@@ -11,4 +11,10 @@
 
 --- 
 
+# 0. Założenia odnośnie projektu:
+ - W zakres studiów wchodzą pojedyńcze przedmioty (studium), które mają przypisane spotkania
+
+---
+
 # 1.	Wymagania i funkcje systemu
+
