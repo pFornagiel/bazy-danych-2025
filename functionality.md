@@ -33,9 +33,9 @@
 - Dziekanat
 - Tłumacz
 
-# Funkcje poszczególnych użytkowników 
+## Funkcje poszczególnych użytkowników 
 
-## Studenci (użytkownicy zalogowani, rozszerzenie możliwości gości)
+### Studenci (użytkownicy zalogowani, rozszerzenie możliwości gości)
 - możliwość zapisania się na kurs
 - zapis na praktyki
 - usunięcie konta
@@ -48,29 +48,29 @@
 - stworzenie zamówienia
 - opłacenie zamówienia
 
-## Goście (użytkownicy niezalogowani)
+### Goście (użytkownicy niezalogowani)
 - dostęp do wybranych webinarów
 - przegląd dostępnych webinarów / studiów / kursów
 - założenie konta
 
-## Prowadzący zajęcia
+### Prowadzący zajęcia
 - modyfikacja terminu zajęć
 - modyfikacja udostępnionych zasobów 
 - sprawdzanie obecności dla każdych zajęć
 - wyświetlenie wykazu prowadzonych zajęć
 
-## Administrator zasobów
+### Administrator zasobów
 - dodawanie / usuwanie webinarów, kursów i studiów
 - dodawanie / usuwanie materiałów
 
-## Dyrektor
+### Dyrektor
 - dodawanie / usuwanie pracowników
 - modyfikacja dostępu do kursu
 - modyfikacja opłat za kurs
 - modyfikacja czasu na dokonanie płatności dla danej osoby
 - przegląd wszelkich danych dotyczących realizowanych zajęć
 
-## Dziekanat
+### Dziekanat
 - tworzenie dyplomów potwierdzających ukończenie kursu / studium
 - dodawanie / modyfikacja praktyk
 - modyfikacja webinarów / kursów / studiów / przedmiotów
@@ -86,6 +86,6 @@
 - wyświetlenie danych dotyczących wybranych form zajęć
 - wykrywanie i wyświetlanie kolizji czasowych studentów
 
-## Tłumacz
+### Tłumacz
 - Dostęp do zasobów poszczególnych kursów / studiów i webinarów
 - Dodawanie przetłumaczonych zasobów do kursów /studiów / webinarów
