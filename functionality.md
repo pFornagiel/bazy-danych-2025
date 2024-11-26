@@ -2,7 +2,7 @@
 
 ## Funkcje
 
-- Automatyczna aktualizacja frekwencji po obejrzeniu części danego modułu / studium
+- Automatyczna aktualizacja frekwencji i zaliczeń etapów po obejrzeniu części danego modułu / studium lub obecności na zajęciach
 - Automatyczne udostępnianie zasobów po zakończeniu wykładu online / zakupie
 - Automatyczne blokowanie dostępu do treści po upływie terminu ważności seminarium / studium online
 - Automatyczna weryfikacja limitu zapisanych osób i blokowanie jego przekroczenia
@@ -26,83 +26,70 @@
 
 ## Użytkownicy
 
-- Uczestnicy kursu/studenci
-- goście
-- Koordynatorzy przedmiotów ?
+- Studenci (osoby posiadające konto)
+- Goście (użytkownicy bez konta)
 - Prowadzący zajęcia
 - Dyrektor Szkoły
-- Administrator
+- Administrator zasobów
 - Dziekanat
-- tłumacz
+- Tłumacz
 
 # Funkcje poszczególnych użytkowników 
 
-## Studenci (rozszerza goście) 
+## Studenci (użytkownicy zalogowani, rozszerzenie możliwości gości)
 
 - możliwość zapisania się na kurs
 - zapis na praktyki
 - usunięcie konta
-- wyświetlenie do wykazu zajęć w których brał udział / obecności
 - dodanie i usunięcie adresu
-- wyświetlenie dostępnych kursów/webinarów/studiów
-- dodanie elementów do koszyka
+- wyświetlenie wykazu zajęć w których brał udział / obecności
+- wyświetlenie frekwencji / stopnia zaliczenia dla poszczególnych zajęć
+- wyświetlenie dostępnych kursów / webinarów / studiów
+- wyświetlanie linków dostępu do udostępnionych zasobów
+- dodanie, usunięcie i przegląd elementów w koszyku
 - usunięcie elementów z koszyka
 - stworzenie zamówienia
 - opłacenie zamówienia
 
-## goście (czyli osoba bez konta)
-- założenie konta
+## Goście (czyli osoba bez konta)
 - dostęp do wybranych webinarów
 - przegląd dostępnych webinarów, studiów i kursów
-
-## Koordynator przedmiotu
-- modyfikacja dostępnych modułów w zakresie swojego przedmiotu
-- modyfikacja terminu zajęć
+- założenie konta
 
 ## Prowadzący zajęcia
 - modyfikacja terminu zajęć
-- modyfikacja udostępnionych zasobów (webinarów)
+- modyfikacja udostępnionych zasobów 
 - sprawdzanie obecności dla każdych zajęć z osobna
-- zadawanie prac domowych (????) | ja bym powiedział że useless ~Paweł
-- zlecenie tłumaczenia zasobów (czy trzeba? ~Pawel)
 - wyświetlenie wykazu prowadzonych zajęć
 
-## Dyrektor funkcje
-- zatrudnianie pracowników
-- zwalnianie pracowników
-- modyfikacja opłat za kurs i czasu na dokonanie płatności dla danych osób
-- przegląd wszelkich statystyk szkoły
-
-## Administrator
+## Administrator zasobów
 - usuwanie i dodawanie webinarów, kursów i studiów
 - usuwanie i dodawanie materiałów
 
+## Dyrektor
+- usuwanie pracowników
+- dodanie pracowników
+- modyfikacja dostępu do kursu
+- modyfikacja opłat za kurs i czasu na dokonanie płatności dla danych osób
+- przegląd wszelkich danych dotyczących realizowanych zajęć
+
 ## Dziekanat
-- dodanie pracowników (chyba, że robi to dyrektor???)
-- tworzenie kont poszczególnym pracownikom
-- usunięcie pracowników
-- usuwanie kont poszczególnym pracownikom
 - tworzenie dyplomów potwierdzających ukończenie kursu/studium
 - dodawanie praktyk
 - dodawanie przedmiotów
-- modyfikacja webinarów/kursów/studiów
-- dodawanie webinarów/kursów/studiów
+- modyfikacja webinarów / kursów / studiów / przedmiotów
+- dodawanie webinarów / kursów / studiów / przedmiotów
+- dodawanie tłumacza do wybranych przedmiotów
+- tworzenie sylabusu
 - generowanie harmonogramu
-- zestawienia statystyczne dla całej szkoły DODATKOWE POMYSŁY?
-- wyświetlenie listy osób, które skorzystały z usług, ale nie uiściły opłat
-- wyświetlenie dochodów z poszczególnych modułów (webinar/kurs/studium)
-- wyświetlenie liczby zatrudnionych pracowników
-- wyświetlenie liczby studentów dla danego kursu i limity dla danego zasobu
+- generowanie danych dotyczących realizowanych zajęć
+- generowanie poszczególnych raportów wymienionych w sekcji *Raportowanie*
+- wyświetlanie poszczególnych raportów opisanych w skecji *Raportowanie*
+- wyświetlenie zatrudnionych pracowników
+- wyświetlenie studentów przypisanych do danego zasobu wraz z limitami zasobu
 - wyświetlenie danych dotyczących wszystkich form zajęć
-- wyświetlenie kolizji w planie studentów
-- tworzenie raportu liczby zapisanych osób na przyszłe wydarzenia wraz z informacjami o wydarzeniach
-- tworzenie raportu dotyczącego frekwencji na zakończonych wydarzeniach
-- tworzenie raportu dotyczącego osób, które skorzystały z usług, ale nie uiściły opłat
-- tworzenie raportów finansowych
-- tworzenie list obecności dla poszczególnych form zajęć
-- Wykrywanie kolizji czasowych wśród użytkowników
+- wykrywanie i wyświetlanie kolizji czasowych studentów
 
 ## Tłumacz
-
-- Dostęp do zasobów wszsykich kursów/studiów i webinarów
-- Dodawanie przetłumaczonych zasobów do kursów/studiów i webinarów
+- Dostęp do zasobów poszczególnych kursów / studiów i webinarów
+- Dodawanie przetłumaczonych zasobów do kursów /studiów / webinarów
