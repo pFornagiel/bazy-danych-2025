@@ -1,28 +1,9 @@
 # Opis Funkcjonalności Systemu
 
-## Funkcje
-
-- Automatyczna aktualizacja frekwencji i zaliczeń etapów po obejrzeniu części danego modułu / studium lub obecności na zajęciach
-- Automatyczne udostępnianie zasobów po zakończeniu wykładu online / zakupie
-- Automatyczne blokowanie dostępu do treści po upływie terminu ważności seminarium / studium online
-- Automatyczne wyliczanie wolnych miejsc na każdy z kursów
-- Automatyczne tworzenie kalendarza z harmonogramu zajęć (np. zajęcia co poniedziałek)
-- Zapewnianie poprawności działania systemu:
-  - Automatyczna weryfikacja limitu zapisanych osób i blokowanie jego przekroczenia
-  - Automatyczne blokowanie możliwości zapisania się na te same zajęcia wiele razy
-- Raportowanie
-  - Tworzenie raportu liczby zapisanych osób na przyszłe wydarzenia wraz z informacjami o wydarzeniach
-  - Tworzenie raportu dotyczącego frekwencji na zakończonych wydarzeniach
-  - Tworzenie raportu dotyczącego osób, które skorzystały z usług, ale nie uiściły opłat
-  - Tworzenie raportów finansowych
-  - Tworzenie list obecności dla poszczególnych form zajęć
-  - Tworzenie list kolizji czasowych wśród użytkowników
-- Integracja z systemem płatności 
-  - Możliwość składania zamówień przez studentów
-  - Możliwość przechowywania, dodawania i usuwania z koszyka przez studentów
-  - Możliwość udostępniania linków do płatności
-  - Automatyczne śledzenie wartości koszyka studenta
-  - Automatyczne dodawnie uczestnika do wybranego kursu / webinaru / studiów / spotkania po uiszczeniu opłaty
+## Funkcje Systemu
+- Weryfikacja limitu zapisanych osób i blokowanie jego przekroczenia
+- Blokowanie zapisu / dostępu do treści po upływie terminu ważności
+- Blokowanie możliwości zapisania się na te same zajęcia wiele razy
 
 ## Użytkownicy
 - Studenci (użytkownicy zalogowani)
@@ -79,12 +60,17 @@
 - tworzenie sylabusu
 - generowanie harmonogramu
 - generowanie danych dotyczących realizowanych zajęć
-- generowanie poszczególnych raportów wymienionych w sekcji *Raportowanie*
-- wyświetlanie poszczególnych raportów wymienionych w skecji *Raportowanie*
 - wyświetlenie zatrudnionych pracowników
 - wyświetlenie studentów przypisanych do danego zasobu wraz z limitami zasobu
 - wyświetlenie danych dotyczących wybranych form zajęć
 - wykrywanie i wyświetlanie kolizji czasowych studentów
+- Raportowanie:
+  - Tworzenie raportu liczby zapisanych osób na przyszłe wydarzenia wraz z informacjami o wydarzeniach
+  - Tworzenie raportu dotyczącego frekwencji na zakończonych wydarzeniach
+  - Tworzenie raportu dotyczącego osób, które skorzystały z usług, ale nie uiściły opłat
+  - Tworzenie raportów finansowych
+  - Tworzenie list obecności dla poszczególnych form zajęć
+  - Tworzenie list kolizji czasowych wśród użytkowników
 
 ### Tłumacz
 - Dostęp do zasobów poszczególnych kursów / studiów i webinarów
