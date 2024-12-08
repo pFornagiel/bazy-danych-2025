@@ -95,3 +95,6 @@
 ### Tłumacz
 - Dostęp do zasobów poszczególnych kursów / studiów i webinarów
 - Dodawanie przetłumaczonych zasobów do kursów /studiów / webinarów
+
+# Schemat bazy danych
+![Opis alternatywny](schemat.png)
