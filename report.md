@@ -103,6 +103,17 @@
 ## Kategoria Users
 ### Tabela Users
 
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| user_id | int | Primary Key |
+| username | varchar(30) |  |
+| first_name | nvarchar(30) |  |
+| last_name | nvarchar(30) |  |
+| email | varchar(50) |  |
+| phone | varchar(9) |  |
+| CONSTRAINT | unique_email |  |
+| CONSTRAINT | unique_phone |  |
+
 Zawiera podstawowe informacje o każdym użytkowniku bazy.
 
 - *user_id* int - klucz główny, identifikuje użytkownika
@@ -137,9 +148,18 @@ CREATE TABLE USERS (
 
 ### Tabela Students
 
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| student_id | int | Primary Key<br>Foreign Key |
+| street | varchar(30) |  |
+| city | varchar(30) |  |
+| postal_code | varchar(30) |  |
+| country | varchar(30) |  |
+
+
 Zawiera infromacje specyficzne dla studenta
 
-- *student_id* int - klucz główny, identyfikuje studenta
+- *student_id* int - klucz główny, klucz obcy, identyfikuje studenta
 
 - street varchar(30) - ulica, na której mieszka studenta
 
@@ -163,11 +183,18 @@ CREATE TABLE STUDENTS (
 
 ### Tabela EMPLOYEES
 
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| emploee_id | int | Primary Key<br>Foreign Key |
+| type_id | int |  |
+| hire_date | date |  |
+| birth_date | date |  |
+
 Zawiera szczególne informacje dla pracowników (dyrektora, pracownika dziekanatu, nauczyciela, tłumacza)
 
-- *emploee_id* int - klucz główny, identyfikator pracownika
+- *emploee_id* int - klucz główny, klucz obcy, identyfikator pracownika
 
-- type_id int - typ pracownika (opisany poniżej)
+- type_id int - sklucz obcy, typ pracownika (opisany poniżej)
 
 - hire_date date nullable - data zatrudnienia
   - DEFAULT current_date
@@ -187,6 +214,11 @@ CREATE TABLE EMPLOYEES (
 ```
 
 ### Tabela EMPLOYEES_TYPE
+
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| type_id | int | Primary Key |
+| type_name | varchar(30) |  |
 
 Zawiera opis typów pracowników
 
@@ -209,21 +241,30 @@ CREATE TABLE EMPLOYEE_TYPES (
 ## Kategoria Products
 
 ### Tabela Products
+
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| product_id | int | Primary Key<br>Foreign Key |
+| type_id | int |  |
+| price | money |  |
+| vacancies | int |  |
+| total_amount | int |  |
+
 Zawiera informacje o każdym produkcie w ofercie. Produkt jest rozumiany
-jako każda form przeprowadzania zajęć.
+jako każda z form przeprowadzania zajęć.
 
 - *product_id* int - klucz główny, identyfikuje produkt
 
-- type_id int - numer kategorii produktu
+- type_id int - klucz obcy, numer kategorii produktu
 
 - price money nullable - cena za produkt
   - warunek: prive >= 0
   - DEFAULT 1000
 
-- vacancies int - ilość wolnoch miejsc możliwych do kupienia na dane zajęcia
+- vacancies int - ilość wolnych miejsc możliwych do zakupu na dane zajęcia
   - warunek: vacancies >= 0
 
-- total_amount int - liczba wszystkich miejsc na dane zajęcia
+- total_amount int - liczba wszystkich dostępneych miejsc na dane zajęcia
 
 ``` sql
 -- Table: PRODUCTS
@@ -237,13 +278,19 @@ CREATE TABLE PRODUCTS (
 );
 ```
 
-### Tabela Product_DETAILS
+### Tabela PRODUCTS_DETAILS
+
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| student_id | int | Primary Key<br>Foreign Key |
+| product_id | int | Primary Key<br>Foreign Key |
+| order_id | int |  |
 
 Zawiera informacje o studentach zapisanych na dane zajęcia oraz o numerze zamówienia z jakiego został kupiony dostęp do zajęć
 
-- student_id int - wchodzi w skład klucza głównego, identyfikuje studenta
-- product_id int - wchodzi w skład klucza głównego, identifukuje produkt
-- order_id int - identifikuje zamówienie z jakiego został kupiony dostęp do zajęć
+- student_id int - wchodzi w skład klucza głównego, klucz obcy, identyfikuje studenta
+- product_id int - wchodzi w skład klucza głównego, klucz obcy, identifukuje produkt
+- order_id int - klucz obcy, identifikuje zamówienie z jakiego został kupiony dostęp do zajęć
 
 
 ``` sql
@@ -257,6 +304,11 @@ CREATE TABLE PRODUCTS_DETAILS (
 ```
 
 ### Tabela PRODUCT_TYPES
+
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| type_id | int | Primary Key |
+| type_name | varchar(30) |  |
 
 Zawiera informacje o typach produktów
 
@@ -280,11 +332,19 @@ CREATE TABLE PRODUCT_TYPES (
 
 ### Tabela ORDERS
 
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| order_id | int | Primary Key<br>Foreign Key |
+| student_id | int |  |
+| order_date | datetime |  |
+| complete_payment_date | datetime |  |
+| paid | int |  |
+
 Zawiera informacje na temat zamówienia pod danym identyfikatorem
 
 - order_id int - klucz główny, identyfikator zamówienia
 
-- student_id int - identyfikator studenta
+- student_id int - kluczo obcy, identyfikator studenta
 
 - order_date datetime nullable - data złożenia zamówienia
 
@@ -306,11 +366,17 @@ CREATE TABLE ORDERS (
 
 ### Tabela ORDER_DETAILS
 
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| order_id | int | Primary Key<br>Foreign Key |
+| product_id | int | Primary Key<br>Foreign Key |
+| discount | int |  |
+
 Tabela zawiera informacje o produktach wchodzących w skład danego zamówienia i rabacie udzielonym dla danego zamówienia
 
-- order_id int - wchodzi w skład klucza głównego, identifikator zamówienia
+- order_id int - wchodzi w skład klucza głównego, klucz obcy, identifikator zamówienia
 
-- product_id int - wchodzi w skład klucza głównego, identyfikator produktu
+- product_id int - wchodzi w skład klucza głównego, klucz obcy, identyfikator produktu
 
 - discount int - rabat udzielony dla zamówienia
   - Warunki: discount >= 0 and discount <= 1
@@ -328,11 +394,18 @@ CREATE TABLE ORDER_DETAILS (
 
 ### Tabela PAYMENTS
 
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| payment_id | int | Primary Key<br>Foreign Key |
+| order_id | int |  |
+| payment_date | date |  |
+| payment_value | money |  |
+
 Zawiera informacje o płatności dołączonej do danego zamówienia
 
 - payment_id int - klucz główny, identyfikator płatności
 
-- order_id int - identifikator zamówienia
+- order_id int - klucz obcy, identifikator zamówienia
 
 - payment_date date - data dokonania płatności
 
@@ -354,13 +427,25 @@ CREATE TABLE PAYMENTS (
 
 ### Tabela Webinars
 
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| webinar_id | int | Primary Key<br>Foreign Key |
+| tutor_id | int |  |
+| translator_id | int |  |
+| webinar_name | varchar(50) |  |
+| webinar_description | text |  |
+| video_url | text |  |
+| webinar_duration | time(0) |  |
+| publish_date | datetime |  |
+| language | varchar(50) |  |
+
 Zawiera informacje specyfinczne dla każdego produktu będącego webinarem
 
-- webinar_id int - klucz główny, identifikator webinaru 
+- webinar_id int - klucz główny, klucz obcy, identifikator webinaru 
 
-- tutor_id int - identifikator nauczyciela
+- tutor_id int - klucz obcy, identifikator nauczyciela
 
-- translator_id int nullable - identifikator tłumacza
+- translator_id int nullable - klucz obcy, identifikator tłumacza
 
 - webinar_name varchar(50) - nazwa webinaru 
 
@@ -399,9 +484,15 @@ CREATE TABLE WEBINARS (
 
 ### Tabela COURSES
 
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| course_id | int | Primary Key<br>Foreign Key |
+| course_name | nvarchar(50) |  |
+| course_description | text |  |
+
 Zawiera informacje o produktach, które są kursami
 
-- course_id int - klucz główny, identifikator kursu
+- course_id int - klucz główny, klucz obcy, identifikator kursu
 
 - course_name nvarchar(50) - nazwa kursu
 
@@ -419,13 +510,19 @@ CREATE TABLE COURSES (
 
 ### Tabela MODULES
 
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| module_id | int | Primary Key<br>Foreign Key |
+| course_id | int |  |
+| tutor_id | int |  |
+
 Zawiera szczegółowe informacje dla każdego modułu kursu
 
 - module_id int - klucz główny, identifikator modułu
 
-- course_id int - identifikator kursu, z którego pochodzi
+- course_id int - klucz obcy, identifikator kursu, z którego pochodzi
 
-- tutor_id int - identifikator nauczyciela, który prowadzi dany moduł
+- tutor_id int - klucz obcy, identifikator nauczyciela, który prowadzi dany moduł
 
 ``` SQL
 -- Table: MODULES
@@ -441,9 +538,15 @@ CREATE TABLE MODULES (
 
 ### Tabela STUDIES
 
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| study_id | int | Primary Key<br>Foreign Key |
+| study_name | nvarchar(50) |  |
+| study_description | text |  |
+
 Zawiera ogólne informacje o danych studiach
 
-- study_id int - klucz główny, identifikator studium
+- study_id int - klucz główny, klucz obcy, identifikator studium
 
 - study_name nvarchar(50) - nazwa studium
 
@@ -461,17 +564,25 @@ CREATE TABLE STUDIES (
 
 ### Tabela SUBJECTS
 
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| subject_id | int | Primary Key<br>Foreign Key |
+| study_id | int |  |
+| tutor_id | int |  |
+| subject_name | varchar(50) |  |
+| subject_description | text |  |
+
 Zawiera informacje szczegółowe inforamcje dotyczące przedmiotow
 
-- subject_id int - klucz główny, identifikator przedmiotu
+- subject_id int - klucz główny, klucz obcy, identifikator przedmiotu
 
 - subject_name varchar(50) - nazwa przedmiotu
 
 - subject_description text nullable - opis przedmiotu
 
-- study_id int - identifikator studiów, z których pochodzi przedmiot
+- study_id int - klucz obcy, identifikator studiów, z których pochodzi przedmiot
 
-- tutor_id int - identifikator nauczyciela, który uczy dany przedmiot
+- tutor_id int - klucz obcy, identifikator nauczyciela, który uczy dany przedmiot
 
 
 ``` sql
@@ -488,11 +599,17 @@ CREATE TABLE SUBJECTS (
 
 ### Tabela INTERSHIPS
 
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| internship_id | int | Primary Key<br>Foreign Key |
+| study_id | int |  |
+| start_date | date |  |
+
 Zawiera informacje o praktykach prowadzonych na danych studiach
 
 - internship_id - klucz główny, identifikator praktyk
 
-- study_id int - identifikator studiów
+- study_id int - klucz obcy, identifikator studiów
 
 - start_date date nullable - data rozpoczęcia praktyk
 
@@ -508,11 +625,18 @@ CREATE TABLE INTERSHIPS (
 
 ### Tabela INTERSHIPS_DETAILS
 
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| internship_id | int | Primary Key<br>Foreign Key |
+| student_id | int | Primary Key<br>Foreign Key |
+| date | date |  |
+| attendance | bit |  |
+
 Zawiera szczegółowe informacje na temat danych praktyk
 
-- internship_id int - klucz główny, identifikator praktyk
+- internship_id int - klucz główny, klucz obcy, identifikator praktyk
 
-- student_id int -identifikator studenta biorącego udział w praktykach
+- student_id int - klucz główny, klucz obcy, identifikator studenta biorącego udział w praktykach
 
 - date date - data dnia praktyk
 
@@ -536,13 +660,23 @@ CREATE TABLE INTERSHIP_DETAILS (
 
 ### Tabela MEETINGS
 
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| meeting_id | int | Primary Key<br>Foreign Key |
+| tutor_id | int |  |
+| translator_id | int |  |
+| meeting_name | varchar(30) |  |
+| term | datetime |  |
+| duration | time(0) |  |
+| language | varchar(30) |  |
+
 Zawiera ogólne informacje na temat spotkania
 
 - meeting_id int - klucz główny, identifikator spotkania
 
-- tutor_id int - identifikator nauczyciela prowadzącego spotkanie
+- tutor_id int - klucz obcy, identifikator nauczyciela prowadzącego spotkanie
 
-- translator_id int nullable nullable - identifikator tłumacza tłumaczącego spotkanie
+- translator_id int nullable nullable - klucz obcy, identifikator tłumacza tłumaczącego spotkanie
 
 - meeting_name varchar(30) - nazwa spotkania
 
@@ -571,6 +705,13 @@ CREATE TABLE MEETINGS (
 
 ### Tabela MEETING_DETAILS
 
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| meeting_id | int | Primary Key<br>Foreign Key |
+| student_id | int | Primary Key<br>Foreign Key |
+| attendance | bit |  |
+
+
 Zawiera szczegółowe informacje na temat osób biorących udział w spotkaniu
 
 - meeting_id int - klucz główny, identyfikator spotkania
@@ -593,11 +734,16 @@ CREATE TABLE MEETING_DETAILS (
 
 ### Tabela SUBJECT_MEETINGS
 
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| subject_id | int | Primary Key<br>Foreign Key |
+| meeting_id | int | Primary Key<br>Foreign Key |
+
 Tabela posiada identyfikatory spotkań, które odbywają się w ramach danego przedmiotu wraz z jego identyfikatorem
 
-- subject_id int - wchodzi w skład klucza głównego, identyfikator przedmiotu
+- subject_id int - wchodzi w skład klucza głównego, klucz obcy, identyfikator przedmiotu
 
-- meeting_id int - wchodzi w skład klucza głównego, identyfikator spotkania
+- meeting_id int - wchodzi w skład klucza głównego, klucz obcy, identyfikator spotkania
 
 ``` sql
 -- Table: SUBJECT_MEETINGS
@@ -608,13 +754,18 @@ CREATE TABLE SUBJECT_MEETINGS (
 );
 ```
 
-### Tabela SUBJECT_MODULES
+### Tabela MODULE_MEETINGS
+
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| module_id | int | Primary Key<br>Foreign Key |
+| meeting_id | int | Primary Key<br>Foreign Key |
 
 Tabela posiada identyfikatory spotkań, które odbywają się w ramach danego modułu kursu wraz z jego identyfikatorem
 
-- module_id int - wchodzi w skład klucza głównego, identyfikator modułu
+- module_id int - wchodzi w skład klucza głównego, klucz obcy, identyfikator modułu
 
-- meeting_id int - wchodzi w skład klucza głównego, identyfikator spotkania
+- meeting_id int - wchodzi w skład klucza głównego, klucz obcy, identyfikator spotkania
 
 ``` sql
 -- Table: MODULE_MEETINGS
@@ -627,9 +778,14 @@ CREATE TABLE MODULE_MEETINGS (
 
 ### Tabela ASYNC_MEETINGS
 
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| meeting_id | int | Primary Key<br>Foreign Key |
+| meeting_url | text |  |
+
 Zawiera dane dotyczące spotkań internetowych, które nie są na żywo
 
-- meeting_id int - klucz główny, identyfikator spotkania
+- meeting_id int - klucz główny, klucz obcy, identyfikator spotkania
 
 - meeting_url text - link do spotkania
 
@@ -644,9 +800,15 @@ CREATE TABLE ASYNC_MEETINGS (
 
 ### Tabela SYNC_MEETINGS
 
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| meeting_id | int | Primary Key<br>Foreign Key |
+| video_url | text |  |
+| meeting_url | text |  |
+
 Zawiera dane dotyczące spotkań internetowych, które są na żywo
 
-- meeting_id int - klucz główny, identyfikator spotkania
+- meeting_id int - klucz główny, klucz obcy, identyfikator spotkania
 
 - video_url text nullable - link do zapisu video spotkania
 
@@ -664,9 +826,15 @@ CREATE TABLE SYNC_MEETINGS (
 
 ### STATIONARY_MEETINGS
 
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| meeting_id | int | Primary Key<br>Foreign Key |
+| classroom | varchar(10) |  |
+
+
 Zawiera dane dotyczące spotkań internetowych, które są stacjonarnie
 
-- meeting_id int - klucz główny, identyfikator spotkania
+- meeting_id int - klucz główny, klucz obcy, identyfikator spotkania
 
 - classroom varchar(10) - numer pokoju, w którym przeprowadzane jest spotkanie
 
@@ -678,3 +846,43 @@ CREATE TABLE STATIONARY_MEETINGS (
    CONSTRAINT STATIONARY_MEETINGS_pk PRIMARY KEY  (meeting_id)
 );
 ```
+
+# Dokumentacja kluczy obcych
+
+| Table Name       | FK Column      | Referenced Table   | Referenced Column |
+|------------------|----------------|--------------------|-------------------|
+| ASYNC_MEETINGS | meeting_id | MEETINGS | meeting_id |
+| COURSES | course_id | PRODUCTS | product_id |
+| EMPLOYEES | type_id | EMPLOYEE_TYPES | type_id |
+| EMPLOYEES | emploee_id | USERS | user_id |
+| WEBINARS | tutor_id | EMPLOYEES | emploee_id |
+| INTERSHIPS | study_id | STUDIES | study_id |
+| INTERSHIP_DETAILS | internship_id | INTERSHIPS | internship_id |
+| INTERSHIP_DETAILS | student_id | STUDENTS | student_id |
+| MEETING_DETAILS | meeting_id | MEETINGS | meeting_id |
+| MEETING_DETAILS | student_id | STUDENTS | student_id |
+| MEETINGS | tutor_id | EMPLOYEES | emploee_id |
+| MODULE_MEETINGS | meeting_id | MEETINGS | meeting_id |
+| MEETINGS | translator_id | EMPLOYEES | emploee_id |
+| MODULES | course_id | COURSES | course_id |
+| MODULES | tutor_id | EMPLOYEES | emploee_id |
+| MODULE_MEETINGS | module_id | MODULES | module_id |
+| ORDER_DETAILS | order_id | ORDERS | order_id |
+| PAYMENTS | order_id | ORDERS | order_id |
+| PRODUCTS_DETAILS | order_id | ORDERS | order_id |
+| PRODUCTS_DETAILS | product_id | PRODUCTS | product_id |
+| PRODUCTS_DETAILS | student_id | STUDENTS | student_id |
+| PRODUCTS | type_id | PRODUCT_TYPES | type_id |
+| ORDER_DETAILS | product_id | PRODUCTS | product_id |
+| SUBJECTS | subject_id | PRODUCTS | product_id |
+| STATIONARY_MEETINGS | meeting_id | MEETINGS | meeting_id |
+| ORDERS | student_id | STUDENTS | student_id |
+| STUDIES | study_id | PRODUCTS | product_id |
+| SUBJECTS | tutor_id | EMPLOYEES | emploee_id |
+| SUBJECT_MEETINGS | meeting_id | MEETINGS | meeting_id |
+| SUBJECT_MEETINGS | subject_id | SUBJECTS | subject_id |
+| SUBJECTS | study_id | STUDIES | study_id |
+| SYNC_MEETINGS | meeting_id | MEETINGS | meeting_id |
+| STUDENTS | student_id | USERS | user_id |
+| WEBINARS | translator_id | EMPLOYEES | emploee_id |
+| WEBINARS | webinar_id | PRODUCTS | product_id |
