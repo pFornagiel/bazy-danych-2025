@@ -98,3 +98,172 @@
 
 # Schemat bazy danych
 ![Opis alternatywny](schemat.png)
+
+# Opis tabel
+## Kategoria Users
+### Tabela Users
+
+Zawiera podstawowe informacje o każdym użytkowniku bazy.
+
+- *user_id* int - klucz główny, identifikuje użytkownika
+
+- username varchar(30)  - nazwa użytkownika w bazie danych
+
+- first_name nvarchar(30) - imię użytkownika
+
+- last_name nvarchar(30) - nazwisko użytkownika
+
+- email varchar(50) - email użytkownika
+  - warunek: (mail LIKE '%_@%.%')
+- phone varchar(9) nullable - numer telefonu użytkownika
+  - warunek: LEN(Phone) = 15 AND ISNUMERIC(Phone) = 1
+
+
+``` sql
+-- Table: USERS
+CREATE TABLE USERS (
+    user_id int  NOT NULL IDENTITY,
+    username varchar(30)  NOT NULL,
+    first_name nvarchar(30)  NOT NULL,
+    last_name nvarchar(30)  NOT NULL,
+    email varchar(50)  NOT NULL CHECK (mail LIKE '%_@%.%'),
+    phone varchar(9)  NULL CHECK (LEN(Phone) = 9 AND ISNUMERIC(Phone) = 1),
+    CONSTRAINT unique_email UNIQUE (email),
+    CONSTRAINT unique_phone UNIQUE (phone),
+    CONSTRAINT USERS_pk PRIMARY KEY  (user_id)
+);
+```
+
+### Tabela Students
+
+Zawiera infromacje specyficzne dla studenta
+
+- *student_id* int - klucz główny, identyfikuje studenta
+
+- street varchar(30) - ulica, na której mieszka studenta
+
+- city varchar(30) - miasto, w którym mieszka studenta
+
+- postal_code varchar(30) - kod pocztowy studenta
+
+- country varchar(30)  - kraj pochodzenia studenta
+
+``` sql
+-- Table: STUDENTS
+CREATE TABLE STUDENTS (
+   student_id int  NOT NULL,
+   street varchar(30)  NOT NULL,
+   city varchar(30)  NOT NULL,
+   postal_code varchar(30)  NOT NULL,
+   country varchar(30)  NOT NULL,
+   CONSTRAINT STUDENTS_pk PRIMARY KEY  (student_id)
+);
+```
+
+### Tabela EMPLOYEES
+
+Zawiera szczególne informacje dla pracowników (dyrektora, pracownika dziekanatu, nauczyciela, tłumacza)
+
+- *emploee_id* int - klucz główny, identyfikator pracownika
+
+- type_id int - typ pracownika (opisany poniżej)
+
+- hire_date date nullable - data zatrudnienia
+  - DEFAULT current_date
+
+- birth_date date nullable - data urodzin pracownika
+  - DEFAULT current_date
+
+``` sql
+-- Table: EMPLOYEES
+CREATE TABLE EMPLOYEES (
+    emploee_id int  NOT NULL,
+    type_id int  NOT NULL,
+    hire_date date  NULL DEFAULT current_date,
+    birth_date date  NULL DEFAULT current_date,
+    CONSTRAINT EMPLOYEES_pk PRIMARY KEY  (emploee_id)
+);
+```
+
+### Tabela EMPLOYEES_TYPE
+Zawiera opis typu pracowników
+
+- *type_id* int - klucz główny, typ pracownika (dyrektor, pracownik dziekanatu, nauczyciel, tłumacz)
+- type_name varchar(30) - nazwa pełnionej funkcji
+
+``` sql
+-- Table: EMPLOYEE_TYPES
+CREATE TABLE EMPLOYEE_TYPES (
+    type_id int  NOT NULL IDENTITY,
+    type_name varchar(30)  NOT NULL,
+    CONSTRAINT EMPLOYEE_TYPES_pk PRIMARY KEY  (type_id)
+);
+```
+
+## Kategoria Products
+
+### Tabela Products
+Zawiera informacje o każdym produkcie w ofercie. Produkt jest rozumiany
+jako każda form przeprowadzania zajęć.
+
+- *product_id* int - klucz główny, identyfikuje produkt
+
+- type_id int - numer kategorii produktu (1- study, 2 - subject, 3 - course
+, 4 - webinar)
+
+- price money - cena za produkt
+  - warunek: prive >= 0
+  - DEFAULT 1000
+
+- vacancies int - ilość wolnoch miejsc możliwych do kupienia na dane zajęcia
+  - warunek: vacancies>=0
+
+- total_amount int - liczba wszystkich miejsc dla produktu
+
+``` sql
+-- Table: PRODUCTS
+CREATE TABLE PRODUCTS (
+    product_id int  NOT NULL IDENTITY,
+    type_id int  NOT NULL,
+    price money  NULL DEFAULT 1000 CHECK (prive>=0),
+    vacancies int  NOT NULL CHECK (vacancies>=0),
+    total_amount int  NOT NULL DEFAULT 30 CHECK (total_amount>0),
+    CONSTRAINT product_id PRIMARY KEY  (product_id)
+);
+```
+
+### Tabela Product_DETAILS
+
+Zawiera informacje o studentach zapisanych na dane zajęcia 
+o oraz numerze zamówienia z jakiego został kupiony dostęp do zajęć
+
+- student_id int - wchodzi w skład klucza głównego, identyfikuje studenta
+- product_id int - wchodzi w skład klucza głównego, identifukuje produkt
+- order_id int - identifikuje zamówienie z jakiego został kupiony dostęp do zajęć
+
+
+``` sql
+-- Table: PRODUCTS_DETAILS
+CREATE TABLE PRODUCTS_DETAILS (
+    student_id int  NOT NULL,
+    product_id int  NOT NULL,
+    order_id int  NOT NULL,
+    CONSTRAINT PRODUCTS_DETAILS_pk PRIMARY KEY  (student_id,product_id)
+);
+```
+
+### Tabela PRODUCT_TYPES
+
+Zawiera informacje o typach produktów
+
+- type_id int - klucz główny, identyfikuje typ
+- type_name varchar(30) - nazwa typu
+
+``` sql
+-- Table: PRODUCT_TYPES
+CREATE TABLE PRODUCT_TYPES (
+    type_id int  NOT NULL IDENTITY,
+    type_name varchar(30)  NOT NULL,
+    CONSTRAINT PRODUCT_TYPES_pk PRIMARY KEY  (type_id)
+);
+```
