@@ -18,7 +18,7 @@ def parse_sql(sql_script):
             column_details = column.strip().split()
             column_name = column_details[0]
             column_type = column_details[1] if len(column_details) > 1 else ''
-            if(column_details[0] == 'CONSTRAINT'):
+            if(column_details[0] == 'CONSTRAINT' and 'PRIMARY' in column_details):
               for pk in column_details[4].strip('()').split(','):
                 primary_keys.append(pk)
               continue
@@ -51,14 +51,17 @@ def parse_foreign_keys(sql_script):
 
   return foreign_keys
 
-def generate_markdown_documentation(tables):
+def generate_markdown_documentation(tables, foreign):
   doc = "# Database Documentation\n\n"
   for table in tables:
     doc += f"##{table['name'][2::]}\n\n"
     doc += "| Column Name | Data Type | Properties |\n"
     doc += "|-------------|-----------|------------|\n"
     for column in table['columns']:
-      doc += f"| {column['name']} | {column['type']} | {'Primary Key' if column['name'] in table['pk'] else ''} |\n"
+      foreign_value = 'Foreign Key' if any(d.get('table_name') == table['name'][10:-1:] for d in foreign) else ''
+      print([(d.get('table_name'), table['name'][10:-1:]) for d in foreign])
+      value = 'Primary Key<br>Foreign Key' if foreign_value else 'Primary Key'
+      doc += f"| {column['name']} | {column['type']} | {value if column['name'] in table['pk'] else ''} |\n"
     doc += "\n"
   return doc
 
@@ -75,8 +78,11 @@ sql_script = ""
 with open(os.path.join('bazy-danych-2025_create.sql'), 'r') as file:
   sql_script = "".join(file.readlines()[4::]) 
 
-documentation = generate_markdown_documentation(parse_sql(sql_script))
-documentation_foreign_keys = generate_markdown_for_foreign_keys(parse_foreign_keys(sql_script))
+# print(parse_foreign_keys(sql_script))
+parsed_main = parse_sql(sql_script)
+parsed_foreign = parse_foreign_keys(sql_script)
+documentation = generate_markdown_documentation(parsed_main, parsed_foreign)
+documentation_foreign_keys = generate_markdown_for_foreign_keys(parsed_foreign)
 
 # Save to MD
 with open("database_documentation.md", "w") as file:
