@@ -39,11 +39,11 @@ class ProductType:
 @dataclass
 class Product:
     product_id: int = field(default=0)
-    category_id: int = field(default=0)
+    type_id: int = field(default=0)
     price: int = field(default=0)
     vacancies: int = field(default=0)
     total_amount: int = field(default=0)
-    type_id: int = field(default=0)
+
 
 @dataclass
 class Course(Product):
@@ -61,6 +61,7 @@ class Order:
     student_id: int = field(default=0)
     order_date: datetime = field(default_factory=datetime.now)
     complete_payment_date: Optional[datetime] = None
+    paid: int = field(default=0)
 
 @dataclass
 class OrderDetails:
