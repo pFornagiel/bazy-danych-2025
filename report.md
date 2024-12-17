@@ -328,6 +328,28 @@ CREATE TABLE PRODUCT_TYPES (
 );
 ```
 
+### Tabela CART
+
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| student_id | int | Primary Key<br>Foreign Key |
+| product_id | int |  |
+
+Zawiera informacje o koszyku użytkownika
+
+- student_id int - klucz główny, klucz obcy, identyfikator użytkownika
+
+- product_id int - klucz główny, klucz obcy, identyfikator produktu
+
+```sql
+-- Table: CART
+CREATE TABLE CART (
+    student_id int  NOT NULL,
+    product_id int  NOT NULL,
+    CONSTRAINT CART_pk PRIMARY KEY  (student_id)
+);
+```
+
 ## Kategoria Orders
 
 ### Tabela ORDERS
@@ -336,9 +358,7 @@ CREATE TABLE PRODUCT_TYPES (
 |-------------|-----------|------------|
 | order_id | int | Primary Key<br>Foreign Key |
 | student_id | int |  |
-| order_date | datetime |  |
-| complete_payment_date | datetime |  |
-| paid | int |  |
+| order_date | date |  |
 
 Zawiera informacje na temat zamówienia pod danym identyfikatorem
 
@@ -348,78 +368,77 @@ Zawiera informacje na temat zamówienia pod danym identyfikatorem
 
 - order_date datetime nullable - data złożenia zamówienia
 
-- complete_payment_date datetime nullable - data opłacenia pełnej kwoty zamówienia
-
-- paid int - kwota, którą zapłacił student w ramach zamówienia (nie musi być to pełna kwota zamówienia)
-
 ``` sql
 -- Table: ORDERS
 CREATE TABLE ORDERS (
     order_id int  NOT NULL IDENTITY,
     student_id int  NOT NULL,
-    order_date datetime  NOT NULL DEFAULT actual_date,
-    complete_payment_date datetime  NULL,
-    paid int  NOT NULL DEFAULT 0 CHECK (paid>=0),
+    order_date date  NOT NULL DEFAULT actual_date,
     CONSTRAINT ORDERS_pk PRIMARY KEY  (order_id)
 );
 ```
 
-### Tabela ORDER_DETAILS
+### Tabela FEES
 
 | Column Name | Data Type | Properties |
 |-------------|-----------|------------|
-| order_id | int | Primary Key<br>Foreign Key |
-| product_id | int | Primary Key<br>Foreign Key |
-| discount | int |  |
-
-Tabela zawiera informacje o produktach wchodzących w skład danego zamówienia i rabacie udzielonym dla danego zamówienia
-
-- order_id int - wchodzi w skład klucza głównego, klucz obcy, identifikator zamówienia
-
-- product_id int - wchodzi w skład klucza głównego, klucz obcy, identyfikator produktu
-
-- discount int - rabat udzielony dla zamówienia
-  - Warunki: discount >= 0 and discount <= 1
-  - DEFAULT 0
-
-``` sql
--- Table: ORDER_DETAILS
-CREATE TABLE ORDER_DETAILS (
-   order_id int  NOT NULL,
-   product_id int  NOT NULL,
-   discount int  NOT NULL DEFAULT 0 CHECK (discount >= 0 and discount <= 1),
-   CONSTRAINT ORDER_DETAILS_pk PRIMARY KEY  (order_id,product_id)
-);
-```
-
-### Tabela PAYMENTS
-
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| payment_id | int | Primary Key<br>Foreign Key |
-| order_id | int |  |
+| fee_id | int | Primary Key<br>Foreign Key |
+| due_date | date |  |
 | payment_date | date |  |
-| payment_value | money |  |
+| fee_value | money |  |
+| type_id | int |  |
+| order_id | int |  |
+| product_id | int |  |
 
-Zawiera informacje o płatności dołączonej do danego zamówienia
+Zawiera informacje o płatności za dany produkt dołączonej do danego zamówienia
 
-- payment_id int - klucz główny, identyfikator płatności
+- fee_id int - klucz główny, identyfikator płatności
+
+- due_date date - data wymagania płatności, nieuregulowanie do podanego teminu skutkuje wpisem na liste dłużników
+
+- payment_date date nullable - data dokonania płatności
+
+- fee_value money - cena płatności
+  - warunek: fee_value >= 0
+
+- type_id int - klucz obcy, identyfikator typu płatności
 
 - order_id int - klucz obcy, identifikator zamówienia
 
-- payment_date date - data dokonania płatności
-
-- payment_value money - opłacona płatności
-  - warunek: payment_value >= 0
+- product_id int, klucz obcy, identyfikator produktu
 
 ``` sql
 -- Table: PAYMENTS
-CREATE TABLE PAYMENTS (
-    payment_id int  NOT NULL IDENTITY,
+CREATE TABLE FEES (
+    fee_id int  NOT NULL IDENTITY,
+    due_date date  NOT NULL DEFAULT actual_date,
+    payment_date date  NULL,
+    fee_value money  NOT NULL CHECK (payment_value>=0),
+    type_id int  NOT NULL,
     order_id int  NOT NULL,
-    payment_date date  NOT NULL DEFAULT actual_date,
-    payment_value money  NOT NULL CHECK (payment_value>=0),
-    CONSTRAINT PAYMENTS_pk PRIMARY KEY  (payment_id)
+    product_id int  NOT NULL,
+    CONSTRAINT FEES_pk PRIMARY KEY  (fee_id)
+);
+```
+
+### Tabela FEE_TYPE
+
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| type_id | int | Primary Key |
+| type_name | nvarchar(30) |  |
+
+Zawiera informacje o możliwych typach płatności
+
+- type_id int - klucz główny, identyfikator typu płatności
+
+- type_name nvarachar(30) - nazwa typu płatności
+
+```sql
+CREATE TABLE FEE_TYPE (
+    type_id int  NOT NULL,
+    type_name nvarchar(30)  NOT NULL,
+    CONSTRAINT FEE_TYPE_pk PRIMARY KEY  (type_id)
 );
 ```
 
@@ -597,6 +616,26 @@ CREATE TABLE SUBJECTS (
 );
 ```
 
+## Tabela SESSIONS
+
+| Column Name | Data Type | Properties |
+|-------------|-----------|------------|
+| session_id | int | Primary Key<br>Foreign Key |
+| subject_id | int |  |
+
+Zawiera informacje o poszczególnych sesjach (grupach spotkań zjazdowych)
+
+- sessions_id int - klucz główny, klucz obcy, identyfikator sesji
+- subject_id int - klucz główny, klucz obcy, identifikator przedmiotu związanego z sesją
+
+```sql
+CREATE TABLE SESSIONS (
+    session_id int  NOT NULL,
+    subject_id int  NOT NULL,
+    CONSTRAINT SESSIONS_pk PRIMARY KEY  (session_id)
+);
+```
+
 ### Tabela INTERSHIPS
 
 | Column Name | Data Type | Properties |
@@ -604,6 +643,7 @@ CREATE TABLE SUBJECTS (
 | internship_id | int | Primary Key<br>Foreign Key |
 | study_id | int |  |
 | start_date | date |  |
+| end_date | date |  |
 
 Zawiera informacje o praktykach prowadzonych na danych studiach
 
@@ -613,13 +653,16 @@ Zawiera informacje o praktykach prowadzonych na danych studiach
 
 - start_date date nullable - data rozpoczęcia praktyk
 
+- end_date date nullable - data zakończenia praktyk
+
 ``` sql
 -- Table: INTERSHIPS
 CREATE TABLE INTERSHIPS (
-   internship_id int  NOT NULL IDENTITY,
-   study_id int  NOT NULL,
-   start_date date  NULL,
-   CONSTRAINT INTERSHIPS_pk PRIMARY KEY  (internship_id)
+    internship_id int  NOT NULL IDENTITY,
+    study_id int  NOT NULL,
+    start_date date  NULL,
+    end_date date  NULL,
+    CONSTRAINT INTERSHIPS_pk PRIMARY KEY  (internship_id)
 );
 ```
 
@@ -629,8 +672,7 @@ CREATE TABLE INTERSHIPS (
 |-------------|-----------|------------|
 | internship_id | int | Primary Key<br>Foreign Key |
 | student_id | int | Primary Key<br>Foreign Key |
-| date | date |  |
-| attendance | bit |  |
+| passed | bit |  |
 
 Zawiera szczegółowe informacje na temat danych praktyk
 
@@ -638,21 +680,18 @@ Zawiera szczegółowe informacje na temat danych praktyk
 
 - student_id int - klucz główny, klucz obcy, identifikator studenta biorącego udział w praktykach
 
-- date date - data dnia praktyk
-
-- attendance bit - obecność, <br>
-1 - student uczestniczył w praktykach danego dnia, <br>
-0 - student nie uczestniczył w praktykach danego dnia
+- passed bit - zaliczenie danych praktyk, <br>
+1 - student zaliczył praktyki (100% obecności), <br>
+0 - student nie zaliczył praktyk (brak 100% obecności)
 
 ``` sql
 -- Table: INTERSHIP_DETAILS
 -- Table: INTERSHIP_DETAILS
 CREATE TABLE INTERSHIP_DETAILS (
-   internship_id int  NOT NULL,
-   student_id int  NOT NULL,
-   date date  NOT NULL,
-   attendance bit  NOT NULL,
-   CONSTRAINT INTERSHIP_DETAILS_pk PRIMARY KEY  (internship_id)
+    internship_id int  NOT NULL,
+    student_id int  NOT NULL,
+    passed bit  NOT NULL,
+    CONSTRAINT INTERSHIP_DETAILS_pk PRIMARY KEY  (internship_id,student_id)
 );
 ```
 
@@ -669,6 +708,8 @@ CREATE TABLE INTERSHIP_DETAILS (
 | term | datetime |  |
 | duration | time(0) |  |
 | language | varchar(30) |  |
+| module_id | int |  |
+| session_id | int |  |
 
 Zawiera ogólne informacje na temat spotkania
 
@@ -689,17 +730,23 @@ Zawiera ogólne informacje na temat spotkania
 - language varchar(30) - język w jakim przeprowadza się spotkanie
   - DEFAULT 'POLISH'
 
+- module_id int nullable - klucz obcy, identyfikator modułu kursu odpowiadającego spotkani
+
+- sessions_id int nullable - klucz obcy, identyfikator sesji odpowiadającej spotkaniu
+
 ``` sql
 -- Table: MEETINGS
 CREATE TABLE MEETINGS (
-   meeting_id int  NOT NULL IDENTITY,
-   tutor_id int  NOT NULL,
-   translator_id int  NULL,
-   meeting_name varchar(30)  NOT NULL,
-   term datetime  NOT NULL,
-   duration time(0)  NULL DEFAULT 01:30:00 CHECK (duration>'00:00:00'),
-   language varchar(30)  NOT NULL DEFAULT 'POLISH',
-   CONSTRAINT MEETINGS_pk PRIMARY KEY  (meeting_id)
+    meeting_id int  NOT NULL IDENTITY,
+    tutor_id int  NOT NULL,
+    translator_id int  NULL,
+    meeting_name varchar(30)  NOT NULL,
+    term datetime  NOT NULL,
+    duration time(0)  NULL DEFAULT 01:30:00 CHECK (duration>'00:00:00'),
+    language varchar(30)  NOT NULL DEFAULT 'POLISH',
+    module_id int  NULL,
+    session_id int  NULL,
+    CONSTRAINT MEETINGS_pk PRIMARY KEY  (meeting_id)
 );
 ```
 
@@ -729,50 +776,6 @@ CREATE TABLE MEETING_DETAILS (
    student_id int  NOT NULL,
    attendance bit  NOT NULL,
    CONSTRAINT MEETING_DETAILS_pk PRIMARY KEY  (meeting_id,student_id)
-);
-```
-
-### Tabela SUBJECT_MEETINGS
-
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| subject_id | int | Primary Key<br>Foreign Key |
-| meeting_id | int | Primary Key<br>Foreign Key |
-
-Tabela posiada identyfikatory spotkań, które odbywają się w ramach danego przedmiotu wraz z jego identyfikatorem
-
-- subject_id int - wchodzi w skład klucza głównego, klucz obcy, identyfikator przedmiotu
-
-- meeting_id int - wchodzi w skład klucza głównego, klucz obcy, identyfikator spotkania
-
-``` sql
--- Table: SUBJECT_MEETINGS
-CREATE TABLE SUBJECT_MEETINGS (
-   subject_id int  NOT NULL,
-   meeting_id int  NOT NULL,
-   CONSTRAINT SUBJECT_MEETINGS_pk PRIMARY KEY  (subject_id,meeting_id)
-);
-```
-
-### Tabela MODULE_MEETINGS
-
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| module_id | int | Primary Key<br>Foreign Key |
-| meeting_id | int | Primary Key<br>Foreign Key |
-
-Tabela posiada identyfikatory spotkań, które odbywają się w ramach danego modułu kursu wraz z jego identyfikatorem
-
-- module_id int - wchodzi w skład klucza głównego, klucz obcy, identyfikator modułu
-
-- meeting_id int - wchodzi w skład klucza głównego, klucz obcy, identyfikator spotkania
-
-``` sql
--- Table: MODULE_MEETINGS
-CREATE TABLE MODULE_MEETINGS (
-   module_id int  NOT NULL,
-   meeting_id int  NOT NULL,
-   CONSTRAINT MODULE_MEETINGS_pk PRIMARY KEY  (module_id,meeting_id)
 );
 ```
 
@@ -852,35 +855,37 @@ CREATE TABLE STATIONARY_MEETINGS (
 | Table Name       | FK Column      | Referenced Table   | Referenced Column |
 |------------------|----------------|--------------------|-------------------|
 | ASYNC_MEETINGS | meeting_id | MEETINGS | meeting_id |
+| CART | product_id | PRODUCTS | product_id |
+| CART | student_id | STUDENTS | student_id |
 | COURSES | course_id | PRODUCTS | product_id |
 | EMPLOYEES | type_id | EMPLOYEE_TYPES | type_id |
 | EMPLOYEES | emploee_id | USERS | user_id |
 | WEBINARS | tutor_id | EMPLOYEES | emploee_id |
+| FEES | order_id | ORDERS | order_id |
+| FEES | product_id | PRODUCTS | product_id |
+| FEES | type_id | FEE_TYPE | type_id |
 | INTERSHIPS | study_id | STUDIES | study_id |
 | INTERSHIP_DETAILS | internship_id | INTERSHIPS | internship_id |
 | INTERSHIP_DETAILS | student_id | STUDENTS | student_id |
+| MEETINGS | module_id | MODULES | module_id |
+| MEETINGS | session_id | SESSIONS | session_id |
 | MEETING_DETAILS | meeting_id | MEETINGS | meeting_id |
 | MEETING_DETAILS | student_id | STUDENTS | student_id |
 | MEETINGS | tutor_id | EMPLOYEES | emploee_id |
-| MODULE_MEETINGS | meeting_id | MEETINGS | meeting_id |
 | MEETINGS | translator_id | EMPLOYEES | emploee_id |
 | MODULES | course_id | COURSES | course_id |
 | MODULES | tutor_id | EMPLOYEES | emploee_id |
-| MODULE_MEETINGS | module_id | MODULES | module_id |
-| ORDER_DETAILS | order_id | ORDERS | order_id |
-| PAYMENTS | order_id | ORDERS | order_id |
 | PRODUCTS_DETAILS | order_id | ORDERS | order_id |
 | PRODUCTS_DETAILS | product_id | PRODUCTS | product_id |
 | PRODUCTS_DETAILS | student_id | STUDENTS | student_id |
 | PRODUCTS | type_id | PRODUCT_TYPES | type_id |
-| ORDER_DETAILS | product_id | PRODUCTS | product_id |
 | SUBJECTS | subject_id | PRODUCTS | product_id |
+| SESSIONS | session_id | PRODUCTS | product_id |
+| SESSIONS | subject_id | SUBJECTS | subject_id |
 | STATIONARY_MEETINGS | meeting_id | MEETINGS | meeting_id |
 | ORDERS | student_id | STUDENTS | student_id |
 | STUDIES | study_id | PRODUCTS | product_id |
 | SUBJECTS | tutor_id | EMPLOYEES | emploee_id |
-| SUBJECT_MEETINGS | meeting_id | MEETINGS | meeting_id |
-| SUBJECT_MEETINGS | subject_id | SUBJECTS | subject_id |
 | SUBJECTS | study_id | STUDIES | study_id |
 | SYNC_MEETINGS | meeting_id | MEETINGS | meeting_id |
 | STUDENTS | student_id | USERS | user_id |

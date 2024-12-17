@@ -4,17 +4,21 @@ from models import User, Student, Employee, EmployeeType
 import random
 
 class UserDataGenerator:
+  
+  last_user_id = 0
+  EMPLOYEE_TYPES = {
+    1: 'headmaster',
+    2: 'administrative worker',
+    3: 'tutor',
+    4: 'translator'
+  }
+  
   def __init__(self, locale='pl_PL', country='Poland'):
     """Static Employee Types"""
-    EMPLOYEE_TYPES = {
-      1: 'headmaster',
-      2: 'administrative worker',
-      3: 'tutor',
-      4: 'translator'
-    }
+    
     
     """Static user_id"""
-    self.last_user_id = 0
+    
     
     """
     Initialize the data generator with a specific locale.
@@ -39,7 +43,7 @@ class UserDataGenerator:
       username = self.fake.user_name()
       self.generated_data['users'].append(
         User(
-          user_id=1+self.last_user_id,
+          user_id=1+UserDataGenerator.last_user_id,
           username = username,
           first_name = self.fake.first_name(),
           last_name = self.fake.last_name(),
@@ -47,7 +51,7 @@ class UserDataGenerator:
           phone = self.fake.phone_number()
         )
       )
-      self.last_user_id += 1
+      UserDataGenerator.last_user_id += 1
     
       
     return self.generated_data['users']
