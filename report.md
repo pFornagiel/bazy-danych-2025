@@ -248,7 +248,7 @@ CREATE TABLE EMPLOYEE_TYPES (
 | type_id | int |  |
 | price | money |  |
 | vacancies | int |  |
-| total_amount | int |  |
+| release | date |  |
 
 Zawiera informacje o każdym produkcie w ofercie. Produkt jest rozumiany
 jako każda z form przeprowadzania zajęć.
@@ -264,16 +264,16 @@ jako każda z form przeprowadzania zajęć.
 - vacancies int - ilość wolnych miejsc możliwych do zakupu na dane zajęcia
   - warunek: vacancies >= 0
 
-- total_amount int - liczba wszystkich dostępneych miejsc na dane zajęcia
+- release date - data udostępnienia produktu do zakupu
 
 ``` sql
 -- Table: PRODUCTS
 CREATE TABLE PRODUCTS (
-    product_id int  NOT NULL IDENTITY,
+    product_id int  NOT NULL,
     type_id int  NOT NULL,
-    price money  NULL DEFAULT 1000 CHECK (prive>=0),
-    vacancies int  NOT NULL CHECK (vacancies>=0),
-    total_amount int  NOT NULL DEFAULT 30 CHECK (total_amount>0),
+    price money  NULL DEFAULT 1000 CHECK (price>=0),
+    total_vacancies int  NOT NULL DEFAULT 30 CHECK (total_amount>0),
+    release date  NOT NULL,
     CONSTRAINT product_id PRIMARY KEY  (product_id)
 );
 ```
@@ -891,3 +891,712 @@ CREATE TABLE STATIONARY_MEETINGS (
 | STUDENTS | student_id | USERS | user_id |
 | WEBINARS | translator_id | EMPLOYEES | emploee_id |
 | WEBINARS | webinar_id | PRODUCTS | product_id |
+
+
+# Procedury
+
+## Użytkownicy
+### CreateBasicUser
+Procedura CreateBasicUser tworzy nowego użytkownika w systemie. ID użytkownika zwracane jest za pomocą @user_id.
+
+Argumenty:
+
+- @username - Nazwa użytkownika
+- @first_name - Imię użytkownika
+- @last_name - Nazwisko użytkownika
+- @email - Adres email użytkownika
+- @phone - Opcjonalny numer telefonu
+- @user_id - Zwracany ID użytkownika
+
+```sql
+CREATE PROCEDURE CreateBasicUser
+  @username VARCHAR(30),
+  @first_name NVARCHAR(30),
+  @last_name NVARCHAR(30),
+  @email VARCHAR(50),
+  @phone VARCHAR(9) = NULL,
+  @user_id INT OUTPUT
+AS
+BEGIN
+  SET NOCOUNT ON;
+  
+  BEGIN TRY
+    BEGIN TRANSACTION;
+    
+    -- Validate email format
+    IF @email NOT LIKE '%_@%.%'
+    BEGIN
+      RAISERROR('Niepoprawny format adresu email.', 16, 1);
+      RETURN;
+    END
+    
+    -- Validate phone number if provided
+    IF @phone IS NOT NULL AND (LEN(@phone) != 9 OR ISNUMERIC(@phone) = 0)
+    BEGIN
+      RAISERROR('Niepoprawny format numeru telefonu.', 16, 1);
+      RETURN;
+    END
+    
+    -- Check for existing email
+    IF EXISTS (SELECT 1 FROM USERS WHERE email = @email)
+    BEGIN
+      RAISERROR('Email został już przypisany do innego użytkownika.', 16, 1);
+      RETURN;
+    END
+    
+    -- Check for existing phone if provided
+    IF @phone IS NOT NULL AND EXISTS (SELECT 1 FROM USERS WHERE phone = @phone)
+    BEGIN
+      RAISERROR('Numer telefonu został już przypisany do innego użytkownika.', 16, 1);
+      RETURN;
+    END
+    
+    -- Insert the new user
+    INSERT INTO USERS (
+      username, 
+      first_name, 
+      last_name, 
+      email, 
+      phone
+    ) VALUES (
+      @username, 
+      @first_name, 
+      @last_name, 
+      @email, 
+      @phone
+    );
+    
+    -- Set the output parameter to the new user's ID
+    SET @user_id = SCOPE_IDENTITY();
+    
+    COMMIT TRANSACTION;
+    PRINT('Użytkownik utworzony pomyślnie.')
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END
+```
+
+### CreateStudent
+Procedura CreateStudent tworzy nowego studenta w systemie. ID studenta jest zwracane za pomocą @student_id
+
+Argumenty:
+
+@username - Nazwa użytkownika
+@first_name - Imię studenta
+@last_name - Nazwisko studenta
+@email - Adres email studenta
+@phone - Opcjonalny numer telefonu
+@street - Ulica zamieszkania
+@city - Miasto zamieszkania
+@postal_code - Kod pocztowy
+@country - Kraj zamieszkania
+@student_id - Wyjściowy identyfikator utworzonego studenta
+
+```sql
+CREATE PROCEDURE CreateStudent
+  @username VARCHAR(30),
+  @first_name NVARCHAR(30),
+  @last_name NVARCHAR(30),
+  @email VARCHAR(50),
+  @phone VARCHAR(9) = NULL,
+  @street VARCHAR(30),
+  @city VARCHAR(30),
+  @postal_code VARCHAR(30),
+  @country VARCHAR(30),
+  @user_id INT OUTPUT
+AS
+BEGIN
+  SET NOCOUNT ON;
+  
+  BEGIN TRY
+    BEGIN TRANSACTION;
+    
+    -- Create basic user first
+    DECLARE @id INT;
+    EXEC CreateBasicUser 
+      @username = @username,
+      @first_name = @first_name,
+      @last_name = @last_name,
+      @email = @email,
+      @phone = @phone,
+      @user_id = @id OUTPUT;
+    
+    -- Insert student details
+    INSERT INTO STUDENTS (
+      student_id,
+      street,
+      city,
+      postal_code,
+      country
+    ) VALUES (
+      @user_id,
+      @street,
+      @city,
+      @postal_code,
+      @country
+    );
+    
+    COMMIT TRANSACTION;
+    PRINT("Student utworzony pomyślnie")
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END
+```
+
+### CreateEmployee
+Procedura CreateEmployee tworzy nowego pracownika w systemie. ID pracownika jest zwracane za pomocą @employee_id
+
+Argumenty:
+
+- @username - Nazwa użytkownika
+- @first_name - Imię pracownika
+- @last_name - Nazwisko pracownika
+- @email - Adres email pracownika
+- @phone - Opcjonalny numer telefonu
+- @employee_type_id - Identyfikator typu pracownika
+- @hire_date - Opcjonalna data zatrudnienia
+- @birth_date - Opcjonalna data urodzenia
+- @employee_id - Zwracany ID pracownika
+
+
+```sql
+CREATE PROCEDURE CreateEmployee
+  @username VARCHAR(30),
+  @first_name NVARCHAR(30),
+  @last_name NVARCHAR(30),
+  @email VARCHAR(50),
+  @phone VARCHAR(9) = NULL,
+  @employee_type_id INT,
+  @hire_date DATE = NULL,
+  @birth_date DATE = NULL,
+  @employee_id INT OUTPUT
+AS
+BEGIN
+  SET NOCOUNT ON;
+  
+  BEGIN TRY
+    BEGIN TRANSACTION;
+    
+    -- Validate employee type exists
+    IF NOT EXISTS (SELECT 1 FROM EMPLOYEE_TYPES WHERE type_id = @employee_type_id)
+    BEGIN
+      RAISERROR('Nieprawidłowy typ pracownika.', 16, 1);
+      RETURN;
+    END
+    
+    -- Create basic user first
+    EXEC CreateBasicUser 
+      @username = @username,
+      @first_name = @first_name,
+      @last_name = @last_name,
+      @email = @email,
+      @phone = @phone,
+      @employee_id = @user_id OUTPUT;
+    
+    -- Insert employee details
+    INSERT INTO EMPLOYEES (
+      emploee_id,
+      type_id,
+      hire_date,
+      birth_date
+    ) VALUES (
+      @user_id,
+      @employee_type_id,
+      -- Check for NULL value
+      COALESCE(@hire_date, GETDATE()),
+      @birth_date
+    );
+    
+    COMMIT TRANSACTION;
+    PRINT("Pracownik utworzony pomyślnie.")
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END
+```
+
+## Kursy
+### CreateCourse
+Procedura `CreateCourse` tworzy nowy kurs na podstawie podanych danych oraz zwraca jego ID
+poprzez argument @course_id.
+Argumenty:
+- @course_name - Nazwa kursu
+- @course_description - Opis kursu
+- @product_price MONEY - Cena kursu
+- @vacancies - Ilość wolnych miejsc podczas zapisu na kurs
+- @course_id - Zwracane ID kursu 
+
+```sql
+CREATE PROCEDURE [dbo].[CreateCourse]
+  @course_name NVARCHAR(50),
+  @course_description TEXT = NULL,
+  @product_price MONEY = 0,
+  @vacancies INT,
+  @release DATE,
+  @course_id INT OUTPUT
+AS
+BEGIN
+  BEGIN TRANSACTION;
+
+  BEGIN TRY
+    -- Add the product
+    INSERT INTO PRODUCTS (type_id, price, total_vacancies, release)
+    VALUES (3, @product_price, @vacancies, @release);
+    -- Get created product ID, return it later
+    SET @course_id = SCOPE_IDENTITY();
+
+    -- Add the course
+    INSERT INTO COURSES (course_id, course_name, course_description)
+    VALUES (@course_id, @course_name, @course_description);
+
+    COMMIT TRANSACTION;
+    PRINT 'Kurs dodany pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH;
+END;
+```
+
+
+### CreateModule
+Procedura `CreateModule` tworzy nowy moduł dla istniejącego kursu. Procedura sprawdza poprawność wprowadzanych danych i zwraca identyfikator nowo utworzonego modułu. ID modułu zwracane jest przez  @module_id.
+
+Argumenty:
+- @course_id - Identyfikator istniejącego kursu, do którego zostanie dodany moduł
+- @tutor_id - Identyfikator prowadzącego (nauczyciela) przypisanego do modułu
+- @module_id - Zwracane ID modułu
+
+```sql
+CREATE PROCEDURE createModule
+  @course_id INT,
+  @tutor_id INT,
+  @module_id INT OUTPUT
+AS
+BEGIN
+  -- Validate that the course exists
+  IF NOT EXISTS (SELECT 1 FROM COURSES WHERE course_id = @course_id)
+  BEGIN
+    RAISERROR('Kurs nie istnieje.', 16, 1);
+    RETURN;
+  END
+
+  -- Validate that the tutor exists
+  IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE emploee_id = @tutor_id)
+  BEGIN
+    RAISERROR('Tutor nie istnieje.', 16, 1);
+    RETURN;
+  END
+
+  -- Insert the new module
+  INSERT INTO MODULES (course_id, tutor_id)
+  VALUES (@course_id, @tutor_id);
+
+  -- Return the newly inserted module's ID
+  SET @module_id = SCOPE_IDENTITY();
+  PRINT("Moduł dodany pomyślnie.")
+END
+```
+
+### CreateModuleStationaryMeeting
+Procedura CreateModuleStationaryMeeting tworzy nowe spotkanie stacjonarne dla modułu kursu. ID spotkania zwracane jest przez @meeting_id
+
+Argumenty:
+
+- @module_id - Identyfikator modułu kursu
+- @tutor_id - Identyfikator prowadzącego
+- @translator_id - Opcjonalny identyfikator tłumacza
+- @meeting_name - Nazwa spotkania
+- @term - Termin spotkania
+- @duration - Czas trwania spotkania (domyślnie 1h 30min)
+- @language - Język spotkania (domyślnie polski)
+- @classroom - Numer sali, w której odbędzie się spotkanie
+- @meeting_id - Zwracane ID spotkania
+
+```sql
+-- Stworzenie Stationary Meetingu dla modułu
+CREATE PROCEDURE CreateModuleStationaryMeeting
+  @module_id INT,
+  @tutor_id INT,
+  @translator_id INT = NULL,
+  @meeting_name VARCHAR(30),
+  @term DATETIME,
+  @duration TIME(0) = '01:30:00',
+  @language VARCHAR(30) = 'POLISH',
+  @classroom VARCHAR(10),
+  @meeting_id INT OUTPUT
+AS
+BEGIN
+  SET NOCOUNT ON;
+  
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate module exists
+    IF NOT EXISTS (SELECT 1 FROM MODULES WHERE module_id = @module_id)
+    BEGIN
+      RAISERROR('Moduł o podanym ID nie istnieje.', 16, 1);
+      RETURN;
+    END
+
+    -- Validate tutor exists
+    IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE emploee_id = @tutor_id)
+    BEGIN
+      RAISERROR('Tutor o podanym ID nie istnieje.', 16, 1);
+      RETURN;
+    END
+
+    -- Insert meeting
+    INSERT INTO MEETINGS (
+      module_id, 
+      tutor_id, 
+      translator_id, 
+      meeting_name, 
+      term, 
+      duration, 
+      language
+    ) VALUES (
+      @module_id, 
+      @tutor_id, 
+      @translator_id, 
+      @meeting_name, 
+      @term, 
+      @duration, 
+      @language
+    );
+
+    -- Get the newly created meeting ID
+    SET @meeting_id INT = SCOPE_IDENTITY();
+
+    -- Insert stationary meeting details
+    INSERT INTO STATIONARY_MEETINGS (
+      meeting_id, 
+      classroom
+    ) VALUES (
+      @meeting_id, 
+      @classroom
+    );
+
+    COMMIT TRANSACTION;
+    PRINT("Spotkanie dodane pomyślnie")
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END
+```
+
+### CreateModuleSyncMeeting
+Procedura CreateModuleSyncMeeting tworzy nowe spotkanie synchroniczne (na żywo) dla modułu kursu. ID spotkania zwracane jest za pomocą @meeting_id.
+
+Argumenty:
+- @module_id - Identyfikator modułu kursu
+- @tutor_id - Identyfikator prowadzącego
+- @translator_id - Opcjonalny identyfikator tłumacza
+- @meeting_name - Nazwa spotkania
+- @term - Termin spotkania
+- @duration - Czas trwania spotkania (domyślnie 1h 30min)
+- @language - Język spotkania (domyślnie polski)
+- @meeting_url - Link do spotkania online
+- @video_url - Opcjonalny link do nagrania wideo
+- @meeting_id - Zwracane ID spotkania 
+
+```sql
+CREATE PROCEDURE CreateModuleSyncMeeting
+    @module_id INT,
+    @tutor_id INT,
+    @translator_id INT = NULL,
+    @meeting_name VARCHAR(30),
+    @term DATETIME,
+    @duration TIME(0) = '01:30:00',
+    @language VARCHAR(30) = 'POLISH',
+    @meeting_url TEXT,
+    @video_url TEXT = NULL,
+    @meeting_id INT OUTPUT
+AS
+BEGIN
+  SET NOCOUNT ON;
+  
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate module exists
+    IF NOT EXISTS (SELECT 1 FROM MODULES WHERE module_id = @module_id)
+    BEGIN
+      RAISERROR('Module does not exist.', 16, 1);
+      RETURN;
+    END
+
+    -- Validate tutor exists
+    IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE emploee_id = @tutor_id)
+    BEGIN
+      RAISERROR('Tutor does not exist.', 16, 1);
+      RETURN;
+    END
+
+    -- Insert meeting
+    INSERT INTO MEETINGS (
+      module_id, 
+      tutor_id, 
+      translator_id, 
+      meeting_name, 
+      term, 
+      duration, 
+      language
+    ) VALUES (
+      @module_id, 
+      @tutor_id, 
+      @translator_id, 
+      @meeting_name, 
+      @term, 
+      @duration, 
+      @language
+    );
+
+    -- Get the newly created meeting ID
+    SET @meeting_id INT = SCOPE_IDENTITY();
+
+    -- Insert sync meeting details
+    INSERT INTO SYNC_MEETINGS (
+      meeting_id, 
+      video_url, 
+      meeting_url
+    ) VALUES (
+      @meeting_id, 
+      @video_url, 
+      @meeting_url
+    );
+
+    COMMIT TRANSACTION;
+    PRINT "Spoktanie synchroniczne utworzone pomyślnie."
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+        ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END
+```
+
+### CreateModuleAsyncMeeting
+Procedura CreateModuleAsyncMeeting tworzy nowe spotkanie asynchroniczne dla modułu kursu. ID spotkania zwracane jest za pomocą @meeting_id.
+ 
+Argumenty:
+
+- @module_id - Identyfikator modułu kursu
+- @tutor_id - Identyfikator prowadzącego
+- @translator_id - Opcjonalny identyfikator tłumacza
+- @meeting_name - Nazwa spotkania
+- @term - Termin spotkania
+- @duration - Czas trwania spotkania (domyślnie 1h 30min)
+- @language - Język spotkania (domyślnie polski)
+- @meeting_url - Link do materiałów 
+- @meeting_id - Zwracane ID spotkania
+
+```sql
+CREATE PROCEDURE CreateModuleAsyncMeeting
+  @module_id INT,
+  @tutor_id INT,
+  @translator_id INT = NULL,
+  @meeting_name VARCHAR(30),
+  @term DATETIME,
+  @duration TIME(0) = '01:30:00',
+  @language VARCHAR(30) = 'POLISH',
+  @meeting_url TEXT,
+  @meeting_id INT OUTPUT
+AS
+BEGIN
+  SET NOCOUNT ON;
+  
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate module exists
+    IF NOT EXISTS (SELECT 1 FROM MODULES WHERE module_id = @module_id)
+    BEGIN
+      RAISERROR('Module does not exist.', 16, 1);
+      RETURN;
+    END
+
+    -- Validate tutor exists
+    IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE emploee_id = @tutor_id)
+    BEGIN
+      RAISERROR('Tutor does not exist.', 16, 1);
+      RETURN;
+    END
+
+    -- Insert meeting
+    INSERT INTO MEETINGS (
+      module_id, 
+      tutor_id, 
+      translator_id, 
+      meeting_name, 
+      term, 
+      duration, 
+      language
+    ) VALUES (
+      @module_id, 
+      @tutor_id, 
+      @translator_id, 
+      @meeting_name, 
+      @term, 
+      @duration, 
+      @language
+    );
+
+    -- Get the newly created meeting ID
+    SET @meeting_id INT = SCOPE_IDENTITY();
+
+    -- Insert async meeting details
+    INSERT INTO ASYNC_MEETINGS (
+      meeting_id, 
+      meeting_url
+    ) VALUES (
+      @meeting_id, 
+      @meeting_url
+    );
+
+    COMMIT TRANSACTION;
+    PRINT("Spotkanie asynchroniczne utworzone pomyślnie.")
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END
+```
+
+## Webinary
+### CreateWebinar
+Procedura CreateWebinar tworzy nowy webinar w systemie. ID webinaru jest zwracane za pomocą @webinar_id
+
+Argumenty:
+
+- @tutor_id - Identyfikator prowadzącego webinar
+- @translator_id - Opcjonalny identyfikator tłumacza
+- @webinar_name - Nazwa webinaru
+- @webinar_description - Opcjonalny opis webinaru
+- @video_url - Opcjonalny link do nagrania wideo
+- @webinar_duration - Czas trwania webinaru (domyślnie 1h 30min)
+- @publish_date - Data publikacji webinaru (domyślnie aktualna data)
+- @language - Język webinaru (domyślnie polski)
+- @product_price - Cena webinaru (domyślnie 0)
+- @vacancies - Liczba dostępnych miejsc (domyślnie 30)
+- @webinar_id - Wyjściowy identyfikator utworzonego webinaru
+
+```sql
+CREATE PROCEDURE CreateWebinar
+  @tutor_id INT,
+  @translator_id INT = NULL,
+  @webinar_name VARCHAR(50),
+  @webinar_description TEXT = NULL,
+  @video_url TEXT = NULL,
+  @webinar_duration TIME(0) = '01:30:00',
+  @publish_date DATETIME = NULL,
+  @language VARCHAR(50) = 'POLISH',
+  @product_price MONEY = 0,
+  @vacancies INT = 30,
+  @release INT,
+  @webinar_id INT OUTPUT
+AS
+BEGIN
+  SET NOCOUNT ON;
+  
+  BEGIN TRY
+    BEGIN TRANSACTION;
+    
+    -- Validate tutor exists
+    IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE emploee_id = @tutor_id)
+    BEGIN
+      RAISERROR('Tutor nie istnieje.', 16, 1);
+      RETURN;
+    END
+    
+    -- Validate translator exists if provided
+    IF @translator_id IS NOT NULL AND 
+       NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE emploee_id = @translator_id)
+    BEGIN
+      RAISERROR('Tłumacz nie istnieje.', 16, 1);
+      RETURN;
+    END
+    
+    -- Insert product first (webinars are products)
+    DECLARE @product_id INT;
+    INSERT INTO PRODUCTS (
+      type_id,  -- Assuming type_id 4 is for webinars
+      price,
+      vacancies,
+      release
+    ) VALUES (
+      4,  
+      @product_price,
+      @vacancies,
+      @release
+    );
+    
+    SET @product_id = SCOPE_IDENTITY();
+    
+    -- Insert webinar details
+    INSERT INTO WEBINARS (
+      webinar_id,
+      tutor_id,
+      translator_id,
+      webinar_name,
+      webinar_description,
+      video_url,
+      webinar_duration,
+      publish_date,
+      language
+    ) VALUES (
+      @product_id,
+      @tutor_id,
+      @translator_id,
+      @webinar_name,
+      @webinar_description,
+      @video_url,
+      @webinar_duration,
+      COALESCE(@publish_date, GETDATE()),
+      @language
+    );
+    
+    -- Set the output parameter to the new webinar's ID
+    SET @webinar_id = @product_id;
+    
+    COMMIT TRANSACTION;
+    
+    PRINT("Webinar utworzono pomyślnie.")
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END
+```
+
+## Studia
+### CreateStudy
+Procedura CreateStudy tworzy nowe studia w systemie. ID studium jest zwracane za pomocą @study_id
+
+Argumenty:
+
+- @study_name - Nazwa studiów
+- @study_description - Opcjonalny opis studiów
+- @product_price - Cena studiów (domyślnie 1000)
+- @vacancies - Liczba dostępnych miejsc (domyślnie 30)
+- @study_id - Wyjściowy identyfikator utworzonych studiów
