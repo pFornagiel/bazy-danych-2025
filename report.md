@@ -9,23 +9,26 @@
 
 **Link do repozytorium git**: https://github.com/pFornagiel/bazy-danych-2025
 
---- 
+---
 
 ### Założenia dotyczące projektu:
- - W zakres studiów wchodzą pojedyńcze przedmioty (studium), które mają przypisane spotkania
+
+- W zakres studiów wchodzą pojedyńcze przedmioty (studium), które mają przypisane spotkania
 
 ---
 
-# 1.	Wymagania i funkcje systemu
+# 1. Wymagania i funkcje systemu
 
 # Opis Funkcjonalności Systemu
 
 ## Funkcje Systemu
+
 - Weryfikacja limitu zapisanych osób i blokowanie jego przekroczenia
 - Blokowanie zapisu / dostępu do treści po upływie terminu ważności
 - Blokowanie możliwości zapisania się na te same zajęcia wiele razy
 
 ## Użytkownicy
+
 - Studenci (użytkownicy zalogowani)
 - Goście (użytkownicy niezalogowani)
 - Prowadzący zajęcia
@@ -34,9 +37,10 @@
 - Dziekanat
 - Tłumacz
 
-## Funkcje poszczególnych użytkowników 
+## Funkcje poszczególnych użytkowników
 
 ### Studenci (użytkownicy zalogowani, rozszerzenie możliwości gości)
+
 - możliwość zapisania się na kurs
 - zapis na praktyki
 - usunięcie konta
@@ -50,21 +54,25 @@
 - opłacenie zamówienia
 
 ### Goście (użytkownicy niezalogowani)
+
 - dostęp do wybranych webinarów
 - przegląd dostępnych webinarów / studiów / kursów
 - założenie konta
 
 ### Prowadzący zajęcia
+
 - modyfikacja terminu zajęć
-- modyfikacja udostępnionych zasobów 
+- modyfikacja udostępnionych zasobów
 - sprawdzanie obecności dla każdych zajęć
 - wyświetlenie wykazu prowadzonych zajęć
 
 ### Administrator zasobów
+
 - dodawanie / usuwanie webinarów, kursów i studiów
 - dodawanie / usuwanie materiałów
 
 ### Dyrektor
+
 - dodawanie / usuwanie pracowników
 - modyfikacja dostępu do kursu
 - modyfikacja opłat za kurs
@@ -72,6 +80,7 @@
 - przegląd wszelkich danych dotyczących realizowanych zajęć
 
 ### Dziekanat
+
 - tworzenie dyplomów potwierdzających ukończenie kursu / studium
 - dodawanie / modyfikacja praktyk
 - modyfikacja webinarów / kursów / studiów / przedmiotów
@@ -93,45 +102,49 @@
   - Tworzenie list kolizji czasowych wśród użytkowników
 
 ### Tłumacz
+
 - Dostęp do zasobów poszczególnych kursów / studiów i webinarów
 - Dodawanie przetłumaczonych zasobów do kursów /studiów / webinarów
 
 # Schemat bazy danych
+
 ![Opis alternatywny](schemat.png)
 
 # Opis tabel
+
 ## Kategoria Users
+
 ### Tabela Users
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| user_id | int | Primary Key |
-| username | varchar(30) |  |
-| first_name | nvarchar(30) |  |
-| last_name | nvarchar(30) |  |
-| email | varchar(50) |  |
-| phone | varchar(9) |  |
-| CONSTRAINT | unique_email |  |
-| CONSTRAINT | unique_phone |  |
+| Column Name | Data Type    | Properties  |
+| ----------- | ------------ | ----------- |
+| user_id     | int          | Primary Key |
+| username    | varchar(30)  |             |
+| first_name  | nvarchar(30) |             |
+| last_name   | nvarchar(30) |             |
+| email       | varchar(50)  |             |
+| phone       | varchar(9)   |             |
+| CONSTRAINT  | unique_email |             |
+| CONSTRAINT  | unique_phone |             |
 
 Zawiera podstawowe informacje o każdym użytkowniku bazy.
 
-- *user_id* int - klucz główny, identifikuje użytkownika
+- _user_id_ int - klucz główny, identifikuje użytkownika
 
-- username varchar(30)  - nazwa użytkownika w bazie danych
+- username varchar(30) - nazwa użytkownika w bazie danych
 
 - first_name nvarchar(30) - imię użytkownika
 
 - last_name nvarchar(30) - nazwisko użytkownika
 
 - email varchar(50) - email użytkownika
-  - warunek: (mail LIKE '%_@%.%')
+
+  - warunek: (mail LIKE '%\_@%.%')
 
 - phone varchar(9) nullable - numer telefonu użytkownika
   - warunek: LEN(Phone) = 15 AND ISNUMERIC(Phone) = 1
 
-
-``` sql
+```sql
 -- Table: USERS
 CREATE TABLE USERS (
     user_id int  NOT NULL IDENTITY,
@@ -148,18 +161,17 @@ CREATE TABLE USERS (
 
 ### Tabela Students
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| student_id | int | Primary Key<br>Foreign Key |
-| street | varchar(30) |  |
-| city | varchar(30) |  |
-| postal_code | varchar(30) |  |
-| country | varchar(30) |  |
-
+| Column Name | Data Type   | Properties                 |
+| ----------- | ----------- | -------------------------- |
+| student_id  | int         | Primary Key<br>Foreign Key |
+| street      | varchar(30) |                            |
+| city        | varchar(30) |                            |
+| postal_code | varchar(30) |                            |
+| country     | varchar(30) |                            |
 
 Zawiera infromacje specyficzne dla studenta
 
-- *student_id* int - klucz główny, klucz obcy, identyfikuje studenta
+- _student_id_ int - klucz główny, klucz obcy, identyfikuje studenta
 
 - street varchar(30) - ulica, na której mieszka studenta
 
@@ -167,9 +179,9 @@ Zawiera infromacje specyficzne dla studenta
 
 - postal_code varchar(30) - kod pocztowy studenta
 
-- country varchar(30)  - kraj pochodzenia studenta
+- country varchar(30) - kraj pochodzenia studenta
 
-``` sql
+```sql
 -- Table: STUDENTS
 CREATE TABLE STUDENTS (
    student_id int  NOT NULL,
@@ -183,26 +195,27 @@ CREATE TABLE STUDENTS (
 
 ### Tabela EMPLOYEES
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| emploee_id | int | Primary Key<br>Foreign Key |
-| type_id | int |  |
-| hire_date | date |  |
-| birth_date | date |  |
+| Column Name | Data Type | Properties                 |
+| ----------- | --------- | -------------------------- |
+| emploee_id  | int       | Primary Key<br>Foreign Key |
+| type_id     | int       |                            |
+| hire_date   | date      |                            |
+| birth_date  | date      |                            |
 
 Zawiera szczególne informacje dla pracowników (dyrektora, pracownika dziekanatu, nauczyciela, tłumacza)
 
-- *emploee_id* int - klucz główny, klucz obcy, identyfikator pracownika
+- _emploee_id_ int - klucz główny, klucz obcy, identyfikator pracownika
 
 - type_id int - sklucz obcy, typ pracownika (opisany poniżej)
 
 - hire_date date nullable - data zatrudnienia
+
   - DEFAULT current_date
 
 - birth_date date nullable - data urodzin pracownika
   - DEFAULT current_date
 
-``` sql
+```sql
 -- Table: EMPLOYEES
 CREATE TABLE EMPLOYEES (
     emploee_id int  NOT NULL,
@@ -215,21 +228,21 @@ CREATE TABLE EMPLOYEES (
 
 ### Tabela EMPLOYEES_TYPE
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| type_id | int | Primary Key |
-| type_name | varchar(30) |  |
+| Column Name | Data Type   | Properties  |
+| ----------- | ----------- | ----------- |
+| type_id     | int         | Primary Key |
+| type_name   | varchar(30) |             |
 
 Zawiera opis typów pracowników
 
-- *type_id* int - klucz główny, typ pracownika <br>
-1 - headmaster <br>
-2 - administration worker <br>
-3 - tutor <br>
-4 - translator <br>
+- _type_id_ int - klucz główny, typ pracownika <br>
+  1 - headmaster <br>
+  2 - administration worker <br>
+  3 - tutor <br>
+  4 - translator <br>
 - type_name varchar(30) - nazwa pełnionej funkcji
 
-``` sql
+```sql
 -- Table: EMPLOYEE_TYPES
 CREATE TABLE EMPLOYEE_TYPES (
     type_id int  NOT NULL IDENTITY,
@@ -242,31 +255,33 @@ CREATE TABLE EMPLOYEE_TYPES (
 
 ### Tabela Products
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| product_id | int | Primary Key<br>Foreign Key |
-| type_id | int |  |
-| price | money |  |
-| vacancies | int |  |
-| total_amount | int |  |
+| Column Name  | Data Type | Properties                 |
+| ------------ | --------- | -------------------------- |
+| product_id   | int       | Primary Key<br>Foreign Key |
+| type_id      | int       |                            |
+| price        | money     |                            |
+| vacancies    | int       |                            |
+| total_amount | int       |                            |
 
 Zawiera informacje o każdym produkcie w ofercie. Produkt jest rozumiany
 jako każda z form przeprowadzania zajęć.
 
-- *product_id* int - klucz główny, identyfikuje produkt
+- _product_id_ int - klucz główny, identyfikuje produkt
 
 - type_id int - klucz obcy, numer kategorii produktu
 
 - price money nullable - cena za produkt
+
   - warunek: prive >= 0
   - DEFAULT 1000
 
 - vacancies int - ilość wolnych miejsc możliwych do zakupu na dane zajęcia
+
   - warunek: vacancies >= 0
 
 - total_amount int - liczba wszystkich dostępneych miejsc na dane zajęcia
 
-``` sql
+```sql
 -- Table: PRODUCTS
 CREATE TABLE PRODUCTS (
     product_id int  NOT NULL IDENTITY,
@@ -280,11 +295,11 @@ CREATE TABLE PRODUCTS (
 
 ### Tabela PRODUCTS_DETAILS
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| student_id | int | Primary Key<br>Foreign Key |
-| product_id | int | Primary Key<br>Foreign Key |
-| order_id | int |  |
+| Column Name | Data Type | Properties                 |
+| ----------- | --------- | -------------------------- |
+| student_id  | int       | Primary Key<br>Foreign Key |
+| product_id  | int       | Primary Key<br>Foreign Key |
+| order_id    | int       |                            |
 
 Zawiera informacje o studentach zapisanych na dane zajęcia oraz o numerze zamówienia z jakiego został kupiony dostęp do zajęć
 
@@ -292,8 +307,7 @@ Zawiera informacje o studentach zapisanych na dane zajęcia oraz o numerze zamó
 - product_id int - wchodzi w skład klucza głównego, klucz obcy, identifukuje produkt
 - order_id int - klucz obcy, identifikuje zamówienie z jakiego został kupiony dostęp do zajęć
 
-
-``` sql
+```sql
 -- Table: PRODUCTS_DETAILS
 CREATE TABLE PRODUCTS_DETAILS (
     student_id int  NOT NULL,
@@ -305,21 +319,21 @@ CREATE TABLE PRODUCTS_DETAILS (
 
 ### Tabela PRODUCT_TYPES
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| type_id | int | Primary Key |
-| type_name | varchar(30) |  |
+| Column Name | Data Type   | Properties  |
+| ----------- | ----------- | ----------- |
+| type_id     | int         | Primary Key |
+| type_name   | varchar(30) |             |
 
 Zawiera informacje o typach produktów
 
 - type_id int - klucz główny, identyfikuje typ:<br>
-1- study, <br>
-2 - subject,<br>
-3 - course,<br>
- 4 - webinar
+  1- study, <br>
+  2 - subject,<br>
+  3 - course,<br>
+  4 - webinar
 - type_name varchar(30) - nazwa typu
 
-``` sql
+```sql
 -- Table: PRODUCT_TYPES
 CREATE TABLE PRODUCT_TYPES (
     type_id int  NOT NULL IDENTITY,
@@ -330,10 +344,10 @@ CREATE TABLE PRODUCT_TYPES (
 
 ### Tabela CART
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| student_id | int | Primary Key<br>Foreign Key |
-| product_id | int |  |
+| Column Name | Data Type | Properties                 |
+| ----------- | --------- | -------------------------- |
+| student_id  | int       | Primary Key<br>Foreign Key |
+| product_id  | int       |                            |
 
 Zawiera informacje o koszyku użytkownika
 
@@ -354,11 +368,11 @@ CREATE TABLE CART (
 
 ### Tabela ORDERS
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| order_id | int | Primary Key<br>Foreign Key |
-| student_id | int |  |
-| order_date | date |  |
+| Column Name | Data Type | Properties                 |
+| ----------- | --------- | -------------------------- |
+| order_id    | int       | Primary Key<br>Foreign Key |
+| student_id  | int       |                            |
+| order_date  | date      |                            |
 
 Zawiera informacje na temat zamówienia pod danym identyfikatorem
 
@@ -368,7 +382,7 @@ Zawiera informacje na temat zamówienia pod danym identyfikatorem
 
 - order_date datetime nullable - data złożenia zamówienia
 
-``` sql
+```sql
 -- Table: ORDERS
 CREATE TABLE ORDERS (
     order_id int  NOT NULL IDENTITY,
@@ -380,15 +394,15 @@ CREATE TABLE ORDERS (
 
 ### Tabela FEES
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| fee_id | int | Primary Key<br>Foreign Key |
-| due_date | date |  |
-| payment_date | date |  |
-| fee_value | money |  |
-| type_id | int |  |
-| order_id | int |  |
-| product_id | int |  |
+| Column Name  | Data Type | Properties                 |
+| ------------ | --------- | -------------------------- |
+| fee_id       | int       | Primary Key<br>Foreign Key |
+| due_date     | date      |                            |
+| payment_date | date      |                            |
+| fee_value    | money     |                            |
+| type_id      | int       |                            |
+| order_id     | int       |                            |
+| product_id   | int       |                            |
 
 Zawiera informacje o płatności za dany produkt dołączonej do danego zamówienia
 
@@ -399,6 +413,7 @@ Zawiera informacje o płatności za dany produkt dołączonej do danego zamówie
 - payment_date date nullable - data dokonania płatności
 
 - fee_value money - cena płatności
+
   - warunek: fee_value >= 0
 
 - type_id int - klucz obcy, identyfikator typu płatności
@@ -407,7 +422,7 @@ Zawiera informacje o płatności za dany produkt dołączonej do danego zamówie
 
 - product_id int, klucz obcy, identyfikator produktu
 
-``` sql
+```sql
 -- Table: PAYMENTS
 CREATE TABLE FEES (
     fee_id int  NOT NULL IDENTITY,
@@ -423,10 +438,10 @@ CREATE TABLE FEES (
 
 ### Tabela FEE_TYPE
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| type_id | int | Primary Key |
-| type_name | nvarchar(30) |  |
+| Column Name | Data Type    | Properties  |
+| ----------- | ------------ | ----------- |
+| type_id     | int          | Primary Key |
+| type_name   | nvarchar(30) |             |
 
 Zawiera informacje o możliwych typach płatności
 
@@ -446,30 +461,30 @@ CREATE TABLE FEE_TYPE (
 
 ### Tabela Webinars
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| webinar_id | int | Primary Key<br>Foreign Key |
-| tutor_id | int |  |
-| translator_id | int |  |
-| webinar_name | varchar(50) |  |
-| webinar_description | text |  |
-| meeting_url | text |  |
-| video_url | text |  |
-| webinar_duration | time(0) |  |
-| publish_date | datetime |  |
-| language | varchar(50) |  |
+| Column Name         | Data Type   | Properties                 |
+| ------------------- | ----------- | -------------------------- |
+| webinar_id          | int         | Primary Key<br>Foreign Key |
+| tutor_id            | int         |                            |
+| translator_id       | int         |                            |
+| webinar_name        | varchar(50) |                            |
+| webinar_description | text        |                            |
+| meeting_url         | text        |                            |
+| video_url           | text        |                            |
+| webinar_duration    | time(0)     |                            |
+| publish_date        | datetime    |                            |
+| language            | varchar(50) |                            |
 
 Zawiera informacje specyfinczne dla każdego produktu będącego webinarem
 
-- webinar_id int - klucz główny, klucz obcy, identifikator webinaru 
+- webinar_id int - klucz główny, klucz obcy, identifikator webinaru
 
 - tutor_id int - klucz obcy, identifikator nauczyciela
 
 - translator_id int nullable - klucz obcy, identifikator tłumacza
 
-- webinar_name varchar(50) - nazwa webinaru 
+- webinar_name varchar(50) - nazwa webinaru
 
-- webinar_description text nullable - opis webinaru 
+- webinar_description text nullable - opis webinaru
 
 - meeting_url text nullable - link do webinaru na żywo
 
@@ -486,7 +501,7 @@ Zawiera informacje specyfinczne dla każdego produktu będącego webinarem
 - language varchar(50) - język w jakim był prowadzony webinar
   - DEFAULT 'POLISH'
 
-``` sql
+```sql
 -- Table: WEBINARS
 CREATE TABLE WEBINARS (
    webinar_id int  NOT NULL,
@@ -506,11 +521,11 @@ CREATE TABLE WEBINARS (
 
 ### Tabela COURSES
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| course_id | int | Primary Key<br>Foreign Key |
-| course_name | nvarchar(50) |  |
-| course_description | text |  |
+| Column Name        | Data Type    | Properties                 |
+| ------------------ | ------------ | -------------------------- |
+| course_id          | int          | Primary Key<br>Foreign Key |
+| course_name        | nvarchar(50) |                            |
+| course_description | text         |                            |
 
 Zawiera informacje o produktach, które są kursami
 
@@ -520,7 +535,7 @@ Zawiera informacje o produktach, które są kursami
 
 - course_description text nullable - opis kursu
 
-``` sql
+```sql
 -- Table: COURSES
 CREATE TABLE COURSES (
     course_id int  NOT NULL,
@@ -532,13 +547,13 @@ CREATE TABLE COURSES (
 
 ### Tabela MODULES
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| module_id | int | Primary Key<br>Foreign Key |
-| course_id | int |  |
-| tutor_id | int |  |
-| module_name | int |  |
-| module_description | int |  |
+| Column Name        | Data Type | Properties                 |
+| ------------------ | --------- | -------------------------- |
+| module_id          | int       | Primary Key<br>Foreign Key |
+| course_id          | int       |                            |
+| tutor_id           | int       |                            |
+| module_name        | int       |                            |
+| module_description | int       |                            |
 
 Zawiera szczegółowe informacje dla każdego modułu kursu
 
@@ -552,7 +567,7 @@ Zawiera szczegółowe informacje dla każdego modułu kursu
 
 - module_description - opis modułu
 
-``` SQL
+```SQL
 -- Table: MODULES
 CREATE TABLE MODULES (
     module_id int  NOT NULL IDENTITY,
@@ -566,11 +581,11 @@ CREATE TABLE MODULES (
 
 ### Tabela STUDIES
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| study_id | int | Primary Key<br>Foreign Key |
-| study_name | nvarchar(50) |  |
-| study_description | text |  |
+| Column Name       | Data Type    | Properties                 |
+| ----------------- | ------------ | -------------------------- |
+| study_id          | int          | Primary Key<br>Foreign Key |
+| study_name        | nvarchar(50) |                            |
+| study_description | text         |                            |
 
 Zawiera ogólne informacje o danych studiach
 
@@ -580,7 +595,7 @@ Zawiera ogólne informacje o danych studiach
 
 - study_description text nullable - opis studium
 
-``` sql
+```sql
 -- Table: STUDIES
 CREATE TABLE STUDIES (
     study_id int  NOT NULL,
@@ -592,13 +607,13 @@ CREATE TABLE STUDIES (
 
 ### Tabela SUBJECTS
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| subject_id | int | Primary Key<br>Foreign Key |
-| study_id | int |  |
-| tutor_id | int |  |
-| subject_name | varchar(50) |  |
-| subject_description | text |  |
+| Column Name         | Data Type   | Properties                 |
+| ------------------- | ----------- | -------------------------- |
+| subject_id          | int         | Primary Key<br>Foreign Key |
+| study_id            | int         |                            |
+| tutor_id            | int         |                            |
+| subject_name        | varchar(50) |                            |
+| subject_description | text        |                            |
 
 Zawiera informacje szczegółowe inforamcje dotyczące przedmiotow
 
@@ -612,8 +627,7 @@ Zawiera informacje szczegółowe inforamcje dotyczące przedmiotow
 
 - tutor_id int - klucz obcy, identifikator nauczyciela, który uczy dany przedmiot
 
-
-``` sql
+```sql
 -- Table: SUBJECTS
 CREATE TABLE SUBJECTS (
    subject_id int  NOT NULL,
@@ -627,10 +641,10 @@ CREATE TABLE SUBJECTS (
 
 ## Tabela SESSIONS
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| session_id | int | Primary Key<br>Foreign Key |
-| subject_id | int |  |
+| Column Name | Data Type | Properties                 |
+| ----------- | --------- | -------------------------- |
+| session_id  | int       | Primary Key<br>Foreign Key |
+| subject_id  | int       |                            |
 
 Zawiera informacje o poszczególnych sesjach (grupach spotkań zjazdowych)
 
@@ -647,12 +661,12 @@ CREATE TABLE SESSIONS (
 
 ### Tabela INTERSHIPS
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| internship_id | int | Primary Key<br>Foreign Key |
-| study_id | int |  |
-| start_date | date |  |
-| end_date | date |  |
+| Column Name   | Data Type | Properties                 |
+| ------------- | --------- | -------------------------- |
+| internship_id | int       | Primary Key<br>Foreign Key |
+| study_id      | int       |                            |
+| start_date    | date      |                            |
+| end_date      | date      |                            |
 
 Zawiera informacje o praktykach prowadzonych na danych studiach
 
@@ -664,7 +678,7 @@ Zawiera informacje o praktykach prowadzonych na danych studiach
 
 - end_date date nullable - data zakończenia praktyk
 
-``` sql
+```sql
 -- Table: INTERSHIPS
 CREATE TABLE INTERSHIPS (
     internship_id int  NOT NULL IDENTITY,
@@ -677,11 +691,11 @@ CREATE TABLE INTERSHIPS (
 
 ### Tabela INTERSHIPS_DETAILS
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| internship_id | int | Primary Key<br>Foreign Key |
-| student_id | int | Primary Key<br>Foreign Key |
-| passed | bit |  |
+| Column Name   | Data Type | Properties                 |
+| ------------- | --------- | -------------------------- |
+| internship_id | int       | Primary Key<br>Foreign Key |
+| student_id    | int       | Primary Key<br>Foreign Key |
+| passed        | bit       |                            |
 
 Zawiera szczegółowe informacje na temat danych praktyk
 
@@ -690,10 +704,10 @@ Zawiera szczegółowe informacje na temat danych praktyk
 - student_id int - klucz główny, klucz obcy, identifikator studenta biorącego udział w praktykach
 
 - passed bit - zaliczenie danych praktyk, <br>
-1 - student zaliczył praktyki (100% obecności), <br>
-0 - student nie zaliczył praktyk (brak 100% obecności)
+  1 - student zaliczył praktyki (100% obecności), <br>
+  0 - student nie zaliczył praktyk (brak 100% obecności)
 
-``` sql
+```sql
 -- Table: INTERSHIP_DETAILS
 -- Table: INTERSHIP_DETAILS
 CREATE TABLE INTERSHIP_DETAILS (
@@ -708,17 +722,17 @@ CREATE TABLE INTERSHIP_DETAILS (
 
 ### Tabela MEETINGS
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| meeting_id | int | Primary Key<br>Foreign Key |
-| tutor_id | int |  |
-| translator_id | int |  |
-| meeting_name | varchar(30) |  |
-| term | datetime |  |
-| duration | time(0) |  |
-| language | varchar(30) |  |
-| module_id | int |  |
-| session_id | int |  |
+| Column Name   | Data Type   | Properties                 |
+| ------------- | ----------- | -------------------------- |
+| meeting_id    | int         | Primary Key<br>Foreign Key |
+| tutor_id      | int         |                            |
+| translator_id | int         |                            |
+| meeting_name  | varchar(30) |                            |
+| term          | datetime    |                            |
+| duration      | time(0)     |                            |
+| language      | varchar(30) |                            |
+| module_id     | int         |                            |
+| session_id    | int         |                            |
 
 Zawiera ogólne informacje na temat spotkania
 
@@ -733,17 +747,19 @@ Zawiera ogólne informacje na temat spotkania
 - term datetime - data i godzina spotkania
 
 - duration time(0) nullable - czas trwania spotkania
+
   - Warunek: duration > '00:00:00'
   - DEFAULT 01:30:00
 
 - language varchar(30) - język w jakim przeprowadza się spotkanie
+
   - DEFAULT 'POLISH'
 
 - module_id int nullable - klucz obcy, identyfikator modułu kursu odpowiadającego spotkani
 
 - sessions_id int nullable - klucz obcy, identyfikator sesji odpowiadającej spotkaniu
 
-``` sql
+```sql
 -- Table: MEETINGS
 CREATE TABLE MEETINGS (
     meeting_id int  NOT NULL IDENTITY,
@@ -761,12 +777,11 @@ CREATE TABLE MEETINGS (
 
 ### Tabela MEETING_DETAILS
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| meeting_id | int | Primary Key<br>Foreign Key |
-| student_id | int | Primary Key<br>Foreign Key |
-| attendance | bit |  |
-
+| Column Name | Data Type | Properties                 |
+| ----------- | --------- | -------------------------- |
+| meeting_id  | int       | Primary Key<br>Foreign Key |
+| student_id  | int       | Primary Key<br>Foreign Key |
+| attendance  | bit       |                            |
 
 Zawiera szczegółowe informacje na temat osób biorących udział w spotkaniu
 
@@ -775,10 +790,10 @@ Zawiera szczegółowe informacje na temat osób biorących udział w spotkaniu
 - student_id int - identyfiaktor studenta, zapisanego na spotkanie
 
 - attendance bit - obecność, <br>
-1 - student uczestniczył w spotkaniu, <br>
-0 - student nie uczestniczył w spotkaniu
+  1 - student uczestniczył w spotkaniu, <br>
+  0 - student nie uczestniczył w spotkaniu
 
-``` sql
+```sql
 -- Table: MEETING_DETAILS
 CREATE TABLE MEETING_DETAILS (
    meeting_id int  NOT NULL,
@@ -790,10 +805,10 @@ CREATE TABLE MEETING_DETAILS (
 
 ### Tabela ASYNC_MEETINGS
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| meeting_id | int | Primary Key<br>Foreign Key |
-| meeting_url | text |  |
+| Column Name | Data Type | Properties                 |
+| ----------- | --------- | -------------------------- |
+| meeting_id  | int       | Primary Key<br>Foreign Key |
+| meeting_url | text      |                            |
 
 Zawiera dane dotyczące spotkań internetowych, które nie są na żywo
 
@@ -801,7 +816,7 @@ Zawiera dane dotyczące spotkań internetowych, które nie są na żywo
 
 - meeting_url text - link do spotkania
 
-``` sql
+```sql
 -- Table: ASYNC_MEETINGS
 CREATE TABLE ASYNC_MEETINGS (
    meeting_id int  NOT NULL,
@@ -812,11 +827,11 @@ CREATE TABLE ASYNC_MEETINGS (
 
 ### Tabela SYNC_MEETINGS
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| meeting_id | int | Primary Key<br>Foreign Key |
-| video_url | text |  |
-| meeting_url | text |  |
+| Column Name | Data Type | Properties                 |
+| ----------- | --------- | -------------------------- |
+| meeting_id  | int       | Primary Key<br>Foreign Key |
+| video_url   | text      |                            |
+| meeting_url | text      |                            |
 
 Zawiera dane dotyczące spotkań internetowych, które są na żywo
 
@@ -826,7 +841,7 @@ Zawiera dane dotyczące spotkań internetowych, które są na żywo
 
 - meeting_url text - link do spotkania
 
-``` sql
+```sql
 -- Table: SYNC_MEETINGS
 CREATE TABLE SYNC_MEETINGS (
    meeting_id int  NOT NULL,
@@ -838,11 +853,10 @@ CREATE TABLE SYNC_MEETINGS (
 
 ### STATIONARY_MEETINGS
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| meeting_id | int | Primary Key<br>Foreign Key |
-| classroom | varchar(10) |  |
-
+| Column Name | Data Type   | Properties                 |
+| ----------- | ----------- | -------------------------- |
+| meeting_id  | int         | Primary Key<br>Foreign Key |
+| classroom   | varchar(10) |                            |
 
 Zawiera dane dotyczące spotkań internetowych, które są stacjonarnie
 
@@ -850,7 +864,7 @@ Zawiera dane dotyczące spotkań internetowych, które są stacjonarnie
 
 - classroom varchar(10) - numer pokoju, w którym przeprowadzane jest spotkanie
 
-``` sql
+```sql
 -- Table: STATIONARY_MEETINGS
 CREATE TABLE STATIONARY_MEETINGS (
    meeting_id int  NOT NULL,
@@ -861,45 +875,45 @@ CREATE TABLE STATIONARY_MEETINGS (
 
 # Dokumentacja kluczy obcych
 
-| Table Name       | FK Column      | Referenced Table   | Referenced Column |
-|------------------|----------------|--------------------|-------------------|
-| ASYNC_MEETINGS | meeting_id | MEETINGS | meeting_id |
-| CART | product_id | PRODUCTS | product_id |
-| CART | student_id | STUDENTS | student_id |
-| COURSES | course_id | PRODUCTS | product_id |
-| EMPLOYEES | type_id | EMPLOYEE_TYPES | type_id |
-| EMPLOYEES | emploee_id | USERS | user_id |
-| WEBINARS | tutor_id | EMPLOYEES | emploee_id |
-| FEES | order_id | ORDERS | order_id |
-| FEES | product_id | PRODUCTS | product_id |
-| FEES | type_id | FEE_TYPE | type_id |
-| INTERSHIPS | study_id | STUDIES | study_id |
-| INTERSHIP_DETAILS | internship_id | INTERSHIPS | internship_id |
-| INTERSHIP_DETAILS | student_id | STUDENTS | student_id |
-| MEETINGS | module_id | MODULES | module_id |
-| MEETINGS | session_id | SESSIONS | session_id |
-| MEETING_DETAILS | meeting_id | MEETINGS | meeting_id |
-| MEETING_DETAILS | student_id | STUDENTS | student_id |
-| MEETINGS | tutor_id | EMPLOYEES | emploee_id |
-| MEETINGS | translator_id | EMPLOYEES | emploee_id |
-| MODULES | course_id | COURSES | course_id |
-| MODULES | tutor_id | EMPLOYEES | emploee_id |
-| PRODUCTS_DETAILS | order_id | ORDERS | order_id |
-| PRODUCTS_DETAILS | product_id | PRODUCTS | product_id |
-| PRODUCTS_DETAILS | student_id | STUDENTS | student_id |
-| PRODUCTS | type_id | PRODUCT_TYPES | type_id |
-| SUBJECTS | subject_id | PRODUCTS | product_id |
-| SESSIONS | session_id | PRODUCTS | product_id |
-| SESSIONS | subject_id | SUBJECTS | subject_id |
-| STATIONARY_MEETINGS | meeting_id | MEETINGS | meeting_id |
-| ORDERS | student_id | STUDENTS | student_id |
-| STUDIES | study_id | PRODUCTS | product_id |
-| SUBJECTS | tutor_id | EMPLOYEES | emploee_id |
-| SUBJECTS | study_id | STUDIES | study_id |
-| SYNC_MEETINGS | meeting_id | MEETINGS | meeting_id |
-| STUDENTS | student_id | USERS | user_id |
-| WEBINARS | translator_id | EMPLOYEES | emploee_id |
-| WEBINARS | webinar_id | PRODUCTS | product_id |
+| Table Name          | FK Column     | Referenced Table | Referenced Column |
+| ------------------- | ------------- | ---------------- | ----------------- |
+| ASYNC_MEETINGS      | meeting_id    | MEETINGS         | meeting_id        |
+| CART                | product_id    | PRODUCTS         | product_id        |
+| CART                | student_id    | STUDENTS         | student_id        |
+| COURSES             | course_id     | PRODUCTS         | product_id        |
+| EMPLOYEES           | type_id       | EMPLOYEE_TYPES   | type_id           |
+| EMPLOYEES           | emploee_id    | USERS            | user_id           |
+| WEBINARS            | tutor_id      | EMPLOYEES        | emploee_id        |
+| FEES                | order_id      | ORDERS           | order_id          |
+| FEES                | product_id    | PRODUCTS         | product_id        |
+| FEES                | type_id       | FEE_TYPE         | type_id           |
+| INTERSHIPS          | study_id      | STUDIES          | study_id          |
+| INTERSHIP_DETAILS   | internship_id | INTERSHIPS       | internship_id     |
+| INTERSHIP_DETAILS   | student_id    | STUDENTS         | student_id        |
+| MEETINGS            | module_id     | MODULES          | module_id         |
+| MEETINGS            | session_id    | SESSIONS         | session_id        |
+| MEETING_DETAILS     | meeting_id    | MEETINGS         | meeting_id        |
+| MEETING_DETAILS     | student_id    | STUDENTS         | student_id        |
+| MEETINGS            | tutor_id      | EMPLOYEES        | emploee_id        |
+| MEETINGS            | translator_id | EMPLOYEES        | emploee_id        |
+| MODULES             | course_id     | COURSES          | course_id         |
+| MODULES             | tutor_id      | EMPLOYEES        | emploee_id        |
+| PRODUCTS_DETAILS    | order_id      | ORDERS           | order_id          |
+| PRODUCTS_DETAILS    | product_id    | PRODUCTS         | product_id        |
+| PRODUCTS_DETAILS    | student_id    | STUDENTS         | student_id        |
+| PRODUCTS            | type_id       | PRODUCT_TYPES    | type_id           |
+| SUBJECTS            | subject_id    | PRODUCTS         | product_id        |
+| SESSIONS            | session_id    | PRODUCTS         | product_id        |
+| SESSIONS            | subject_id    | SUBJECTS         | subject_id        |
+| STATIONARY_MEETINGS | meeting_id    | MEETINGS         | meeting_id        |
+| ORDERS              | student_id    | STUDENTS         | student_id        |
+| STUDIES             | study_id      | PRODUCTS         | product_id        |
+| SUBJECTS            | tutor_id      | EMPLOYEES        | emploee_id        |
+| SUBJECTS            | study_id      | STUDIES          | study_id          |
+| SYNC_MEETINGS       | meeting_id    | MEETINGS         | meeting_id        |
+| STUDENTS            | student_id    | USERS            | user_id           |
+| WEBINARS            | translator_id | EMPLOYEES        | emploee_id        |
+| WEBINARS            | webinar_id    | PRODUCTS         | product_id        |
 
 # Widoki
 
@@ -910,9 +924,9 @@ CREATE TABLE STATIONARY_MEETINGS (
 Widok student_address dla każdego studenta podaje jego imię i nazwisko i adres zamieszkania ,
 czyli ulicę, kod pocztowy, miasto i państwo.
 
-``` sql
-CREATE view student_address as 
-	SELECT 
+```sql
+CREATE view student_address as
+	SELECT
     	students.user_id AS student_id,
     	users.first_name + ' ' + users.last_name AS name,
     	students.street AS street,
@@ -929,9 +943,9 @@ CREATE view student_address as
 
 Widok emploee_type_list wylisowuje wszystkich imiona i nazwiaska wszystkich pracowników oraz przypisane do nich role
 
-``` sql
-CREATE view emploee_type_list as 
-	SELECT 
+```sql
+CREATE view emploee_type_list as
+	SELECT
 		emploees.emploee_id as emploee_id,
 		users.first_name + ' ' + users.last_name AS name,
 		emploee_type.type_name as rola
@@ -947,13 +961,13 @@ CREATE view emploee_type_list as
 Widok user_information dla każdego użytkownika podaje jego imię, nazwisko, adres e-mail, nr
 telefonu oraz czy jest studentem, czy pracownikiem
 
-``` sql
-CREATE view user_information as 
-	SELECT 
+```sql
+CREATE view user_information as
+	SELECT
 		users.user_id as user_id,
 		users.first_name + ' ' + users.last_name AS name,
 		users.email as email,
-		users.phone as phone 
+		users.phone as phone
 		CASE
 			WHEN users.id IN (SELECT user_id FROM students) AND
 			users.id NOT IN (SELECT user_id FROM emploees) AND
@@ -967,13 +981,12 @@ CREATE view user_information as
 ;
 ```
 
-
 ### Regular_customers
 
-Widok regular_customers pokazuje stałych klientów, którzy są zdefiniowani jako osoby, 
+Widok regular_customers pokazuje stałych klientów, którzy są zdefiniowani jako osoby,
 które złożyły jakiekolwiek zamówienie w przeciągu ostatnich 2 lat
 
-``` sql
+```sql
 CREATE VIEW regular_customers AS
 	SELECT
 		student_id,
@@ -992,8 +1005,7 @@ CREATE VIEW regular_customers AS
 Widok webinar_information dla każdego webinaru podaje jego tytuł, opis, ID prowadzącego, ramy
 czasowe, ID tłumacza, link do spotkania, link do nagrania oraz jezyk w jakim jest prowadzony.
 
-
-``` sql
+```sql
 CREATE VIEW Webinar_information report AS
 	SELECT
 		webinar_id as webinar_id
@@ -1009,13 +1021,12 @@ CREATE VIEW Webinar_information report AS
 ;
 ```
 
-alternatywnie 
+alternatywnie
 
 Widok webinar_information dla każdego webinaru podaje jego tytuł, opis, imie i nazwisko prowadzącego, ramy
 czasowe, imie i nazwisko tłumacza, link do spotkania, link do nagrania oraz jezyk w jakim jest prowadzony.
 
-
-``` sql
+```sql
 CREATE VIEW Webinar_information report AS
 	SELECT
 		webinar_id as webinar_id
@@ -1028,9 +1039,9 @@ CREATE VIEW Webinar_information report AS
 		meeting_url as meeting_url
 		language as language
 	FROM WEBINARS
-	left join users Tu 
+	left join users Tu
 		on Tu.user_id = WEBINARS.tutor_id
-	left join users Tr 
+	left join users Tr
 		on Tr.user_id = WEBINARS.translator_id
 ;
 ```
@@ -1040,7 +1051,7 @@ CREATE VIEW Webinar_information report AS
 Widok webinar_information wylistowuje webinary, które są darmowe. Dla każdego webinaru podaje jego tytuł, opis, imie i nazwisko prowadzącego, ramy
 czasowe, imie i nazwisko tłumacza, link do spotkania, link do nagrania oraz jezyk w jakim jest prowadzony.
 
-``` sql
+```sql
 CREATE VIEW Webinar_free_entry report AS
 	SELECT
 		webinar_id as webinar_id
@@ -1053,21 +1064,22 @@ CREATE VIEW Webinar_free_entry report AS
 		meeting_url as meeting_url
 		language as language
 	FROM WEBINARS
-	left join users Tu 
+	left join users Tu
 		on Tu.user_id = WEBINARS.tutor_id
-	left join users Tr 
+	left join users Tr
 		on Tr.user_id = WEBINARS.translator_id
-	left join Products 
-		on webinar_id = product_id 
-	where products.price = 0 
+	left join Products
+		on webinar_id = product_id
+	where products.price = 0
 ;
 ```
 
 ## Webinar_available
+
 Widok Webinar_available wylistowuje webinary, które odbędą się w przyszłości. Dla każdego webinaru podaje jego tytuł, opis, imie i nazwisko prowadzącego, ramy
 czasowe, imie i nazwisko tłumacza, link do spotkania, link do nagrania oraz jezyk w jakim jest prowadzony.
 
-``` sql
+```sql
 CREATE VIEW Webinar_available report AS
 	SELECT
 		webinar_id as webinar_id
@@ -1080,7 +1092,7 @@ CREATE VIEW Webinar_available report AS
 		meeting_url as meeting_url
 		language as language
 	FROM WEBINARS
-	join users Tu 
+	join users Tu
 		on Tu.user_id = WEBINARS.tutor_id
 	join users Tr
 		on Tr.user_id = WEBINARS.translator_id
@@ -1092,14 +1104,14 @@ CREATE VIEW Webinar_available report AS
 
 ## Course_information
 
-Widok Course_information dla każdego kursu podaje jego ID wraz z jego tytułem, opisem, 
- ramami czasowymi, językiem w którym odbywają się spotkania,
+Widok Course_information dla każdego kursu podaje jego ID wraz z jego tytułem, opisem,
+ramami czasowymi, językiem w którym odbywają się spotkania,
 limitem miejsc i ceną.
 
-``` sql
+```sql
 CREATE VIEW Course_information report AS
 	with course_start_end_date as (
-		select 
+		select
 			course_id as course_id,
 			min(term) as start_date,
 			max(term) as end_date
@@ -1120,9 +1132,9 @@ CREATE VIEW Course_information report AS
 		products.price as price
 		products.total_vacancies as amount_of_site
 	FROM courses c
-	join course_start_end_date 
+	join course_start_end_date
 		on course_start_end_date.course_id = courses.course_id
-	join products 
+	join products
 		on products.product_id = course.course_id
 ;
 ```
@@ -1132,28 +1144,28 @@ CREATE VIEW Course_information report AS
 Widok course_module_meeting_types dla każdego modułu kursu podaje ile spotkań danego typu
 do niego należy.
 
-``` sql
+```sql
 CREATE VIEW course_module_meeting_types AS
 
 	with STATIONARY_course_MEETINGS_count as (
-		select 
-			module_id, 
+		select
+			module_id,
 			count(*) as STATIONARY_MEETINGS_count
 		from MEETINGS
 		join STATIONARY_MEETINGS on STATIONARY_MEETINGS.meeting_id = MEETINGS.meeting_id
 		GROUP by module_id
 	),
 	with sync_course_MEETINGS_count as (
-		select 
-			module_id, 
+		select
+			module_id,
 			count(*) as sync_MEETINGS_count
 		from MEETINGS
 		join sync_MEETINGS on sync_MEETINGS.meeting_id = MEETINGS.meeting_id
 		GROUP by module_id
 	),
 	with async_course_MEETINGS_count as (
-		select 
-			module_id, 
+		select
+			module_id,
 			count(*) as async_MEETINGS_count
 		from MEETINGS
 		join async_MEETINGS on async_MEETINGS.meeting_id = MEETINGS.meeting_id
@@ -1166,13 +1178,13 @@ CREATE VIEW course_module_meeting_types AS
 		STATIONARY_MEETINGS_count as STATIONARY_MEETINGS_count
 		sync_MEETINGS_count as sync_MEETINGS_count
 		async_MEETINGS_count as async_MEETINGS_count
-	from 
+	from
 		MODULES
-	JOIN STATIONARY_course_MEETINGS_count AS scmc 
+	JOIN STATIONARY_course_MEETINGS_count AS scmc
 		ON scmc.module_id = m.module_id
-	JOIN sync_course_MEETINGS_count AS syncmc 
+	JOIN sync_course_MEETINGS_count AS syncmc
 		ON syncmc.module_id = m.module_id
-	JOIN async_course_MEETINGS_count AS asyncmc 
+	JOIN async_course_MEETINGS_count AS asyncmc
 		ON asyncmc.module_id = m.module_id;
 
 
@@ -1182,27 +1194,27 @@ CREATE VIEW course_module_meeting_types AS
 
 Widok course_module_information dla każdego modułu kursu podaje jego typ, limit miejsc oraz imię i nazwisko nauczyciela
 
-``` sql
+```sql
 CREATE VIEW Course_module_information report AS
 	with STATIONARY_course_MEETINGS_count as (
-		select 
-			module_id, 
+		select
+			module_id,
 			count(*) as STATIONARY_MEETINGS_count
 		from MEETINGS
 		join STATIONARY_MEETINGS on STATIONARY_MEETINGS.meeting_id = MEETINGS.meeting_id
 		GROUP by module_id
 	),
 	with sync_course_MEETINGS_count as (
-		select 
-			module_id, 
+		select
+			module_id,
 			count(*) as sync_MEETINGS_count
 		from MEETINGS
 		join sync_MEETINGS on sync_MEETINGS.meeting_id = MEETINGS.meeting_id
 		GROUP by module_id
 	),
 	with async_course_MEETINGS_count as (
-		select 
-			module_id, 
+		select
+			module_id,
 			count(*) as async_MEETINGS_count
 		from MEETINGS
 		join async_MEETINGS on async_MEETINGS.meeting_id = MEETINGS.meeting_id
@@ -1229,17 +1241,17 @@ CREATE VIEW Course_module_information report AS
 	products.total_vacancies
 
 FROM modules AS m
-JOIN STATIONARY_course_MEETINGS_count AS scmc 
+JOIN STATIONARY_course_MEETINGS_count AS scmc
     ON scmc.module_id = m.module_id
-JOIN sync_course_MEETINGS_count AS syncmc 
+JOIN sync_course_MEETINGS_count AS syncmc
     ON syncmc.module_id = m.module_id
-JOIN async_course_MEETINGS_count AS asyncmc 
+JOIN async_course_MEETINGS_count AS asyncmc
     ON asyncmc.module_id = m.module_id
-join courses 
+join courses
 	on courses.module_id = m.module_id
-join products 
+join products
 	on courses.course_id = products.product_id
-join emploees Tu 
+join emploees Tu
 	on Tu.emploee_id = m.tutor_id
 ;
 ```
@@ -1248,7 +1260,8 @@ join emploees Tu
 
 Widok course_meeting_information dla każdego spotkania w ramach kursu podaje ID kursu do
 którego należy, ID modułu do którego należy, tytuł, opis spotkania, ramy czasowe oraz jego typ.
-``` sql
+
+```sql
 CREATE VIEW course_meeting_information report AS
 	select
 		modules.course_id AS course_id,
@@ -1293,7 +1306,7 @@ CREATE VIEW course_meeting_information report AS
 Widok course_passes dla każdego kursu podaje listę jego uczestników wraz z informacją o jego
 zaliczeniu.
 
-``` sql
+```sql
 CREATE VIEW course_passes AS
 	SELECT
 	courses.course_id as course_id,
@@ -1303,4 +1316,99 @@ CREATE VIEW course_passes AS
 	join products on products.product_id = courses.course_id
 	join PRODUCTS_DETAILS on PRODUCTS_DETAILS.product_id = courses.course_id
 
+```
+
+# Kategoria zamówienia i produkty
+
+## PRODUCT VACANCIES
+
+Przedstawia ID produktu i wolne miejsca na dany produkt
+
+```sql
+create view PRODUCT_VACANCIES as
+select product_id, total_vacancies-(select count(*) from FEES where FEES.product_id=PRODUCTS.product_id)
+from PRODUCTS
+```
+
+**USERS IN DEBT**\
+Przedstawia użytkowników którzy nie opłacili danej usługi, ale z niej skorzystali co wykazane jest na liście obecności
+
+```sql
+create view USERS_IN_DEBT as
+select student_id, concat_ws(' ',first_name,last_name) as name
+from STUDENTS
+join USERS on USERS.user_id=STUDENTS.student_id
+where exists (select student_id
+              from ORDERS
+              join FEES on ORDERS.order_id=FEES.order_id
+              join PRODUCTS on PRODUCTS.product_id = FEES.product_id
+              join STUDIES on STUDIES.study_id=PRODUCTS.product_id
+              join SUBJECTS on STUDIES.study_id=SUBJECTS.study_id
+              join SESSIONS on SESSIONS.subject_id=SUBJECTS.subject_id
+              join MEETINGS on MEETINGS.session_id=SESSIONS.session_id
+              join MEETING_DETAILS on MEETINGS.meeting_id=MEETING_DETAILS.meeting_id
+              where FEES.due_date>MEETINGS.term and FEES.payment_date=null
+              union all
+              select student_id
+              from ORDERS
+              join FEES on ORDERS.order_id=FEES.order_id
+              join PRODUCTS on PRODUCTS.product_id = FEES.product_id
+              join COURSES on COURSES.course_id=PRODUCTS.product_id
+              join MODULES on COURSES.course_id=MODULES.course_id
+              join MEETINGS on MEETINGS.module_id=MODULES.module_id
+              join MEETING_DETAILS on MEETINGS.meeting_id=MEETING_DETAILS.meeting_id
+              where FEES.due_date>MEETINGS.term and FEES.payment_date=null
+              union all
+              select student_id
+              from ORDERS
+              join FEES on ORDERS.order_id=FEES.order_id
+              join PRODUCTS on PRODUCTS.product_id = FEES.product_id
+              join MEETINGS on MEETINGS.session_id=PRODUCTS.product_id
+              join MEETING_DETAILS on MEETINGS.meeting_id=MEETING_DETAILS.meeting_id
+              where FEES.due_date>MEETINGS.term and FEES.payment_date=null
+)
+```
+
+## FINANCIAL REPORT
+
+Przedstawia przychód dla każdego z produktów
+
+```sql
+create view FINANCIAL_REPORT as
+select product_id, (select count(*) from FEES where FEES.product_id=PRODUCTS.product_id)*price as income, type_name
+from PRODUCTS
+join PRODUCT_TYPES on PRODUCTS.type_id=PRODUCT_TYPES.type_id
+```
+
+## BILOCATION REPORT
+
+Przedstawia studentów którzy mają kolizje wśród swoich zajęć
+
+```sql
+create view BILOCATION_REPORT as
+with student_meetings as (
+    select student_id, meeting_id,term,duration
+    from MEETING_DETAILS
+    join MEETINGS on MEETING_DETAILS.meeting_id=MEETINGS.meeting_id)
+select student_id
+from STUDENTS
+join (select sm1.student_id,count(*) as collisions
+              from student_meetings sm1
+              join student_meetings sm2 on sm1.student_id=sm2.student_id and (datediff(hour,sm2.term-sm1.term)<sm1.duration or
+                                                                              (datediff(hour,sm2.term-sm1.term)=sm1.duration and datediff(minute,sm2.term-sm1.term)<sm1.duration )) or
+                                                                              datediff(hour,sm1.term-sm2.term)<sm2.duration or
+                                                                              (datediff(hour,sm1.term-sm2.term)=sm2.duration and datediff(minute,sm1.term-sm2.term)<sm2.duration )
+              group by sm1.student_id) T on STUDENTS.student_id=T.student_id
+where collisions>1
+```
+
+## PRODUCT OWNERS
+
+Przedstawia użytkowników i zakupione przez nich produkty
+
+```sql
+create view PRODUCT_OWNERS as
+select student_id, concat_ws(' ',first_name,last_name) as name
+from ORDER_DETAILS
+join USERS on USER.user_id=ORDER_DETAILS.student_id
 ```
