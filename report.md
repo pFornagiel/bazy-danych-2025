@@ -453,6 +453,7 @@ CREATE TABLE FEE_TYPE (
 | translator_id | int |  |
 | webinar_name | varchar(50) |  |
 | webinar_description | text |  |
+| meeting_url | text |  |
 | video_url | text |  |
 | webinar_duration | time(0) |  |
 | publish_date | datetime |  |
@@ -469,6 +470,8 @@ Zawiera informacje specyfinczne dla każdego produktu będącego webinarem
 - webinar_name varchar(50) - nazwa webinaru 
 
 - webinar_description text nullable - opis webinaru 
+
+- meeting_url text nullable - link do webinaru na żywo
 
 - video_url text nullable - link do zapisu webinaru
 
@@ -534,6 +537,8 @@ CREATE TABLE COURSES (
 | module_id | int | Primary Key<br>Foreign Key |
 | course_id | int |  |
 | tutor_id | int |  |
+| module_name | int |  |
+| module_description | int |  |
 
 Zawiera szczegółowe informacje dla każdego modułu kursu
 
@@ -542,6 +547,10 @@ Zawiera szczegółowe informacje dla każdego modułu kursu
 - course_id int - klucz obcy, identifikator kursu, z którego pochodzi
 
 - tutor_id int - klucz obcy, identifikator nauczyciela, który prowadzi dany moduł
+
+- module_name - nazwa modułu
+
+- module_description - opis modułu
 
 ``` SQL
 -- Table: MODULES
@@ -891,3 +900,407 @@ CREATE TABLE STATIONARY_MEETINGS (
 | STUDENTS | student_id | USERS | user_id |
 | WEBINARS | translator_id | EMPLOYEES | emploee_id |
 | WEBINARS | webinar_id | PRODUCTS | product_id |
+
+# Widoki
+
+## Users
+
+### Student_address
+
+Widok student_address dla każdego studenta podaje jego imię i nazwisko i adres zamieszkania ,
+czyli ulicę, kod pocztowy, miasto i państwo.
+
+``` sql
+CREATE view student_address as 
+	SELECT 
+    	students.user_id AS student_id,
+    	users.first_name + ' ' + users.last_name AS name,
+    	students.street AS street,
+    	students.postal_code AS zip_code,
+    	students.city AS city,
+    	student.country AS country
+
+  	FROM students
+	join user on users.user_id = students.student_id
+;
+```
+
+### Emploee_list
+
+Widok emploee_type_list wylisowuje wszystkich imiona i nazwiaska wszystkich pracowników oraz przypisane do nich role
+
+``` sql
+CREATE view emploee_type_list as 
+	SELECT 
+		emploees.emploee_id as emploee_id,
+		users.first_name + ' ' + users.last_name AS name,
+		emploee_type.type_name as rola
+
+	FROM emploees
+	join user on users.user_id = emploees.emploee_id
+	join emploee_type on emploee_type.type_id = emploees.type_id
+;
+```
+
+### User_information
+
+Widok user_information dla każdego użytkownika podaje jego imię, nazwisko, adres e-mail, nr
+telefonu oraz czy jest studentem, czy pracownikiem
+
+``` sql
+CREATE view user_information as 
+	SELECT 
+		users.user_id as user_id,
+		users.first_name + ' ' + users.last_name AS name,
+		users.email as email,
+		users.phone as phone 
+		CASE
+			WHEN users.id IN (SELECT user_id FROM students) AND
+			users.id NOT IN (SELECT user_id FROM emploees) AND
+			THEN 'student'
+
+			WHEN users.id NOT IN (SELECT user_id FROM students) AND
+			users.id IN (SELECT user_id FROM emploees) AND
+			THEN 'employee'
+
+	FROM emploees
+;
+```
+
+
+### Regular_customers
+
+Widok regular_customers pokazuje stałych klientów, którzy są zdefiniowani jako osoby, 
+które złożyły jakiekolwiek zamówienie w przeciągu ostatnich 2 lat
+
+``` sql
+CREATE VIEW regular_customers AS
+	SELECT
+		student_id,
+		COUNT(order_date) AS order_count
+	FROM orders
+	WHERE order_date >= DATEADD(year, -2, GETDATE())
+	GROUP BY student_id
+	HAVING COUNT(order_date) > 0
+;
+```
+
+# Webinars
+
+## Webinar_information
+
+Widok webinar_information dla każdego webinaru podaje jego tytuł, opis, ID prowadzącego, ramy
+czasowe, ID tłumacza, link do spotkania, link do nagrania oraz jezyk w jakim jest prowadzony.
+
+
+``` sql
+CREATE VIEW Webinar_information report AS
+	SELECT
+		webinar_id as webinar_id
+		webinar_name as name
+		webinar_description as description
+		tutor_id as tutor
+		publish_date as start_time
+		webinar_duration as duration
+		translator_id as translator
+		meeting_url as meeting_url
+		language as language
+	FROM WEBINARS
+;
+```
+
+alternatywnie 
+
+Widok webinar_information dla każdego webinaru podaje jego tytuł, opis, imie i nazwisko prowadzącego, ramy
+czasowe, imie i nazwisko tłumacza, link do spotkania, link do nagrania oraz jezyk w jakim jest prowadzony.
+
+
+``` sql
+CREATE VIEW Webinar_information report AS
+	SELECT
+		webinar_id as webinar_id
+		webinar_name as name
+		webinar_description as description
+		Tu.first_name + ' ' + Tu.last_name AS tutor_name,
+		publish_date as start_time
+		webinar_duration as duration
+		Tr.first_name + ' ' + Tr.last_name AS translator_name,
+		meeting_url as meeting_url
+		language as language
+	FROM WEBINARS
+	left join users Tu 
+		on Tu.user_id = WEBINARS.tutor_id
+	left join users Tr 
+		on Tr.user_id = WEBINARS.translator_id
+;
+```
+
+## Webinar_free_entry
+
+Widok webinar_information wylistowuje webinary, które są darmowe. Dla każdego webinaru podaje jego tytuł, opis, imie i nazwisko prowadzącego, ramy
+czasowe, imie i nazwisko tłumacza, link do spotkania, link do nagrania oraz jezyk w jakim jest prowadzony.
+
+``` sql
+CREATE VIEW Webinar_free_entry report AS
+	SELECT
+		webinar_id as webinar_id
+		webinar_name as name
+		webinar_description as description
+		Tu.first_name + ' ' + Tu.last_name AS tutor_name,
+		publish_date as start_time
+		webinar_duration as duration
+		Tr.first_name + ' ' + Tr.last_name AS translator_name,
+		meeting_url as meeting_url
+		language as language
+	FROM WEBINARS
+	left join users Tu 
+		on Tu.user_id = WEBINARS.tutor_id
+	left join users Tr 
+		on Tr.user_id = WEBINARS.translator_id
+	left join Products 
+		on webinar_id = product_id 
+	where products.price = 0 
+;
+```
+
+## Webinar_available
+Widok Webinar_available wylistowuje webinary, które odbędą się w przyszłości. Dla każdego webinaru podaje jego tytuł, opis, imie i nazwisko prowadzącego, ramy
+czasowe, imie i nazwisko tłumacza, link do spotkania, link do nagrania oraz jezyk w jakim jest prowadzony.
+
+``` sql
+CREATE VIEW Webinar_available report AS
+	SELECT
+		webinar_id as webinar_id
+		webinar_name as name
+		webinar_description as description
+		Tu.first_name + ' ' + Tu.last_name AS tutor_name,
+		publish_date as start_time
+		webinar_duration as duration
+		Tr.first_name + ' ' + Tr.last_name AS translator_name,
+		meeting_url as meeting_url
+		language as language
+	FROM WEBINARS
+	join users Tu 
+		on Tu.user_id = WEBINARS.tutor_id
+	join users Tr
+		on Tr.user_id = WEBINARS.translator_id
+	WHERE publish_date >= GETDATE()
+;
+```
+
+# Courses
+
+## Course_information
+
+Widok Course_information dla każdego kursu podaje jego ID wraz z jego tytułem, opisem, 
+ ramami czasowymi, językiem w którym odbywają się spotkania,
+limitem miejsc i ceną.
+
+``` sql
+CREATE VIEW Course_information report AS
+	with course_start_end_date as (
+		select 
+			course_id as course_id,
+			min(term) as start_date,
+			max(term) as end_date
+		from meetings
+		join modules on modules.module_id = meetings.module_id
+		GROUP by module_id
+		where module_id is not null
+	)
+
+	SELECT
+		c.course_id as course_id
+		c.course_name as name
+		c.course_description as description
+		start_end_date.start_date as start_date
+		start_end_date.end_date as end_date
+		c.meeting_url as meeting_url
+		language as language
+		products.price as price
+		products.total_vacancies as amount_of_site
+	FROM courses c
+	join course_start_end_date 
+		on course_start_end_date.course_id = courses.course_id
+	join products 
+		on products.product_id = course.course_id
+;
+```
+
+## Course_module_meeting_types
+
+Widok course_module_meeting_types dla każdego modułu kursu podaje ile spotkań danego typu
+do niego należy.
+
+``` sql
+CREATE VIEW course_module_meeting_types AS
+
+	with STATIONARY_course_MEETINGS_count as (
+		select 
+			module_id, 
+			count(*) as STATIONARY_MEETINGS_count
+		from MEETINGS
+		join STATIONARY_MEETINGS on STATIONARY_MEETINGS.meeting_id = MEETINGS.meeting_id
+		GROUP by module_id
+	),
+	with sync_course_MEETINGS_count as (
+		select 
+			module_id, 
+			count(*) as sync_MEETINGS_count
+		from MEETINGS
+		join sync_MEETINGS on sync_MEETINGS.meeting_id = MEETINGS.meeting_id
+		GROUP by module_id
+	),
+	with async_course_MEETINGS_count as (
+		select 
+			module_id, 
+			count(*) as async_MEETINGS_count
+		from MEETINGS
+		join async_MEETINGS on async_MEETINGS.meeting_id = MEETINGS.meeting_id
+		GROUP by module_id
+	)
+
+	select
+		module_id as module_id
+		module_name as name
+		STATIONARY_MEETINGS_count as STATIONARY_MEETINGS_count
+		sync_MEETINGS_count as sync_MEETINGS_count
+		async_MEETINGS_count as async_MEETINGS_count
+	from 
+		MODULES
+	JOIN STATIONARY_course_MEETINGS_count AS scmc 
+		ON scmc.module_id = m.module_id
+	JOIN sync_course_MEETINGS_count AS syncmc 
+		ON syncmc.module_id = m.module_id
+	JOIN async_course_MEETINGS_count AS asyncmc 
+		ON asyncmc.module_id = m.module_id;
+
+
+```
+
+## Course_module_information
+
+Widok course_module_information dla każdego modułu kursu podaje jego typ, limit miejsc oraz imię i nazwisko nauczyciela
+
+``` sql
+CREATE VIEW Course_module_information report AS
+	with STATIONARY_course_MEETINGS_count as (
+		select 
+			module_id, 
+			count(*) as STATIONARY_MEETINGS_count
+		from MEETINGS
+		join STATIONARY_MEETINGS on STATIONARY_MEETINGS.meeting_id = MEETINGS.meeting_id
+		GROUP by module_id
+	),
+	with sync_course_MEETINGS_count as (
+		select 
+			module_id, 
+			count(*) as sync_MEETINGS_count
+		from MEETINGS
+		join sync_MEETINGS on sync_MEETINGS.meeting_id = MEETINGS.meeting_id
+		GROUP by module_id
+	),
+	with async_course_MEETINGS_count as (
+		select 
+			module_id, 
+			count(*) as async_MEETINGS_count
+		from MEETINGS
+		join async_MEETINGS on async_MEETINGS.meeting_id = MEETINGS.meeting_id
+		GROUP by module_id
+	)
+
+	SELECT
+    m.module_id,
+    CASE
+        WHEN scmc.STATIONARY_MEETINGS_count <> 0 AND
+             syncmc.sync_MEETINGS_count = 0 AND
+             asyncmc.async_MEETINGS_count = 0 THEN 'on_site'
+        WHEN scmc.STATIONARY_MEETINGS_count = 0 AND
+             syncmc.sync_MEETINGS_count <> 0 AND
+             asyncmc.async_MEETINGS_count = 0 THEN 'online_synchronous'
+        WHEN scmc.STATIONARY_MEETINGS_count = 0 AND
+             syncmc.sync_MEETINGS_count = 0 AND
+             asyncmc.async_MEETINGS_count <> 0 THEN 'online_asynchronous'
+        WHEN scmc.STATIONARY_MEETINGS_count <> 0 OR
+             syncmc.sync_MEETINGS_count <> 0 OR
+             asyncmc.async_MEETINGS_count <> 0 THEN 'hybrid'
+    END AS module_type,
+	Tu.first_name + ' ' + Tu.last_name AS tutor_name,
+	products.total_vacancies
+
+FROM modules AS m
+JOIN STATIONARY_course_MEETINGS_count AS scmc 
+    ON scmc.module_id = m.module_id
+JOIN sync_course_MEETINGS_count AS syncmc 
+    ON syncmc.module_id = m.module_id
+JOIN async_course_MEETINGS_count AS asyncmc 
+    ON asyncmc.module_id = m.module_id
+join courses 
+	on courses.module_id = m.module_id
+join products 
+	on courses.course_id = products.product_id
+join emploees Tu 
+	on Tu.emploee_id = m.tutor_id
+;
+```
+
+## Course meeting information
+
+Widok course_meeting_information dla każdego spotkania w ramach kursu podaje ID kursu do
+którego należy, ID modułu do którego należy, tytuł, opis spotkania, ramy czasowe oraz jego typ.
+``` sql
+CREATE VIEW course_meeting_information report AS
+	select
+		modules.course_id AS course_id,
+		modules.activity_id AS module_id,
+		meetings.meeting_id AS meeting_id,
+		meeting.name AS name,
+		modules.description as description,
+		meeting.term as start_time,
+		meeting.duration as duration,
+		CASE
+			WHEN
+				meetings.meeting_id IN (SELECT meeting_id FROM
+				STATIONARY_MEETINGS) AND
+				meetings.meeting_id not IN (SELECT meeting_id FROM
+				async_meetings) AND
+				meetings.meeting_id NOT IN (SELECT meeting_id FROM
+				sync_meetings)
+			THEN 'stationary'
+			WHEN
+				meetings.meeting_id not IN (SELECT meeting_id FROM
+				STATIONARY_MEETINGS) AND
+				meetings.meeting_id not IN (SELECT meeting_id FROM
+				async_meetings) AND
+				meetings.meeting_id IN (SELECT meeting_id FROM
+				sync_meetings)
+			THEN 'online_synchronous'
+			WHEN
+				meetings.meeting_id not IN (SELECT meeting_id FROM
+				STATIONARY_MEETINGS) AND
+				meetings.meeting_id IN (SELECT meeting_id FROM
+				async_meetings) AND
+				meetings.meeting_id NOT IN (SELECT meeting_id FROM
+				sync_meetings)
+			THEN 'online_asynchronous'
+			END AS meeting_type,
+	from modules
+	join meeting on meeting.course_id = modules.module_id
+```
+
+## Course passes
+
+Widok course_passes dla każdego kursu podaje listę jego uczestników wraz z informacją o jego
+zaliczeniu.
+
+``` sql
+CREATE VIEW course_passes AS
+	SELECT
+	courses.course_id as course_id,
+	student_id as student_id,
+	passed as passed
+	from courses
+	join products on products.product_id = courses.course_id
+	join PRODUCTS_DETAILS on PRODUCTS_DETAILS.product_id = courses.course_id
+
+```
