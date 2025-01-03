@@ -112,9 +112,9 @@
 
 # Opis tabel
 
-## Kategoria Users
+## Kategoria USERS
 
-### Tabela Users
+### Tabela USERS
 
 | Column Name | Data Type    | Properties  |
 | ----------- | ------------ | ----------- |
@@ -124,12 +124,10 @@
 | last_name   | nvarchar(30) |             |
 | email       | varchar(50)  |             |
 | phone       | varchar(9)   |             |
-| CONSTRAINT  | unique_email |             |
-| CONSTRAINT  | unique_phone |             |
 
 Zawiera podstawowe informacje o każdym użytkowniku bazy.
 
-- _user_id_ int - klucz główny, identifikuje użytkownika
+- user_id int - klucz główny, identifikuje użytkownika
 
 - username varchar(30) - nazwa użytkownika w bazie danych
 
@@ -159,7 +157,7 @@ CREATE TABLE USERS (
 );
 ```
 
-### Tabela Students
+### Tabela STUDENTS
 
 | Column Name | Data Type   | Properties                 |
 | ----------- | ----------- | -------------------------- |
@@ -167,7 +165,7 @@ CREATE TABLE USERS (
 | street      | varchar(30) |                            |
 | city        | varchar(30) |                            |
 | postal_code | varchar(30) |                            |
-| country     | varchar(30) |                            |
+| country_id  | varchar(30) | Foreign Key                |
 
 Zawiera infromacje specyficzne dla studenta
 
@@ -179,7 +177,7 @@ Zawiera infromacje specyficzne dla studenta
 
 - postal_code varchar(30) - kod pocztowy studenta
 
-- country varchar(30) - kraj pochodzenia studenta
+- country_id int - klucz obcy, identyfikator pochodzenia studenta
 
 ```sql
 -- Table: STUDENTS
@@ -198,7 +196,7 @@ CREATE TABLE STUDENTS (
 | Column Name | Data Type | Properties                 |
 | ----------- | --------- | -------------------------- |
 | emploee_id  | int       | Primary Key<br>Foreign Key |
-| type_id     | int       |                            |
+| type_id     | int       | Foreign Key                |
 | hire_date   | date      |                            |
 | birth_date  | date      |                            |
 
@@ -251,29 +249,43 @@ CREATE TABLE EMPLOYEE_TYPES (
 );
 ```
 
+### Tabela COUNTRIES
+
+| Column Name  | Data Type    | Properties  |
+| ------------ | ------------ | ----------- |
+| country_id   | int          | Primary Key |
+| country_name | nvarchar(30) |             |
+
+Tabela słownikowa, przechowująca nazwy znanych państw, z których pocodzą studenci
+
+- country_id int - klucz główny, identyfikator państwa
+- country_name nvarchar(30) - nazwa państwa
+
+```sql
+-- Table: COUNTRIES
+CREATE TABLE COUNTRIES (
+    country_id int  NOT NULL,
+    country_name nvarchar(30)  NOT NULL,
+    CONSTRAINT COUNTRIES_pk PRIMARY KEY  (country_id)
+);
+```
+
 ## Kategoria Products
 
 ### Tabela Products
 
-| Column Name | Data Type | Properties |
-|-------------|-----------|------------|
-| product_id | int | Primary Key<br>Foreign Key |
-| type_id | int |  |
-| price | money |  |
-| vacancies | int |  |
-| release | date |  |
-| Column Name  | Data Type | Properties                 |
-| ------------ | --------- | -------------------------- |
-| product_id   | int       | Primary Key<br>Foreign Key |
-| type_id      | int       |                            |
-| price        | money     |                            |
-| vacancies    | int       |                            |
-| total_amount | int       |                            |
+| Column Name     | Data Type | Properties                 |
+| --------------- | --------- | -------------------------- |
+| product_id      | int       | Primary Key<br>Foreign Key |
+| type_id         | int       | Foreign Key                |
+| price           | money     |                            |
+| total_vacancies | int       |                            |
+| release         | date      |                            |
 
 Zawiera informacje o każdym produkcie w ofercie. Produkt jest rozumiany
 jako każda z form przeprowadzania zajęć.
 
-- _product_id_ int - klucz główny, identyfikuje produkt
+- product*id* int - klucz główny, identyfikuje produkt
 
 - type_id int - klucz obcy, numer kategorii produktu
 
@@ -282,7 +294,7 @@ jako każda z form przeprowadzania zajęć.
   - warunek: prive >= 0
   - DEFAULT 1000
 
-- vacancies int - ilość wolnych miejsc możliwych do zakupu na dane zajęcia
+- total_vacancies int - ilość wolnych miejsc możliwych do zakupu na dane zajęcia
 
   - warunek: vacancies >= 0
 
@@ -306,7 +318,7 @@ CREATE TABLE PRODUCTS (
 | ----------- | --------- | -------------------------- |
 | student_id  | int       | Primary Key<br>Foreign Key |
 | product_id  | int       | Primary Key<br>Foreign Key |
-| order_id    | int       |                            |
+| order_id    | int       | Foreign Key                |
 
 Zawiera informacje o studentach zapisanych na dane zajęcia oraz o numerze zamówienia z jakiego został kupiony dostęp do zajęć
 
@@ -354,7 +366,7 @@ CREATE TABLE PRODUCT_TYPES (
 | Column Name | Data Type | Properties                 |
 | ----------- | --------- | -------------------------- |
 | student_id  | int       | Primary Key<br>Foreign Key |
-| product_id  | int       |                            |
+| product_id  | int       | Foreign Key                |
 
 Zawiera informacje o koszyku użytkownika
 
@@ -378,7 +390,7 @@ CREATE TABLE CART (
 | Column Name | Data Type | Properties                 |
 | ----------- | --------- | -------------------------- |
 | order_id    | int       | Primary Key<br>Foreign Key |
-| student_id  | int       |                            |
+| student_id  | int       | Foreign Key                |
 | order_date  | date      |                            |
 
 Zawiera informacje na temat zamówienia pod danym identyfikatorem
@@ -407,9 +419,9 @@ CREATE TABLE ORDERS (
 | due_date     | date      |                            |
 | payment_date | date      |                            |
 | fee_value    | money     |                            |
-| type_id      | int       |                            |
-| order_id     | int       |                            |
-| product_id   | int       |                            |
+| type_id      | int       | Foreign Key                |
+| order_id     | int       | Foreign Key                |
+| product_id   | int       | Foreign Key                |
 
 Zawiera informacje o płatności za dany produkt dołączonej do danego zamówienia
 
@@ -471,15 +483,15 @@ CREATE TABLE FEE_TYPE (
 | Column Name         | Data Type   | Properties                 |
 | ------------------- | ----------- | -------------------------- |
 | webinar_id          | int         | Primary Key<br>Foreign Key |
-| tutor_id            | int         |                            |
-| translator_id       | int         |                            |
+| tutor_id            | int         | Foreign Key                |
+| translator_id       | int         | Foreign Key                |
 | webinar_name        | varchar(50) |                            |
 | webinar_description | text        |                            |
 | meeting_url         | text        |                            |
 | video_url           | text        |                            |
 | webinar_duration    | time(0)     |                            |
 | publish_date        | datetime    |                            |
-| language            | varchar(50) |                            |
+| language_id         | int         | Foreign Key                |
 
 Zawiera informacje specyfinczne dla każdego produktu będącego webinarem
 
@@ -505,8 +517,8 @@ Zawiera informacje specyfinczne dla każdego produktu będącego webinarem
 
 - publish_date datetime - data przeprowadzenia i udostępnięnia materiałów video
 
-- language varchar(50) - język w jakim był prowadzony webinar
-  - DEFAULT 'POLISH'
+- language_id int - klucz obcy, identyfikator języka, w jakim jest prowadzony Webinar
+  - DEFAULT 0
 
 ```sql
 -- Table: WEBINARS
@@ -557,8 +569,8 @@ CREATE TABLE COURSES (
 | Column Name        | Data Type | Properties                 |
 | ------------------ | --------- | -------------------------- |
 | module_id          | int       | Primary Key<br>Foreign Key |
-| course_id          | int       |                            |
-| tutor_id           | int       |                            |
+| course_id          | int       | Foreign Key                |
+| tutor_id           | int       | Foreign Key                |
 | module_name        | int       |                            |
 | module_description | int       |                            |
 
@@ -617,8 +629,8 @@ CREATE TABLE STUDIES (
 | Column Name         | Data Type   | Properties                 |
 | ------------------- | ----------- | -------------------------- |
 | subject_id          | int         | Primary Key<br>Foreign Key |
-| study_id            | int         |                            |
-| tutor_id            | int         |                            |
+| study_id            | int         | Foreign Key                |
+| tutor_id            | int         | Foreign Key                |
 | subject_name        | varchar(50) |                            |
 | subject_description | text        |                            |
 
@@ -651,7 +663,7 @@ CREATE TABLE SUBJECTS (
 | Column Name | Data Type | Properties                 |
 | ----------- | --------- | -------------------------- |
 | session_id  | int       | Primary Key<br>Foreign Key |
-| subject_id  | int       |                            |
+| subject_id  | int       | Foreign Key                |
 
 Zawiera informacje o poszczególnych sesjach (grupach spotkań zjazdowych)
 
@@ -671,7 +683,7 @@ CREATE TABLE SESSIONS (
 | Column Name   | Data Type | Properties                 |
 | ------------- | --------- | -------------------------- |
 | internship_id | int       | Primary Key<br>Foreign Key |
-| study_id      | int       |                            |
+| study_id      | int       | Foreign Key                |
 | start_date    | date      |                            |
 | end_date      | date      |                            |
 
@@ -732,14 +744,14 @@ CREATE TABLE INTERSHIP_DETAILS (
 | Column Name   | Data Type   | Properties                 |
 | ------------- | ----------- | -------------------------- |
 | meeting_id    | int         | Primary Key<br>Foreign Key |
-| tutor_id      | int         |                            |
-| translator_id | int         |                            |
+| tutor_id      | int         | Foreign Key                |
+| translator_id | int         | Foreign Key                |
 | meeting_name  | varchar(30) |                            |
 | term          | datetime    |                            |
 | duration      | time(0)     |                            |
-| language      | varchar(30) |                            |
-| module_id     | int         |                            |
-| session_id    | int         |                            |
+| language_id   | int         | Foreign Key                |
+| module_id     | int         | Foreign Key                |
+| session_id    | int         | Foreign Key                |
 
 Zawiera ogólne informacje na temat spotkania
 
@@ -758,9 +770,9 @@ Zawiera ogólne informacje na temat spotkania
   - Warunek: duration > '00:00:00'
   - DEFAULT 01:30:00
 
-- language varchar(30) - język w jakim przeprowadza się spotkanie
+- language_id int - klucz obcy, identyfikator języka w jakim przeprowadza się spotkanie
 
-  - DEFAULT 'POLISH'
+  - DEFAULT 0
 
 - module_id int nullable - klucz obcy, identyfikator modułu kursu odpowiadającego spotkani
 
@@ -858,7 +870,7 @@ CREATE TABLE SYNC_MEETINGS (
 );
 ```
 
-### STATIONARY_MEETINGS
+### Tabela STATIONARY_MEETINGS
 
 | Column Name | Data Type   | Properties                 |
 | ----------- | ----------- | -------------------------- |
@@ -880,13 +892,37 @@ CREATE TABLE STATIONARY_MEETINGS (
 );
 ```
 
+## Kategoria LANGUAGES
+
+### Tabela LANGUAGES
+
+| Column Name   | Data Type   | Properties  |
+| ------------- | ----------- | ----------- |
+| language_id   | int         | Primary Key |
+| language_name | varchar(30) |             |
+
+Tabela słownikowa, zawierająca nazwy dostępnych język, w których
+są przeprowadzane formy kształcenia
+
+- language_id int - klucz główny, identyfikator języka
+- language_name varchar(30) - nazwa języka
+
+```sql
+-- Table: LANGUAGES
+CREATE TABLE LANGUAGES (
+    language_id int  NOT NULL,
+    language_name varchar(30)  NOT NULL,
+    CONSTRAINT LANGUAGES_pk PRIMARY KEY  (language_id)
+);
+```
+
 # Dokumentacja kluczy obcych
 
 | Table Name          | FK Column     | Referenced Table | Referenced Column |
 | ------------------- | ------------- | ---------------- | ----------------- |
 | ASYNC_MEETINGS      | meeting_id    | MEETINGS         | meeting_id        |
-| CART                | product_id    | PRODUCTS         | product_id        |
-| CART                | student_id    | STUDENTS         | student_id        |
+| SHOPPING_CART       | product_id    | PRODUCTS         | product_id        |
+| SHOPPING_CART       | student_id    | STUDENTS         | student_id        |
 | COURSES             | course_id     | PRODUCTS         | product_id        |
 | EMPLOYEES           | type_id       | EMPLOYEE_TYPES   | type_id           |
 | EMPLOYEES           | emploee_id    | USERS            | user_id           |
@@ -897,6 +933,8 @@ CREATE TABLE STATIONARY_MEETINGS (
 | INTERSHIPS          | study_id      | STUDIES          | study_id          |
 | INTERSHIP_DETAILS   | internship_id | INTERSHIPS       | internship_id     |
 | INTERSHIP_DETAILS   | student_id    | STUDENTS         | student_id        |
+| MEETINGS            | language_id   | LANGUAGES        | language_id       |
+| WEBINARS            | language_id   | LANGUAGES        | language_id       |
 | MEETINGS            | module_id     | MODULES          | module_id         |
 | MEETINGS            | session_id    | SESSIONS         | session_id        |
 | MEETING_DETAILS     | meeting_id    | MEETINGS         | meeting_id        |
@@ -913,6 +951,7 @@ CREATE TABLE STATIONARY_MEETINGS (
 | SESSIONS            | session_id    | PRODUCTS         | product_id        |
 | SESSIONS            | subject_id    | SUBJECTS         | subject_id        |
 | STATIONARY_MEETINGS | meeting_id    | MEETINGS         | meeting_id        |
+| STUDENTS            | country_id    | COUNTRIES        | country_id        |
 | ORDERS              | student_id    | STUDENTS         | student_id        |
 | STUDIES             | study_id      | PRODUCTS         | product_id        |
 | SUBJECTS            | tutor_id      | EMPLOYEES        | emploee_id        |
@@ -1382,7 +1421,12 @@ Przedstawia przychód dla każdego z produktów
 
 ```sql
 create view FINANCIAL_REPORT as
-select product_id, (select count(*) from FEES where FEES.product_id=PRODUCTS.product_id)*price as income, type_name
+select
+  product_id,
+  (select count(*)
+    from FEES
+    where FEES.product_id=PRODUCTS.product_id
+  )*price as income, type_name
 from PRODUCTS
 join PRODUCT_TYPES on PRODUCTS.type_id=PRODUCT_TYPES.type_id
 ```
@@ -1400,12 +1444,19 @@ with student_meetings as (
 select student_id
 from STUDENTS
 join (select sm1.student_id,count(*) as collisions
-              from student_meetings sm1
-              join student_meetings sm2 on sm1.student_id=sm2.student_id and (datediff(hour,sm2.term-sm1.term)<sm1.duration or
-                                                                              (datediff(hour,sm2.term-sm1.term)=sm1.duration and datediff(minute,sm2.term-sm1.term)<sm1.duration )) or
-                                                                              datediff(hour,sm1.term-sm2.term)<sm2.duration or
-                                                                              (datediff(hour,sm1.term-sm2.term)=sm2.duration and datediff(minute,sm1.term-sm2.term)<sm2.duration )
-              group by sm1.student_id) T on STUDENTS.student_id=T.student_id
+      from student_meetings sm1
+      join student_meetings sm2 on sm1.student_id=sm2.student_id and
+      (
+        datediff(hour,sm2.term-sm1.term)<sm1.duration or
+        (datediff(hour,sm2.term-sm1.term)=sm1.duration and
+        datediff(minute,sm2.term-sm1.term)<sm1.duration )
+      ) or
+      datediff(hour,sm1.term-sm2.term)<sm2.duration or
+      (
+        datediff(hour,sm1.term-sm2.term)=sm2.duration and
+        datediff(minute,sm1.term-sm2.term)<sm2.duration
+      )
+      group by sm1.student_id) T on STUDENTS.student_id=T.student_id
 where collisions>1
 ```
 
@@ -1420,11 +1471,12 @@ from ORDER_DETAILS
 join USERS on USER.user_id=ORDER_DETAILS.student_id
 ```
 
-
 # Procedury
 
 ## Użytkownicy
+
 ### CreateBasicUser
+
 Procedura CreateBasicUser tworzy nowego użytkownika w systemie. ID użytkownika zwracane jest za pomocą @user_id.
 
 Argumenty:
@@ -1447,56 +1499,56 @@ CREATE PROCEDURE CreateBasicUser
 AS
 BEGIN
   SET NOCOUNT ON;
-  
+
   BEGIN TRY
     BEGIN TRANSACTION;
-    
+
     -- Validate email format
     IF @email NOT LIKE '%_@%.%'
     BEGIN
       RAISERROR('Niepoprawny format adresu email.', 16, 1);
       RETURN;
     END
-    
+
     -- Validate phone number if provided
     IF @phone IS NOT NULL AND (LEN(@phone) != 9 OR ISNUMERIC(@phone) = 0)
     BEGIN
       RAISERROR('Niepoprawny format numeru telefonu.', 16, 1);
       RETURN;
     END
-    
+
     -- Check for existing email
     IF EXISTS (SELECT 1 FROM USERS WHERE email = @email)
     BEGIN
       RAISERROR('Email został już przypisany do innego użytkownika.', 16, 1);
       RETURN;
     END
-    
+
     -- Check for existing phone if provided
     IF @phone IS NOT NULL AND EXISTS (SELECT 1 FROM USERS WHERE phone = @phone)
     BEGIN
       RAISERROR('Numer telefonu został już przypisany do innego użytkownika.', 16, 1);
       RETURN;
     END
-    
+
     -- Insert the new user
     INSERT INTO USERS (
-      username, 
-      first_name, 
-      last_name, 
-      email, 
+      username,
+      first_name,
+      last_name,
+      email,
       phone
     ) VALUES (
-      @username, 
-      @first_name, 
-      @last_name, 
-      @email, 
+      @username,
+      @first_name,
+      @last_name,
+      @email,
       @phone
     );
-    
+
     -- Set the output parameter to the new user's ID
     SET @user_id = SCOPE_IDENTITY();
-    
+
     COMMIT TRANSACTION;
     PRINT('Użytkownik utworzony pomyślnie.')
   END TRY
@@ -1509,6 +1561,7 @@ END
 ```
 
 ### CreateStudent
+
 Procedura CreateStudent tworzy nowego studenta w systemie. ID studenta jest zwracane za pomocą @student_id
 
 Argumenty:
@@ -1539,20 +1592,20 @@ CREATE PROCEDURE CreateStudent
 AS
 BEGIN
   SET NOCOUNT ON;
-  
+
   BEGIN TRY
     BEGIN TRANSACTION;
-    
+
     -- Create basic user first
     DECLARE @id INT;
-    EXEC CreateBasicUser 
+    EXEC CreateBasicUser
       @username = @username,
       @first_name = @first_name,
       @last_name = @last_name,
       @email = @email,
       @phone = @phone,
       @user_id = @id OUTPUT;
-    
+
     -- Insert student details
     INSERT INTO STUDENTS (
       student_id,
@@ -1567,7 +1620,7 @@ BEGIN
       @postal_code,
       @country
     );
-    
+
     COMMIT TRANSACTION;
     PRINT("Student utworzony pomyślnie")
   END TRY
@@ -1580,6 +1633,7 @@ END
 ```
 
 ### CreateEmployee
+
 Procedura CreateEmployee tworzy nowego pracownika w systemie. ID pracownika jest zwracane za pomocą @employee_id
 
 Argumenty:
@@ -1593,7 +1647,6 @@ Argumenty:
 - @hire_date - Opcjonalna data zatrudnienia
 - @birth_date - Opcjonalna data urodzenia
 - @employee_id - Zwracany ID pracownika
-
 
 ```sql
 CREATE PROCEDURE CreateEmployee
@@ -1609,26 +1662,26 @@ CREATE PROCEDURE CreateEmployee
 AS
 BEGIN
   SET NOCOUNT ON;
-  
+
   BEGIN TRY
     BEGIN TRANSACTION;
-    
+
     -- Validate employee type exists
     IF NOT EXISTS (SELECT 1 FROM EMPLOYEE_TYPES WHERE type_id = @employee_type_id)
     BEGIN
       RAISERROR('Nieprawidłowy typ pracownika.', 16, 1);
       RETURN;
     END
-    
+
     -- Create basic user first
-    EXEC CreateBasicUser 
+    EXEC CreateBasicUser
       @username = @username,
       @first_name = @first_name,
       @last_name = @last_name,
       @email = @email,
       @phone = @phone,
       @employee_id = @user_id OUTPUT;
-    
+
     -- Insert employee details
     INSERT INTO EMPLOYEES (
       emploee_id,
@@ -1642,7 +1695,7 @@ BEGIN
       COALESCE(@hire_date, GETDATE()),
       @birth_date
     );
-    
+
     COMMIT TRANSACTION;
     PRINT("Pracownik utworzony pomyślnie.")
   END TRY
@@ -1655,15 +1708,18 @@ END
 ```
 
 ## Kursy
+
 ### CreateCourse
+
 Procedura `CreateCourse` tworzy nowy kurs na podstawie podanych danych oraz zwraca jego ID
 poprzez argument @course_id.
 Argumenty:
+
 - @course_name - Nazwa kursu
 - @course_description - Opis kursu
 - @product_price MONEY - Cena kursu
 - @vacancies - Ilość wolnych miejsc podczas zapisu na kurs
-- @course_id - Zwracane ID kursu 
+- @course_id - Zwracane ID kursu
 
 ```sql
 CREATE PROCEDURE [dbo].[CreateCourse]
@@ -1698,11 +1754,12 @@ BEGIN
 END;
 ```
 
-
 ### CreateModule
-Procedura `CreateModule` tworzy nowy moduł dla istniejącego kursu. Procedura sprawdza poprawność wprowadzanych danych i zwraca identyfikator nowo utworzonego modułu. ID modułu zwracane jest przez  @module_id.
+
+Procedura `CreateModule` tworzy nowy moduł dla istniejącego kursu. Procedura sprawdza poprawność wprowadzanych danych i zwraca identyfikator nowo utworzonego modułu. ID modułu zwracane jest przez @module_id.
 
 Argumenty:
+
 - @course_id - Identyfikator istniejącego kursu, do którego zostanie dodany moduł
 - @tutor_id - Identyfikator prowadzącego (nauczyciela) przypisanego do modułu
 - @module_id - Zwracane ID modułu
@@ -1739,6 +1796,7 @@ END
 ```
 
 ### CreateModuleStationaryMeeting
+
 Procedura CreateModuleStationaryMeeting tworzy nowe spotkanie stacjonarne dla modułu kursu. ID spotkania zwracane jest przez @meeting_id
 
 Argumenty:
@@ -1768,7 +1826,7 @@ CREATE PROCEDURE CreateModuleStationaryMeeting
 AS
 BEGIN
   SET NOCOUNT ON;
-  
+
   BEGIN TRY
     BEGIN TRANSACTION;
 
@@ -1788,20 +1846,20 @@ BEGIN
 
     -- Insert meeting
     INSERT INTO MEETINGS (
-      module_id, 
-      tutor_id, 
-      translator_id, 
-      meeting_name, 
-      term, 
-      duration, 
+      module_id,
+      tutor_id,
+      translator_id,
+      meeting_name,
+      term,
+      duration,
       language
     ) VALUES (
-      @module_id, 
-      @tutor_id, 
-      @translator_id, 
-      @meeting_name, 
-      @term, 
-      @duration, 
+      @module_id,
+      @tutor_id,
+      @translator_id,
+      @meeting_name,
+      @term,
+      @duration,
       @language
     );
 
@@ -1810,10 +1868,10 @@ BEGIN
 
     -- Insert stationary meeting details
     INSERT INTO STATIONARY_MEETINGS (
-      meeting_id, 
+      meeting_id,
       classroom
     ) VALUES (
-      @meeting_id, 
+      @meeting_id,
       @classroom
     );
 
@@ -1829,9 +1887,11 @@ END
 ```
 
 ### CreateModuleSyncMeeting
+
 Procedura CreateModuleSyncMeeting tworzy nowe spotkanie synchroniczne (na żywo) dla modułu kursu. ID spotkania zwracane jest za pomocą @meeting_id.
 
 Argumenty:
+
 - @module_id - Identyfikator modułu kursu
 - @tutor_id - Identyfikator prowadzącego
 - @translator_id - Opcjonalny identyfikator tłumacza
@@ -1841,7 +1901,7 @@ Argumenty:
 - @language - Język spotkania (domyślnie polski)
 - @meeting_url - Link do spotkania online
 - @video_url - Opcjonalny link do nagrania wideo
-- @meeting_id - Zwracane ID spotkania 
+- @meeting_id - Zwracane ID spotkania
 
 ```sql
 CREATE PROCEDURE CreateModuleSyncMeeting
@@ -1858,7 +1918,7 @@ CREATE PROCEDURE CreateModuleSyncMeeting
 AS
 BEGIN
   SET NOCOUNT ON;
-  
+
   BEGIN TRY
     BEGIN TRANSACTION;
 
@@ -1878,20 +1938,20 @@ BEGIN
 
     -- Insert meeting
     INSERT INTO MEETINGS (
-      module_id, 
-      tutor_id, 
-      translator_id, 
-      meeting_name, 
-      term, 
-      duration, 
+      module_id,
+      tutor_id,
+      translator_id,
+      meeting_name,
+      term,
+      duration,
       language
     ) VALUES (
-      @module_id, 
-      @tutor_id, 
-      @translator_id, 
-      @meeting_name, 
-      @term, 
-      @duration, 
+      @module_id,
+      @tutor_id,
+      @translator_id,
+      @meeting_name,
+      @term,
+      @duration,
       @language
     );
 
@@ -1900,12 +1960,12 @@ BEGIN
 
     -- Insert sync meeting details
     INSERT INTO SYNC_MEETINGS (
-      meeting_id, 
-      video_url, 
+      meeting_id,
+      video_url,
       meeting_url
     ) VALUES (
-      @meeting_id, 
-      @video_url, 
+      @meeting_id,
+      @video_url,
       @meeting_url
     );
 
@@ -1921,8 +1981,9 @@ END
 ```
 
 ### CreateModuleAsyncMeeting
+
 Procedura CreateModuleAsyncMeeting tworzy nowe spotkanie asynchroniczne dla modułu kursu. ID spotkania zwracane jest za pomocą @meeting_id.
- 
+
 Argumenty:
 
 - @module_id - Identyfikator modułu kursu
@@ -1932,7 +1993,7 @@ Argumenty:
 - @term - Termin spotkania
 - @duration - Czas trwania spotkania (domyślnie 1h 30min)
 - @language - Język spotkania (domyślnie polski)
-- @meeting_url - Link do materiałów 
+- @meeting_url - Link do materiałów
 - @meeting_id - Zwracane ID spotkania
 
 ```sql
@@ -1949,7 +2010,7 @@ CREATE PROCEDURE CreateModuleAsyncMeeting
 AS
 BEGIN
   SET NOCOUNT ON;
-  
+
   BEGIN TRY
     BEGIN TRANSACTION;
 
@@ -1969,20 +2030,20 @@ BEGIN
 
     -- Insert meeting
     INSERT INTO MEETINGS (
-      module_id, 
-      tutor_id, 
-      translator_id, 
-      meeting_name, 
-      term, 
-      duration, 
+      module_id,
+      tutor_id,
+      translator_id,
+      meeting_name,
+      term,
+      duration,
       language
     ) VALUES (
-      @module_id, 
-      @tutor_id, 
-      @translator_id, 
-      @meeting_name, 
-      @term, 
-      @duration, 
+      @module_id,
+      @tutor_id,
+      @translator_id,
+      @meeting_name,
+      @term,
+      @duration,
       @language
     );
 
@@ -1991,10 +2052,10 @@ BEGIN
 
     -- Insert async meeting details
     INSERT INTO ASYNC_MEETINGS (
-      meeting_id, 
+      meeting_id,
       meeting_url
     ) VALUES (
-      @meeting_id, 
+      @meeting_id,
       @meeting_url
     );
 
@@ -2010,7 +2071,9 @@ END
 ```
 
 ## Webinary
+
 ### CreateWebinar
+
 Procedura CreateWebinar tworzy nowy webinar w systemie. ID webinaru jest zwracane za pomocą @webinar_id
 
 Argumenty:
@@ -2044,25 +2107,25 @@ CREATE PROCEDURE CreateWebinar
 AS
 BEGIN
   SET NOCOUNT ON;
-  
+
   BEGIN TRY
     BEGIN TRANSACTION;
-    
+
     -- Validate tutor exists
     IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE emploee_id = @tutor_id)
     BEGIN
       RAISERROR('Tutor nie istnieje.', 16, 1);
       RETURN;
     END
-    
+
     -- Validate translator exists if provided
-    IF @translator_id IS NOT NULL AND 
+    IF @translator_id IS NOT NULL AND
        NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE emploee_id = @translator_id)
     BEGIN
       RAISERROR('Tłumacz nie istnieje.', 16, 1);
       RETURN;
     END
-    
+
     -- Insert product first (webinars are products)
     DECLARE @product_id INT;
     INSERT INTO PRODUCTS (
@@ -2071,14 +2134,14 @@ BEGIN
       vacancies,
       release
     ) VALUES (
-      4,  
+      4,
       @product_price,
       @vacancies,
       @release
     );
-    
+
     SET @product_id = SCOPE_IDENTITY();
-    
+
     -- Insert webinar details
     INSERT INTO WEBINARS (
       webinar_id,
@@ -2101,12 +2164,12 @@ BEGIN
       COALESCE(@publish_date, GETDATE()),
       @language
     );
-    
+
     -- Set the output parameter to the new webinar's ID
     SET @webinar_id = @product_id;
-    
+
     COMMIT TRANSACTION;
-    
+
     PRINT("Webinar utworzono pomyślnie.")
   END TRY
   BEGIN CATCH
@@ -2118,7 +2181,9 @@ END
 ```
 
 ## Studia
+
 ### CreateStudy
+
 Procedura CreateStudy tworzy nowe studia w systemie. ID studium jest zwracane za pomocą @study_id
 
 Argumenty:
