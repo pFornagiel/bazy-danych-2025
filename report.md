@@ -1486,10 +1486,10 @@ SELECT
   fee.due_date as due_date
   IIF(pt.type_name IN ('study', 'study',
   'course', 'session'), 1, 0) AS accepts_advance_payments
-FROM 
+FROM
   products p
   join products_type pt on pt.product_id = p.product_id
-  join fee on fee.product_id = p.product_id 
+  join fee on fee.product_id = p.product_id
 
 ```
 
@@ -1503,7 +1503,7 @@ CREATE VIEW product_payment_information AS
 SELECT
   o.student_id
   sum(fee.value - product.price) as to_pay_value
-FROM 
+FROM
   orders o
   join fee on fee.order_id = o.order_id
   join product p on fee.product_id = p.product_id
@@ -1512,12 +1512,11 @@ group by
 
 <!-- ``` -->
 
-
 ## Product_information
 
 Widok product_information dla każdego produktu wylistowuje jego tytuł, opis, typ i cenę.
 
-``` sql
+```sql
 create view PRODUCT_OWNERS
 select product_id,
   case
@@ -1547,39 +1546,39 @@ left join sessions on sessions.session_id = p.product_id,
 left join webinars on webinars.webinar_id = p.product_id
 ```
 
-
 # Meetings
 
 ## Attendance_list
-Widok Attendance_list pokazuje id spotkań,jego nazwe, datę kiedy się spotkanie odbyło, rodzaj spotkania, jezyk spotkania, 
+
+Widok Attendance_list pokazuje id spotkań,jego nazwe, datę kiedy się spotkanie odbyło, rodzaj spotkania, jezyk spotkania,
 imie i nazwisko nauczyciela, imie i nazwisko tłumacza, imię i nazwisko studenta wraz z jego statusem obecności
 
 ```sql
 create view ATTENDANCE_LIST as
-SELECT 
+SELECT
     m.meeting_id,
     m.meeting_name,
     m.term AS meeting_date,
     m.duration,
-    CASE 
+    CASE
         WHEN sm.meeting_id IS NOT NULL THEN 'Stationary'
         WHEN sync.meeting_id IS NOT NULL THEN 'Synchronous'
         WHEN async.meeting_id IS NOT NULL THEN 'Asynchronous'
     END AS meeting_type,
     l.language_name,
     tutor.first_name + ' ' + tutor.last_name AS tutor_name,
-    CASE 
-        WHEN trans.user_id IS NOT NULL 
-        THEN trans.first_name + ' ' + trans.last_name 
-        ELSE NULL 
+    CASE
+        WHEN trans.user_id IS NOT NULL
+        THEN trans.first_name + ' ' + trans.last_name
+        ELSE NULL
     END AS translator_name,
     u.first_name + ' ' + u.last_name AS student_name,
     u.email AS student_email,
-    CASE 
+    CASE
         WHEN md.attendance = 1 THEN 'Present'
         ELSE 'Absent'
     END AS attendance_status
-FROM 
+FROM
     MEETINGS m
     INNER JOIN MEETING_DETAILS md ON m.meeting_id = md.meeting_id
     INNER JOIN USERS u ON md.student_id = u.user_id
@@ -1589,74 +1588,77 @@ FROM
     LEFT JOIN STATIONARY_MEETINGS sm ON m.meeting_id = sm.meeting_id
     LEFT JOIN SYNC_MEETINGS sync ON m.meeting_id = sync.meeting_id
     LEFT JOIN ASYNC_MEETINGS async ON m.meeting_id = async.meeting_id
-WHERE 
+WHERE
     m.term < GETDATE()
-ORDER BY 
+ORDER BY
     m.term DESC, m.meeting_id, u.last_name, u.first_name;
-    
+
 ```
 
 ## Future_meeting_attendee_count
-Widok Future_meeting_attendee_count pokazuje id przyszłych spotkań, ich nazwę, termin, rodzaj oraz liczbę zapisanych na to spotkanie studentów 
 
-``` sql
+Widok Future_meeting_attendee_count pokazuje id przyszłych spotkań, ich nazwę, termin, rodzaj oraz liczbę zapisanych na to spotkanie studentów
+
+```sql
 CREATE VIEW vw_future_meeting_attendee_count AS
-SELECT 
+SELECT
     m.meeting_id as meeting_id,
     m.meeting_name as meeting_name,
     m.term AS meeting_date,
-    CASE 
+    CASE
         WHEN sm.meeting_id IS NOT NULL THEN 'Stationary'
         WHEN sync.meeting_id IS NOT NULL THEN 'Synchronous'
         WHEN async.meeting_id IS NOT NULL THEN 'Asynchronous'
     END AS meeting_type,
     COUNT(md.student_id) AS total_registered,
-FROM 
+FROM
     MEETINGS m
     LEFT JOIN MEETING_DETAILS md ON m.meeting_id = md.meeting_id
     LEFT JOIN STATIONARY_MEETINGS sm ON m.meeting_id = sm.meeting_id
     LEFT JOIN SYNC_MEETINGS sync ON m.meeting_id = sync.meeting_id
     LEFT JOIN ASYNC_MEETINGS async ON m.meeting_id = async.meeting_id
-WHERE 
+WHERE
     m.term > GETDATE()
-GROUP BY 
+GROUP BY
     m.meeting_id,
     m.meeting_name,
     m.term,
     sm.meeting_id,
     sync.meeting_id,
     async.meeting_id
-ORDER BY 
+ORDER BY
     m.term;
 ```
 
 ## Meeting_type
+
 Widok Meeting_type wylistowuje id meetingu, jego nazwę, date, jego typ, czy należy do kursu, czy do studiów, nazwę studiów i nazwę kursów
-``` sql
+
+```sql
 CREATE VIEW vw_meeting_types AS
-SELECT 
+SELECT
     m.meeting_id,
     m.meeting_name,
     m.term,
     -- Determine meeting type
-    CASE 
+    CASE
         WHEN sm.meeting_id IS NOT NULL THEN 'Stationary'
         WHEN sync.meeting_id IS NOT NULL THEN 'Synchronous'
         WHEN async.meeting_id IS NOT NULL THEN 'Asynchronous'
     END AS meeting_type,
     -- Check if meeting is part of a course
-    CASE 
+    CASE
         WHEN c.course_id IS NOT NULL THEN 'Yes'
         ELSE 'No'
     END AS is_part_of_course,
     c.course_name,
     -- Check if meeting is part of studies
-    CASE 
+    CASE
         WHEN s.study_id IS NOT NULL THEN 'Yes'
         ELSE 'No'
     END AS is_part_of_studies,
     sub.subject_name,
-FROM 
+FROM
     MEETINGS m
     -- Join with meeting type tables
     LEFT JOIN STATIONARY_MEETINGS sm ON m.meeting_id = sm.meeting_id
@@ -1669,30 +1671,32 @@ FROM
     LEFT JOIN SESSIONS ses ON m.session_id = ses.session_id
     LEFT JOIN SUBJECTS sub ON ses.subject_id = sub.subject_id
     LEFT JOIN STUDIES s ON sub.study_id = s.study_id
-ORDER BY 
+ORDER BY
     m.term, m.meeting_id;
 ```
 
 ## Only_course_meeting
+
 Widok Only_course_meeting pokazuje id spotkania, jego nazwę, date, czas trwania, nazwę kursu do którego należy, nazwę modułu, którego jest częścią,
 typ spotkania, imie i nazwisko nauczyciela oraz jezyk, w którym jest prowadzone spotkanie
-``` sql
+
+```sql
 CREATE VIEW Only_course_meeting AS
-SELECT 
+SELECT
     m.meeting_id,
     m.meeting_name,
     m.term AS meeting_date,
     m.duration,
     c.course_name,
     mod.module_name,
-    CASE 
+    CASE
         WHEN sm.meeting_id IS NOT NULL THEN 'Stationary'
         WHEN sync.meeting_id IS NOT NULL THEN 'Synchronous'
         WHEN async.meeting_id IS NOT NULL THEN 'Asynchronous'
     END AS meeting_type,
     tutor.first_name + ' ' + tutor.last_name AS tutor_name,
     l.language_name
-FROM 
+FROM
     MEETINGS m
     INNER JOIN MODULES mod ON m.module_id = mod.module_id
     INNER JOIN COURSES c ON mod.course_id = c.course_id
@@ -1701,19 +1705,21 @@ FROM
     LEFT JOIN STATIONARY_MEETINGS sm ON m.meeting_id = sm.meeting_id
     LEFT JOIN SYNC_MEETINGS sync ON m.meeting_id = sync.meeting_id
     LEFT JOIN ASYNC_MEETINGS async ON m.meeting_id = async.meeting_id
-WHERE 
+WHERE
     m.module_id IS NOT NULL
     AND m.session_id IS NULL
-ORDER BY 
+ORDER BY
     m.term;
 ```
 
 ## Only_studies_meeting
+
 Widok Only_studies_meeting pokazuje id spotkania, jego nazwę, date, czas trwania, nazwę studiów do którego należy, nazwę przedmiotu, którego jest częścią,
 numer zjazdu, do którego należy ,typ spotkania, imie i nazwisko nauczyciela oraz jezyk, w którym jest prowadzone spotkanie.
-``` sql
+
+```sql
 CREATE VIEW Only_studies_meeting AS
-SELECT 
+SELECT
     m.meeting_id,
     m.meeting_name,
     m.term AS meeting_date,
@@ -1721,14 +1727,14 @@ SELECT
     s.study_name,
     sub.subject_name,
     ses.session_id AS session_number,
-    CASE 
+    CASE
         WHEN sm.meeting_id IS NOT NULL THEN 'Stationary'
         WHEN sync.meeting_id IS NOT NULL THEN 'Synchronous'
         WHEN async.meeting_id IS NOT NULL THEN 'Asynchronous'
     END AS meeting_type,
     tutor.first_name + ' ' + tutor.last_name AS tutor_name,
     l.language_name
-FROM 
+FROM
     MEETINGS m
     INNER JOIN SESSIONS ses ON m.session_id = ses.session_id
     INNER JOIN SUBJECTS sub ON ses.subject_id = sub.subject_id
@@ -1738,19 +1744,22 @@ FROM
     LEFT JOIN STATIONARY_MEETINGS sm ON m.meeting_id = sm.meeting_id
     LEFT JOIN SYNC_MEETINGS sync ON m.meeting_id = sync.meeting_id
     LEFT JOIN ASYNC_MEETINGS async ON m.meeting_id = async.meeting_id
-WHERE 
+WHERE
     m.session_id IS NOT NULL
     AND m.module_id IS NULL
-ORDER BY 
+ORDER BY
     m.term;
 ```
+
 ## Room_schedule
+
 Widok Room_schedule listuje id spotkania, jego nazwę, numer pokoju, termin startu i zakończenia spotkania, czas jego trwania, imie i nazwisko
 nauczyciela, nazwę kursu lub studiów z których dane spotkanie pochodzi, nazwę języka, w którym jest prowadzone spotkanie oraz określenie, czy
 spotkanie się już odbyło, czy dopiero odbędzie
-``` sql
+
+```sql
 CREATE VIEW Room_schedule AS
-SELECT 
+SELECT
     m.meeting_id,
     m.meeting_name,
     sm.classroom AS room,
@@ -1758,16 +1767,16 @@ SELECT
     DATEADD(MINUTE, DATEDIFF(MINUTE, '00:00:00', m.duration), m.term) AS end_time,
     m.duration,
     tutor.first_name + ' ' + tutor.last_name AS tutor_name,
-    CASE 
+    CASE
         WHEN mod.module_id IS NOT NULL THEN 'Course: ' + c.course_name
         WHEN ses.session_id IS NOT NULL THEN 'Study: ' + s.study_name
     END AS meeting_context,
     l.language_name,
-    CASE 
+    CASE
         WHEN m.term < GETDATE() THEN 'Past'
         ELSE 'Upcoming'
     END AS meeting_status
-FROM 
+FROM
     MEETINGS m
     INNER JOIN STATIONARY_MEETINGS sm ON m.meeting_id = sm.meeting_id
     INNER JOIN USERS tutor ON m.tutor_id = tutor.user_id
@@ -1777,7 +1786,7 @@ FROM
     LEFT JOIN SESSIONS ses ON m.session_id = ses.session_id
     LEFT JOIN SUBJECTS sub ON ses.subject_id = sub.subject_id
     LEFT JOIN STUDIES s ON sub.study_id = s.study_id
-ORDER BY 
+ORDER BY
     sm.classroom,
     m.term;
 ```
@@ -1791,23 +1800,23 @@ i date rozpoczęcia ostatnich zajęc, ilość przedmiotów, liczbę wszystkich z
 liczbe zajęć online oraz liczbę asynchronicznych zajęć online, liczbę praktyk podpiętych pod studia,
 limit miejsc na studia, opłatę za wpis oraz liczbę zapisanych studentów na dane studia.
 
-``` sql
+```sql
 CREATE VIEW Study_information AS
 WITH study_timeframe AS (
-    SELECT 
+    SELECT
         s.study_id,
         MIN(m.term) AS start_date,
         MAX(m.term) AS end_date
-    FROM 
+    FROM
         STUDIES s
         JOIN SUBJECTS sub ON s.study_id = sub.study_id
         JOIN SESSIONS ses ON sub.subject_id = ses.subject_id
         JOIN MEETINGS m ON ses.session_id = m.session_id
-    GROUP BY 
+    GROUP BY
         s.study_id
 ),
 
-SELECT 
+SELECT
     s.study_id,
     s.study_name,
     s.study_description,
@@ -1838,7 +1847,7 @@ SELECT
         FROM PRODUCTS_DETAILS pd
         WHERE pd.product_id = s.study_id
     ) AS current_enrollment
-FROM 
+FROM
     STUDIES s
     LEFT JOIN study_timeframe tf ON s.study_id = tf.study_id
     LEFT JOIN SUBJECTS sub ON s.study_id = sub.study_id
@@ -1848,7 +1857,7 @@ FROM
     LEFT JOIN SYNC_MEETINGS sync ON m.meeting_id = sync.meeting_id
     LEFT JOIN ASYNC_MEETINGS async ON m.meeting_id = async.meeting_id
     LEFT JOIN PRODUCTS p ON s.study_id = p.product_id
-GROUP BY 
+GROUP BY
     s.study_id,
     s.study_name,
     s.study_description,
@@ -1865,9 +1874,9 @@ Widok Study_internship_information wypisuje infomacje o praktykach. Wilistowuje 
 nazwę studiów, z których te praktyki pochodzą, date ich rozpoczęcia i zakończenia, długość ich trwania,
 studentów zapisanych na te praktyki, ilość studentów, którzy zaliczyli praktyki, status praktyk.
 
-``` sql
+```sql
 CREATE VIEW study_internship_information AS
-SELECT 
+SELECT
     i.internship_id,
     s.study_id,
     s.study_name,
@@ -1879,59 +1888,60 @@ SELECT
     -- Count passed students
     SUM(CASE WHEN id.passed = 1 THEN 1 ELSE 0 END) AS students_passed,
     -- Status of internship
-    CASE 
+    CASE
         WHEN i.end_date < GETDATE() THEN 'Completed'
         WHEN i.start_date > GETDATE() THEN 'Upcoming'
         ELSE 'In Progress'
     END AS internship_status,
     -- Time until start or since end
-FROM 
+FROM
     INTERSHIPS i
     INNER JOIN STUDIES s ON i.study_id = s.study_id
     LEFT JOIN INTERSHIP_DETAILS id ON i.internship_id = id.internship_id
-GROUP BY 
+GROUP BY
     i.internship_id,
     s.study_id,
     s.study_name,
     i.start_date,
     i.end_date
-ORDER BY 
+ORDER BY
     i.start_date DESC;
 ```
 
 ## Study_meeting_information
-Widok Study_meeting_information wylistowuje informacje na temat spotkań organizowanych 
-w ramach studiów. wylisowuje id studiów, ich nazwe, id przedmiotu wraz z jego nazwą, 
-id sesji, organizowanych dla danych przedmiotów, id spotkania, nazwę spotkania, 
-datę spotkania oraz czas jego trwania, typ spotkania, link do spotkania albo numer sali 
+
+Widok Study_meeting_information wylistowuje informacje na temat spotkań organizowanych
+w ramach studiów. wylisowuje id studiów, ich nazwe, id przedmiotu wraz z jego nazwą,
+id sesji, organizowanych dla danych przedmiotów, id spotkania, nazwę spotkania,
+datę spotkania oraz czas jego trwania, typ spotkania, link do spotkania albo numer sali
 stosownie do typu spotkania, status odbycia się spotkania oraz liczbe zapisanych studentów na to spotkanie
 
-``` sql
+```sql
 CREATE VIEW study_meeting_information AS
-SELECT 
+SELECT
     s.study_id,
     s.study_name,
     sub.subject_id,
     sub.subject_name,
-    ses.session_id, 
+    ses.session_id,
     m.meeting_id,
     m.meeting_name,
     m.term AS meeting_date,
     m.duration,
     -- Meeting type determination
-    CASE 
+    CASE
         WHEN sm.meeting_id IS NOT NULL THEN 'Stationary'
         WHEN sync.meeting_id IS NOT NULL THEN 'Synchronous'
         WHEN async.meeting_id IS NOT NULL THEN 'Asynchronous'
     END AS meeting_type,
     -- Location/URL information based on type
-    CASE 
+    CASE
         WHEN sm.meeting_id IS NOT NULL THEN sm.classroom
         WHEN sync.meeting_id IS NOT NULL THEN sync.meeting_url
         WHEN async.meeting_id IS NOT NULL THEN async.video_url
     END AS meeting_location,
     -- Meeting status
-    CASE 
+    CASE
         WHEN m.term < GETDATE() THEN 'Past'
         ELSE 'Upcoming'
     END AS meeting_status,
@@ -1941,7 +1951,7 @@ SELECT
         FROM MEETING_DETAILS md
         WHERE md.meeting_id = m.meeting_id
     ) AS current_enrollment
-FROM 
+FROM
     STUDIES s
     INNER JOIN SUBJECTS sub ON s.study_id = sub.study_id
     INNER JOIN SESSIONS ses ON sub.subject_id = ses.subject_id
@@ -1950,7 +1960,7 @@ FROM
     LEFT JOIN SYNC_MEETINGS sync ON m.meeting_id = sync.meeting_id
     LEFT JOIN ASYNC_MEETINGS async ON m.meeting_id = async.meeting_id
     LEFT JOIN PRODUCTS p ON ses.session_id = p.product_id
-ORDER BY 
+ORDER BY
     s.study_id,
     ses.session_id,  -- Added to ordering
     m.term;
@@ -1959,48 +1969,48 @@ ORDER BY
 ## Study_offers
 
 Widok study_offers wylistowuje informacje o oferowanych aktualnie studiach. Podaje informacje
-o id studiów, ich nazwie, ich opisie, dacie rozpoczęcia pierwszych i ostatnich zajęć, ilości 
+o id studiów, ich nazwie, ich opisie, dacie rozpoczęcia pierwszych i ostatnich zajęć, ilości
 przedmiotów oraz spotkań z podziałem na typy spotkań, informacje o ilości wszystkich, zajętych
- oraz wolnych miejsc na studiach oraz opłacie za nie oraz statusie czsowym studiów.
+oraz wolnych miejsc na studiach oraz opłacie za nie oraz statusie czsowym studiów.
 
-``` sql
+```sql
 CREATE VIEW study_offers AS
 WITH study_timeframe AS (
-    SELECT 
+    SELECT
         s.study_id,
         MIN(m.term) AS start_date,
         MAX(m.term) AS end_date
-    FROM 
+    FROM
         STUDIES s
         JOIN SUBJECTS sub ON s.study_id = sub.study_id
         JOIN SESSIONS ses ON sub.subject_id = ses.subject_id
         JOIN MEETINGS m ON ses.session_id = m.session_id
-    GROUP BY 
+    GROUP BY
         s.study_id
 ),
 study_languages AS (
-    SELECT 
+    SELECT
         s.study_id,
         STRING_AGG(DISTINCT l.language_name, ', ') AS available_languages
-    FROM 
+    FROM
         STUDIES s
         JOIN SUBJECTS sub ON s.study_id = sub.study_id
         JOIN SESSIONS ses ON sub.subject_id = ses.subject_id
         JOIN MEETINGS m ON ses.session_id = m.session_id
         JOIN LANGUAGES l ON m.language_id = l.language_id
-    GROUP BY 
+    GROUP BY
         s.study_id
 ),
 current_enrollment AS (
-    SELECT 
+    SELECT
         product_id,
         COUNT(DISTINCT student_id) AS enrolled_students
-    FROM 
+    FROM
         PRODUCTS_DETAILS
-    GROUP BY 
+    GROUP BY
         product_id
 )
-SELECT 
+SELECT
     s.study_id,
     s.study_name,
     s.study_description,
@@ -2024,11 +2034,11 @@ SELECT
     p.total_vacancies - COALESCE(ce.enrolled_students, 0) AS available_places,
     p.price AS entry_fee,
     -- Status information
-    CASE 
+    CASE
         WHEN tf.start_date > GETDATE() THEN 'Upcoming'
         ELSE 'In Progress'
     END AS study_status
-FROM 
+FROM
     STUDIES s
     JOIN PRODUCTS p ON s.study_id = p.product_id
     LEFT JOIN study_timeframe tf ON s.study_id = tf.study_id
@@ -2040,10 +2050,10 @@ FROM
     LEFT JOIN STATIONARY_MEETINGS sm ON m.meeting_id = sm.meeting_id
     LEFT JOIN SYNC_MEETINGS sync ON m.meeting_id = sync.meeting_id
     LEFT JOIN ASYNC_MEETINGS async ON m.meeting_id = async.meeting_id
-WHERE 
+WHERE
     p.total_vacancies - COALESCE(ce.enrolled_students, 0) > 0  -- Only studies with available places
     AND (tf.end_date IS NULL OR tf.end_date >= GETDATE())     -- Only current or future studies
-GROUP BY 
+GROUP BY
     s.study_id,
     s.study_name,
     s.study_description,
@@ -2053,7 +2063,7 @@ GROUP BY
     p.total_vacancies,
     p.price,
     ce.enrolled_students
-ORDER BY 
+ORDER BY
     tf.start_date;
 ```
 
@@ -2062,29 +2072,29 @@ ORDER BY
 Widok Study_passed wylistowuje id studiów, ich nazwe, id studenta zapisanego na te studia,
 jego imie i nazwisko wraz z informacją, czy zdał dane studia i jego frekwencją w wykładach.
 
-``` sql
+```sql
 CREATE VIEW study_passes AS
-SELECT 
+SELECT
     s.study_id,
     s.study_name,
     u.user_id AS student_id,
     u.email,
     -- Study completion status directly from PRODUCTS_DETAILS
-    CASE 
+    CASE
         WHEN pd.passed = 1 THEN 'Passed'
         ELSE 'Not Passed'
     END AS study_status,
     -- Meeting attendance details
     COUNT(DISTINCT m.meeting_id) AS total_available_meetings,
     COUNT(DISTINCT CASE WHEN md.attendance = 1 THEN m.meeting_id END) AS meetings_attended,
-    CASE 
+    CASE
         WHEN COUNT(DISTINCT m.meeting_id) = 0 THEN 0
-        ELSE CAST(COUNT(DISTINCT CASE WHEN md.attendance = 1 THEN m.meeting_id END) AS FLOAT) / 
-             COUNT(DISTINCT m.meeting_id) * 100 
+        ELSE CAST(COUNT(DISTINCT CASE WHEN md.attendance = 1 THEN m.meeting_id END) AS FLOAT) /
+             COUNT(DISTINCT m.meeting_id) * 100
     END AS attendance_rate,
     -- Internship completion details
     id.passed as internships_passed
-FROM 
+FROM
     STUDIES s
     INNER JOIN PRODUCTS_DETAILS pd ON s.study_id = pd.product_id
     INNER JOIN ORDERS o ON pd.order_id = o.order_id
@@ -2097,7 +2107,7 @@ FROM
     -- Internship completion
     LEFT JOIN INTERSHIPS i ON s.study_id = i.study_id
     LEFT JOIN INTERSHIP_DETAILS id ON i.internship_id = id.internship_id AND id.student_id = pd.student_id
-GROUP BY 
+GROUP BY
     s.study_id,
     s.study_name,
     u.user_id,
@@ -2107,7 +2117,7 @@ GROUP BY
     pd.order_id,
     o.order_date,
     pd.passed
-ORDER BY 
+ORDER BY
     s.study_name,
     u.last_name,
     u.first_name;
@@ -2118,25 +2128,24 @@ ORDER BY
 Widok Study_session_schedule wylistowuje wszystkie zjazdy wraz z czasem rozpoczęcia pierwszych
 i ostatnich zajęć wramach tego zjazdu
 
-``` sql
+```sql
 CREATE VIEW study_session_schedule AS
   SELECT
   s.study_id,
   s.session_id,
   MIN(m.term) AS start_time,
   MAX(m.term) AS end_time
-  FROM 
+  FROM
     sessions s
     join meetings m on m.session_id =  s.session_id
-  GROUP BY 
+  GROUP BY
     s.study_id,
     s.session_id
 ```
 
 ## Study_syllabus
 
-
-``` sql
+```sql
 CREATE VIEW study_syllabus AS
 SELECT
   s.study_id AS study_id,
@@ -2146,12 +2155,12 @@ SELECT
   COUNT(m.meeting_id) AS meeting_count,
   MIN(m.start_time) AS start_time,
   MAX(m.end_time) AS end_time
-  FROM 
+  FROM
     stadies s
-    JOIN subjects sub on sub.study_id = s.study_id 
+    JOIN subjects sub on sub.study_id = s.study_id
     join sessions on sub.subject_id = sessions.subject_id
     JOIN meetings m ON m.session_id = sessions.session_id
-  GROUP BY 
+  GROUP BY
     s.study_id
 ```
 
@@ -2877,3 +2886,379 @@ Argumenty:
 - @product_price - Cena studiów (domyślnie 1000)
 - @vacancies - Liczba dostępnych miejsc (domyślnie 30)
 - @study_id - Wyjściowy identyfikator utworzonych studiów
+
+# Funkcje
+
+## Kategoria zamówienia i produkty
+
+### Wyliczenie wartości koszyka
+
+```sql
+CREATE FUNCTION GetCartValue(@StudentId INT)
+RETURNS MONEY
+AS
+BEGIN
+    RETURN (
+        SELECT SUM(p.price)
+        FROM SHOPPING_CART sc
+        JOIN PRODUCTS p ON sc.product_id = p.product_id
+        WHERE sc.student_id = @StudentId
+    );
+END;
+```
+
+### Wyliczenie wartości zamówienia
+
+```sql
+CREATE FUNCTION GetOrderValue(@OrderId INT)
+RETURNS MONEY
+AS
+BEGIN
+    RETURN (
+        SELECT SUM(f.fee_value)
+        FROM FEES f
+        WHERE f.order_id = @OrderId
+    );
+END;
+```
+
+### Sprawdzenie czy zjazd został zakupiony pojedynczo
+
+```sql
+CREATE FUNCTION isSingleProduct(@fee_id INT)
+RETURNS BIT
+AS
+BEGIN
+    DECLARE @result BIT;
+
+    SELECT
+        @result = CASE
+                     WHEN ft.type_name = 'study session' or ft.type_name = 'subject session' THEN 0
+                     ELSE 1
+                  END
+    FROM FEES f
+    JOIN FEE_TYPE ft ON f.type_id = ft.type_id
+    WHERE f.fee_id = @fee_id;
+
+    RETURN @result;
+END;
+```
+
+### Znalezienie studiów do których należy sesja
+
+```sql
+CREATE FUNCTION getParentId(@session_id INT)
+RETURNS INT
+AS
+BEGIN
+    DECLARE @study_id INT;
+
+    SELECT
+        @study_id = s.subject_id
+    FROM
+        SESSIONS ses
+    JOIN SUBJECTS s ON ses.subject_id = s.subject_id
+    WHERE
+        ses.session_id = @session_id;
+
+    RETURN @study_id;
+END;
+```
+
+### Wyliczenie wolnych miejsc dla danego produktu
+
+```sql
+CREATE FUNCTION GetVacanciesForProduct(@ProductId INT)
+RETURNS INT
+AS
+BEGIN
+    DECLARE @TotalVacancies INT, @EnrolledStudents INT;
+
+    SELECT @TotalVacancies = p.total_vacancies
+    FROM PRODUCTS p
+    WHERE p.product_id = @ProductId;
+
+    SELECT @EnrolledStudents = COUNT(*)
+    FROM PRODUCTS_DETAILS pd
+    WHERE pd.product_id = @ProductId;
+
+    RETURN ISNULL(@TotalVacancies - @EnrolledStudents, 0);
+END;
+```
+
+### Sprawdzenie czy student posiada dany produkt
+
+```sql
+CREATE FUNCTION CheckStudentOwnsProduct(@student_id INT, @product_id INT)
+RETURNS BIT
+AS
+BEGIN
+    DECLARE @owns_product BIT;
+
+    SELECT
+        @owns_product = CASE
+                            WHEN EXISTS (
+                                SELECT 1
+                                FROM PRODUCTS_DETAILS pd
+                                WHERE pd.product_id = @product_id
+                                  AND pd.student_id = @student_id
+                            ) THEN 1
+                            ELSE 0
+                        END;
+
+    RETURN @owns_product;
+END;
+```
+
+### Sprawdzenie czy student może dodać produkt do koszyka
+
+```sql
+CREATE FUNCTION CanAddToCart(@StudentId INT, @ProductId INT)
+RETURNS BIT
+AS
+BEGIN
+    DECLARE @OwnsProduct BIT;
+
+    SELECT @OwnsProduct = CheckStudentOwnsProduct(@StudentId,@ProductId)
+
+    RETURN @OwnsProduct
+END;
+```
+
+### Sprawdzenie czy student może kupić produkt
+
+```sql
+CREATE FUNCTION CanStudentBuyProduct(@StudentId INT, @ProductId INT)
+RETURNS BIT
+AS
+BEGIN
+    DECLARE @AvailableVacancies INT;
+
+    SELECT @AvailableVacancies = GetVacanciesForProduct(@ProductId)
+
+    RETURN (
+        CASE
+            WHEN @AvailableVacancies > 0 THEN 1
+            ELSE 0
+        END
+    );
+END;
+```
+
+## Kursy, studia i webinary
+
+### Sprawdzenie czy student zdał praktyki
+
+```sql
+CREATE FUNCTION DoesStudentPassInternship(@StudentId INT)
+RETURNS BIT
+AS
+BEGIN
+    DECLARE @Result bit = 0
+    IF EXISTS (SELECT 1 FROM INTERNSHIP_DETAILS WHERE @StudentId=student_id)
+    BEGIN
+        IF NOT EXISTS (
+            SELECT 1
+            FROM INTERNSHIP_DETAILS id
+            JOIN INTERNSHIPS i ON i.internship_id=id.internship_id
+            WHERE id.student_id=@StudentId AND i.end_date>GETDATE()
+        )
+        BEGIN
+            IF NOT EXISTS (
+                SELECT 1
+                FROM INTERNSHIP_DETAILS id
+                WHERE id.student_id=@StudentId and id.passed=0
+            )
+            SET @Result=1
+        END
+    END
+    RETURN @Result;
+END
+```
+
+### Wyliczenie obecności studenta na danych studiach
+
+```sql
+CREATE FUNCTION GetAttendanceForStudy(@StudentId INT, @StudyId INT)
+RETURNS DECIMAL(5, 2)
+AS
+BEGIN
+    DECLARE @TotalMeetings INT, @AttendedMeetings INT;
+
+    SELECT @TotalMeetings = COUNT(*)
+    FROM MEETING_DETAILS md
+    JOIN MEETINGS m ON md.meeting_id = m.meeting_id
+    JOIN SESSIONS sess ON m.session_id = sess.session_id
+    JOIN SUBJECTS subj ON sess.subject_id = subj.subject_id
+    WHERE subj.study_id = @StudyId;
+
+    SELECT @AttendedMeetings = COUNT(*)
+    FROM MEETING_DETAILS md
+    JOIN MEETINGS m ON md.meeting_id = m.meeting_id
+    JOIN SESSIONS sess ON m.session_id = sess.session_id
+    JOIN SUBJECTS subj ON sess.subject_id = subj.subject_id
+    WHERE subj.study_id = @StudyId AND md.student_id = @StudentId AND md.attendance = 1;
+
+    RETURN ISNULL((@AttendedMeetings * 100.0) / NULLIF(@TotalMeetings, 0), 0);
+END;
+```
+
+### Wyliczenie obecności studenta na danym kursie
+
+```sql
+CREATE FUNCTION GetAttendanceForCourse(@StudentId INT, @CourseId INT)
+RETURNS DECIMAL(5, 2)
+AS
+BEGIN
+    DECLARE @TotalMeetings INT, @AttendedMeetings INT;
+
+    SELECT @TotalMeetings = COUNT(*)
+    FROM MEETING_DETAILS md
+    JOIN MEETINGS m ON md.meeting_id = m.meeting_id
+    JOIN MODULES mod ON m.module_id = mod.module_id
+    WHERE mod.course_id = @CourseId;
+
+    SELECT @AttendedMeetings = COUNT(*)
+    FROM MEETING_DETAILS md
+    JOIN MEETINGS m ON md.meeting_id = m.meeting_id
+    JOIN MODULES mod ON m.module_id = mod.module_id
+    WHERE mod.course_id = @CourseId AND md.student_id = @StudentId AND md.attendance = 1;
+
+    RETURN ISNULL((@AttendedMeetings * 100.0) / NULLIF(@TotalMeetings, 0), 0);
+END;
+```
+
+### Zwraca plan studiów w formie spotkań
+
+```sql
+CREATE FUNCTION GetStudySchedule(@StudyId INT)
+RETURNS TABLE
+AS
+RETURN (
+    SELECT m.meeting_id, m.meeting_name, m.term, m.duration, l.language_name
+    FROM MEETING_DETAILS md
+    JOIN MEETINGS m ON md.meeting_id = m.meeting_id
+    JOIN LANGUAGES l ON m.language_id = l.language_id
+    JOIN SESSIONS s ON m.session_id=s.session_id
+    JOIN SUBJECTS sub on sub.subject_id=s.session_id
+    JOIN STUDIES st on st.study_id=sub.study_id
+    WHERE st.study_id=@StudyId
+    ORDER BY m.term
+);
+```
+
+### Zwraca plan kursu w formie spotkań
+
+```sql
+CREATE FUNCTION GetCourseSchedule(@CourseId INT)
+RETURNS TABLE
+AS
+RETURN (
+    SELECT m.meeting_id, m.meeting_name, m.term, m.duration, l.language_name
+    FROM MEETING_DETAILS md
+    JOIN MEETINGS m ON md.meeting_id = m.meeting_id
+    JOIN LANGUAGES l ON m.language_id = l.language_id
+    JOIN MODULES mod ON mod.module_id=m.module_id
+    JOIN COURSES c on c.course_id=m.course_id
+    WHERE c.course_id=@CourseId
+    ORDER BY m.term
+);
+```
+
+### Plan zajęć studenta
+
+```sql
+CREATE FUNCTION GetStudentTimetable(@StudentId INT)
+RETURNS TABLE
+AS
+RETURN (
+    SELECT m.meeting_id, m.meeting_name, m.term, m.duration, l.language_name
+    FROM MEETING_DETAILS md
+    JOIN MEETINGS m ON md.meeting_id = m.meeting_id
+    JOIN LANGUAGES l ON m.language_id = l.language_id
+    WHERE md.student_id = @StudentId
+    ORDER BY m.term
+);
+```
+
+### Plan zajęć nauczyciela
+
+```sql
+CREATE FUNCTION GetTutorTimetable(@EmployeeId INT)
+RETURNS TABLE
+AS
+RETURN (
+    SELECT m.meeting_id, m.meeting_name, m.term, m.duration, l.language_name
+    FROM MEETINGS m
+    JOIN LANGUAGES l ON m.language_id = l.language_id
+    WHERE m.tutor_id = @EmployeeId
+    ORDER BY m.term
+);
+```
+
+### Plan zajęć tłumacza
+
+```sql
+CREATE FUNCTION GetTranslatorTimetable(@EmployeeId INT)
+RETURNS TABLE
+AS
+RETURN (
+    SELECT m.meeting_id, m.meeting_name, m.term, m.duration, l.language_name
+    FROM MEETINGS m
+    JOIN LANGUAGES l ON m.language_id = l.language_id
+    WHERE m.translator_id = @EmployeeId
+    ORDER BY m.term
+);
+```
+
+### Sprawdzenie czy spotkanie koliduje z resztą planu użytkownika
+
+```sql
+CREATE FUNCTION CheckMeetingConflict(@Id INT, @MeetingId INT)
+RETURNS BIT
+AS
+BEGIN
+    DECLARE @Conflict BIT = 0;
+
+    DECLARE @MeetingTerm DATETIME, @MeetingDuration INT;
+    SELECT @MeetingTerm = term, @MeetingDuration = duration
+    FROM MEETINGS
+    WHERE meeting_id = @MeetingId;
+
+    IF @MeetingTerm IS NULL OR @MeetingDuration IS NULL
+    BEGIN
+        RETURN 0;
+    END
+
+    IF EXISTS (
+        SELECT 1
+        FROM MEETING_DETAILS md
+        JOIN MEETINGS m ON md.meeting_id = m.meeting_id
+        WHERE md.student_id = @Id
+          AND m.term < DATEADD(MINUTE, @MeetingDuration, @MeetingTerm)
+          AND DATEADD(MINUTE, m.duration, m.term) > @MeetingTerm
+		  AND m.meeting_id <> @MeetingId
+        UNION ALL
+
+        SELECT 1
+        FROM MEETINGS m
+        WHERE m.tutor_id = @Id
+          AND m.term < DATEADD(MINUTE, @MeetingDuration, @MeetingTerm)
+          AND DATEADD(MINUTE, m.duration, m.term) > @MeetingTerm
+		  AND m.meeting_id <> @MeetingId
+        UNION ALL
+
+        SELECT 1
+        FROM MEETINGS m
+        WHERE m.translator_id = @Id
+          AND m.term < DATEADD(MINUTE, @MeetingDuration, @MeetingTerm)
+          AND DATEADD(MINUTE, m.duration, m.term) > @MeetingTerm
+		  AND m.meeting_id <> @MeetingId
+    )
+    BEGIN
+        SET @Conflict = 1;
+    END
+
+    RETURN @Conflict;
+END;
+```
