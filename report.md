@@ -195,14 +195,14 @@ CREATE TABLE STUDENTS (
 
 | Column Name | Data Type | Properties                 |
 | ----------- | --------- | -------------------------- |
-| emploee_id  | int       | Primary Key<br>Foreign Key |
+| employee_id | int       | Primary Key<br>Foreign Key |
 | type_id     | int       | Foreign Key                |
 | hire_date   | date      |                            |
 | birth_date  | date      |                            |
 
 Zawiera szczególne informacje dla pracowników (dyrektora, pracownika dziekanatu, nauczyciela, tłumacza)
 
-- _emploee_id_ int - klucz główny, klucz obcy, identyfikator pracownika
+- _employee_id_ int - klucz główny, klucz obcy, identyfikator pracownika
 
 - type_id int - sklucz obcy, typ pracownika (opisany poniżej)
 
@@ -216,11 +216,11 @@ Zawiera szczególne informacje dla pracowników (dyrektora, pracownika dziekanat
 ```sql
 -- Table: EMPLOYEES
 CREATE TABLE EMPLOYEES (
-    emploee_id int  NOT NULL,
+    employee_id int  NOT NULL,
     type_id int  NOT NULL,
     hire_date date  NULL DEFAULT current_date,
     birth_date date  NULL DEFAULT current_date,
-    CONSTRAINT EMPLOYEES_pk PRIMARY KEY  (emploee_id)
+    CONSTRAINT EMPLOYEES_pk PRIMARY KEY  (employee_id)
 );
 ```
 
@@ -307,7 +307,7 @@ CREATE TABLE PRODUCTS (
     type_id int  NOT NULL,
     price money  NULL DEFAULT 1000 CHECK (price>=0),
     total_vacancies int  NOT NULL DEFAULT 30 CHECK (total_amount>0),
-    release date  NOT NULL,
+    release date NOT NULL,
     CONSTRAINT product_id PRIMARY KEY  (product_id)
 );
 ```
@@ -531,7 +531,7 @@ CREATE TABLE WEBINARS (
    video_url text  NULL,
    webinar_duration time(0)  NULL DEFAULT 01:30:00 CHECK (DurationTime > '00:00:00'),
    publish_date datetime  NOT NULL,
-   language varchar(50)  NOT NULL DEFAULT 'POLISH',
+   language_id int  NOT NULL DEFAULT 0,
    CONSTRAINT WEBINARS_pk PRIMARY KEY  (webinar_id)
 );
 ```
@@ -545,6 +545,7 @@ CREATE TABLE WEBINARS (
 | course_id          | int          | Primary Key<br>Foreign Key |
 | course_name        | nvarchar(50) |                            |
 | course_description | text         |                            |
+| advance_share      | decimal(5,4) |                            |
 
 Zawiera informacje o produktach, które są kursami
 
@@ -554,12 +555,19 @@ Zawiera informacje o produktach, które są kursami
 
 - course_description text nullable - opis kursu
 
+- advance_share - reprezentacja procentowej części ceny kursu, która jest uznawana za zaliczkę:
+  - warunek: advance_share >= 0 and advance_share <= 1
+  - default: 0.3000
+
 ```sql
 -- Table: COURSES
 CREATE TABLE COURSES (
     course_id int  NOT NULL,
     course_name nvarchar(50)  NOT NULL,
     course_description text  NULL,
+    advance_share decimal(5,4) NOT NULL
+      DEFAULT 0.3000
+      CHECK (advance_share >= 0 and advance_share <= 1),
     CONSTRAINT COURSES_pk PRIMARY KEY  (course_id)
 );
 ```
@@ -592,6 +600,8 @@ CREATE TABLE MODULES (
     module_id int  NOT NULL IDENTITY,
     course_id int  NOT NULL,
     tutor_id int  NOT NULL,
+    module_name nvarchar(50)  NOT NULL,
+    module_description text  NOT NULL,
     CONSTRAINT MODULES_pk PRIMARY KEY  (module_id)
 );
 ```
@@ -693,17 +703,17 @@ Zawiera informacje o praktykach prowadzonych na danych studiach
 
 - study_id int - klucz obcy, identifikator studiów
 
-- start_date date nullable - data rozpoczęcia praktyk
+- start_date date - data rozpoczęcia praktyk
 
-- end_date date nullable - data zakończenia praktyk
+- end_date date - data zakończenia praktyk
 
 ```sql
 -- Table: INTERSHIPS
 CREATE TABLE INTERSHIPS (
     internship_id int  NOT NULL IDENTITY,
     study_id int  NOT NULL,
-    start_date date  NULL,
-    end_date date  NULL,
+    start_date date NOT NULL,
+    end_date date NOT NULL,
     CONSTRAINT INTERSHIPS_pk PRIMARY KEY  (internship_id)
 );
 ```
@@ -727,7 +737,6 @@ Zawiera szczegółowe informacje na temat danych praktyk
   0 - student nie zaliczył praktyk (brak 100% obecności)
 
 ```sql
--- Table: INTERSHIP_DETAILS
 -- Table: INTERSHIP_DETAILS
 CREATE TABLE INTERSHIP_DETAILS (
     internship_id int  NOT NULL,
@@ -787,7 +796,7 @@ CREATE TABLE MEETINGS (
     meeting_name varchar(30)  NOT NULL,
     term datetime  NOT NULL,
     duration time(0)  NULL DEFAULT 01:30:00 CHECK (duration>'00:00:00'),
-    language varchar(30)  NOT NULL DEFAULT 'POLISH',
+    language_id int  NOT NULL DEFAULT 0,
     module_id int  NULL,
     session_id int  NULL,
     CONSTRAINT MEETINGS_pk PRIMARY KEY  (meeting_id)
@@ -925,8 +934,8 @@ CREATE TABLE LANGUAGES (
 | SHOPPING_CART       | student_id    | STUDENTS         | student_id        |
 | COURSES             | course_id     | PRODUCTS         | product_id        |
 | EMPLOYEES           | type_id       | EMPLOYEE_TYPES   | type_id           |
-| EMPLOYEES           | emploee_id    | USERS            | user_id           |
-| WEBINARS            | tutor_id      | EMPLOYEES        | emploee_id        |
+| EMPLOYEES           | employee_id   | USERS            | user_id           |
+| WEBINARS            | tutor_id      | EMPLOYEES        | employee_id       |
 | FEES                | order_id      | ORDERS           | order_id          |
 | FEES                | product_id    | PRODUCTS         | product_id        |
 | FEES                | type_id       | FEE_TYPE         | type_id           |
@@ -939,10 +948,10 @@ CREATE TABLE LANGUAGES (
 | MEETINGS            | session_id    | SESSIONS         | session_id        |
 | MEETING_DETAILS     | meeting_id    | MEETINGS         | meeting_id        |
 | MEETING_DETAILS     | student_id    | STUDENTS         | student_id        |
-| MEETINGS            | tutor_id      | EMPLOYEES        | emploee_id        |
-| MEETINGS            | translator_id | EMPLOYEES        | emploee_id        |
+| MEETINGS            | tutor_id      | EMPLOYEES        | employee_id       |
+| MEETINGS            | translator_id | EMPLOYEES        | employee_id       |
 | MODULES             | course_id     | COURSES          | course_id         |
-| MODULES             | tutor_id      | EMPLOYEES        | emploee_id        |
+| MODULES             | tutor_id      | EMPLOYEES        | employee_id       |
 | PRODUCTS_DETAILS    | order_id      | ORDERS           | order_id          |
 | PRODUCTS_DETAILS    | product_id    | PRODUCTS         | product_id        |
 | PRODUCTS_DETAILS    | student_id    | STUDENTS         | student_id        |
@@ -954,11 +963,11 @@ CREATE TABLE LANGUAGES (
 | STUDENTS            | country_id    | COUNTRIES        | country_id        |
 | ORDERS              | student_id    | STUDENTS         | student_id        |
 | STUDIES             | study_id      | PRODUCTS         | product_id        |
-| SUBJECTS            | tutor_id      | EMPLOYEES        | emploee_id        |
+| SUBJECTS            | tutor_id      | EMPLOYEES        | employee_id       |
 | SUBJECTS            | study_id      | STUDIES          | study_id          |
 | SYNC_MEETINGS       | meeting_id    | MEETINGS         | meeting_id        |
 | STUDENTS            | student_id    | USERS            | user_id           |
-| WEBINARS            | translator_id | EMPLOYEES        | emploee_id        |
+| WEBINARS            | translator_id | EMPLOYEES        | employee_id       |
 | WEBINARS            | webinar_id    | PRODUCTS         | product_id        |
 
 # Widoki
@@ -992,12 +1001,12 @@ Widok emploee_type_list wylisowuje wszystkich imiona i nazwiaska wszystkich prac
 ```sql
 CREATE view emploee_type_list as
 	SELECT
-		emploees.emploee_id as emploee_id,
+		emploees.employee_id as employee_id,
 		users.first_name + ' ' + users.last_name AS name,
 		emploee_type.type_name as rola
 
 	FROM emploees
-	join user on users.user_id = emploees.emploee_id
+	join user on users.user_id = emploees.employee_id
 	join emploee_type on emploee_type.type_id = emploees.type_id
 ;
 ```
@@ -1298,7 +1307,7 @@ join courses
 join products
 	on courses.course_id = products.product_id
 join emploees Tu
-	on Tu.emploee_id = m.tutor_id
+	on Tu.employee_id = m.tutor_id
 ;
 ```
 
@@ -1471,7 +1480,163 @@ from ORDER_DETAILS
 join USERS on USER.user_id=ORDER_DETAILS.student_id
 ```
 
-# Procedury
+# Procedury,
+
+## Sprawdzanie poprawności danych przed operacją
+
+### CheckWebinarExists
+
+Procedura `CheckWebinarExists` sprawdza czy webinar o podanym ID istnieje w bazie. Jeśli nie - zgłasza błąd.
+
+Argumenty:
+
+- @webinar_id INT - Identyfikator webinaru do sprawdzenia
+
+```sql
+CREATE PROCEDURE [dbo].[CheckWebinarExists]
+  @webinar_id INT
+AS
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM WEBINARS WHERE webinar_id = @webinar_id)
+  BEGIN
+    RAISERROR('Webinar o podanym ID nie istnieje.', 16, 1);
+    RETURN;
+  END
+END;
+GO
+```
+
+### CheckEmployeeExists
+
+Procedura `CheckEmployeeExists` sprawdza czy pracownik o podanym ID istnieje w bazie. Jeśli nie - zgłasza błąd.
+
+Argumenty:
+
+- @employee_id INT - Identyfikator pracownika do sprawdzenia
+
+```sql
+CREATE PROCEDURE [dbo].[CheckEmployeeExists]
+  @employee_id INT
+AS
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE employee_id = @employee_id)
+  BEGIN
+    RAISERROR('Pracownik o id %d nie istnieje.', 16, 1, @employee_id);
+    RETURN;
+  END
+END;
+GO
+```
+
+### CheckMeetingExists
+
+Procedura `CheckMeetingExists` sprawdza czy spotkanie o podanym ID istnieje w bazie. Jeśli nie - zgłasza błąd.
+
+Argumenty:
+
+- @meeting_id INT - Identyfikator spotkania do sprawdzenia
+
+```sql
+CREATE PROCEDURE [dbo].[CheckMeetingExists]
+  @meeting_id INT
+AS
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM MEETINGS WHERE meeting_id = @meeting_id)
+  BEGIN
+    RAISERROR('Sesja o ID %d nie istnieje.', 16, 1, @meeting_id);
+    RETURN;
+  END
+END;
+GO
+```
+
+### CheckSessionExists
+
+Procedura `CheckSessionExists` sprawdza czy sesja o podanym ID istnieje w bazie. Jeśli nie - zgłasza błąd.
+
+Argumenty:
+
+- @session_id INT - Identyfikator sesji do sprawdzenia
+
+```sql
+CREATE PROCEDURE [dbo].[CheckSessionExists]
+  @session_id INT
+AS
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM SESSIONS WHERE session_id = @session_id)
+  BEGIN
+    RAISERROR('Sesja o ID %d nie istnieje.', 16, 1, @session_id);
+    RETURN;
+  END
+END;
+GO
+```
+
+### CheckStudyExists
+
+Procedura `CheckStudyExists` sprawdza czy studium o podanym ID istnieje w bazie. Jeśli nie - zgłasza błąd.
+
+Argumenty:
+
+- @study_id INT - Identyfikator studium do sprawdzenia
+
+```sql
+CREATE PROCEDURE [dbo].[CheckStudyExists]
+  @study_id INT
+AS
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM STUDIES WHERE study_id = @study_id)
+  BEGIN
+    RAISERROR('Studia o ID %d nie istnieją.', 16, 1, @study_id);
+    RETURN;
+  END
+END;
+GO
+```
+
+### CheckCountryExists
+
+Procedura `CheckCountryExists` sprawdza czy kraj o podanym ID istnieje w bazie. Jeśli nie - zgłasza błąd.
+
+Argumenty:
+
+- @country_id INT - Identyfikator kraju do sprawdzenia
+
+```sql
+CREATE PROCEDURE [dbo].[CheckCountryExists]
+  @country_id INT
+AS
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM COUNTRIES WHERE country_id = @country_id)
+  BEGIN
+    RAISERROR('Państwo nie istnieje.', 16, 1);
+    RETURN;
+  END
+END;
+GO
+```
+
+### CheckFeeExists
+
+Procedura `CheckFeeExists` sprawdza czy należność o podanym ID istnieje w bazie. Jeśli nie - zgłasza błąd.
+
+Argumenty:
+
+- @fee_id INT - Identyfikator opłaty do sprawdzenia
+
+```sql
+CREATE PROCEDURE [dbo].[CheckFeeExists]
+  @fee_id INT
+AS
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM FEES WHERE fee_id = @fee_id)
+  BEGIN
+    RAISERROR('Należność o podanym ID nie istnieje.', 16, 1);
+    RETURN;
+  END
+END;
+GO
+```
 
 ## Użytkownicy
 
@@ -1489,7 +1654,7 @@ Argumenty:
 - @user_id - Zwracany ID użytkownika
 
 ```sql
-CREATE PROCEDURE CreateBasicUser
+CREATE PROCEDURE [dbo].[CreateBasicUser]
   @username VARCHAR(30),
   @first_name NVARCHAR(30),
   @last_name NVARCHAR(30),
@@ -1558,6 +1723,7 @@ BEGIN
     THROW;
   END CATCH
 END
+GO
 ```
 
 ### CreateStudent
@@ -1578,7 +1744,7 @@ Argumenty:
 @student_id - Wyjściowy identyfikator utworzonego studenta
 
 ```sql
-CREATE PROCEDURE CreateStudent
+CREATE PROCEDURE [dbo].[CreateStudent]
   @username VARCHAR(30),
   @first_name NVARCHAR(30),
   @last_name NVARCHAR(30),
@@ -1587,7 +1753,7 @@ CREATE PROCEDURE CreateStudent
   @street VARCHAR(30),
   @city VARCHAR(30),
   @postal_code VARCHAR(30),
-  @country VARCHAR(30),
+  @country_id INT = 0,
   @user_id INT OUTPUT
 AS
 BEGIN
@@ -1595,6 +1761,9 @@ BEGIN
 
   BEGIN TRY
     BEGIN TRANSACTION;
+
+    -- Validate country exists
+    EXEC [dbo].[CheckCountryExists] @country_id;
 
     -- Create basic user first
     DECLARE @id INT;
@@ -1606,23 +1775,27 @@ BEGIN
       @phone = @phone,
       @user_id = @id OUTPUT;
 
+    SET @user_id = @id;
+
     -- Insert student details
     INSERT INTO STUDENTS (
       student_id,
       street,
       city,
       postal_code,
-      country
+      country_id
     ) VALUES (
       @user_id,
       @street,
       @city,
       @postal_code,
-      @country
+      @country_id
     );
 
+
+
     COMMIT TRANSACTION;
-    PRINT("Student utworzony pomyślnie")
+    PRINT('Student utworzony pomyślnie')
   END TRY
   BEGIN CATCH
     IF @@TRANCOUNT > 0
@@ -1630,6 +1803,7 @@ BEGIN
     THROW;
   END CATCH
 END
+GO
 ```
 
 ### CreateEmployee
@@ -1649,15 +1823,15 @@ Argumenty:
 - @employee_id - Zwracany ID pracownika
 
 ```sql
-CREATE PROCEDURE CreateEmployee
+CREATE PROCEDURE [dbo].[CreateEmployee]
   @username VARCHAR(30),
   @first_name NVARCHAR(30),
   @last_name NVARCHAR(30),
   @email VARCHAR(50),
   @phone VARCHAR(9) = NULL,
   @employee_type_id INT,
-  @hire_date DATE = NULL,
   @birth_date DATE = NULL,
+  @hire_date DATE = NULL,
   @employee_id INT OUTPUT
 AS
 BEGIN
@@ -1674,22 +1848,26 @@ BEGIN
     END
 
     -- Create basic user first
+    DECLARE @id INT;
     EXEC CreateBasicUser
       @username = @username,
       @first_name = @first_name,
       @last_name = @last_name,
       @email = @email,
       @phone = @phone,
-      @employee_id = @user_id OUTPUT;
+      @user_id = @id OUTPUT;
+
+    -- Set the returned value
+    SET @employee_id = @id;
 
     -- Insert employee details
     INSERT INTO EMPLOYEES (
-      emploee_id,
+      employee_id,
       type_id,
       hire_date,
       birth_date
     ) VALUES (
-      @user_id,
+      @employee_id,
       @employee_type_id,
       -- Check for NULL value
       COALESCE(@hire_date, GETDATE()),
@@ -1697,7 +1875,7 @@ BEGIN
     );
 
     COMMIT TRANSACTION;
-    PRINT("Pracownik utworzony pomyślnie.")
+    PRINT('Pracownik utworzony pomyślnie.')
   END TRY
   BEGIN CATCH
     IF @@TRANCOUNT > 0
@@ -1705,6 +1883,93 @@ BEGIN
     THROW;
   END CATCH
 END
+GO
+```
+
+### LinkTranslatorToWebinar
+
+Procedura `LinkTranslatorToWebinar` przypisuje tłumacza do istniejącego webinaru.
+
+Argumenty:
+
+- @webinar_id INT - Identyfikator webinaru, do którego ma zostać przypisany tłumacz
+- @translator_id INT - Identyfikator tłumacza, który ma zostać przypisany do webinaru
+
+```sql
+CREATE PROCEDURE [dbo].[LinkTranslatorToWebinar]
+  @webinar_id INT,
+  @translator_id INT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate webinar exists
+    EXEC [dbo].[CheckWebinarExists] @webinar_id
+
+    -- Validate translator exists
+    EXEC [dbo].[CheckEmployeeExists] @translator_id
+
+    -- Update the webinar to link the translator
+    UPDATE WEBINARS
+    SET translator_id = @translator_id
+    WHERE webinar_id = @webinar_id;
+
+    COMMIT TRANSACTION;
+    PRINT 'Tłumacz został przypisany do webinaru pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+```
+
+### LinkTranslatorToMeeting
+
+Procedura `LinkTranslatorToMeeting` przypisuje tłumacza do istniejącego spotkania.
+
+Argumenty:
+
+- @meeting_id INT - Identyfikator spotkania, do którego ma zostać przypisany tłumacz
+- @translator_id INT - Identyfikator tłumacza, który ma zostać przypisany do spotkania
+
+```sql
+CREATE PROCEDURE [dbo].[LinkTranslatorToMeeting]
+  @meeting_id INT,
+  @translator_id INT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate meeting exists
+    EXEC [dbo].[CheckMeetingExists] @meeting_id
+
+    -- Validate translator exists
+    EXEC [dbo].[CheckEmployeeExists] @translator_id
+
+    -- Update the meeting to link the translator
+    UPDATE MEETINGS
+    SET translator_id = @translator_id
+    WHERE meeting_id = @meeting_id;
+
+    COMMIT TRANSACTION;
+    PRINT 'Tłumacz został przypisany do spotkania pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
 ```
 
 ## Kursy
@@ -1779,7 +2044,7 @@ BEGIN
   END
 
   -- Validate that the tutor exists
-  IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE emploee_id = @tutor_id)
+  IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE employee_id = @tutor_id)
   BEGIN
     RAISERROR('Tutor nie istnieje.', 16, 1);
     RETURN;
@@ -1838,7 +2103,7 @@ BEGIN
     END
 
     -- Validate tutor exists
-    IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE emploee_id = @tutor_id)
+    IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE employee_id = @tutor_id)
     BEGIN
       RAISERROR('Tutor o podanym ID nie istnieje.', 16, 1);
       RETURN;
@@ -1930,7 +2195,7 @@ BEGIN
     END
 
     -- Validate tutor exists
-    IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE emploee_id = @tutor_id)
+    IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE employee_id = @tutor_id)
     BEGIN
       RAISERROR('Tutor does not exist.', 16, 1);
       RETURN;
@@ -2022,7 +2287,7 @@ BEGIN
     END
 
     -- Validate tutor exists
-    IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE emploee_id = @tutor_id)
+    IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE employee_id = @tutor_id)
     BEGIN
       RAISERROR('Tutor does not exist.', 16, 1);
       RETURN;
@@ -2091,18 +2356,19 @@ Argumenty:
 - @webinar_id - Wyjściowy identyfikator utworzonego webinaru
 
 ```sql
-CREATE PROCEDURE CreateWebinar
+CREATE PROCEDURE [dbo].[CreateWebinar]
   @tutor_id INT,
   @translator_id INT = NULL,
   @webinar_name VARCHAR(50),
   @webinar_description TEXT = NULL,
   @video_url TEXT = NULL,
+  @meeting_url TEXT = NULL,
   @webinar_duration TIME(0) = '01:30:00',
   @publish_date DATETIME = NULL,
-  @language VARCHAR(50) = 'POLISH',
+  @language_id INT = 0,
   @product_price MONEY = 0,
   @vacancies INT = 30,
-  @release INT,
+  @release DATE,
   @webinar_id INT OUTPUT
 AS
 BEGIN
@@ -2112,26 +2378,23 @@ BEGIN
     BEGIN TRANSACTION;
 
     -- Validate tutor exists
-    IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE emploee_id = @tutor_id)
-    BEGIN
-      RAISERROR('Tutor nie istnieje.', 16, 1);
-      RETURN;
-    END
+    EXEC [dbo].[CheckEmployeeExists] @tutor_id;
 
     -- Validate translator exists if provided
-    IF @translator_id IS NOT NULL AND
-       NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE emploee_id = @translator_id)
+    IF @translator_id IS NOT NULL
     BEGIN
-      RAISERROR('Tłumacz nie istnieje.', 16, 1);
-      RETURN;
+      EXEC [dbo].[CheckEmployeeExists] @translator_id;
     END
+
+    -- Validate language exists
+    EXEC [dbo].[CheckLanguageExists] @language_id;
 
     -- Insert product first (webinars are products)
     DECLARE @product_id INT;
     INSERT INTO PRODUCTS (
-      type_id,  -- Assuming type_id 4 is for webinars
+      type_id,
       price,
-      vacancies,
+      total_vacancies,
       release
     ) VALUES (
       4,
@@ -2150,9 +2413,10 @@ BEGIN
       webinar_name,
       webinar_description,
       video_url,
+      meeting_url,
       webinar_duration,
       publish_date,
-      language
+      language_id
     ) VALUES (
       @product_id,
       @tutor_id,
@@ -2160,9 +2424,10 @@ BEGIN
       @webinar_name,
       @webinar_description,
       @video_url,
+      @meeting_url,
       @webinar_duration,
       COALESCE(@publish_date, GETDATE()),
-      @language
+      @language_id
     );
 
     -- Set the output parameter to the new webinar's ID
@@ -2170,7 +2435,7 @@ BEGIN
 
     COMMIT TRANSACTION;
 
-    PRINT("Webinar utworzono pomyślnie.")
+    PRINT('Webinar utworzono pomyślnie.')
   END TRY
   BEGIN CATCH
     IF @@TRANCOUNT > 0
@@ -2178,6 +2443,7 @@ BEGIN
     THROW;
   END CATCH
 END
+GO
 ```
 
 ## Studia
@@ -2193,3 +2459,1439 @@ Argumenty:
 - @product_price - Cena studiów (domyślnie 1000)
 - @vacancies - Liczba dostępnych miejsc (domyślnie 30)
 - @study_id - Wyjściowy identyfikator utworzonych studiów
+
+```sql
+CREATE PROCEDURE [dbo].[CreateStudy]
+  @study_name NVARCHAR(50),
+  @study_description TEXT = NULL,
+  @product_price MONEY,
+  @vacancies INT = 30,
+  @release DATE,
+  @study_id INT OUTPUT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Insert product first (studies are products)
+    INSERT INTO PRODUCTS (
+      type_id,
+      price,
+      total_vacancies,
+      release
+    ) VALUES (
+      1,
+      @product_price,
+      @vacancies,
+      @release
+    );
+
+    -- Get the newly created product ID
+    SET @study_id = SCOPE_IDENTITY();
+
+    -- Insert study details
+    INSERT INTO STUDIES (
+      study_id,
+      study_name,
+      study_description
+    ) VALUES (
+      @study_id,
+      @study_name,
+      @study_description
+    );
+
+    COMMIT TRANSACTION;
+
+    PRINT('Studium utworzono pomyślnie')
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END
+GO
+```
+
+### CreateSubject
+
+Procedura `CreateSubject` tworzy nowy przedmiot w ramach istniejących studiów. ID przedmiotu zwracane jest za pomocą @subject_id
+
+Argumenty:
+
+- @study_id - Identyfikator studiów
+- @tutor_id - Identyfikator prowadzącego przedmiot
+- @subject_name - Nazwa przedmiotu
+- @subject_description - Opcjonalny opis przedmiotu
+- @product_price - Cena przedmiotu
+- @vacancies - Liczba dostępnych miejsc (domyślnie 30)
+- @release - Data udostępnienia przedmiotu
+- @subject_id - Zwracane ID przedmiotu
+
+```sql
+CREATE PROCEDURE [dbo].[CreateSubject]
+  @study_id INT,
+  @tutor_id INT,
+  @subject_name NVARCHAR(50),
+  @subject_description TEXT = NULL,
+  @product_price MONEY = 0,
+  @vacancies INT = 30,
+  @release DATE,
+  @subject_id INT OUTPUT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate study exists
+    EXEC [dbo].[CheckStudyExists] @study_id
+
+    -- Validate tutor exists
+    EXEC [dbo].[CheckEmployeeExists] @tutor_id
+
+    -- Insert product first (subjects are products)
+    INSERT INTO PRODUCTS (
+      type_id,  -- Assuming type_id 2 is for subjects
+      price,
+      total_vacancies,
+      release
+    ) VALUES (
+      2,
+      @product_price,
+      @vacancies,
+      @release
+    );
+
+    -- Get the newly created product ID
+    SET @subject_id = SCOPE_IDENTITY();
+
+    -- Insert subject details
+    INSERT INTO SUBJECTS (
+      subject_id,
+      study_id,
+      tutor_id,
+      subject_name,
+      subject_description
+    ) VALUES (
+      @subject_id,
+      @study_id,
+      @tutor_id,
+      @subject_name,
+      @subject_description
+    );
+
+    COMMIT TRANSACTION;
+    PRINT 'Przedmiot dodany pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+```
+
+### CreateSession
+
+Procedura `CreateSession` tworzy nową sesję (zestaw spotkań) dla istniejącego przedmiotu. ID sesji zwracane jest za pomocą @session_id
+
+Argumenty:
+
+- @subject_id - Identyfikator przedmiotu
+- @product_price - Cena sesji
+- @vacancies - Liczba dostępnych miejsc (domyślnie 30)
+- @release - Data udostępnienia sesji
+- @session_id - Zwracane ID sesji
+
+```sql
+CREATE PROCEDURE [dbo].[CreateSession]
+  @subject_id INT,
+  @product_price MONEY = 0,
+  @vacancies INT = 30,
+  @release DATE,
+  @session_id INT OUTPUT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate subject exists
+    IF NOT EXISTS (SELECT 1 FROM SUBJECTS WHERE subject_id = @subject_id)
+    BEGIN
+      RAISERROR('Przedmiot nie istnieje.', 16, 1);
+      RETURN;
+    END
+
+    -- Insert product first (sessions are products)
+    INSERT INTO PRODUCTS (
+      type_id,  -- Assuming type_id 5 is for sessions
+      price,
+      total_vacancies,
+      release
+    ) VALUES (
+      5,
+      @product_price,
+      @vacancies,
+      @release
+    );
+
+    -- Get the newly created product ID
+    SET @session_id = SCOPE_IDENTITY();
+
+    -- Insert session details
+    INSERT INTO SESSIONS (
+      session_id,
+      subject_id
+    ) VALUES (
+      @session_id,
+      @subject_id
+    );
+
+    COMMIT TRANSACTION;
+    PRINT 'Sesja dodana pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+```
+
+### CreateSessionStationaryMeeting
+
+Procedura `CreateSessionStationaryMeeting` tworzy nowe spotkanie stacjonarne w ramach sesji. ID spotkania zwracane jest za pomocą @meeting_id
+
+Argumenty:
+
+- @session_id - Identyfikator sesji
+- @tutor_id - Identyfikator prowadzącego
+- @translator_id - Opcjonalny identyfikator tłumacza
+- @meeting_name - Nazwa spotkania
+- @term - Termin spotkania
+- @duration - Czas trwania (domyślnie 1h 30min)
+- @language_id - Identyfikator języka (domyślnie 0)
+- @classroom - Numer sali
+- @meeting_id - Zwracane ID spotkania
+
+```sql
+CREATE PROCEDURE [dbo].[CreateSessionStationaryMeeting]
+  @session_id INT,
+  @tutor_id INT,
+  @translator_id INT = NULL,
+  @meeting_name VARCHAR(30),
+  @term DATETIME,
+  @duration TIME(0) = '01:30:00',
+  @language_id INT = 0,
+  @classroom VARCHAR(10),
+  @meeting_id INT OUTPUT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate session exists
+    EXEC [dbo].[CheckSessionExists] @session_id
+
+    -- Validate tutor exists
+    EXEC [dbo].[CheckEmployeeExists] @tutor_id
+
+    -- Insert meeting
+    INSERT INTO MEETINGS (
+      session_id,
+      tutor_id,
+      translator_id,
+      meeting_name,
+      term,
+      duration,
+      language_id
+    ) VALUES (
+      @session_id,
+      @tutor_id,
+      @translator_id,
+      @meeting_name,
+      @term,
+      @duration,
+      @language_id
+    );
+
+    -- Get the newly created meeting ID
+    SET @meeting_id = SCOPE_IDENTITY();
+
+    -- Insert stationary meeting details
+    INSERT INTO STATIONARY_MEETINGS (
+      meeting_id,
+      classroom
+    ) VALUES (
+      @meeting_id,
+      @classroom
+    );
+
+    COMMIT TRANSACTION;
+    PRINT('Spotkanie stacjonarne utworzone pomyślnie.')
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+```
+
+### CreateSessionSyncMeeting
+
+Procedura `CreateSessionSyncMeeting` tworzy nowe spotkanie synchroniczne w ramach sesji. ID spotkania zwracane jest za pomocą @meeting_id
+
+Argumenty:
+
+- @session_id - Identyfikator sesji
+- @tutor_id - Identyfikator prowadzącego
+- @translator_id - Opcjonalny identyfikator tłumacza
+- @meeting_name - Nazwa spotkania
+- @term - Termin spotkania
+- @duration - Czas trwania (domyślnie 1h 30min)
+- @language_id - Identyfikator języka (domyślnie 0)
+- @meeting_url - Link do spotkania
+- @video_url - Opcjonalny link do nagrania
+- @meeting_id - Zwracane ID spotkania
+
+```sql
+CREATE PROCEDURE [dbo].[CreateSessionSyncMeeting]
+  @session_id INT,
+  @tutor_id INT,
+  @translator_id INT = NULL,
+  @meeting_name VARCHAR(30),
+  @term DATETIME,
+  @duration TIME(0) = '01:30:00',
+  @language_id INT = 0,
+  @meeting_url TEXT,
+  @video_url TEXT = NULL,
+  @meeting_id INT OUTPUT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate session exists
+    EXEC [dbo].[CheckSessionExists] @session_id
+
+    -- Validate tutor exists
+    EXEC [dbo].[CheckEmployeeExists] @tutor_id
+
+    -- Insert meeting
+    INSERT INTO MEETINGS (
+      session_id,
+      tutor_id,
+      translator_id,
+      meeting_name,
+      term,
+      duration,
+      language_id
+    ) VALUES (
+      @session_id,
+      @tutor_id,
+      @translator_id,
+      @meeting_name,
+      @term,
+      @duration,
+      @language_id
+    );
+
+    -- Get the newly created meeting ID
+    SET @meeting_id = SCOPE_IDENTITY();
+
+    -- Insert sync meeting details
+    INSERT INTO SYNC_MEETINGS (
+      meeting_id,
+      video_url,
+      meeting_url
+    ) VALUES (
+      @meeting_id,
+      @video_url,
+      @meeting_url
+    );
+
+    COMMIT TRANSACTION;
+    PRINT('Spotkanie synchroniczne utworzone pomyślnie.')
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+```
+
+### CreateSessionAsyncMeeting
+
+Procedura `CreateSessionAsyncMeeting` tworzy nowe spotkanie asynchroniczne w ramach sesji. ID spotkania zwracane jest za pomocą @meeting_id
+
+Argumenty:
+
+- @session_id - Identyfikator sesji
+- @tutor_id - Identyfikator prowadzącego
+- @translator_id - Opcjonalny identyfikator tłumacza
+- @meeting_name - Nazwa spotkania
+- @term - Termin spotkania
+- @duration - Czas trwania (domyślnie 1h 30min)
+- @language_id - Identyfikator języka (domyślnie 0)
+- @meeting_url - Link do materiałów
+- @meeting_id - Zwracane ID spotkania
+
+```sql
+CREATE PROCEDURE [dbo].[CreateSessionAsyncMeeting]
+  @session_id INT,
+  @tutor_id INT,
+  @translator_id INT = NULL,
+  @meeting_name VARCHAR(30),
+  @term DATETIME,
+  @duration TIME(0) = '01:30:00',
+  @language_id INT = 0,
+  @video_url TEXT,
+  @meeting_id INT OUTPUT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate session exists
+    EXEC [dbo].[CheckSessionExists] @session_id
+
+    -- Validate tutor exists
+    EXEC [dbo].[CheckEmployeeExists] @tutor_id
+
+    -- Insert meeting
+    INSERT INTO MEETINGS (
+      session_id,
+      tutor_id,
+      translator_id,
+      meeting_name,
+      term,
+      duration,
+      language_id
+    ) VALUES (
+      @session_id,
+      @tutor_id,
+      @translator_id,
+      @meeting_name,
+      @term,
+      @duration,
+      @language_id
+    );
+
+    -- Get the newly created meeting ID
+    SET @meeting_id = SCOPE_IDENTITY();
+
+    -- Insert async meeting details
+    INSERT INTO ASYNC_MEETINGS (
+      meeting_id,
+      video_url
+    ) VALUES (
+      @meeting_id,
+      @video_url
+    );
+
+    COMMIT TRANSACTION;
+    PRINT('Spotkanie asynchroniczne utworzone pomyślnie.')
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+```
+
+### CreateInternship
+
+Procedura CreateInternship tworzy nową praktykę zawodową. ID praktyki zwracane jest za pomocą @internship_id
+
+Argumenty:
+
+- @product_price MONEY - Cena praktyki
+- @vacancies INT - Liczba dostępnych miejsc (domyślnie 30)
+- @release DATE - Data udostępnienia praktyki
+- @name VARCHAR(30) - Nazwa praktyki
+- @description TEXT - Opis praktyki
+- @start_date DATE - Data rozpoczęcia praktyk
+- @end_date DATE - Data zakończenia praktyk
+- @internship_id INT OUTPUT - Zwracane ID praktyki
+
+```sql
+CREATE PROCEDURE [dbo].[CreateInternship]
+  @study_id INT,
+  @start_date DATE = NULL,
+  @end_date DATE = NULL,
+  @internship_id INT OUTPUT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate study exists
+    EXEC [dbo].[CheckStudyExists] @study_id
+
+    -- Insert internship
+    INSERT INTO INTERSHIPS (
+      study_id,
+      start_date,
+      end_date
+    ) VALUES (
+      @study_id,
+      @start_date,
+      @end_date
+    );
+
+    -- Get the newly created internship ID
+    SET @internship_id = SCOPE_IDENTITY();
+
+    COMMIT TRANSACTION;
+    PRINT 'Praktyka dodana pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+```
+
+### CreateInternshipDetails
+
+Procedura CreateInternshipDetails dodaje szczegóły do istniejącej praktyki.
+
+Argumenty:
+
+- @internship_id INT - Identyfikator praktyki
+- @tutor_id INT - Identyfikator opiekuna praktyk
+- @student_id INT - Identyfikator studenta
+- @company_id INT - Identyfikator firmy
+- @completed BIT - Status ukończenia (domyślnie 0)
+- @details_id INT OUTPUT - Zwracane ID szczegółów praktyki
+
+```sql
+CREATE PROCEDURE [dbo].[CreateInternshipDetails]
+  @internship_id INT,
+  @student_id INT,
+  @passed BIT = 0,
+  @internship_detail_id INT OUTPUT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate internship exists
+    IF NOT EXISTS (SELECT 1 FROM INTERSHIPS WHERE internship_id = @internship_id)
+    BEGIN
+      RAISERROR('Praktyka nie istnieje.', 16, 1);
+      RETURN;
+    END
+
+    -- Validate student exists
+    EXEC [dbo].[CheckStudentExists] @student_id
+
+    -- Insert internship details
+    INSERT INTO INTERSHIP_DETAILS (
+      internship_id,
+      student_id,
+      passed
+    ) VALUES (
+      @internship_id,
+      @student_id,
+      @passed
+    );
+
+    -- Get the newly created internship detail ID
+    SET @internship_detail_id = SCOPE_IDENTITY();
+
+    COMMIT TRANSACTION;
+    PRINT 'Szczegóły praktyki dodane pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+```
+
+## Orders
+
+### CreateOrder
+
+Procedura `CreateOrder` tworzy nowe zamówienie dla studenta wraz z odpowiednimi opłatami.
+
+Argumenty:
+
+- @student_id INT - ID studenta składającego zamówienie
+- @product_ids dbo.productIdList READONLY - Tabela z ID zamawianych produktów
+- @order_id INT OUTPUT - Zwracane ID utworzonego zamówienia
+
+```sql
+CREATE PROCEDURE [dbo].[CreateOrder]
+  @student_id INT,
+  @product_ids dbo.productIdList READONLY,  -- productIdList type
+  @order_id INT OUTPUT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate student exists
+    EXEC [dbo].[CheckStudentExists] @student_id
+
+    -- Insert order
+    INSERT INTO ORDERS (
+      student_id,
+      order_date
+    ) VALUES (
+      @student_id,
+      GETDATE()
+    );
+
+    -- Get the newly created order ID
+    SET @order_id = SCOPE_IDENTITY();
+
+    -- Process each product in the list
+    DECLARE @product_id INT;
+    DECLARE @type_id INT;
+
+    DECLARE product_cursor CURSOR FOR
+    SELECT product_id FROM @product_ids;
+
+    OPEN product_cursor;
+    FETCH NEXT FROM product_cursor INTO @product_id;
+
+    -- While there are rows to fetch from cursor and an error has not occured
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+      -- Get product type
+      SELECT @type_id = type_id FROM PRODUCTS WHERE product_id = @product_id;
+
+      -- Process based on product type
+      IF @type_id = 1
+      -- study
+      BEGIN
+        EXEC [dbo].[createFeesForStudySession] @order_id, @product_id;
+        EXEC [dbo].[createEntryFeeForStudy] @order_id, @product_id;
+      END
+      ELSE IF @type_id = 2
+      -- subject
+      BEGIN
+        EXEC [dbo].[createFeesForSubject] @order_id, @product_id;
+      END
+      ELSE IF @type_id = 3
+      -- course
+      BEGIN
+        EXEC [dbo].[createFeesForCourse] @order_id, @product_id;
+      END
+      ELSE IF @type_id = 4
+      -- webinar
+      BEGIN
+        EXEC [dbo].[createFeeForWebinar] @order_id, @product_id;
+      END
+      ELSE IF @type_id = 5
+      -- session
+      BEGIN
+        EXEC [dbo].[createFeeForSession] @order_id, @product_id;
+      END
+
+      -- Fetch next product
+      FETCH NEXT FROM product_cursor INTO @product_id;
+    END
+
+    CLOSE product_cursor;
+    DEALLOCATE product_cursor;
+
+    COMMIT TRANSACTION;
+    PRINT 'Zamówienie utworzone pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+```
+
+### CreateFee
+
+Procedura `CreateFee` dodaje pojedynczą opłatę do zamówienia.
+
+Argumenty:
+
+- @order_id INT - ID zamówienia
+- @product_id INT - ID produktu
+- @type_id INT - Typ opłaty
+- @due_date DATE - Termin płatności
+- @fee_value MONEY - Kwota opłaty
+- @fee_id INT OUTPUT - Zwracane ID utworzonej opłaty
+
+```sql
+CREATE PROCEDURE [dbo].[CreateFee]
+  @order_id INT,
+  @product_id INT,
+  @type_id INT,
+  @due_date DATE,
+  @fee_value MONEY,
+  @fee_id INT OUTPUT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate order exists
+    EXEC [dbo].[CheckOrderExists] @order_id
+
+    -- Validate product exists
+    EXEC [dbo].[CheckProductExists] @product_id
+
+    -- Validate fee type exists
+    IF NOT EXISTS (SELECT 1 FROM FEE_TYPE WHERE type_id = @type_id)
+    BEGIN
+      RAISERROR('Typ opłaty o ID @d nie istnieje.', 16, 1, @type_id);
+      RETURN;
+    END
+
+    -- Insert fee
+    INSERT INTO FEES (
+      due_date,
+      fee_value,
+      type_id,
+      order_id,
+      product_id
+    ) VALUES (
+      @due_date,
+      @fee_value,
+      @type_id,
+      @order_id,
+      @product_id
+    );
+
+    -- Get the newly created fee ID
+    SET @fee_id = SCOPE_IDENTITY();
+
+    COMMIT TRANSACTION;
+    PRINT 'Opłata dodana pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+```
+
+### createFeeForSession
+
+Procedura `createFeeForSession` tworzy opłatę za pojedynczą sesję.
+
+Argumenty:
+
+- @order_id INT - ID zamówienia
+- @session_id INT - ID sesji
+- @fee_type INT - Typ opłaty (domyślnie 1)
+
+```sql
+CREATE PROCEDURE [dbo].[createFeeForSession]
+  @order_id INT,
+  @session_id INT,
+  @fee_type INT = 1
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    DECLARE @first_meeting_date DATE;
+
+    -- Get the date of the first meeting in the session
+    SELECT TOP 1 @first_meeting_date = MIN(term)
+    FROM MEETINGS
+    WHERE session_id = @session_id
+    GROUP BY term
+    ORDER BY term;
+
+    -- Add fee for session
+    DECLARE @fee_id INT;
+    EXEC [dbo].[CreateFee]
+      @order_id = @order_id,
+      @product_id = @session_id,
+      @type_id = @fee_type,
+      @due_date = DATEADD(DAY, -1, @first_meeting_date),
+      @fee_value = (SELECT price FROM PRODUCTS WHERE product_id = @session_id),
+      @fee_id = @fee_id OUTPUT;
+
+    COMMIT TRANSACTION;
+    PRINT 'Opłata za sesję utworzona pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+
+-- Create fees for subject sessions
+CREATE PROCEDURE [dbo].[createFeesForSubject]
+  @order_id INT,
+  @subject_id INT,
+  @fee_type INT = 1
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    DECLARE @session_id INT;
+
+    DECLARE session_cursor CURSOR FOR
+      SELECT session_id
+      FROM SESSIONS
+      WHERE subject_id = @subject_id;
+
+    OPEN session_cursor;
+    FETCH NEXT FROM session_cursor INTO @session_id;
+
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+      -- Create fee for each session in the subject
+      EXEC [dbo].[createFeeForSession] @order_id, @session_id, @fee_type;
+
+      FETCH NEXT FROM session_cursor INTO @session_id;
+    END
+
+    CLOSE session_cursor;
+    DEALLOCATE session_cursor;
+
+    COMMIT TRANSACTION;
+    PRINT 'Opłaty za sesje przedmiotu utworzone pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+```
+
+### createFeesForSubject
+
+Procedura `createFeesForSubject` tworzy opłaty za wszystkie sesje w ramach przedmiotu.
+
+Argumenty:
+
+- @order_id INT - ID zamówienia
+- @subject_id INT - ID przedmiotu
+- @fee_type INT - Typ opłaty (domyślnie 1)
+
+```sql
+CREATE PROCEDURE [dbo].[createFeesForSubject]
+  @order_id INT,
+  @subject_id INT,
+  @fee_type INT = 1
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    DECLARE @session_id INT;
+
+    DECLARE session_cursor CURSOR FOR
+      SELECT session_id
+      FROM SESSIONS
+      WHERE subject_id = @subject_id;
+
+    OPEN session_cursor;
+    FETCH NEXT FROM session_cursor INTO @session_id;
+
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+      -- Create fee for each session in the subject
+      EXEC [dbo].[createFeeForSession] @order_id, @session_id, @fee_type;
+
+      FETCH NEXT FROM session_cursor INTO @session_id;
+    END
+
+    CLOSE session_cursor;
+    DEALLOCATE session_cursor;
+
+    COMMIT TRANSACTION;
+    PRINT 'Opłaty za sesje przedmiotu utworzone pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+```
+
+### createFeesForStudySession
+
+Procedura `createFeesForStudySession` tworzy opłaty za wszystkie sesje przedmiotów w ramach studiów.
+
+Argumenty:
+
+- @order_id INT - ID zamówienia
+- @study_id INT - ID studiów
+
+```sql
+CREATE PROCEDURE [dbo].[createFeesForStudySession]
+  @order_id INT,
+  @study_id INT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    DECLARE @subject_id INT;
+
+    DECLARE subject_cursor CURSOR FOR
+      SELECT subject_id
+      FROM SUBJECTS
+      WHERE study_id = @study_id;
+
+    OPEN subject_cursor;
+    FETCH NEXT FROM subject_cursor INTO @subject_id;
+
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+      -- Create fees for each subject in the study
+      EXEC [dbo].[createFeesForSubject] @order_id, @subject_id, 2;
+
+      FETCH NEXT FROM subject_cursor INTO @subject_id;
+    END
+
+    CLOSE subject_cursor;
+    DEALLOCATE subject_cursor;
+
+    COMMIT TRANSACTION;
+    PRINT 'Opłaty za sesje studiów utworzone pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+```
+
+### createEntryFeeForStudy
+
+Procedura `createEntryFeeForStudy` tworzy opłatę wpisową za studia.
+
+Argumenty:
+
+- @order_id INT - ID zamówienia
+- @study_id INT - ID studiów
+
+```sql
+CREATE PROCEDURE [dbo].[createEntryFeeForStudy]
+  @order_id INT,
+  @study_id INT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    DECLARE @first_meeting_date DATE;
+
+    -- Get the date of the first meeting in the study
+    SELECT TOP 1 @first_meeting_date = MIN(term)
+    FROM SESSIONS
+    JOIN MEETINGS ON SESSIONS.session_id = MEETINGS.session_id
+    WHERE SESSIONS.subject_id IN (SELECT subject_id FROM SUBJECTS WHERE study_id = @study_id)
+    GROUP BY term
+    ORDER BY term;
+
+    -- Add entry fee
+    DECLARE @fee_id INT;
+    EXEC [dbo].[CreateFee]
+      @order_id = @order_id,
+      @product_id = @study_id,
+      @type_id = 4,
+      @due_date = DATEADD(DAY, -1, @first_meeting_date),
+      @fee_value = (SELECT price FROM PRODUCTS WHERE product_id = @study_id),
+      @fee_id = @fee_id OUTPUT;
+
+    COMMIT TRANSACTION;
+    PRINT 'Opłata wstępna za studia utworzona pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+```
+
+### createFeesForCourse
+
+Procedura `createFeesForCourse` tworzy opłaty za kurs (zaliczkę i opłatę końcową).
+
+Argumenty:
+
+- @order_id INT - ID zamówienia
+- @course_id INT - ID kursu
+
+```sql
+CREATE PROCEDURE [dbo].[createFeesForCourse]
+  @order_id INT,
+  @course_id INT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    DECLARE @product_price MONEY;
+    DECLARE @advance_share DECIMAL(5,4);
+    DECLARE @first_meeting_date DATE;
+
+    -- Get product price and advance share
+    SELECT @product_price = price, @advance_share = advance_share
+    FROM PRODUCTS
+    JOIN COURSES ON PRODUCTS.product_id = COURSES.course_id
+    WHERE PRODUCTS.product_id = @course_id;
+
+    -- Get the date of the first meeting in the course
+    SELECT TOP 1 @first_meeting_date = MIN(term)
+    FROM MEETINGS
+    JOIN MODULES ON MEETINGS.module_id = MODULES.module_id
+    WHERE MODULES.course_id = @course_id
+    GROUP BY term
+    ORDER BY term;
+
+    -- Add advance fee
+    DECLARE @fee_id INT;
+    EXEC [dbo].[CreateFee]
+      @order_id = @order_id,
+      @product_id = @course_id,
+      @type_id = 6,
+      @due_date = GETDATE(),
+      @fee_value = @product_price * @advance_share,
+      @fee_id = @fee_id OUTPUT;
+
+    -- Add remaining fee for course
+    EXEC [dbo].[CreateFee]
+      @order_id = @order_id,
+      @product_id = @course_id,
+      @type_id = 5,
+      @due_date = DATEADD(DAY, -3, @first_meeting_date),
+      @fee_value = @product_price * (1 - @advance_share),
+      @fee_id = @fee_id OUTPUT;
+
+    COMMIT TRANSACTION;
+    PRINT 'Opłaty za kurs utworzone pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+```
+
+### createFeeForWebinar
+
+Procedura `createFeeForWebinar` tworzy opłatę za webinar.
+
+Argumenty:
+
+- @order_id INT - ID zamówienia
+- @webinar_id INT - ID webinaru
+
+```sql
+CREATE PROCEDURE [dbo].[createFeeForWebinar]
+  @order_id INT,
+  @webinar_id INT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    DECLARE @fee_id INT;
+    DECLARE @product_price MONEY;
+
+    -- Get product price
+    SELECT @product_price = price
+    FROM PRODUCTS
+    WHERE product_id = @webinar_id;
+
+    -- Add fee for webinar
+    EXEC [dbo].[CreateFee]
+      @order_id = @order_id,
+      @product_id = @webinar_id,
+      @type_id = 7,
+      @due_date = GETDATE(),
+      @fee_value = @product_price,
+      @fee_id = @fee_id OUTPUT;
+
+    COMMIT TRANSACTION;
+    PRINT 'Opłata za webinar utworzona pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+```
+
+### CreateOrderFromCart
+
+Procedura `CreateOrderFromCart` tworzy zamówienie na podstawie koszyka studenta.
+
+Argumenty:
+
+- @student_id INT - ID studenta
+- @order_id INT OUTPUT - Zwracane ID utworzonego zamówienia
+
+```sql
+CREATE PROCEDURE [dbo].[CreateOrderFromCart]
+  @student_id INT,
+  @order_id INT OUTPUT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate student exists
+    EXEC [dbo].[CheckStudentExists] @student_id;
+
+    -- Create a table variable to hold product IDs from the cart
+    DECLARE @product_ids dbo.productIdList;
+
+    -- Insert product IDs from the cart into the table variable
+    INSERT INTO @product_ids (product_id)
+    SELECT product_id FROM CART WHERE student_id = @student_id;
+
+    -- Create the order
+    EXEC [dbo].[CreateOrder] @student_id, @product_ids, @order_id OUTPUT;
+
+    -- Empty the cart
+    DELETE FROM CART WHERE student_id = @student_id;
+
+    COMMIT TRANSACTION;
+    PRINT 'Zamówienie utworzone z koszyka i koszyk opróżniony pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+```
+
+### UpdateFeePaymentDate
+
+Procedura `UpdateFeePaymentDate` aktualizuje datę opłaty na bieżącą.
+
+Argumenty:
+
+- @fee_id INT - ID opłaty do zaktualizowania
+
+```sql
+CREATE PROCEDURE [dbo].[UpdateFeePaymentDate]
+  @fee_id INT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate fee exists
+    EXEC [dbo].[CheckFeeExists] @fee_id;
+
+    -- Update the fee with the current date as the payment date
+    UPDATE FEES
+    SET payment_date = GETDATE()
+    WHERE fee_id = @fee_id;
+
+    COMMIT TRANSACTION;
+    PRINT 'Data płatności została zaktualizowana pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+```
+
+## Products
+
+### FillProductDetails
+
+Procedura `FillProductDetails` dodaje szczegóły zakupionego produktu do tabeli PRODUCTS_DETAILS.
+
+Argumenty:
+
+- @student_id INT - ID studenta, który zakupił produkt
+- @product_id INT - ID zakupionego produktu
+- @order_id INT - ID zamówienia w ramach którego zakupiono produkt
+
+```sql
+CREATE PROCEDURE [dbo].[FillProductDetails]
+  @student_id INT,
+  @product_id INT,
+  @order_id INT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate student exists
+    EXEC [dbo].[CheckStudentExists] @student_id
+
+    -- Validate product exists
+    EXEC [dbo].[CheckProductExists] @product_id
+
+    -- Validate order exists
+    EXEC [dbo].[CheckOrderExists] @order_id
+
+    -- Insert into PRODUCTS_DETAILS
+    INSERT INTO PRODUCTS_DETAILS (
+      student_id,
+      product_id,
+      order_id
+    ) VALUES (
+      @student_id,
+      @product_id,
+      @order_id
+    );
+
+    COMMIT TRANSACTION;
+    PRINT 'Tabela PRODUCTS_DETAILS została wypełniona pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+```
+
+### MarkProductAsPassed
+
+Procedura `MarkProductAsPassed` oznacza produkt jako zaliczony przez danego studenta.
+
+Argumenty:
+
+- @product_id INT - ID produktu do oznaczenia
+- @student_id INT - ID studenta, który zaliczył produkt
+
+```sql
+CREATE PROCEDURE [dbo].[MarkProductAsPassed]
+  @product_id INT,
+  @student_id INT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate student exists
+    EXEC [dbo].[CheckStudentExists] @student_id
+
+    -- Validate product exists
+    EXEC [dbo].[CheckProductExists] @product_id
+
+    -- Update the product details to mark as passed
+    UPDATE PRODUCTS_DETAILS
+    SET passed = 1
+    WHERE product_id = @product_id AND student_id = @student_id;
+
+    COMMIT TRANSACTION;
+    PRINT 'Produkt oznaczony jako zaliczony pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+```
+
+## MEETINGS
+
+### FillMeetingDetails
+
+Procedura `FillMeetingDetails` rejestruje obecność studenta na spotkaniu poprzez dodanie wpisu do tabeli MEETING_DETAILS.
+
+Argumenty:
+
+- @meeting_id INT - ID spotkania
+- @student_id INT - ID studenta uczestniczącego w spotkaniu
+
+```sql
+CREATE PROCEDURE [dbo].[FillMeetingDetails]
+  @meeting_id INT,
+  @student_id INT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate meeting exists
+    EXEC [dbo].[CheckMeetingExists] @meeting_id
+
+    -- Validate student exists
+    EXEC [dbo].[CheckStudentExists] @student_id
+
+    -- Insert into MEETING_DETAILS
+    INSERT INTO MEETING_DETAILS (
+      meeting_id,
+      student_id
+    ) VALUES (
+      @meeting_id,
+      @student_id
+    );
+
+    COMMIT TRANSACTION;
+    PRINT 'Tabela MEETING_DETAILS została wypełniona pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+```
+
+# Wyzwalacze (Triggers)
+
+### trg_AddMeetingDetails
+
+Trigger `trg_AddMeetingDetails` automatycznie dodaje wpisy do tabeli MEETING_DETAILS gdy student zostaje przypisany do produktu w PRODUCTS_DETAILS.
+
+Tabela wyzwalająca:
+
+- PRODUCTS_DETAILS
+
+Moment aktywacji:
+
+- AFTER INSERT
+
+```sql
+CREATE TRIGGER trg_AddMeetingDetails
+ON PRODUCTS_DETAILS
+AFTER INSERT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  DECLARE @student_id INT;
+  DECLARE @product_id INT;
+  DECLARE @type_id INT;
+
+  -- Get the inserted student_id and product_id
+  SELECT @student_id = inserted.student_id, @product_id = inserted.product_id
+  FROM inserted;
+
+  -- Get the type_id of the product
+  SELECT @type_id = type_id FROM PRODUCTS WHERE product_id = @product_id;
+
+  -- Return early if type_id does not match study, subject, course, or session
+  IF @type_id NOT IN (1, 2, 3, 5)
+  BEGIN
+    RETURN;
+  END
+
+  -- Add meeting details based on product type
+  IF @type_id = 1 -- study
+  BEGIN
+    INSERT INTO MEETING_DETAILS (meeting_id, student_id)
+    SELECT meeting_id, @student_id
+    FROM MEETINGS
+    JOIN SESSIONS ON MEETINGS.session_id = SESSIONS.session_id
+    JOIN SUBJECTS ON SESSIONS.subject_id = SUBJECTS.subject_id
+    WHERE SUBJECTS.study_id = @product_id;
+  END
+  ELSE IF @type_id = 2 -- subject
+  BEGIN
+    INSERT INTO MEETING_DETAILS (meeting_id, student_id)
+    SELECT meeting_id, @student_id
+    FROM MEETINGS
+    JOIN SESSIONS ON MEETINGS.session_id = SESSIONS.session_id
+    WHERE SESSIONS.subject_id = @product_id;
+  END
+  ELSE IF @type_id = 3 -- course
+  BEGIN
+    INSERT INTO MEETING_DETAILS (meeting_id, student_id)
+    SELECT meeting_id, @student_id
+    FROM MEETINGS
+    JOIN MODULES ON MEETINGS.module_id = MODULES.module_id
+    WHERE MODULES.course_id = @product_id;
+  END
+  ELSE IF @type_id = 5 -- session
+  BEGIN
+    INSERT INTO MEETING_DETAILS (meeting_id, student_id)
+    SELECT meeting_id, @student_id
+    FROM MEETINGS
+    WHERE session_id = @product_id;
+  END
+END;
+GO
+```
