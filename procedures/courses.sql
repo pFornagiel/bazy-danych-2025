@@ -1,7 +1,8 @@
--- Dodawnanie nowego kursu
+-- Adding new course
 CREATE PROCEDURE [dbo].[CreateCourse]
  @course_name NVARCHAR(50),
  @course_description TEXT = NULL,
+ @advance_share DECIMAL(5,4) = 0.3000,
  @product_price MONEY = 0,
  @vacancies INT,
  @release DATE,
@@ -18,8 +19,8 @@ BEGIN
     SET @course_id = SCOPE_IDENTITY();
 
     -- Add the course
-    INSERT INTO COURSES (course_id, course_name, course_description)
-    VALUES (@course_id, @course_name, @course_description);
+    INSERT INTO COURSES (course_id, course_name, course_description, advance_share)
+    VALUES (@course_id, @course_name, @course_description, @advance_share);
 
     COMMIT TRANSACTION;
     PRINT 'Kurs dodany pomyślnie.';
@@ -29,15 +30,18 @@ BEGIN
     THROW;
   END CATCH;
 END;
+GO
 
-
--- Utworzenie modułu dla kursu o danym ID
-CREATE PROCEDURE createModule
+-- Create module for course of given ID
+CREATE PROCEDURE [dbo].[CreateModule]
   @course_id INT,
   @tutor_id INT,
+  @module_name NVARCHAR(50),
+  @module_description TEXT,
   @module_id INT OUTPUT
 AS
 BEGIN
+
   -- Validate that the course exists
   IF NOT EXISTS (SELECT 1 FROM COURSES WHERE course_id = @course_id)
   BEGIN
@@ -46,30 +50,27 @@ BEGIN
   END
 
   -- Validate that the tutor exists
-  IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE emploee_id = @tutor_id)
-  BEGIN
-    RAISERROR('Tutor nie istnieje.', 16, 1);
-    RETURN;
-  END
+  EXEC [dbo].[CheckEmployeeExists] @tutor_id;
 
   -- Insert the new module
-  INSERT INTO MODULES (course_id, tutor_id)
-  VALUES (@course_id, @tutor_id);
+  INSERT INTO MODULES (course_id, tutor_id, module_name, module_description)
+  VALUES (@course_id, @tutor_id, @module_name, @module_description);
 
   -- Return the newly inserted module's ID
   SET @module_id = SCOPE_IDENTITY();
-  PRINT("Moduł dodany pomyślnie.")
+  PRINT('Moduł dodany pomyślnie.')
 END
+GO
 
--- Stworzenie Stationary Meetingu dla modułu
-CREATE PROCEDURE CreateModuleStationaryMeeting
+-- Create Stationary Meeting for module
+CREATE PROCEDURE [dbo].[CreateModuleStationaryMeeting]
   @module_id INT,
   @tutor_id INT,
   @translator_id INT = NULL,
   @meeting_name VARCHAR(30),
   @term DATETIME,
   @duration TIME(0) = '01:30:00',
-  @language VARCHAR(30) = 'POLISH',
+  @language_id INT = 0,
   @classroom VARCHAR(10),
   @meeting_id INT OUTPUT
 AS
@@ -80,18 +81,10 @@ BEGIN
     BEGIN TRANSACTION;
 
     -- Validate module exists
-    IF NOT EXISTS (SELECT 1 FROM MODULES WHERE module_id = @module_id)
-    BEGIN
-      RAISERROR('Moduł o podanym ID nie istnieje.', 16, 1);
-      RETURN;
-    END
+    EXEC [dbo].[CheckModuleExists] @module_id
 
     -- Validate tutor exists
-    IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE emploee_id = @tutor_id)
-    BEGIN
-      RAISERROR('Tutor o podanym ID nie istnieje.', 16, 1);
-      RETURN;
-    END
+    EXEC [dbo].CheckEmployeeExists @tutor_id
 
     -- Insert meeting
     INSERT INTO MEETINGS (
@@ -101,7 +94,7 @@ BEGIN
       meeting_name, 
       term, 
       duration, 
-      language
+      language_id
     ) VALUES (
       @module_id, 
       @tutor_id, 
@@ -109,11 +102,11 @@ BEGIN
       @meeting_name, 
       @term, 
       @duration, 
-      @language
+      @language_id
     );
 
     -- Get the newly created meeting ID
-    SET @meeting_id INT = SCOPE_IDENTITY();
+    SET @meeting_id = SCOPE_IDENTITY();
 
     -- Insert stationary meeting details
     INSERT INTO STATIONARY_MEETINGS (
@@ -125,7 +118,7 @@ BEGIN
     );
 
     COMMIT TRANSACTION;
-    PRINT("Spotkanie stacjonarne utworzone pomyślnie")
+    PRINT('Spotkanie stacjonarne utworzone pomyślnie')
   END TRY
   BEGIN CATCH
     IF @@TRANCOUNT > 0
@@ -133,9 +126,10 @@ BEGIN
     THROW;
   END CATCH
 END
+GO
 
 
--- Stworzenie Sync Meetingu dla modułu
+-- Create Sync Meetingu for module
 CREATE PROCEDURE CreateModuleSyncMeeting
     @module_id INT,
     @tutor_id INT,
@@ -143,7 +137,7 @@ CREATE PROCEDURE CreateModuleSyncMeeting
     @meeting_name VARCHAR(30),
     @term DATETIME,
     @duration TIME(0) = '01:30:00',
-    @language VARCHAR(30) = 'POLISH',
+    @language_id INT = 0,
     @meeting_url TEXT,
     @video_url TEXT = NULL,
     @meeting_id INT OUTPUT
@@ -155,18 +149,10 @@ BEGIN
     BEGIN TRANSACTION;
 
     -- Validate module exists
-    IF NOT EXISTS (SELECT 1 FROM MODULES WHERE module_id = @module_id)
-    BEGIN
-      RAISERROR('Module does not exist.', 16, 1);
-      RETURN;
-    END
+    EXEC [dbo].[CheckModuleExists] @module_id
 
     -- Validate tutor exists
-    IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE emploee_id = @tutor_id)
-    BEGIN
-      RAISERROR('Tutor does not exist.', 16, 1);
-      RETURN;
-    END
+    EXEC [dbo].CheckEmployeeExists @tutor_id
 
     -- Insert meeting
     INSERT INTO MEETINGS (
@@ -176,7 +162,7 @@ BEGIN
       meeting_name, 
       term, 
       duration, 
-      language
+      language_id
     ) VALUES (
       @module_id, 
       @tutor_id, 
@@ -184,11 +170,11 @@ BEGIN
       @meeting_name, 
       @term, 
       @duration, 
-      @language
+      @language_id
     );
 
     -- Get the newly created meeting ID
-    SET @meeting_id INT = SCOPE_IDENTITY();
+    SET @meeting_id = SCOPE_IDENTITY();
 
     -- Insert sync meeting details
     INSERT INTO SYNC_MEETINGS (
@@ -202,7 +188,7 @@ BEGIN
     );
 
     COMMIT TRANSACTION;
-    PRINT "Spoktanie synchroniczne utworzone pomyślnie."
+    PRINT 'Spotkanie synchroniczne utworzone pomyślnie.'
   END TRY
   BEGIN CATCH
     IF @@TRANCOUNT > 0
@@ -210,8 +196,9 @@ BEGIN
     THROW;
   END CATCH
 END
+GO
 
--- Stworzenie Async Meetingu dla modułu
+-- Create Async Meetingu dla modułu
 CREATE PROCEDURE CreateModuleAsyncMeeting
   @module_id INT,
   @tutor_id INT,
@@ -219,8 +206,8 @@ CREATE PROCEDURE CreateModuleAsyncMeeting
   @meeting_name VARCHAR(30),
   @term DATETIME,
   @duration TIME(0) = '01:30:00',
-  @language VARCHAR(30) = 'POLISH',
-  @meeting_url TEXT,
+  @language_id INT = 0,
+  @video_url TEXT,
   @meeting_id INT OUTPUT
 AS
 BEGIN
@@ -230,18 +217,10 @@ BEGIN
     BEGIN TRANSACTION;
 
     -- Validate module exists
-    IF NOT EXISTS (SELECT 1 FROM MODULES WHERE module_id = @module_id)
-    BEGIN
-      RAISERROR('Module does not exist.', 16, 1);
-      RETURN;
-    END
+    EXEC [dbo].[CheckModuleExists] @module_id
 
     -- Validate tutor exists
-    IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE emploee_id = @tutor_id)
-    BEGIN
-      RAISERROR('Tutor does not exist.', 16, 1);
-      RETURN;
-    END
+    EXEC [dbo].[CheckEmployeeExists] @tutor_id
 
     -- Insert meeting
     INSERT INTO MEETINGS (
@@ -251,7 +230,7 @@ BEGIN
       meeting_name, 
       term, 
       duration, 
-      language
+      language_id
     ) VALUES (
       @module_id, 
       @tutor_id, 
@@ -259,23 +238,23 @@ BEGIN
       @meeting_name, 
       @term, 
       @duration, 
-      @language
+      @language_id
     );
 
     -- Get the newly created meeting ID
-    SET @meeting_id INT = SCOPE_IDENTITY();
+    SET @meeting_id = SCOPE_IDENTITY();
 
     -- Insert async meeting details
     INSERT INTO ASYNC_MEETINGS (
       meeting_id, 
-      meeting_url
+      video_url
     ) VALUES (
       @meeting_id, 
-      @meeting_url
+      @video_url
     );
 
     COMMIT TRANSACTION;
-    PRINT("Spotkanie asynchroniczne utworzone pomyślnie.")
+    PRINT('Spotkanie asynchroniczne utworzone pomyślnie.')
   END TRY
   BEGIN CATCH
     IF @@TRANCOUNT > 0
@@ -283,17 +262,4 @@ BEGIN
     THROW;
   END CATCH
 END
-
-
-
-DECLARE @new_user_id INT;
-
-EXEC [dbo].[CreateCourse] 
- @course_name = 'Test',
- @course_description = 'Test_description',
- @product_price = 100.00,
- @vacancies = 30,
- @release = '2025-01-01',
- @course_id = @new_user_id OUTPUT; 
-
-PRINT @new_user_id
+GO

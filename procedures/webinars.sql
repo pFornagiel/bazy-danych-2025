@@ -1,15 +1,16 @@
-CREATE PROCEDURE CreateWebinar
+CREATE PROCEDURE [dbo].[CreateWebinar]
   @tutor_id INT,
   @translator_id INT = NULL,
   @webinar_name VARCHAR(50),
   @webinar_description TEXT = NULL,
   @video_url TEXT = NULL,
+  @meeting_url TEXT = NULL,
   @webinar_duration TIME(0) = '01:30:00',
   @publish_date DATETIME = NULL,
-  @language VARCHAR(50) = 'POLISH',
+  @language_id INT = 0,
   @product_price MONEY = 0,
   @vacancies INT = 30,
-  @release INT,
+  @release DATE,
   @webinar_id INT OUTPUT
 AS
 BEGIN
@@ -19,26 +20,23 @@ BEGIN
     BEGIN TRANSACTION;
     
     -- Validate tutor exists
-    IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE emploee_id = @tutor_id)
-    BEGIN
-      RAISERROR('Tutor nie istnieje.', 16, 1);
-      RETURN;
-    END
-    
+    EXEC [dbo].[CheckEmployeeExists] @tutor_id;
+
     -- Validate translator exists if provided
-    IF @translator_id IS NOT NULL AND 
-       NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE emploee_id = @translator_id)
+    IF @translator_id IS NOT NULL 
     BEGIN
-      RAISERROR('Tłumacz nie istnieje.', 16, 1);
-      RETURN;
+      EXEC [dbo].[CheckEmployeeExists] @translator_id;
     END
+
+    -- Validate language exists
+    EXEC [dbo].[CheckLanguageExists] @language_id;
     
     -- Insert product first (webinars are products)
     DECLARE @product_id INT;
     INSERT INTO PRODUCTS (
-      type_id,  -- Assuming type_id 4 is for webinars
+      type_id, 
       price,
-      vacancies,
+      total_vacancies,
       release
     ) VALUES (
       4,  
@@ -57,9 +55,10 @@ BEGIN
       webinar_name,
       webinar_description,
       video_url,
+      meeting_url,
       webinar_duration,
       publish_date,
-      language
+      language_id
     ) VALUES (
       @product_id,
       @tutor_id,
@@ -67,9 +66,10 @@ BEGIN
       @webinar_name,
       @webinar_description,
       @video_url,
+      @meeting_url,
       @webinar_duration,
       COALESCE(@publish_date, GETDATE()),
-      @language
+      @language_id
     );
     
     -- Set the output parameter to the new webinar's ID
@@ -77,7 +77,7 @@ BEGIN
     
     COMMIT TRANSACTION;
     
-    PRINT("Webinar utworzono pomyślnie.")
+    PRINT('Webinar utworzono pomyślnie.')
   END TRY
   BEGIN CATCH
     IF @@TRANCOUNT > 0
