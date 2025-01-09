@@ -41,24 +41,36 @@ CREATE PROCEDURE [dbo].[CreateModule]
   @module_id INT OUTPUT
 AS
 BEGIN
+  SET NOCOUNT ON;
 
-  -- Validate that the course exists
-  IF NOT EXISTS (SELECT 1 FROM COURSES WHERE course_id = @course_id)
-  BEGIN
-    RAISERROR('Kurs nie istnieje.', 16, 1);
-    RETURN;
-  END
+  BEGIN TRY
+    BEGIN TRANSACTION;
 
-  -- Validate that the tutor exists
-  EXEC [dbo].[CheckEmployeeExists] @tutor_id;
+    -- Validate that the course exists
+    IF NOT EXISTS (SELECT 1 FROM COURSES WHERE course_id = @course_id)
+    BEGIN
+      THROW 50000, 'Kurs nie istnieje.', 1;
+      RETURN;
+    END
 
-  -- Insert the new module
-  INSERT INTO MODULES (course_id, tutor_id, module_name, module_description)
-  VALUES (@course_id, @tutor_id, @module_name, @module_description);
+    -- Validate that the tutor exists
+    EXEC [dbo].[CheckEmployeeExists] @tutor_id;
 
-  -- Return the newly inserted module's ID
-  SET @module_id = SCOPE_IDENTITY();
-  PRINT('Moduł dodany pomyślnie.')
+    -- Insert the new module
+    INSERT INTO MODULES (course_id, tutor_id, module_name, module_description)
+    VALUES (@course_id, @tutor_id, @module_name, @module_description);
+
+    -- Return the newly inserted module's ID
+    SET @module_id = SCOPE_IDENTITY();
+
+    COMMIT TRANSACTION;
+    PRINT('Moduł dodany pomyślnie.')
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
 END
 GO
 

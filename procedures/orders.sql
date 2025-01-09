@@ -565,7 +565,7 @@ BEGIN
     -- Validate product exists in cart
     IF NOT EXISTS (SELECT 1 FROM SHOPPING_CART WHERE student_id = @student_id AND product_id = @product_id)
     BEGIN
-      RAISERROR('Produkt nie znajduje się w koszyku.', 16, 1);
+      THROW 50005, 'Produkt nie znajduje się w koszyku.', 1;
       RETURN;
     END
 
