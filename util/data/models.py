@@ -36,11 +36,6 @@ class Student(User):
 
 @dataclass
 class EmployeeType:
-    username: str = field(default='')
-    first_name: str = field(default='')
-    last_name: str = field(default='')
-    mail: str = field(default='')
-    phone: str = field(default='')
     type_id: int = field(default=0)
     type_name: int = field(default=0)
 
