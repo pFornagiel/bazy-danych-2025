@@ -2,7 +2,7 @@ from faker import Faker
 from models import Webinar
 from datetime import datetime, timedelta
 import random
-from const import LANGAUGES
+from .const import LANGAUGES
 
 class WebinarDataGenerator:
     def __init__(self, locale='pl_PL'):
@@ -12,6 +12,7 @@ class WebinarDataGenerator:
         }
 
     def _generate_webinar_data(self, tutors, translators):
+        now = datetime.now()
         return Webinar(
             tutor_id=random.choice(tutors),
             translator_id=random.choice(translators) if random.choice([True, False]) else None,
@@ -20,11 +21,11 @@ class WebinarDataGenerator:
             video_url=self.fake.url(),
             meeting_url=self.fake.url(),
             webinar_duration=self.fake.time_object(end_datetime=None),
-            publish_date=self.fake.date_time_between(start_date='-1y', end_date='now'),
+            publish_date=self.fake.date_time_between(start_date=now, end_date=now + timedelta(days=365)),
             price=random.uniform(0, 1000),
             vacancies=random.randint(10, 50),
-            release=self.fake.date_between(start_date='-1y', end_date='today'),
-            language_id=random.randint(1,len*LANGAUGES)
+            release=self.fake.date_between(start_date=now, end_date=now + timedelta(days=365)),
+            language_id=random.randint(1,len(LANGAUGES))
         )
 
     def generate_webinars(self, num_webinars, tutors, translators):
