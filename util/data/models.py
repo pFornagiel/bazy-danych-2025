@@ -9,6 +9,7 @@ def save_query_to_file(query: str):
 
 @dataclass
 class User:
+    user_id: int = field(default=0)
     username: str = field(default='')
     first_name: str = field(default='')
     last_name: str = field(default='')
@@ -110,7 +111,6 @@ class Payment:
 
 @dataclass
 class Webinar(Product):
-    webinar_id: int = field(default=0)
     tutor_id: int = field(default=0)
     webinar_name: str = field(default='')
     webinar_description: Optional[str] = field(default=None)
@@ -195,6 +195,7 @@ class Subject:
 
 @dataclass
 class Internship:
+    Internship_id: int = field(default=0)
     study_id: int = field(default=0)
     start_date: datetime = field(default_factory=datetime.now)
     end_date: datetime = field(default_factory=datetime.now)
