@@ -18,6 +18,17 @@ BEGIN
     -- Validate student exists
     EXEC [dbo].[CheckStudentExists] @student_id
 
+    -- Check if student already has access to any of the products
+    IF EXISTS (
+      SELECT 1 
+      FROM @product_ids pid
+      JOIN PRODUCT_DETAILS pd ON pid.product_id = pd.product_id
+      WHERE pd.student_id = @student_id
+    )
+    BEGIN
+      THROW 50004, 'Student już ma dostęp do jednego lub więcej produktów z zamówienia.', 1;
+    END
+
     -- Insert order
     INSERT INTO ORDERS (
       student_id,
@@ -115,11 +126,28 @@ BEGIN
     -- Validate product exists
     EXEC [dbo].[CheckProductExists] @product_id
 
-    -- Validate fee type exists
-    IF NOT EXISTS (SELECT 1 FROM FEE_TYPE WHERE type_id = @type_id)
+    -- Get student_id for checking
+    DECLARE @student_id INT;
+    SELECT @student_id = student_id FROM ORDERS WHERE order_id = @order_id;
+
+    -- Check if fee for this product already exists
+    IF EXISTS (
+      SELECT 1 
+      FROM FEES
+      JOIN ORDERS ON FEES.order_id = ORDERS.order_id
+      WHERE ORDERS.student_id = @student_id 
+      AND FEES.product_id = @product_id
+      AND FEES.payment_date IS NOT NULL
+    )
     BEGIN
-      RAISERROR('Typ opłaty o ID @d nie istnieje.', 16, 1, @type_id);
+      PRINT 'Opłata za ten produkt już istnieje - pominięto.';
       RETURN;
+    END
+
+    -- Validate fee type exists
+    IF NOT EXISTS (SELECT 1 FROM FEE_TYPES WHERE type_id = @type_id)
+    BEGIN
+      THROW 50000, 'Typ opłaty nie istnieje.', 1;
     END
 
     -- Insert fee
@@ -172,14 +200,20 @@ BEGIN
     GROUP BY term
     ORDER BY term;
 
-    -- Add fee for session
+    DECLARE @date datetime;
+    SET @date = DATEADD(DAY, -1, @first_meeting_date);
+
+    DECLARE @fee_value MONEY;
+    SET @fee_value = (SELECT price FROM PRODUCTS WHERE product_id = @session_id);
+
     DECLARE @fee_id INT;
+    
     EXEC [dbo].[CreateFee]
       @order_id = @order_id,
       @product_id = @session_id,
       @type_id = @fee_type,
-      @due_date = DATEADD(DAY, -1, @first_meeting_date),
-      @fee_value = (SELECT price FROM PRODUCTS WHERE product_id = @session_id),
+      @due_date = @date,
+      @fee_value =  @fee_value,
       @fee_id = @fee_id OUTPUT;
 
     COMMIT TRANSACTION;
@@ -261,7 +295,7 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
       -- Create fees for each subject in the study
-      EXEC [dbo].[createFeesForSubject] @order_id, @subject_id, 2;
+      EXEC [dbo].[createFeesForSubject] @order_id, @subject_id, 3;
 
       FETCH NEXT FROM subject_cursor INTO @subject_id;
     END
@@ -301,14 +335,21 @@ BEGIN
     GROUP BY term
     ORDER BY term;
 
+    DECLARE @date datetime;
+    SET @date = DATEADD(DAY, -1, @first_meeting_date);
+
+    DECLARE @fee_value MONEY;
+    SET @fee_value = (SELECT price FROM PRODUCTS WHERE product_id = @study_id);
+
     -- Add entry fee
     DECLARE @fee_id INT;
+
     EXEC [dbo].[CreateFee]
       @order_id = @order_id,
       @product_id = @study_id,
       @type_id = 4,
-      @due_date = DATEADD(DAY, -1, @first_meeting_date),
-      @fee_value = (SELECT price FROM PRODUCTS WHERE product_id = @study_id),
+      @due_date = @date,
+      @fee_value =@fee_value,
       @fee_id = @fee_id OUTPUT;
 
     COMMIT TRANSACTION;
@@ -351,23 +392,37 @@ BEGIN
     GROUP BY term
     ORDER BY term;
 
+    DECLARE @date_advance datetime;
+    SET @date_advance = GETDATE();
+
     -- Add advance fee
+    DECLARE @advance_value MONEY;
+    SET @advance_value =  @product_price * @advance_share;
+    
     DECLARE @fee_id INT;
+    
     EXEC [dbo].[CreateFee]
       @order_id = @order_id,
       @product_id = @course_id,
       @type_id = 6,
-      @due_date = GETDATE(),
-      @fee_value = @product_price * @advance_share,
+      @due_date = @date_advance,
+      @fee_value = @advance_value,
       @fee_id = @fee_id OUTPUT;
 
     -- Add remaining fee for course
+    
+    DECLARE @value_remaining MONEY;
+    SET @value_remaining = @product_price * (1 - @advance_share)
+
+    DECLARE @date_remaining datetime;
+    SET @date_remaining = DATEADD(DAY, -3, @first_meeting_date);
+    
     EXEC [dbo].[CreateFee]
       @order_id = @order_id,
       @product_id = @course_id,
       @type_id = 5,
-      @due_date = DATEADD(DAY, -3, @first_meeting_date),
-      @fee_value = @product_price * (1 - @advance_share),
+      @due_date = @date_remaining,
+      @fee_value = @value_remaining,
       @fee_id = @fee_id OUTPUT;
 
     COMMIT TRANSACTION;
@@ -401,11 +456,14 @@ BEGIN
     WHERE product_id = @webinar_id;
 
     -- Add fee for webinar
+    DECLARE @date datetime;
+    SET @date = GETDATE();
+
     EXEC [dbo].[CreateFee]
       @order_id = @order_id,
       @product_id = @webinar_id,
       @type_id = 7,
-      @due_date = GETDATE(),
+      @due_date =  @date,
       @fee_value = @product_price,
       @fee_id = @fee_id OUTPUT;
 
@@ -439,16 +497,84 @@ BEGIN
 
     -- Insert product IDs from the cart into the table variable
     INSERT INTO @product_ids (product_id)
-    SELECT product_id FROM CART WHERE student_id = @student_id;
+    SELECT product_id FROM SHOPPING_CART WHERE student_id = @student_id;
 
     -- Create the order
     EXEC [dbo].[CreateOrder] @student_id, @product_ids, @order_id OUTPUT;
 
     -- Empty the cart
-    DELETE FROM CART WHERE student_id = @student_id;
+    DELETE FROM SHOPPING_CART WHERE student_id = @student_id;
 
     COMMIT TRANSACTION;
     PRINT 'Zamówienie utworzone z koszyka i koszyk opróżniony pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+
+-- Add product to cart
+CREATE PROCEDURE [dbo].[addProductToCart]
+  @student_id INT,
+  @product_id INT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate student exists
+    EXEC [dbo].[CheckStudentExists] @student_id;
+
+    -- Validate product exists
+    EXEC [dbo].[CheckProductExists] @product_id;
+
+    -- Add product to cart
+    INSERT INTO SHOPPING_CART (student_id, product_id)
+    VALUES (@student_id, @product_id);
+
+    COMMIT TRANSACTION;
+    PRINT 'Produkt dodany do koszyka pomyślnie.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+
+-- Remove product from cart
+CREATE PROCEDURE [dbo].[removeProductFromCart]
+  @student_id INT,
+  @product_id INT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate student exists
+    EXEC [dbo].[CheckStudentExists] @student_id;
+
+    -- Validate product exists in cart
+    IF NOT EXISTS (SELECT 1 FROM SHOPPING_CART WHERE student_id = @student_id AND product_id = @product_id)
+    BEGIN
+      RAISERROR('Produkt nie znajduje się w koszyku.', 16, 1);
+      RETURN;
+    END
+
+    -- Remove product from cart
+    DELETE FROM SHOPPING_CART
+    WHERE student_id = @student_id AND product_id = @product_id;
+
+    COMMIT TRANSACTION;
+    PRINT 'Produkt usunięty z koszyka pomyślnie.';
   END TRY
   BEGIN CATCH
     IF @@TRANCOUNT > 0
