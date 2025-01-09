@@ -162,10 +162,10 @@ CREATE TABLE USERS (
 | Column Name | Data Type   | Properties                 |
 | ----------- | ----------- | -------------------------- |
 | student_id  | int         | Primary Key<br>Foreign Key |
+| country_id  | int         | Foreign Key                |
 | street      | varchar(30) |                            |
 | city        | varchar(30) |                            |
 | postal_code | varchar(30) |                            |
-| country_id  | varchar(30) | Foreign Key                |
 
 Zawiera infromacje specyficzne dla studenta
 
@@ -208,23 +208,20 @@ Zawiera szczególne informacje dla pracowników (dyrektora, pracownika dziekanat
 
 - hire_date date nullable - data zatrudnienia
 
-  - DEFAULT current_date
-
 - birth_date date nullable - data urodzin pracownika
-  - DEFAULT current_date
 
 ```sql
 -- Table: EMPLOYEES
 CREATE TABLE EMPLOYEES (
     employee_id int  NOT NULL,
     type_id int  NOT NULL,
-    hire_date date  NULL DEFAULT current_date,
-    birth_date date  NULL DEFAULT current_date,
+    hire_date date  NULL ,
+    birth_date date  NULL,
     CONSTRAINT EMPLOYEES_pk PRIMARY KEY  (employee_id)
 );
 ```
 
-### Tabela EMPLOYEES_TYPE
+### Tabela EMPLOYEES_TYPES
 
 | Column Name | Data Type   | Properties  |
 | ----------- | ----------- | ----------- |
@@ -234,11 +231,14 @@ CREATE TABLE EMPLOYEES (
 Zawiera opis typów pracowników
 
 - _type_id_ int - klucz główny, typ pracownika <br>
-  1 - headmaster <br>
-  2 - administration worker <br>
-  3 - tutor <br>
-  4 - translator <br>
 - type_name varchar(30) - nazwa pełnionej funkcji
+
+Zdefiniowany typy:
+
+- 1 - headmaster <br>
+- 2 - administration worker <br>
+- 3 - tutor <br>
+- 4 - translator <br>
 
 ```sql
 -- Table: EMPLOYEE_TYPES
@@ -285,13 +285,13 @@ CREATE TABLE COUNTRIES (
 Zawiera informacje o każdym produkcie w ofercie. Produkt jest rozumiany
 jako każda z form przeprowadzania zajęć.
 
-- product*id* int - klucz główny, identyfikuje produkt
+- product_id int - klucz główny, identyfikuje produkt
 
 - type_id int - klucz obcy, numer kategorii produktu
 
-- price money nullable - cena za produkt
+- price money - cena za produkt
 
-  - warunek: prive >= 0
+  - warunek: price >= 0
   - DEFAULT 1000
 
 - total_vacancies int - ilość wolnych miejsc możliwych do zakupu na dane zajęcia
@@ -312,19 +312,21 @@ CREATE TABLE PRODUCTS (
 );
 ```
 
-### Tabela PRODUCTS_DETAILS
+### Tabela PRODUCT_DETAILS
 
 | Column Name | Data Type | Properties                 |
 | ----------- | --------- | -------------------------- |
 | student_id  | int       | Primary Key<br>Foreign Key |
 | product_id  | int       | Primary Key<br>Foreign Key |
 | order_id    | int       | Foreign Key                |
+| passed      | bit       |                            |
 
 Zawiera informacje o studentach zapisanych na dane zajęcia oraz o numerze zamówienia z jakiego został kupiony dostęp do zajęć
 
 - student_id int - wchodzi w skład klucza głównego, klucz obcy, identyfikuje studenta
 - product_id int - wchodzi w skład klucza głównego, klucz obcy, identifukuje produkt
 - order_id int - klucz obcy, identifikuje zamówienie z jakiego został kupiony dostęp do zajęć
+- passed bit - indykator zaliczenia produktu edukacyjnego (1 - produkt zaliczony, 0 - produkt niezaliczony)
 
 ```sql
 -- Table: PRODUCTS_DETAILS
@@ -345,12 +347,16 @@ CREATE TABLE PRODUCTS_DETAILS (
 
 Zawiera informacje o typach produktów
 
-- type_id int - klucz główny, identyfikuje typ:<br>
-  1- study, <br>
-  2 - subject,<br>
-  3 - course,<br>
-  4 - webinar
+- type_id int - klucz główny, identyfikator typu
 - type_name varchar(30) - nazwa typu
+
+Zdefiniowane typy:
+
+- 1 - study <br>
+- 2 - subject<br>
+- 3 - course<br>
+- 4 - webinar <br>
+- 5 - session
 
 ```sql
 -- Table: PRODUCT_TYPES
@@ -361,12 +367,12 @@ CREATE TABLE PRODUCT_TYPES (
 );
 ```
 
-### Tabela CART
+### Tabela SHOPPING_CART
 
 | Column Name | Data Type | Properties                 |
 | ----------- | --------- | -------------------------- |
 | student_id  | int       | Primary Key<br>Foreign Key |
-| product_id  | int       | Foreign Key                |
+| product_id  | int       | Primary Key<br>Foreign Key |
 
 Zawiera informacje o koszyku użytkownika
 
@@ -375,11 +381,11 @@ Zawiera informacje o koszyku użytkownika
 - product_id int - klucz główny, klucz obcy, identyfikator produktu
 
 ```sql
--- Table: CART
-CREATE TABLE CART (
+-- Table: SHOPPING_CART
+CREATE TABLE SHOPPING_CART (
     student_id int  NOT NULL,
     product_id int  NOT NULL,
-    CONSTRAINT CART_pk PRIMARY KEY  (student_id)
+    CONSTRAINT SHOPPING_CART_pk PRIMARY KEY  (student_id, product_id)
 );
 ```
 
@@ -387,11 +393,11 @@ CREATE TABLE CART (
 
 ### Tabela ORDERS
 
-| Column Name | Data Type | Properties                 |
-| ----------- | --------- | -------------------------- |
-| order_id    | int       | Primary Key<br>Foreign Key |
-| student_id  | int       | Foreign Key                |
-| order_date  | date      |                            |
+| Column Name | Data Type | Properties  |
+| ----------- | --------- | ----------- |
+| order_id    | int       | Primary Key |
+| student_id  | int       | Foreign Key |
+| order_date  | date      |             |
 
 Zawiera informacje na temat zamówienia pod danym identyfikatorem
 
@@ -399,29 +405,29 @@ Zawiera informacje na temat zamówienia pod danym identyfikatorem
 
 - student_id int - kluczo obcy, identyfikator studenta
 
-- order_date datetime nullable - data złożenia zamówienia
+- order_date datetime - data złożenia zamówienia
 
 ```sql
 -- Table: ORDERS
 CREATE TABLE ORDERS (
     order_id int  NOT NULL IDENTITY,
     student_id int  NOT NULL,
-    order_date date  NOT NULL DEFAULT actual_date,
+    order_date date  NOT NULL DEFAULT GETDATE(),
     CONSTRAINT ORDERS_pk PRIMARY KEY  (order_id)
 );
 ```
 
 ### Tabela FEES
 
-| Column Name  | Data Type | Properties                 |
-| ------------ | --------- | -------------------------- |
-| fee_id       | int       | Primary Key<br>Foreign Key |
-| due_date     | date      |                            |
-| payment_date | date      |                            |
-| fee_value    | money     |                            |
-| type_id      | int       | Foreign Key                |
-| order_id     | int       | Foreign Key                |
-| product_id   | int       | Foreign Key                |
+| Column Name  | Data Type | Properties  |
+| ------------ | --------- | ----------- |
+| fee_id       | int       | Primary Key |
+| type_id      | int       | Foreign Key |
+| order_id     | int       | Foreign Key |
+| product_id   | int       | Foreign Key |
+| due_date     | date      |             |
+| payment_date | date      |             |
+| fee_value    | money     |             |
 
 Zawiera informacje o płatności za dany produkt dołączonej do danego zamówienia
 
@@ -445,7 +451,7 @@ Zawiera informacje o płatności za dany produkt dołączonej do danego zamówie
 -- Table: PAYMENTS
 CREATE TABLE FEES (
     fee_id int  NOT NULL IDENTITY,
-    due_date date  NOT NULL DEFAULT actual_date,
+    due_date date  NOT NULL DEFAULT GETDATE(),
     payment_date date  NULL,
     fee_value money  NOT NULL CHECK (payment_value>=0),
     type_id int  NOT NULL,
@@ -455,7 +461,7 @@ CREATE TABLE FEES (
 );
 ```
 
-### Tabela FEE_TYPE
+### Tabela FEE_TYPES
 
 | Column Name | Data Type    | Properties  |
 | ----------- | ------------ | ----------- |
@@ -468,8 +474,18 @@ Zawiera informacje o możliwych typach płatności
 
 - type_name nvarachar(30) - nazwa typu płatności
 
+Zdefiniowane typy:
+
+- 1 - session
+- 2 - subject session
+- 3 - study session
+- 4 - study entry fee
+- 5 - course
+- 6 - course advance
+- 7 - webinar
+
 ```sql
-CREATE TABLE FEE_TYPE (
+CREATE TABLE FEE_TYPES (
     type_id int  NOT NULL,
     type_name nvarchar(30)  NOT NULL,
     CONSTRAINT FEE_TYPE_pk PRIMARY KEY  (type_id)
@@ -485,13 +501,13 @@ CREATE TABLE FEE_TYPE (
 | webinar_id          | int         | Primary Key<br>Foreign Key |
 | tutor_id            | int         | Foreign Key                |
 | translator_id       | int         | Foreign Key                |
+| language_id         | int         | Foreign Key                |
 | webinar_name        | varchar(50) |                            |
 | webinar_description | text        |                            |
 | meeting_url         | text        |                            |
 | video_url           | text        |                            |
 | webinar_duration    | time(0)     |                            |
 | publish_date        | datetime    |                            |
-| language_id         | int         | Foreign Key                |
 
 Zawiera informacje specyfinczne dla każdego produktu będącego webinarem
 
@@ -529,7 +545,7 @@ CREATE TABLE WEBINARS (
    webinar_name varchar(50)  NOT NULL,
    webinar_description text  NULL,
    video_url text  NULL,
-   webinar_duration time(0)  NULL DEFAULT 01:30:00 CHECK (DurationTime > '00:00:00'),
+   webinar_duration time(0)  NULL DEFAULT '01:30:00' CHECK (DurationTime > '00:00:00'),
    publish_date datetime  NOT NULL,
    language_id int  NOT NULL DEFAULT 0,
    CONSTRAINT WEBINARS_pk PRIMARY KEY  (webinar_id)
@@ -574,13 +590,13 @@ CREATE TABLE COURSES (
 
 ### Tabela MODULES
 
-| Column Name        | Data Type | Properties                 |
-| ------------------ | --------- | -------------------------- |
-| module_id          | int       | Primary Key<br>Foreign Key |
-| course_id          | int       | Foreign Key                |
-| tutor_id           | int       | Foreign Key                |
-| module_name        | int       |                            |
-| module_description | int       |                            |
+| Column Name        | Data Type    | Properties  |
+| ------------------ | ------------ | ----------- |
+| module_id          | int          | Primary Key |
+| course_id          | int          | Foreign Key |
+| tutor_id           | int          | Foreign Key |
+| module_name        | nvarchar(50) |             |
+| module_description | text         |             |
 
 Zawiera szczegółowe informacje dla każdego modułu kursu
 
@@ -590,9 +606,9 @@ Zawiera szczegółowe informacje dla każdego modułu kursu
 
 - tutor_id int - klucz obcy, identifikator nauczyciela, który prowadzi dany moduł
 
-- module_name - nazwa modułu
+- module_name nvarchar(50) - nazwa modułu
 
-- module_description - opis modułu
+- module_description text - opis modułu
 
 ```SQL
 -- Table: MODULES
@@ -718,7 +734,7 @@ CREATE TABLE INTERSHIPS (
 );
 ```
 
-### Tabela INTERSHIPS_DETAILS
+### Tabela INTERSHIP_DETAILS
 
 | Column Name   | Data Type | Properties                 |
 | ------------- | --------- | -------------------------- |
@@ -750,17 +766,17 @@ CREATE TABLE INTERSHIP_DETAILS (
 
 ### Tabela MEETINGS
 
-| Column Name   | Data Type   | Properties                 |
-| ------------- | ----------- | -------------------------- |
-| meeting_id    | int         | Primary Key<br>Foreign Key |
-| tutor_id      | int         | Foreign Key                |
-| translator_id | int         | Foreign Key                |
-| meeting_name  | varchar(30) |                            |
-| term          | datetime    |                            |
-| duration      | time(0)     |                            |
-| language_id   | int         | Foreign Key                |
-| module_id     | int         | Foreign Key                |
-| session_id    | int         | Foreign Key                |
+| Column Name   | Data Type   | Properties  |
+| ------------- | ----------- | ----------- |
+| meeting_id    | int         | Primary Key |
+| tutor_id      | int         | Foreign Key |
+| translator_id | int         | Foreign Key |
+| language_id   | int         | Foreign Key |
+| module_id     | int         | Foreign Key |
+| session_id    | int         | Foreign Key |
+| meeting_name  | varchar(30) |             |
+| term          | datetime    |             |
+| duration      | time(0)     |             |
 
 Zawiera ogólne informacje na temat spotkania
 
@@ -777,11 +793,11 @@ Zawiera ogólne informacje na temat spotkania
 - duration time(0) nullable - czas trwania spotkania
 
   - Warunek: duration > '00:00:00'
-  - DEFAULT 01:30:00
+  - DEFAULT '01:30:00'
 
 - language_id int - klucz obcy, identyfikator języka w jakim przeprowadza się spotkanie
 
-  - DEFAULT 0
+  - DEFAULT 1
 
 - module_id int nullable - klucz obcy, identyfikator modułu kursu odpowiadającego spotkani
 
@@ -836,7 +852,7 @@ CREATE TABLE MEETING_DETAILS (
 | Column Name | Data Type | Properties                 |
 | ----------- | --------- | -------------------------- |
 | meeting_id  | int       | Primary Key<br>Foreign Key |
-| meeting_url | text      |                            |
+| video_url   | text      |                            |
 
 Zawiera dane dotyczące spotkań internetowych, które nie są na żywo
 
@@ -2243,7 +2259,6 @@ left join sessions on sessions.session_id = p.product_id,
 left join webinars on webinars.webinar_id = p.product_id
 ```
 
-
 # Procedury
 
 ## Sprawdzanie poprawności danych przed operacją
@@ -2275,6 +2290,7 @@ GO
 Procedura `CheckOrderExists` weryfikuje czy zamówienie o podanym ID istnieje w bazie. W przypadku braku zamówienia zgłasza błąd.
 
 Argumenty:
+
 - @order_id INT - ID zamówienia do sprawdzenia
 
 ```sql
@@ -2296,6 +2312,7 @@ GO
 Procedura `CheckStudyExists` weryfikuje czy studia o podanym ID istnieją w bazie. W przypadku braku studiów zgłasza błąd.
 
 Argumenty:
+
 - @study_id INT - ID studiów do sprawdzenia
 
 ```sql
@@ -2317,6 +2334,7 @@ GO
 Procedura `CheckProductExists` weryfikuje czy produkt o podanym ID istnieje w bazie. W przypadku braku produktu zgłasza błąd.
 
 Argumenty:
+
 - @product_id INT - ID produktu do sprawdzenia
 
 ```sql
@@ -2360,6 +2378,7 @@ GO
 Procedura `CheckLanguageExists` weryfikuje czy język o podanym ID istnieje w bazie. W przypadku braku języka zgłasza błąd.
 
 Argumenty:
+
 - @language_id INT - ID języka do sprawdzenia
 
 ```sql
@@ -2381,6 +2400,7 @@ GO
 Procedura `CheckModuleExists` weryfikuje czy moduł o podanym ID istnieje w bazie. W przypadku braku modułu zgłasza błąd.
 
 Argumenty:
+
 - @module_id INT - ID modułu do sprawdzenia
 
 ```sql
@@ -2533,31 +2553,31 @@ CREATE PROCEDURE [dbo].[CreateBasicUser]
 AS
 BEGIN
   SET NOCOUNT ON;
-  
+
   BEGIN TRY
     BEGIN TRANSACTION;
-    
+
     -- Validate email format
     IF @email NOT LIKE '%_@%.%'
     BEGIN
       THROW 50000, 'Niepoprawny format adresu email.', 1;
       RETURN;
     END
-    
+
     -- Validate phone number if provided
     IF @phone IS NOT NULL AND (LEN(@phone) != 9 OR ISNUMERIC(@phone) = 0)
     BEGIN
       THROW 50000, 'Niepoprawny format numeru telefonu.', 1;
       RETURN;
     END
-    
+
     -- Check for existing email
     IF EXISTS (SELECT 1 FROM USERS WHERE email = @email)
     BEGIN
       THROW 50000, 'Email został już przypisany do innego użytkownika.', 1;
       RETURN;
     END
-    
+
     -- Check for existing phone if provided
     IF @phone IS NOT NULL AND EXISTS (SELECT 1 FROM USERS WHERE phone = @phone)
     BEGIN
@@ -2566,22 +2586,22 @@ BEGIN
     END
     -- Insert the new user
     INSERT INTO USERS (
-      username, 
-      first_name, 
-      last_name, 
-      email, 
+      username,
+      first_name,
+      last_name,
+      email,
       phone
     ) VALUES (
-      @username, 
-      @first_name, 
-      @last_name, 
-      @email, 
+      @username,
+      @first_name,
+      @last_name,
+      @email,
       @phone
     );
-    
+
     -- Set the output parameter to the new user's ID
     SET @user_id = SCOPE_IDENTITY();
-    
+
     COMMIT TRANSACTION;
     PRINT('Użytkownik utworzony pomyślnie.')
   END TRY
@@ -2704,27 +2724,27 @@ CREATE PROCEDURE [dbo].[CreateEmployee]
 AS
 BEGIN
   SET NOCOUNT ON;
-  
+
   BEGIN TRY
     BEGIN TRANSACTION;
-    
+
     -- Validate employee type exists
     IF NOT EXISTS (SELECT 1 FROM EMPLOYEE_TYPES WHERE type_id = @employee_type_id)
     BEGIN
       THROW 50000, 'Nieprawidłowy typ pracownika.', 1;
       RETURN;
     END
-    
+
     -- Create basic user first
     DECLARE @id INT;
-    EXEC CreateBasicUser 
+    EXEC CreateBasicUser
       @username = @username,
       @first_name = @first_name,
       @last_name = @last_name,
       @email = @email,
       @phone = @phone,
       @user_id = @id OUTPUT;
-    
+
     -- Set the returned value
     SET @employee_id = @id;
 
@@ -2741,7 +2761,7 @@ BEGIN
       COALESCE(@hire_date, GETDATE()),
       @birth_date
     );
-    
+
     COMMIT TRANSACTION;
     PRINT('Pracownik utworzony pomyślnie.')
   END TRY
@@ -3925,6 +3945,7 @@ GO
 Typ tablicowy `productIdList` służący do przekazywania listy identyfikatorów produktów jako parametru do procedur składowanych.
 
 Struktura:
+
 - product_id INT - Identyfikator produktu
 
 ```sql
@@ -3939,11 +3960,13 @@ CREATE TYPE dbo.productIdList AS TABLE (
 Procedura `CreateOrder` tworzy nowe zamówienie i generuje odpowiednie opłaty na podstawie typów zamawianych produktów.
 
 Argumenty:
+
 - @student_id INT - ID studenta składającego zamówienie
 - @product_ids dbo.productIdList READONLY - Tabela z ID zamawianych produktów
 - @order_id INT OUTPUT - Zwracane ID utworzonego zamówienia
 
 Działanie:
+
 1. Sprawdza czy student istnieje
 2. Weryfikuje czy student nie ma już dostępu do któregoś z zamawianych produktów
 3. Tworzy nowe zamówienie
@@ -3953,7 +3976,6 @@ Działanie:
    - Kurs: opłata zaliczkowa + pozostała część
    - Webinar: opłata jednorazowa
    - Sesja: opłata jednorazowa
-
 
 ```sql
 CREATE PROCEDURE [dbo].[CreateOrder]
@@ -3972,7 +3994,7 @@ BEGIN
 
     -- Check if student already has access to any of the products
     IF EXISTS (
-      SELECT 1 
+      SELECT 1
       FROM @product_ids pid
       JOIN PRODUCT_DETAILS pd ON pid.product_id = pd.product_id
       WHERE pd.student_id = @student_id
@@ -4021,7 +4043,7 @@ BEGIN
       BEGIN
         EXEC [dbo].[createFeesForSubject] @order_id, @product_id;
       END
-      ELSE IF @type_id = 3 
+      ELSE IF @type_id = 3
       -- course
       BEGIN
         EXEC [dbo].[createFeesForCourse] @order_id, @product_id;
@@ -4061,6 +4083,7 @@ GO
 Procedura `CreateFee` tworzy pojedynczą opłatę w systemie.
 
 Argumenty:
+
 - @order_id INT - ID zamówienia
 - @product_id INT - ID produktu, którego dotyczy opłata
 - @type_id INT - Typ opłaty
@@ -4069,6 +4092,7 @@ Argumenty:
 - @fee_id INT OUTPUT - Zwracane ID utworzonej opłaty
 
 Działanie:
+
 1. Sprawdza czy zamówienie istnieje
 2. Sprawdza czy produkt istnieje
 3. Weryfikuje czy typ opłaty jest poprawny
@@ -4101,10 +4125,10 @@ BEGIN
 
     -- Check if fee for this product already exists
     IF EXISTS (
-      SELECT 1 
+      SELECT 1
       FROM FEES
       JOIN ORDERS ON FEES.order_id = ORDERS.order_id
-      WHERE ORDERS.student_id = @student_id 
+      WHERE ORDERS.student_id = @student_id
       AND FEES.product_id = @product_id
       AND FEES.payment_date IS NOT NULL
     )
@@ -4187,7 +4211,7 @@ BEGIN
     SET @fee_value = (SELECT price FROM PRODUCTS WHERE product_id = @session_id);
 
     DECLARE @fee_id INT;
-    
+
     EXEC [dbo].[CreateFee]
       @order_id = @order_id,
       @product_id = @session_id,
@@ -4419,9 +4443,9 @@ BEGIN
     -- Add advance fee
     DECLARE @advance_value MONEY;
     SET @advance_value =  @product_price * @advance_share;
-    
+
     DECLARE @fee_id INT;
-    
+
     EXEC [dbo].[CreateFee]
       @order_id = @order_id,
       @product_id = @course_id,
@@ -4431,13 +4455,13 @@ BEGIN
       @fee_id = @fee_id OUTPUT;
 
     -- Add remaining fee for course
-    
+
     DECLARE @value_remaining MONEY;
     SET @value_remaining = @product_price * (1 - @advance_share)
 
     DECLARE @date_remaining datetime;
     SET @date_remaining = DATEADD(DAY, -3, @first_meeting_date);
-    
+
     EXEC [dbo].[CreateFee]
       @order_id = @order_id,
       @product_id = @course_id,
@@ -4563,6 +4587,7 @@ GO
 Procedura `addProductToCart` dodaje produkt do koszyka studenta.
 
 Argumenty:
+
 - @student_id INT - ID studenta, któremu dodajemy produkt do koszyka
 - @product_id INT - ID produktu, który ma zostać dodany do koszyka
 
@@ -4604,7 +4629,8 @@ GO
 Procedura `removeProductFromCart` usuwa produkt z koszyka studenta.
 
 Argumenty:
-- @student_id INT - ID studenta, któremu usuwamy produkt z koszyka 
+
+- @student_id INT - ID studenta, któremu usuwamy produkt z koszyka
 - @product_id INT - ID produktu, który ma zostać usunięty z koszyka
 
 ```sql
