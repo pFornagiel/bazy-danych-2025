@@ -20,7 +20,7 @@ class CourseDataGenerator:
             course_description=self.fake.text(),
             price=random.uniform(1000, 5000),
             vacancies=random.randint(10, 50),
-            release=self.fake.date_between(start_date='-1y', end_date='today')
+            release=self.fake.date_between(start_date='today', end_date='+1y')
         )
 
     def generate_courses(self, num_courses):

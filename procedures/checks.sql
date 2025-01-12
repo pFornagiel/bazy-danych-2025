@@ -5,7 +5,7 @@ AS
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE employee_id = @employee_id)
   BEGIN
-    RAISERROR('Pracownik o id %d nie istnieje.', 16, 1, @employee_id);
+    THROW 50001, 'Pracownik nie istnieje.', 1;
     RETURN;
   END
 END;
@@ -18,7 +18,7 @@ AS
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM STUDENTS WHERE student_id = @student_id)
   BEGIN
-    RAISERROR('Pracownik o id %d nie istnieje.', 16, 1, @student_id);
+    THROW 50001, 'Student nie istnieje.', 1;
     RETURN;
   END
 END;
@@ -31,7 +31,7 @@ AS
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM COUNTRIES WHERE country_id = @country_id)
   BEGIN
-    RAISERROR('Państwo nie istnieje.', 16, 1);
+    THROW 50001, 'Państwo nie istnieje.', 1;
     RETURN;
   END
 END;
@@ -44,7 +44,7 @@ AS
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM LANGUAGES WHERE language_id = @language_id)
   BEGIN
-    RAISERROR('Język nie istnieje.', 16, 1);
+    THROW 50001, 'Język nie istnieje.', 1;
     RETURN;
   END
 END;
@@ -57,7 +57,7 @@ AS
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM MODULES WHERE module_id = @module_id)
   BEGIN
-    RAISERROR('Moduł o ID %d nie istnieje.', 16, 1, @module_id);
+    THROW 50001, 'Moduł nie istnieje.', 1;
     RETURN;
   END
 END;
@@ -70,12 +70,11 @@ AS
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM STUDIES WHERE study_id = @study_id)
   BEGIN
-    RAISERROR('Studia o ID %d nie istnieją.', 16, 1, @study_id);
+    THROW 50001, 'Studia nie istnieją.', 1;
     RETURN;
   END
 END;
 GO
-
 
 -- Session existing check
 CREATE PROCEDURE [dbo].[CheckSessionExists]
@@ -84,12 +83,11 @@ AS
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM SESSIONS WHERE session_id = @session_id)
   BEGIN
-    RAISERROR('Sesja o ID %d nie istnieje.', 16, 1, @session_id);
+    THROW 50001, 'Sesja nie istnieje.', 1;
     RETURN;
   END
 END;
 GO
-
 
 -- Order existing check
 CREATE PROCEDURE [dbo].[CheckOrderExists]
@@ -98,12 +96,11 @@ AS
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM ORDERS WHERE order_id = @order_id)
   BEGIN
-    RAISERROR('Sesja o ID %d nie istnieje.', 16, 1, @order_id);
+    THROW 50001, 'Zamówienie nie istnieje.', 1;
     RETURN;
   END
 END;
 GO
-
 
 -- Product existing check
 CREATE PROCEDURE [dbo].[CheckProductExists]
@@ -112,7 +109,7 @@ AS
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM PRODUCTS WHERE product_id = @product_id)
   BEGIN
-    RAISERROR('Sesja o ID %d nie istnieje.', 16, 1, @product_id);
+    THROW 50001, 'Produkt nie istnieje.', 1;
     RETURN;
   END
 END;
@@ -125,7 +122,7 @@ AS
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM MEETINGS WHERE meeting_id = @meeting_id)
   BEGIN
-    RAISERROR('Sesja o ID %d nie istnieje.', 16, 1, @meeting_id);
+    THROW 50001, 'Spotkanie nie istnieje.', 1;
     RETURN;
   END
 END;
@@ -138,21 +135,20 @@ AS
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM WEBINARS WHERE webinar_id = @webinar_id)
   BEGIN
-    RAISERROR('Webinar o podanym ID nie istnieje.', 16, 1);
+    THROW 50001, 'Webinar nie istnieje.', 1;
     RETURN;
   END
 END;
 GO
 
 -- Fee existing check
-
 CREATE PROCEDURE [dbo].[CheckFeeExists]
   @fee_id INT
 AS
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM FEES WHERE fee_id = @fee_id)
   BEGIN
-    RAISERROR('Należność o podanym ID nie istnieje.', 16, 1);
+    THROW 50001, 'Należność nie istnieje.', 1;
     RETURN;
   END
 END;

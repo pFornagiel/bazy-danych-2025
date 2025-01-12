@@ -3,6 +3,7 @@ from generators.generate_studies import StudyDataGenerator
 from generators.generate_courses import CourseDataGenerator
 from generators.generate_webinars import WebinarDataGenerator
 import random
+from faker import Faker
 
 class DataGenerator:
     def __init__(self):
@@ -74,6 +75,7 @@ class DataGenerator:
 
         for subject in self.SUBJECTS:
             amount_sessions = random.randint(self.AMOUNT_OF_SESSIONS-1, self.AMOUNT_OF_SESSIONS+1)
+            
             study_data.generate_sessions(amount_sessions, subject)
             self.SESSIONS.extend([i+self.cumulative_products for i in range(amount_sessions)])
             self.cumulative_products += amount_sessions

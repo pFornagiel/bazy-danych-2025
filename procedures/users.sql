@@ -16,31 +16,30 @@ BEGIN
     -- Validate email format
     IF @email NOT LIKE '%_@%.%'
     BEGIN
-      RAISERROR('Niepoprawny format adresu email.', 16, 1);
+      THROW 50000, 'Niepoprawny format adresu email.', 1;
       RETURN;
     END
     
     -- Validate phone number if provided
     IF @phone IS NOT NULL AND (LEN(@phone) != 9 OR ISNUMERIC(@phone) = 0)
     BEGIN
-      RAISERROR('Niepoprawny format numeru telefonu.', 16, 1);
+      THROW 50000, 'Niepoprawny format numeru telefonu.', 1;
       RETURN;
     END
     
     -- Check for existing email
     IF EXISTS (SELECT 1 FROM USERS WHERE email = @email)
     BEGIN
-      RAISERROR('Email został już przypisany do innego użytkownika.', 16, 1);
+      THROW 50000, 'Email został już przypisany do innego użytkownika.', 1;
       RETURN;
     END
     
     -- Check for existing phone if provided
     IF @phone IS NOT NULL AND EXISTS (SELECT 1 FROM USERS WHERE phone = @phone)
     BEGIN
-      RAISERROR('Numer telefonu został już przypisany do innego użytkownika.', 16, 1);
+      THROW 50000, 'Numer telefonu został już przypisany do innego użytkownika.', 1;
       RETURN;
     END
-    
     -- Insert the new user
     INSERT INTO USERS (
       username, 
@@ -153,7 +152,7 @@ BEGIN
     -- Validate employee type exists
     IF NOT EXISTS (SELECT 1 FROM EMPLOYEE_TYPES WHERE type_id = @employee_type_id)
     BEGIN
-      RAISERROR('Nieprawidłowy typ pracownika.', 16, 1);
+      THROW 50000, 'Nieprawidłowy typ pracownika.', 1;
       RETURN;
     END
     
