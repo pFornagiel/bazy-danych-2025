@@ -75,7 +75,7 @@ def generate_markdown_for_foreign_keys(foreign_keys):
 
 
 sql_script = ""
-with open(os.path.join('bazy-danych-2025_create.sql'), 'r') as file:
+with open(os.path.join('data/sql/bazy-danych-2025_create.sql'), 'r') as file:
   sql_script = "".join(file.readlines()[4::]) 
 
 # print(parse_foreign_keys(sql_script))

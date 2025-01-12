@@ -2,6 +2,7 @@ from faker import Faker
 from models import Study, Subject, Session, Internship, InternshipDetails, Meeting, SyncMeeting, AsyncMeeting, StationaryMeeting
 from datetime import datetime, timedelta
 import random
+from .const import LANGAUGES
 
 class StudyDataGenerator:
     def __init__(self, locale='pl_PL'):
@@ -24,7 +25,7 @@ class StudyDataGenerator:
             study_description=self.fake.text(),
             price=random.uniform(1000, 5000),
             vacancies=random.randint(10, 50),
-            release=self.fake.date_between(start_date='-1y', end_date='today')
+            release=self.fake.date_between(start_date='today', end_date='+1y')
         )
 
     def generate_studies(self, num_studies):
@@ -40,7 +41,7 @@ class StudyDataGenerator:
             subject_description=self.fake.text(),
             price=random.uniform(500, 2000),
             vacancies=random.randint(10, 30),
-            release=self.fake.date_between(start_date='-1y', end_date='today')
+            release=self.fake.date_between(start_date='today', end_date='+1y')
         )
 
     def generate_subjects(self, num_subjects, study_id, tutors):
@@ -53,7 +54,7 @@ class StudyDataGenerator:
             subject_id=subject_id,
             price=random.uniform(100, 500),
             vacancies=random.randint(5, 20),
-            release=self.fake.date_between(start_date='-1y', end_date='today')
+            release=self.fake.date_between(start_date='today', end_date='+1y')
         )
 
     def generate_sessions(self, num_sessions, subject_id):
@@ -62,7 +63,7 @@ class StudyDataGenerator:
         return self.generated_data['sessions']
 
     def _generate_internship_data(self, study_id):
-        start_date = self.fake.date_between(start_date='-1y', end_date='today')
+        start_date = self.fake.date_between(start_date='today', end_date='+1y')
         end_date = (start_date + timedelta(weeks=2))
 
 
@@ -91,14 +92,16 @@ class StudyDataGenerator:
         return self.generated_data['internship_details']
 
     def _generate_meeting_data(self, tutor_id, session_id, translator_id=None):
+        session: Session = [session for i,session in enumerate(self.generated_data['sessions']) if len(self.generated_data['subjects']) + len(self.generated_data['studies']) + i+1 == session_id][0]
+        date = session.release
         return Meeting(
             session_id=session_id,
             tutor_id=tutor_id,
-            term=self.fake.date_time_between(start_date='-1y', end_date='now'),
+            term=self.fake.date_time_between(start_date=date, end_date='+1d'),
             meeting_name=self.fake.sentence(nb_words=3),  # Added meeting_name generation
             duration=self.fake.time_object(end_datetime=None),
             translator_id=translator_id,
-            language_id=1# Changed to language_id to match Meeting class
+            language_id=random.randint(1,len(LANGAUGES))# Changed to language_id to match Meeting class
         )
 
     def generate_meetings(self, num_meetings, tutor_id, translator_id=None):

@@ -133,7 +133,7 @@ BEGIN
     -- Validate subject exists
     IF NOT EXISTS (SELECT 1 FROM SUBJECTS WHERE subject_id = @subject_id)
     BEGIN
-      RAISERROR('Przedmiot nie istnieje.', 16, 1);
+      THROW 50000, 'Przedmiot nie istnieje.', 1;
       RETURN;
     END
 
@@ -230,7 +230,7 @@ BEGIN
     -- Validate internship exists
     IF NOT EXISTS (SELECT 1 FROM INTERSHIPS WHERE internship_id = @internship_id)
     BEGIN
-      RAISERROR('Praktyka nie istnieje.', 16, 1);
+      THROW 50000, 'Praktyka nie istnieje.', 1;
       RETURN;
     END
 
