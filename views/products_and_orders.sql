@@ -42,7 +42,7 @@ WHERE
         AND f.payment_date IS NOT NULL  -- Payment has been made
     )
 
-drop view FINANCIAL_REPORT
+
 create view FINANCIAL_REPORT as
 select
   PRODUCTS.product_id,
@@ -111,17 +111,6 @@ FROM
   products p
   join PRODUCT_TYPES pt on pt.type_id = p.type_id
   join fees on fees.product_id = p.product_id
-
-CREATE VIEW product_payment_information AS
-SELECT
-  o.student_id,
-  sum(fees.fee_value - p.price) as to_pay_value
-FROM
-  orders o
-  join fees on fees.order_id = o.order_id
-  join products p on fees.product_id = p.product_id
-group by
-  o.student_id
 
 create view Product_information as
 select product_id,

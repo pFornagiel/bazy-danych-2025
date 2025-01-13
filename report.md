@@ -11,6 +11,209 @@
 
 ---
 
+<!-- TOC -->
+
+- [1. Wymagania i funkcje systemu](#1-wymagania-i-funkcje-systemu)
+- [Opis Funkcjonalności Systemu](#opis-funkcjonalności-systemu)
+  - [Funkcje Systemu](#funkcje-systemu)
+  - [Użytkownicy](#użytkownicy)
+  - [Funkcje poszczególnych użytkowników](#funkcje-poszczególnych-użytkowników)
+    - [Studenci (użytkownicy zalogowani, rozszerzenie możliwości gości)](#studenci-użytkownicy-zalogowani-rozszerzenie-możliwości-gości)
+    - [Goście (użytkownicy niezalogowani)](#goście-użytkownicy-niezalogowani)
+    - [Prowadzący zajęcia](#prowadzący-zajęcia)
+    - [Administrator zasobów](#administrator-zasobów)
+    - [Dyrektor](#dyrektor)
+    - [Dziekanat](#dziekanat)
+    - [Tłumacz](#tłumacz)
+- [Schemat bazy danych](#schemat-bazy-danych)
+- [Opis tabel](#opis-tabel)
+  - [Kategoria USERS](#kategoria-users)
+    - [Tabela USERS](#tabela-users)
+    - [Tabela STUDENTS](#tabela-students)
+    - [Tabela EMPLOYEES](#tabela-employees)
+    - [Tabela EMPLOYEES\_TYPES](#tabela-employees_types)
+    - [Tabela COUNTRIES](#tabela-countries)
+  - [Kategoria Products](#kategoria-products)
+    - [Tabela Products](#tabela-products)
+    - [Tabela PRODUCT\_DETAILS](#tabela-product_details)
+    - [Tabela PRODUCT\_TYPES](#tabela-product_types)
+    - [Tabela SHOPPING\_CART](#tabela-shopping_cart)
+  - [Kategoria Orders](#kategoria-orders)
+    - [Tabela ORDERS](#tabela-orders)
+    - [Tabela FEES](#tabela-fees)
+    - [Tabela FEE\_TYPES](#tabela-fee_types)
+  - [Kategoria Webinars](#kategoria-webinars)
+    - [Tabela Webinars](#tabela-webinars)
+  - [Kategoria COURSES](#kategoria-courses)
+    - [Tabela COURSES](#tabela-courses)
+    - [Tabela MODULES](#tabela-modules)
+  - [Kategoria STUDIES](#kategoria-studies)
+    - [Tabela STUDIES](#tabela-studies)
+    - [Tabela SUBJECTS](#tabela-subjects)
+  - [Tabela SESSIONS](#tabela-sessions)
+    - [Tabela INTERSHIPS](#tabela-interships)
+    - [Tabela INTERSHIP\_DETAILS](#tabela-intership_details)
+  - [Kategoria MEETINGS](#kategoria-meetings)
+    - [Tabela MEETINGS](#tabela-meetings)
+    - [Tabela MEETING\_DETAILS](#tabela-meeting_details)
+    - [Tabela ASYNC\_MEETINGS](#tabela-async_meetings)
+    - [Tabela SYNC\_MEETINGS](#tabela-sync_meetings)
+    - [Tabela STATIONARY\_MEETINGS](#tabela-stationary_meetings)
+  - [Kategoria LANGUAGES](#kategoria-languages)
+    - [Tabela LANGUAGES](#tabela-languages)
+- [Dokumentacja kluczy obcych](#dokumentacja-kluczy-obcych)
+- [Widoki](#widoki)
+  - [Users](#users)
+    - [Student\_address](#student_address)
+    - [Emploee\_list](#emploee_list)
+    - [User\_information](#user_information)
+    - [Regular\_customers](#regular_customers)
+  - [Webinars](#webinars)
+    - [Webinar\_information](#webinar_information)
+    - [Webinar\_free\_entry](#webinar_free_entry)
+    - [Webinar\_available](#webinar_available)
+  - [Courses](#courses)
+    - [Course\_information](#course_information)
+    - [Course\_module\_meeting\_types](#course_module_meeting_types)
+    - [Course\_module\_information](#course_module_information)
+    - [Course passes](#course-passes)
+    - [Course\_syllabus](#course_syllabus)
+  - [Kategoria zamówienia i produkty](#kategoria-zamówienia-i-produkty)
+    - [PRODUCT VACANCIES](#product-vacancies)
+    - [USERS IN DEBT](#users-in-debt)
+    - [FINANCIAL REPORT](#financial-report)
+    - [BILOCATION REPORT](#bilocation-report)
+    - [PRODUCT OWNERS](#product-owners)
+    - [Product\_payment\_information](#product_payment_information)
+    - [Unpaid special permissions](#unpaid-special-permissions)
+    - [Product\_information](#product_information)
+  - [Meetings](#meetings)
+    - [Attendance\_meeting](#attendance_meeting)
+    - [Future\_meeting\_attendee\_count](#future_meeting_attendee_count)
+    - [Meeting\_type](#meeting_type)
+    - [Only\_course\_meeting](#only_course_meeting)
+    - [Only\_studies\_meeting](#only_studies_meeting)
+    - [Room\_schedule](#room_schedule)
+  - [Studies](#studies)
+    - [Study\_information](#study_information)
+    - [Study\_internship\_information](#study_internship_information)
+    - [Study\_meeting\_information](#study_meeting_information)
+    - [Study\_offers](#study_offers)
+    - [Study\_passed](#study_passed)
+    - [Study\_session\_schedule](#study_session_schedule)
+    - [Study\_syllabus](#study_syllabus)
+- [Procedury](#procedury)
+  - [Sprawdzanie poprawności danych przed operacją](#sprawdzanie-poprawności-danych-przed-operacją)
+    - [CheckWebinarExists](#checkwebinarexists)
+    - [CheckOrderExists](#checkorderexists)
+    - [CheckStudyExists](#checkstudyexists)
+    - [CheckProductExists](#checkproductexists)
+    - [CheckEmployeeExists](#checkemployeeexists)
+    - [CheckLanguageExists](#checklanguageexists)
+    - [CheckModuleExists](#checkmoduleexists)
+    - [CheckMeetingExists](#checkmeetingexists)
+    - [CheckSessionExists](#checksessionexists)
+    - [CheckStudyExists](#checkstudyexists-1)
+    - [CheckCountryExists](#checkcountryexists)
+    - [CheckFeeExists](#checkfeeexists)
+  - [Użytkownicy](#użytkownicy-1)
+    - [CreateBasicUser](#createbasicuser)
+    - [CreateStudent](#createstudent)
+    - [CreateEmployee](#createemployee)
+    - [LinkTranslatorToWebinar](#linktranslatortowebinar)
+    - [LinkTranslatorToMeeting](#linktranslatortomeeting)
+  - [Kursy](#kursy)
+    - [CreateCourse](#createcourse)
+    - [CreateModule](#createmodule)
+    - [CreateModuleStationaryMeeting](#createmodulestationarymeeting)
+    - [CreateModuleSyncMeeting](#createmodulesyncmeeting)
+    - [CreateModuleAsyncMeeting](#createmoduleasyncmeeting)
+  - [Webinary](#webinary)
+    - [CreateWebinar](#createwebinar)
+  - [Studia](#studia)
+    - [CreateStudy](#createstudy)
+    - [CreateSubject](#createsubject)
+    - [CreateSession](#createsession)
+    - [CreateSessionStationaryMeeting](#createsessionstationarymeeting)
+    - [CreateSessionSyncMeeting](#createsessionsyncmeeting)
+    - [CreateSessionAsyncMeeting](#createsessionasyncmeeting)
+    - [CreateInternship](#createinternship)
+    - [CreateInternshipDetails](#createinternshipdetails)
+  - [Orders](#orders)
+    - [Typ productIdList](#typ-productidlist)
+    - [CreateOrder](#createorder)
+    - [CreateFee](#createfee)
+    - [createFeeForSession](#createfeeforsession)
+    - [createFeesForSubject](#createfeesforsubject)
+    - [createFeesForStudySession](#createfeesforstudysession)
+    - [createEntryFeeForStudy](#createentryfeeforstudy)
+    - [createFeesForCourse](#createfeesforcourse)
+    - [createFeeForWebinar](#createfeeforwebinar)
+    - [CreateOrderFromCart](#createorderfromcart)
+    - [addProductToCart](#addproducttocart)
+    - [removeProductFromCart](#removeproductfromcart)
+    - [UpdateFeePaymentDate](#updatefeepaymentdate)
+  - [Products](#products)
+    - [FillProductDetails](#fillproductdetails)
+    - [MarkProductAsPassed](#markproductaspassed)
+  - [MEETINGS](#meetings-1)
+    - [FillMeetingDetails](#fillmeetingdetails)
+- [Wyzwalacze (Triggers)](#wyzwalacze-triggers)
+    - [trg\_AddMeetingDetails](#trg_addmeetingdetails)
+- [Funkcje](#funkcje)
+  - [Kategoria zamówienia i produkty](#kategoria-zamówienia-i-produkty-1)
+    - [Wyliczenie wartości koszyka](#wyliczenie-wartości-koszyka)
+    - [Wyliczenie wartości zamówienia](#wyliczenie-wartości-zamówienia)
+    - [Sprawdzenie czy zjazd został zakupiony pojedynczo](#sprawdzenie-czy-zjazd-został-zakupiony-pojedynczo)
+    - [Znalezienie studiów do których należy sesja](#znalezienie-studiów-do-których-należy-sesja)
+    - [Wyliczenie wolnych miejsc dla danego produktu](#wyliczenie-wolnych-miejsc-dla-danego-produktu)
+    - [Sprawdzenie czy student posiada dany produkt](#sprawdzenie-czy-student-posiada-dany-produkt)
+    - [Sprawdzenie czy student może dodać produkt do koszyka](#sprawdzenie-czy-student-może-dodać-produkt-do-koszyka)
+    - [Sprawdzenie czy student może kupić produkt](#sprawdzenie-czy-student-może-kupić-produkt)
+  - [Kursy, studia i webinary](#kursy-studia-i-webinary)
+    - [Sprawdzenie czy student zdał praktyki](#sprawdzenie-czy-student-zdał-praktyki)
+    - [Wyliczenie obecności studenta na danych studiach](#wyliczenie-obecności-studenta-na-danych-studiach)
+    - [Wyliczenie obecności studenta na danym kursie](#wyliczenie-obecności-studenta-na-danym-kursie)
+    - [Zwraca plan studiów w formie spotkań](#zwraca-plan-studiów-w-formie-spotkań)
+    - [Zwraca plan kursu w formie spotkań](#zwraca-plan-kursu-w-formie-spotkań)
+    - [Plan zajęć studenta](#plan-zajęć-studenta)
+    - [Plan zajęć nauczyciela](#plan-zajęć-nauczyciela)
+    - [Plan zajęć tłumacza](#plan-zajęć-tłumacza)
+    - [Sprawdzenie czy spotkanie koliduje z resztą planu użytkownika](#sprawdzenie-czy-spotkanie-koliduje-z-resztą-planu-użytkownika)
+- [Indeksy](#indeksy)
+  - [Indeksy na kluczach obcych](#indeksy-na-kluczach-obcych)
+    - [Tabela EMPLOYEES](#tabela-employees-1)
+    - [Tabela WEBINARS](#tabela-webinars-1)
+    - [Tabela FEES](#tabela-fees-1)
+    - [Tabela INTERNSHIPS](#tabela-internships)
+    - [Tabela MEETINGS](#tabela-meetings-1)
+    - [Tabela MODULES](#tabela-modules-1)
+    - [Tabela PRODUCT\_DETAILS](#tabela-product_details-1)
+    - [Tabela PRODUCTS](#tabela-products-1)
+    - [Tabela SUBJECTS](#tabela-subjects-1)
+    - [Tabela SESSIONS](#tabela-sessions-1)
+    - [Tabela STUDENTS](#tabela-students-1)
+    - [Tabela ORDERS](#tabela-orders-1)
+  - [Pozostałe indeksy](#pozostałe-indeksy)
+    - [Tabela USERS](#tabela-users-1)
+    - [Tabela WEBINARS](#tabela-webinars-2)
+    - [Tabela INTERNSHIPS](#tabela-internships-1)
+    - [Tabela MEETINGS](#tabela-meetings-2)
+    - [Tabela PRODUCTS](#tabela-products-2)
+    - [Tabela ORDERS](#tabela-orders-2)
+    - [Tabela STATIONARY\_MEETINGS](#tabela-stationary_meetings-1)
+- [Weryfikacja integralności bazy danych](#weryfikacja-integralności-bazy-danych)
+  - [can\_product\_be\_in\_shopping\_cart](#can_product_be_in_shopping_cart)
+  - [LimitVacanciesOnInsert](#limitvacanciesoninsert)
+  - [UniqueTranslatorPerMeeting](#uniquetranslatorpermeeting)
+  - [PreventPastMeetingAttendance](#preventpastmeetingattendance)
+  - [CheckRoomAvailability](#checkroomavailability)
+  - [module\_meetings\_no\_intersection](#module_meetings_no_intersection)
+
+
+<!-- /TOC -->
+
+
 ### Założenia dotyczące projektu:
 
 - W zakres studiów wchodzą pojedyńcze przedmioty (studium), które mają przypisane spotkania
@@ -1277,7 +1480,7 @@ select product_id as product_id, dbo.GetVacanciesForProduct(product_id) as vacan
 from PRODUCTS
 ```
 
-**USERS IN DEBT**\
+### USERS IN DEBT
 Przedstawia użytkowników którzy nie opłacili danej usługi, ale z niej skorzystali co wykazane jest na liście obecności
 
 ```sql
@@ -1330,13 +1533,20 @@ Przedstawia przychód dla każdego z produktów
 ```sql
 create view FINANCIAL_REPORT as
 select
-  product_id,
-  (select count(*)
-    from FEES
-    where FEES.product_id=PRODUCTS.product_id
-  )*price as income, type_name
+  PRODUCTS.product_id,
+  PRODUCT_TYPES.type_name,
+  case
+      when PRODUCT_TYPES.type_name = 'session'
+          then dbo.getParentId(PRODUCTS.product_id)
+      when PRODUCT_TYPES.type_name = 'subject'
+          then dbo.getParentIdFromSubject(PRODUCTS.product_id)
+  end as study_id,
+  sum(fees.fee_value) as fees_sum
+
 from PRODUCTS
 join PRODUCT_TYPES on PRODUCTS.type_id=PRODUCT_TYPES.type_id
+join FEES on PRODUCTS.product_id = FEES.product_id
+group by PRODUCTS.product_id, PRODUCT_TYPES.type_name
 ```
 
 ### BILOCATION REPORT
@@ -1416,16 +1626,45 @@ Widok unpaid_special_permissions dla każdego klienta, któremu została odroczo
 zamówienie, pokazuje łączną kwotę jaką musi jeszcze dopłacić ze wszystkich zamówień.
 
 ```sql
-CREATE VIEW product_payment_information AS
+CREATE VIEW unpaid_special_permissions AS
 SELECT
-  o.student_id
-  sum(fee.value - product.price) as to_pay_value
+  o.student_id,
+  SUM(f.fee_value - p.price) AS to_pay_value
 FROM
   orders o
-  join fee on fee.order_id = o.order_id
-  join product p on fee.product_id = p.product_id
-group by
-  o.student_id 
+  JOIN fees f ON f.order_id = o.order_id
+  JOIN products p ON f.product_id = p.product_id
+  JOIN PRODUCT_TYPES pt ON p.type_id = pt.type_id
+WHERE
+  (
+    pt.type_name = 'session' AND
+    EXISTS (
+      SELECT 1
+      FROM MEETINGS m
+      WHERE m.session_id = f.product_id
+      HAVING MIN(m.term) > f.due_date
+    )
+  ) OR
+  (
+    pt.type_name = 'course' AND
+    EXISTS (
+      SELECT 1
+      FROM MEETINGS m
+      JOIN MODULES mod ON m.module_id = mod.module_id
+      WHERE mod.course_id = f.product_id
+      HAVING MIN(m.term) > f.due_date
+    )
+  ) OR
+  (
+    pt.type_name = 'webinar' AND
+    EXISTS (
+      SELECT 1
+      FROM WEBINARS w
+      WHERE w.webinar_id = f.product_id AND w.publish_date > f.due_date
+    )
+  )
+GROUP BY
+  o.student_id;
  ```
 
 ### Product_information
@@ -1433,7 +1672,7 @@ group by
 Widok product_information dla każdego produktu wylistowuje jego tytuł, opis, typ i cenę.
 
 ```sql
-create view PRODUCT_OWNERS
+create view Product_information as
 select product_id,
   case
     WHEN pt.type_id = 1 then studies.study_name
@@ -1449,89 +1688,16 @@ select product_id,
     When pt.type_id = 3 then courses.course_description
     when pt.type_id = 4 then webinars.webinar_description
     when pt.type_id = 5 then null
-  end as product_description
+  end as product_description,
 
-  price,
-  pt.type_name,
+  p.price,
+  pt.type_name
 from products p
-join PRODUCT_TYPES pt on p.product_id = pt.product_id,
-left join courses on courses.country_id = p.product_id,
-left join subjects on subjects.subject_id = p.product_id,
-left join studies on studies.study_id = p.product_id,
-left join sessions on sessions.session_id = p.product_id,
-left join webinars on webinars.webinar_id = p.product_id
-```
-
-
-### Product_payment_information
-
-Widok product_payment_information dla każdego produktu podaje jego typ, najpóźniejszy termin
-opłacenia całej aktywności, a także czy istnieje opcja wpłacenia zaliczki.
-
-```sql
-CREATE VIEW product_payment_information AS
-SELECT
-  p.product_id,
-  pt.type_name,
-  fee.due_date as due_date
-  IIF(pt.type_name IN ('study', 'study',
-  'course', 'session'), 1, 0) AS accepts_advance_payments
-FROM
-  products p
-  join products_type pt on pt.product_id = p.product_id
-  join fee on fee.product_id = p.product_id
-
-```
-
-### Unpaid special permissions
-
-Widok unpaid_special_permissions dla każdego klienta, któremu została odroczona płatność za
-zamówienie, pokazuje łączną kwotę jaką musi jeszcze dopłacić ze wszystkich zamówień.
-
-```sql
-CREATE VIEW product_payment_information AS
-SELECT
-  o.student_id
-  sum(fee.value - product.price) as to_pay_value
-FROM
-  orders o
-  join fee on fee.order_id = o.order_id
-  join product p on fee.product_id = p.product_id
-group by
-  o.student_id
-```
-
-### Product_information
-
-Widok product_information dla każdego produktu wylistowuje jego tytuł, opis, typ i cenę.
-
-```sql
-create view PRODUCT_OWNERS
-select product_id,
-  case
-    WHEN pt.type_id = 1 then studies.study_name
-    when pt.type_id = 2 then subjects.subject_name
-    When pt.type_id = 3 then courses.course_name
-    when pt.type_id = 4 then webinars.webinar_name
-    when pt.type_id = 5 then null
-  end as product_name,
-
-  case
-    WHEN pt.type_id = 1 then studies.study_description
-    when pt.type_id = 2 then subjects.subject_description
-    When pt.type_id = 3 then courses.course_description
-    when pt.type_id = 4 then webinars.webinar_description
-    when pt.type_id = 5 then null
-  end as product_description
-
-  price,
-  pt.type_name,
-from products p
-join PRODUCT_TYPES pt on p.product_id = pt.product_id,
-left join courses on courses.country_id = p.product_id,
-left join subjects on subjects.subject_id = p.product_id,
-left join studies on studies.study_id = p.product_id,
-left join sessions on sessions.session_id = p.product_id,
+join PRODUCT_TYPES pt on p.type_id = pt.type_id
+left join courses on courses.course_id = p.product_id
+left join subjects on subjects.subject_id = p.product_id
+left join studies on studies.study_id = p.product_id
+left join sessions on sessions.session_id = p.product_id
 left join webinars on webinars.webinar_id = p.product_id
 ```
 
@@ -5251,3 +5417,222 @@ CREATE INDEX order_date on ORDERS(order_date)
 ```sql
 CREATE INDEX meeting_classrom ON STATIONARY_MEETINGS (classroom)
 ```
+
+
+# Weryfikacja integralności bazy danych
+## can_product_be_in_shopping_cart
+Wyzwalacz `can_product_be_in_shopping_cart` po dodaniu produktu do koszyka sprawdza, czy użytkownik mógł to zrobić. Jeśli nie, cofa transakcje
+
+``` sql
+CREATE TRIGGER can_product_be_in_shopping_cart
+    ON shopping_cart
+    AFTER INSERT, UPDATE
+    AS BEGIN
+    SET NOCOUNT ON;
+    DECLARE @student_id INT, @product_id INT;
+    SELECT @student_id = student_id, @product_id = product_id
+    FROM inserted
+    IF 0 = dbo.CanAddToCart(@student_id, @product_id)
+    BEGIN
+        RAISERROR ('Cannot add this product to shopping cart', 16, 1);
+        ROLLBACK TRANSACTION;
+    END
+END
+```
+
+## LimitVacanciesOnInsert
+Wyzwalacz `LimitVacanciesOnInsert` zapobiega zapisaniu więcej studentów na kurs, niż wynosi dostępna liczba miejsc (vacancies).
+
+``` sql
+CREATE TRIGGER LimitVacanciesOnInsert
+ON PRODUCT_DETAILS
+AFTER INSERT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  DECLARE @product_id INT;
+  DECLARE @current_count INT;
+  DECLARE @vacancies INT;
+
+  -- Pobierz ID produktu z tabeli inserted
+  SELECT @product_id = product_id FROM inserted;
+
+  -- Policz obecnych użytkowników zapisanych na produkt
+  SELECT @current_count = COUNT(*) 
+  FROM PRODUCT_DETAILS
+  WHERE product_id = @product_id;
+
+  -- Pobierz maksymalną liczbę miejsc
+  SELECT @vacancies = total_vacancies 
+  FROM PRODUCTS
+  WHERE product_id = @product_id;
+
+  -- Jeśli limit miejsc został przekroczony, przerwij transakcję
+  IF @current_count > @vacancies
+  BEGIN
+    THROW 50000, 'Limit miejsc został przekroczony.', 1;
+    ROLLBACK TRANSACTION;
+  END
+END;
+```
+
+## UniqueTranslatorPerMeeting
+
+Wyzwalacz `UniqueTranslatorPerMeeting` zapobiega przypisaniu tego samego tłumacza do więcej niż jednego spotkania w tym samym terminie.
+
+``` sql
+CREATE TRIGGER UniqueTranslatorPerMeeting
+ON MEETINGS
+AFTER INSERT, UPDATE
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  DECLARE @translator_id INT;
+  DECLARE @term DATETIME;
+
+  SELECT @translator_id = translator_id, @term = term 
+  FROM inserted;
+
+  IF EXISTS (
+    SELECT 1
+    FROM MEETINGS
+    WHERE translator_id = @translator_id AND term = @term
+  )
+  BEGIN
+    THROW 50001, 'Tłumacz jest już przypisany do spotkania w tym terminie.', 1;
+    ROLLBACK TRANSACTION;
+  END
+END;
+```
+
+## PreventPastMeetingAttendance
+Wyzwalacz PreventPastMeetingAttendance zapewnia, że nie można zarejestrować obecności na spotkaniach, które już się odbyły.
+
+``` sql
+CREATE TRIGGER PreventPastMeetingAttendance
+ON MEETING_DETAILS
+INSTEAD OF INSERT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  DECLARE @meeting_id INT;
+  DECLARE @current_date DATETIME = GETDATE();
+  DECLARE @meeting_date DATETIME;
+
+  SELECT @meeting_id = meeting_id FROM inserted;
+
+  SELECT @meeting_date = term 
+  FROM MEETINGS 
+  WHERE meeting_id = @meeting_id;
+
+  IF @meeting_date < @current_date
+  BEGIN
+    THROW 50003, 'Nie można zarejestrować obecności na spotkaniu, które już się odbyło.', 1;
+    RETURN;
+  END
+
+  INSERT INTO MEETING_DETAILS (meeting_id, student_id)
+  SELECT meeting_id, student_id
+  FROM inserted;
+
+  PRINT 'Obecność została zarejestrowana pomyślnie.';
+END;
+```
+
+## CheckRoomAvailability
+
+Wyzwalacz `CheckRoomAvailability` zapewnia, że jedna sala nie może być przypisana do więcej niż jednego spotkania w tym samym czasie.
+
+``` sql
+CREATE TRIGGER CheckRoomAvailability
+ON STATIONARY_MEETINGS
+AFTER INSERT, UPDATE
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  DECLARE @meeting_id INT;
+  DECLARE @classroom VARCHAR(10);
+  DECLARE @term DATETIME;
+  DECLARE @duration TIME(0);
+
+  -- Pobierz dane z tabeli inserted
+  SELECT 
+    @meeting_id = sm.meeting_id,
+    @classroom = sm.classroom,
+    @term = m.term,
+    @duration = m.duration
+  FROM inserted i
+  JOIN MEETINGS m ON i.meeting_id = m.meeting_id
+  JOIN STATIONARY_MEETINGS sm ON i.meeting_id = sm.meeting_id;
+
+  -- Sprawdź, czy sala jest już zajęta w podanym terminie
+  IF EXISTS (
+    SELECT 1
+    FROM MEETINGS m
+    JOIN STATIONARY_MEETINGS sm ON m.meeting_id = sm.meeting_id
+    WHERE sm.classroom = @classroom
+      AND (
+        @term < DATEADD(MINUTE, DATEDIFF(MINUTE, 0, m.duration), m.term) -- Koniec istniejącego spotkania
+        AND DATEADD(MINUTE, DATEDIFF(MINUTE, 0, @duration), @term) > m.term -- Początek nowego spotkania
+      )
+      AND m.meeting_id <> @meeting_id
+  )
+  BEGIN
+    THROW 50004, 'Sala jest już zajęta w podanym terminie.', 1;
+    ROLLBACK TRANSACTION;
+  END
+END;
+GO
+```
+
+## module_meetings_no_intersection
+
+Wyzwalacz `module_meetings_no_intersection` sprawdza, czy meetingi w nowo dodanym module nie nachodzą na siebie.
+
+``` sql
+CREATE TRIGGER module_meetings_no_intersection
+ON MEETINGS
+AFTER INSERT, UPDATE
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  DECLARE @module_id INT;
+  DECLARE @new_term DATETIME;
+  DECLARE @new_duration TIME(0);
+  DECLARE @new_end_time DATETIME;
+
+  -- Pobierz dane z tabeli inserted
+  SELECT 
+    @module_id = m.module_id,
+    @new_term = m.term,
+    @new_duration = m.duration
+  FROM inserted i
+  JOIN MEETINGS m ON i.meeting_id = m.meeting_id;
+
+  -- Oblicz koniec nowego spotkania
+  SET @new_end_time = DATEADD(MINUTE, DATEDIFF(MINUTE, 0, @new_duration), @new_term);
+
+  -- Sprawdź, czy istnieją kolizje w harmonogramie modułu
+  IF EXISTS (
+    SELECT 1
+    FROM MEETINGS m
+    WHERE m.module_id = @module_id
+      AND m.meeting_id <> (SELECT meeting_id FROM inserted)
+      AND (
+        @new_term < DATEADD(MINUTE, DATEDIFF(MINUTE, 0, m.duration), m.term) -- Nowe spotkanie zaczyna się przed końcem istniejącego
+        AND @new_end_time > m.term -- Nowe spotkanie kończy się po rozpoczęciu istniejącego
+      )
+  )
+  BEGIN
+    THROW 50001, 'Spotkania w module nachodzą na siebie.', 1;
+    ROLLBACK TRANSACTION;
+  END
+END;
+```
+
+
