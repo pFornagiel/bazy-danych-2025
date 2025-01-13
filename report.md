@@ -31,17 +31,17 @@
     - [Tabela USERS](#tabela-users)
     - [Tabela STUDENTS](#tabela-students)
     - [Tabela EMPLOYEES](#tabela-employees)
-    - [Tabela EMPLOYEES\_TYPES](#tabela-employees_types)
+    - [Tabela EMPLOYEES_TYPES](#tabela-employees_types)
     - [Tabela COUNTRIES](#tabela-countries)
   - [Kategoria Products](#kategoria-products)
     - [Tabela Products](#tabela-products)
-    - [Tabela PRODUCT\_DETAILS](#tabela-product_details)
-    - [Tabela PRODUCT\_TYPES](#tabela-product_types)
-    - [Tabela SHOPPING\_CART](#tabela-shopping_cart)
+    - [Tabela PRODUCT_DETAILS](#tabela-product_details)
+    - [Tabela PRODUCT_TYPES](#tabela-product_types)
+    - [Tabela SHOPPING_CART](#tabela-shopping_cart)
   - [Kategoria Orders](#kategoria-orders)
     - [Tabela ORDERS](#tabela-orders)
     - [Tabela FEES](#tabela-fees)
-    - [Tabela FEE\_TYPES](#tabela-fee_types)
+    - [Tabela FEE_TYPES](#tabela-fee_types)
   - [Kategoria Webinars](#kategoria-webinars)
     - [Tabela Webinars](#tabela-webinars)
   - [Kategoria COURSES](#kategoria-courses)
@@ -52,56 +52,56 @@
     - [Tabela SUBJECTS](#tabela-subjects)
   - [Tabela SESSIONS](#tabela-sessions)
     - [Tabela INTERSHIPS](#tabela-interships)
-    - [Tabela INTERSHIP\_DETAILS](#tabela-intership_details)
+    - [Tabela INTERSHIP_DETAILS](#tabela-intership_details)
   - [Kategoria MEETINGS](#kategoria-meetings)
     - [Tabela MEETINGS](#tabela-meetings)
-    - [Tabela MEETING\_DETAILS](#tabela-meeting_details)
-    - [Tabela ASYNC\_MEETINGS](#tabela-async_meetings)
-    - [Tabela SYNC\_MEETINGS](#tabela-sync_meetings)
-    - [Tabela STATIONARY\_MEETINGS](#tabela-stationary_meetings)
+    - [Tabela MEETING_DETAILS](#tabela-meeting_details)
+    - [Tabela ASYNC_MEETINGS](#tabela-async_meetings)
+    - [Tabela SYNC_MEETINGS](#tabela-sync_meetings)
+    - [Tabela STATIONARY_MEETINGS](#tabela-stationary_meetings)
   - [Kategoria LANGUAGES](#kategoria-languages)
     - [Tabela LANGUAGES](#tabela-languages)
 - [Dokumentacja kluczy obcych](#dokumentacja-kluczy-obcych)
 - [Widoki](#widoki)
   - [Users](#users)
-    - [Student\_address](#student_address)
-    - [Emploee\_list](#emploee_list)
-    - [User\_information](#user_information)
-    - [Regular\_customers](#regular_customers)
+    - [Student_address](#student_address)
+    - [Emploee_list](#emploee_list)
+    - [User_information](#user_information)
+    - [Regular_customers](#regular_customers)
   - [Webinars](#webinars)
-    - [Webinar\_information](#webinar_information)
-    - [Webinar\_free\_entry](#webinar_free_entry)
-    - [Webinar\_available](#webinar_available)
+    - [Webinar_information](#webinar_information)
+    - [Webinar_free_entry](#webinar_free_entry)
+    - [Webinar_available](#webinar_available)
   - [Courses](#courses)
-    - [Course\_information](#course_information)
-    - [Course\_module\_meeting\_types](#course_module_meeting_types)
-    - [Course\_module\_information](#course_module_information)
+    - [Course_information](#course_information)
+    - [Course_module_meeting_types](#course_module_meeting_types)
+    - [Course_module_information](#course_module_information)
     - [Course passes](#course-passes)
-    - [Course\_syllabus](#course_syllabus)
+    - [Course_syllabus](#course_syllabus)
   - [Kategoria zamówienia i produkty](#kategoria-zamówienia-i-produkty)
     - [PRODUCT VACANCIES](#product-vacancies)
     - [USERS IN DEBT](#users-in-debt)
     - [FINANCIAL REPORT](#financial-report)
     - [BILOCATION REPORT](#bilocation-report)
     - [PRODUCT OWNERS](#product-owners)
-    - [Product\_payment\_information](#product_payment_information)
+    - [Product_payment_information](#product_payment_information)
     - [Unpaid special permissions](#unpaid-special-permissions)
-    - [Product\_information](#product_information)
+    - [Product_information](#product_information)
   - [Meetings](#meetings)
-    - [Attendance\_meeting](#attendance_meeting)
-    - [Future\_meeting\_attendee\_count](#future_meeting_attendee_count)
-    - [Meeting\_type](#meeting_type)
-    - [Only\_course\_meeting](#only_course_meeting)
-    - [Only\_studies\_meeting](#only_studies_meeting)
-    - [Room\_schedule](#room_schedule)
+    - [Attendance_meeting](#attendance_meeting)
+    - [Future_meeting_attendee_count](#future_meeting_attendee_count)
+    - [Meeting_type](#meeting_type)
+    - [Only_course_meeting](#only_course_meeting)
+    - [Only_studies_meeting](#only_studies_meeting)
+    - [Room_schedule](#room_schedule)
   - [Studies](#studies)
-    - [Study\_information](#study_information)
-    - [Study\_internship\_information](#study_internship_information)
-    - [Study\_meeting\_information](#study_meeting_information)
-    - [Study\_offers](#study_offers)
-    - [Study\_passed](#study_passed)
-    - [Study\_session\_schedule](#study_session_schedule)
-    - [Study\_syllabus](#study_syllabus)
+    - [Study_information](#study_information)
+    - [Study_internship_information](#study_internship_information)
+    - [Study_meeting_information](#study_meeting_information)
+    - [Study_offers](#study_offers)
+    - [Study_passed](#study_passed)
+    - [Study_session_schedule](#study_session_schedule)
+    - [Study_syllabus](#study_syllabus)
 - [Procedury](#procedury)
   - [Sprawdzanie poprawności danych przed operacją](#sprawdzanie-poprawności-danych-przed-operacją)
     - [CheckWebinarExists](#checkwebinarexists)
@@ -159,7 +159,7 @@
   - [MEETINGS](#meetings-1)
     - [FillMeetingDetails](#fillmeetingdetails)
 - [Wyzwalacze (Triggers)](#wyzwalacze-triggers)
-    - [trg\_AddMeetingDetails](#trg_addmeetingdetails)
+  - [trg_AddMeetingDetails](#trg_addmeetingdetails)
 - [Funkcje](#funkcje)
   - [Kategoria zamówienia i produkty](#kategoria-zamówienia-i-produkty-1)
     - [Wyliczenie wartości koszyka](#wyliczenie-wartości-koszyka)
@@ -188,7 +188,7 @@
     - [Tabela INTERNSHIPS](#tabela-internships)
     - [Tabela MEETINGS](#tabela-meetings-1)
     - [Tabela MODULES](#tabela-modules-1)
-    - [Tabela PRODUCT\_DETAILS](#tabela-product_details-1)
+    - [Tabela PRODUCT_DETAILS](#tabela-product_details-1)
     - [Tabela PRODUCTS](#tabela-products-1)
     - [Tabela SUBJECTS](#tabela-subjects-1)
     - [Tabela SESSIONS](#tabela-sessions-1)
@@ -201,18 +201,23 @@
     - [Tabela MEETINGS](#tabela-meetings-2)
     - [Tabela PRODUCTS](#tabela-products-2)
     - [Tabela ORDERS](#tabela-orders-2)
-    - [Tabela STATIONARY\_MEETINGS](#tabela-stationary_meetings-1)
+    - [Tabela STATIONARY_MEETINGS](#tabela-stationary_meetings-1)
+- [Role i uprawnienia użytkowników](#role-i-uprawnienia-użytkowników)
+  - [Gość](#gość)
+  - [Student](#student)
+  - [Prowadzący zajęcia](#prowadzący-zajęcia-1)
+  - [Dyrektor](#dyrektor-1)
+  - [Dziekanat](#dziekanat-1)
+  - [Tłumacz](#tłumacz-1)
 - [Weryfikacja integralności bazy danych](#weryfikacja-integralności-bazy-danych)
-  - [can\_product\_be\_in\_shopping\_cart](#can_product_be_in_shopping_cart)
+  - [can_product_be_in_shopping_cart](#can_product_be_in_shopping_cart)
   - [LimitVacanciesOnInsert](#limitvacanciesoninsert)
   - [UniqueTranslatorPerMeeting](#uniquetranslatorpermeeting)
   - [PreventPastMeetingAttendance](#preventpastmeetingattendance)
   - [CheckRoomAvailability](#checkroomavailability)
-  - [module\_meetings\_no\_intersection](#module_meetings_no_intersection)
-
+  - [module_meetings_no_intersection](#module_meetings_no_intersection)
 
 <!-- /TOC -->
-
 
 ### Założenia dotyczące projektu:
 
@@ -1304,7 +1309,6 @@ CREATE VIEW Webinar_information AS
 ;
 ```
 
-
 ### Webinar_free_entry
 
 Widok webinar_information wylistowuje webinary, które są darmowe. Dla każdego webinaru podaje jego tytuł, opis, imie i nazwisko prowadzącego, ramy
@@ -1445,7 +1449,7 @@ group by courses.course_id, PRODUCT_DETAILS.student_id, PRODUCT_DETAILS.passed
 
 Widok course_syllabus wylistowuje id kursu, id jego modułów wraz z ich nazwą i opisem, liczbe spotkań dla danego modułu oraz damy czasowe trwania danego modułu
 
-``` sql
+```sql
 CREATE VIEW course_syllabus AS
 SELECT
     c.course_id AS course_id,
@@ -1466,8 +1470,6 @@ GROUP BY
     CAST(m.module_description AS VARCHAR(MAX))
 ```
 
-
-
 ## Kategoria zamówienia i produkty
 
 ### PRODUCT VACANCIES
@@ -1481,6 +1483,7 @@ from PRODUCTS
 ```
 
 ### USERS IN DEBT
+
 Przedstawia użytkowników którzy nie opłacili danej usługi, ale z niej skorzystali co wykazane jest na liście obecności
 
 ```sql
@@ -1665,7 +1668,7 @@ WHERE
   )
 GROUP BY
   o.student_id;
- ```
+```
 
 ### Product_information
 
@@ -1700,7 +1703,6 @@ left join studies on studies.study_id = p.product_id
 left join sessions on sessions.session_id = p.product_id
 left join webinars on webinars.webinar_id = p.product_id
 ```
-
 
 ## Meetings
 
@@ -2103,8 +2105,8 @@ SELECT
 FROM
     Study_information si
 WHERE
-    si.Vacancies > 0 
-    AND (si.study_end IS NULL OR si.study_end >= GETDATE())    
+    si.Vacancies > 0
+    AND (si.study_end IS NULL OR si.study_end >= GETDATE())
 ```
 
 ### Study_passed
@@ -2181,6 +2183,7 @@ CREATE VIEW study_session_schedule AS
 ```
 
 ### Study_syllabus
+
 Widok study_syllabus podaje listę studiów wraz z ich tytułem, opisem, ilością spotkań i ramami
 czasowymi
 
@@ -5250,8 +5253,10 @@ BEGIN
     RETURN @Conflict;
 END;
 ```
+
 Zwraca ramy czasowe kursu
-``` sql
+
+```sql
 CREATE FUNCTION GetCourseStartEndDate(@course_id INT)
 RETURNS TABLE
 AS
@@ -5265,7 +5270,8 @@ RETURN
 ```
 
 Zwraca łączną liczbe spotkań danego typu dla course_id
-``` sql
+
+```sql
 CREATE FUNCTION GetMeetingTypeCounts(@module_id INT)
 RETURNS TABLE
 AS
@@ -5418,12 +5424,126 @@ CREATE INDEX order_date on ORDERS(order_date)
 CREATE INDEX meeting_classrom ON STATIONARY_MEETINGS (classroom)
 ```
 
+# Role i uprawnienia użytkowników
+
+## Gość
+
+```sql
+CREATE ROLE guest;
+grant select on webinar_free_entry to guest;
+grant select on webinar_information to guest;
+grant select on course_information to guest;
+grant select on study_information to guest
+grant select on product_information to guest
+grant execute on CreateStudent to guest
+```
+
+## Student
+
+```sql
+CREATE ROLE student;
+grant select on webinar_information to student;
+grant select on webinar_available to student;
+grant select on course_information to student;
+grant select on course_module_meeting_types to student;
+grant select on course_module to student;
+grant select on course_meeting_information to student;
+grant select on course_passes to student;
+grant select on product_payment_information to student
+grant select on unpaid_special_permissions to student
+grant select on product_information to student
+grant select on meeting_type to student
+grant select on only_course_meeting to student
+grant select on only_studies_meeting to student
+grant select on room_schedule to student
+grant select on study_information to student
+grant select on study_internship_information to student
+grant select on study_meeting_information to student
+grant select on study_offers to student
+grant select on study_passes to student
+grant select on study_session_schedule to student
+grant select on study_syllabus to student
+grant execute on CreateOrder to student
+grant execute on CreateOrderFromCart to student
+grant execute on addProductToCart to student
+grant execute on removeProductFromCart to student
+grant execute on UpdateFeePaymentDate to student
+```
+
+## Prowadzący zajęcia
+
+```sql
+CREATE ROLE tutor;
+grant select on attendance_meeting to tutor
+grant select on future_meeting_atendee_count to tutor;
+grant select on webinar_information to tutor;
+grant select on course_information to tutor;
+grant select on study_information to tutor
+grant select on study_meeting_information to tutor
+grant select on course_meeting_information to student;
+grant select on study_syllabus to tutor
+grant select on room_schedule to tutor
+grant execute on MarkProductAsPassed to tutor;
+grant execute on FillMeetingDetails to tutor
+```
+
+## Dyrektor
+
+```sql
+CREATE ROLE director;
+grant select on regular_customers to director
+```
+
+## Dziekanat
+
+```sql
+CREATE ROLE dean_office;
+grant select on student_adress to dean_office;
+grant select on employee_type_list to dean_office
+grant select on user_information to dean_office
+grant select on regular_customers to dean_office
+grant select on users_in_debt to dean_office
+grant select on product_vacancies to dean_office
+grant select on financial_report to dean_office
+grant select on bilocation_report to dean_office
+grant select on product_owners to dean_office
+grant execute on CreateEmployee to dean_office
+grant execute on CreateCourse to dean_office
+grant execute on CreateModule to dean_office
+grant execute on CreateModuleStationaryMeeting to dean_office
+grant execute on CreateModuleSyncMeeting to dean_office
+grant execute on CreateModuleAsyncMeeting to dean_office
+grant execute on CreateWebinar to dean_office
+grant execute on CreateStudy to dean_office
+grant execute on CreateSubject to dean_office
+grant execute on CreateSession to dean_office
+grant execute on CreateSessionStationaryMeeting to dean_office
+grant execute on CreateSessionSyncMeeting to dean_office
+grant execute on CreateSessionAsyncMeeting to dean_office
+grant execute on CreateInternship to dean_office
+grant execute on CreateInternshipDetails to dean_office
+grant execute on CreateFee to dean_office
+grant execute on FillProductDetails to dean_office
+grant execute on LinkTranslatorToWebinar to translator
+grant execute on LinkTranslatorToMeeting to translator
+```
+
+## Tłumacz
+
+```sql
+CREATE ROLE translator;
+grant select on webinar_information to translator;
+grant select on course_information to translator;
+grant select on study_information to translator
+```
 
 # Weryfikacja integralności bazy danych
+
 ## can_product_be_in_shopping_cart
+
 Wyzwalacz `can_product_be_in_shopping_cart` po dodaniu produktu do koszyka sprawdza, czy użytkownik mógł to zrobić. Jeśli nie, cofa transakcje
 
-``` sql
+```sql
 CREATE TRIGGER can_product_be_in_shopping_cart
     ON shopping_cart
     AFTER INSERT, UPDATE
@@ -5441,9 +5561,10 @@ END
 ```
 
 ## LimitVacanciesOnInsert
+
 Wyzwalacz `LimitVacanciesOnInsert` zapobiega zapisaniu więcej studentów na kurs, niż wynosi dostępna liczba miejsc (vacancies).
 
-``` sql
+```sql
 CREATE TRIGGER LimitVacanciesOnInsert
 ON PRODUCT_DETAILS
 AFTER INSERT
@@ -5459,12 +5580,12 @@ BEGIN
   SELECT @product_id = product_id FROM inserted;
 
   -- Policz obecnych użytkowników zapisanych na produkt
-  SELECT @current_count = COUNT(*) 
+  SELECT @current_count = COUNT(*)
   FROM PRODUCT_DETAILS
   WHERE product_id = @product_id;
 
   -- Pobierz maksymalną liczbę miejsc
-  SELECT @vacancies = total_vacancies 
+  SELECT @vacancies = total_vacancies
   FROM PRODUCTS
   WHERE product_id = @product_id;
 
@@ -5481,7 +5602,7 @@ END;
 
 Wyzwalacz `UniqueTranslatorPerMeeting` zapobiega przypisaniu tego samego tłumacza do więcej niż jednego spotkania w tym samym terminie.
 
-``` sql
+```sql
 CREATE TRIGGER UniqueTranslatorPerMeeting
 ON MEETINGS
 AFTER INSERT, UPDATE
@@ -5492,7 +5613,7 @@ BEGIN
   DECLARE @translator_id INT;
   DECLARE @term DATETIME;
 
-  SELECT @translator_id = translator_id, @term = term 
+  SELECT @translator_id = translator_id, @term = term
   FROM inserted;
 
   IF EXISTS (
@@ -5508,9 +5629,10 @@ END;
 ```
 
 ## PreventPastMeetingAttendance
+
 Wyzwalacz PreventPastMeetingAttendance zapewnia, że nie można zarejestrować obecności na spotkaniach, które już się odbyły.
 
-``` sql
+```sql
 CREATE TRIGGER PreventPastMeetingAttendance
 ON MEETING_DETAILS
 INSTEAD OF INSERT
@@ -5524,8 +5646,8 @@ BEGIN
 
   SELECT @meeting_id = meeting_id FROM inserted;
 
-  SELECT @meeting_date = term 
-  FROM MEETINGS 
+  SELECT @meeting_date = term
+  FROM MEETINGS
   WHERE meeting_id = @meeting_id;
 
   IF @meeting_date < @current_date
@@ -5546,7 +5668,7 @@ END;
 
 Wyzwalacz `CheckRoomAvailability` zapewnia, że jedna sala nie może być przypisana do więcej niż jednego spotkania w tym samym czasie.
 
-``` sql
+```sql
 CREATE TRIGGER CheckRoomAvailability
 ON STATIONARY_MEETINGS
 AFTER INSERT, UPDATE
@@ -5560,7 +5682,7 @@ BEGIN
   DECLARE @duration TIME(0);
 
   -- Pobierz dane z tabeli inserted
-  SELECT 
+  SELECT
     @meeting_id = sm.meeting_id,
     @classroom = sm.classroom,
     @term = m.term,
@@ -5593,7 +5715,7 @@ GO
 
 Wyzwalacz `module_meetings_no_intersection` sprawdza, czy meetingi w nowo dodanym module nie nachodzą na siebie.
 
-``` sql
+```sql
 CREATE TRIGGER module_meetings_no_intersection
 ON MEETINGS
 AFTER INSERT, UPDATE
@@ -5607,7 +5729,7 @@ BEGIN
   DECLARE @new_end_time DATETIME;
 
   -- Pobierz dane z tabeli inserted
-  SELECT 
+  SELECT
     @module_id = m.module_id,
     @new_term = m.term,
     @new_duration = m.duration
@@ -5634,5 +5756,3 @@ BEGIN
   END
 END;
 ```
-
-
