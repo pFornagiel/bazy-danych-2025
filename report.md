@@ -13,7 +13,6 @@
 
 <!-- TOC -->
 
-- [Opis Struktury Systemu](#opis-struktury-systemu)
 - [Opis Funkcjonalności Systemu](#opis-funkcjonalności-systemu)
   - [Funkcje Systemu](#funkcje-systemu)
   - [Użytkownicy](#użytkownicy)
@@ -31,17 +30,17 @@
     - [Tabela USERS](#tabela-users)
     - [Tabela STUDENTS](#tabela-students)
     - [Tabela EMPLOYEES](#tabela-employees)
-    - [Tabela EMPLOYEES_TYPES](#tabela-employees_types)
+    - [Tabela EMPLOYEES\_TYPES](#tabela-employees_types)
     - [Tabela COUNTRIES](#tabela-countries)
   - [Kategoria Products](#kategoria-products)
     - [Tabela Products](#tabela-products)
-    - [Tabela PRODUCT_DETAILS](#tabela-product_details)
-    - [Tabela PRODUCT_TYPES](#tabela-product_types)
-    - [Tabela SHOPPING_CART](#tabela-shopping_cart)
+    - [Tabela PRODUCT\_DETAILS](#tabela-product_details)
+    - [Tabela PRODUCT\_TYPES](#tabela-product_types)
+    - [Tabela SHOPPING\_CART](#tabela-shopping_cart)
   - [Kategoria Orders](#kategoria-orders)
     - [Tabela ORDERS](#tabela-orders)
     - [Tabela FEES](#tabela-fees)
-    - [Tabela FEE_TYPES](#tabela-fee_types)
+    - [Tabela FEE\_TYPES](#tabela-fee_types)
   - [Kategoria Webinars](#kategoria-webinars)
     - [Tabela Webinars](#tabela-webinars)
   - [Kategoria COURSES](#kategoria-courses)
@@ -52,56 +51,56 @@
     - [Tabela SUBJECTS](#tabela-subjects)
   - [Tabela SESSIONS](#tabela-sessions)
     - [Tabela INTERSHIPS](#tabela-interships)
-    - [Tabela INTERSHIP_DETAILS](#tabela-intership_details)
+    - [Tabela INTERSHIP\_DETAILS](#tabela-intership_details)
   - [Kategoria MEETINGS](#kategoria-meetings)
     - [Tabela MEETINGS](#tabela-meetings)
-    - [Tabela MEETING_DETAILS](#tabela-meeting_details)
-    - [Tabela ASYNC_MEETINGS](#tabela-async_meetings)
-    - [Tabela SYNC_MEETINGS](#tabela-sync_meetings)
-    - [Tabela STATIONARY_MEETINGS](#tabela-stationary_meetings)
+    - [Tabela MEETING\_DETAILS](#tabela-meeting_details)
+    - [Tabela ASYNC\_MEETINGS](#tabela-async_meetings)
+    - [Tabela SYNC\_MEETINGS](#tabela-sync_meetings)
+    - [Tabela STATIONARY\_MEETINGS](#tabela-stationary_meetings)
   - [Kategoria LANGUAGES](#kategoria-languages)
     - [Tabela LANGUAGES](#tabela-languages)
 - [Dokumentacja kluczy obcych](#dokumentacja-kluczy-obcych)
 - [Widoki](#widoki)
   - [Users](#users)
-    - [Student_address](#student_address)
-    - [Emploee_list](#emploee_list)
-    - [User_information](#user_information)
-    - [Regular_customers](#regular_customers)
+    - [Student\_address](#student_address)
+    - [Emploee\_list](#emploee_list)
+    - [User\_information](#user_information)
+    - [Regular\_customers](#regular_customers)
   - [Webinars](#webinars)
-    - [Webinar_information](#webinar_information)
-    - [Webinar_free_entry](#webinar_free_entry)
-    - [Webinar_available](#webinar_available)
+    - [Webinar\_information](#webinar_information)
+    - [Webinar\_free\_entry](#webinar_free_entry)
+    - [Webinar\_available](#webinar_available)
   - [Courses](#courses)
-    - [Course_information](#course_information)
-    - [Course_module_meeting_types](#course_module_meeting_types)
-    - [Course_module_information](#course_module_information)
+    - [Course\_information](#course_information)
+    - [Course\_module\_meeting\_types](#course_module_meeting_types)
+    - [Course\_module\_information](#course_module_information)
     - [Course passes](#course-passes)
-    - [Course_syllabus](#course_syllabus)
+    - [Course\_syllabus](#course_syllabus)
   - [Kategoria zamówienia i produkty](#kategoria-zamówienia-i-produkty)
     - [PRODUCT VACANCIES](#product-vacancies)
     - [USERS IN DEBT](#users-in-debt)
     - [FINANCIAL REPORT](#financial-report)
     - [BILOCATION REPORT](#bilocation-report)
     - [PRODUCT OWNERS](#product-owners)
-    - [Product_payment_information](#product_payment_information)
+    - [Product\_payment\_information](#product_payment_information)
     - [Unpaid special permissions](#unpaid-special-permissions)
-    - [Product_information](#product_information)
+    - [Product\_information](#product_information)
   - [Meetings](#meetings)
-    - [Attendance_meeting](#attendance_meeting)
-    - [Future_meeting_attendee_count](#future_meeting_attendee_count)
-    - [Meeting_type](#meeting_type)
-    - [Only_course_meeting](#only_course_meeting)
-    - [Only_studies_meeting](#only_studies_meeting)
-    - [Room_schedule](#room_schedule)
+    - [Attendance\_meeting](#attendance_meeting)
+    - [Future\_meeting\_attendee\_count](#future_meeting_attendee_count)
+    - [Meeting\_type](#meeting_type)
+    - [Only\_course\_meeting](#only_course_meeting)
+    - [Only\_studies\_meeting](#only_studies_meeting)
+    - [Room\_schedule](#room_schedule)
   - [Studies](#studies)
-    - [Study_information](#study_information)
-    - [Study_internship_information](#study_internship_information)
-    - [Study_meeting_information](#study_meeting_information)
-    - [Study_offers](#study_offers)
-    - [Study_passed](#study_passed)
-    - [Study_session_schedule](#study_session_schedule)
-    - [Study_syllabus](#study_syllabus)
+    - [Study\_information](#study_information)
+    - [Study\_internship\_information](#study_internship_information)
+    - [Study\_meeting\_information](#study_meeting_information)
+    - [Study\_offers](#study_offers)
+    - [Study\_passed](#study_passed)
+    - [Study\_session\_schedule](#study_session_schedule)
+    - [Study\_syllabus](#study_syllabus)
 - [Procedury](#procedury)
   - [Sprawdzanie poprawności danych przed operacją](#sprawdzanie-poprawności-danych-przed-operacją)
     - [CheckWebinarExists](#checkwebinarexists)
@@ -186,7 +185,7 @@
     - [Tabela INTERNSHIPS](#tabela-internships)
     - [Tabela MEETINGS](#tabela-meetings-1)
     - [Tabela MODULES](#tabela-modules-1)
-    - [Tabela PRODUCT_DETAILS](#tabela-product_details-1)
+    - [Tabela PRODUCT\_DETAILS](#tabela-product_details-1)
     - [Tabela PRODUCTS](#tabela-products-1)
     - [Tabela SUBJECTS](#tabela-subjects-1)
     - [Tabela SESSIONS](#tabela-sessions-1)
@@ -199,7 +198,7 @@
     - [Tabela MEETINGS](#tabela-meetings-2)
     - [Tabela PRODUCTS](#tabela-products-2)
     - [Tabela ORDERS](#tabela-orders-2)
-    - [Tabela STATIONARY_MEETINGS](#tabela-stationary_meetings-1)
+    - [Tabela STATIONARY\_MEETINGS](#tabela-stationary_meetings-1)
 - [Role i uprawnienia użytkowników](#role-i-uprawnienia-użytkowników)
   - [Gość](#gość)
   - [Student](#student)
@@ -209,15 +208,15 @@
   - [Tłumacz](#tłumacz-1)
 - [Wyzwalacze (Triggers)](#wyzwalacze-triggers)
   - [Weryfikacja integralności bazy danych](#weryfikacja-integralności-bazy-danych)
-    - [trg_CanProductBeInShoppingCart](#trg_canproductbeinshoppingcart)
-    - [trg_LimitVacanciesOnInsert](#trg_limitvacanciesoninsert)
-    - [trg_UniqueTranslatorPerMeeting](#trg_uniquetranslatorpermeeting)
-    - [trg_PreventPastMeetingAttendance](#trg_preventpastmeetingattendance)
-    - [trg_CheckRoomAvailability](#trg_checkroomavailability)
-    - [trg_ModuleMeetingsNoIntersection](#trg_modulemeetingsnointersection)
+    - [trg\_CanProductBeInShoppingCart](#trg_canproductbeinshoppingcart)
+    - [trg\_LimitVacanciesOnInsert](#trg_limitvacanciesoninsert)
+    - [trg\_UniqueTranslatorPerMeeting](#trg_uniquetranslatorpermeeting)
+    - [trg\_PreventPastMeetingAttendance](#trg_preventpastmeetingattendance)
+    - [trg\_CheckRoomAvailability](#trg_checkroomavailability)
+    - [trg\_ModuleMeetingsNoIntersection](#trg_modulemeetingsnointersection)
   - [Automatyczne tworzenie wpisów po zdarzeniu](#automatyczne-tworzenie-wpisów-po-zdarzeniu)
-    - [trg_AddMeetingDetails](#trg_addmeetingdetails)
-    - [trg_OrdersAddProductDetails](#trg_ordersaddproductdetails)
+    - [trg\_AddMeetingDetails](#trg_addmeetingdetails)
+    - [trg\_OrdersAddProductDetails](#trg_ordersaddproductdetails)
 
 <!-- /TOC -->
 
@@ -1538,22 +1537,30 @@ WHERE
 Przedstawia przychód dla każdego z produktów
 
 ```sql
-create view FINANCIAL_REPORT as
-select
-  PRODUCTS.product_id,
-  PRODUCT_TYPES.type_name,
-  case
-      when PRODUCT_TYPES.type_name = 'session'
-          then dbo.getParentId(PRODUCTS.product_id)
-      when PRODUCT_TYPES.type_name = 'subject'
-          then dbo.getParentIdFromSubject(PRODUCTS.product_id)
-  end as study_id,
-  sum(fees.fee_value) as fees_sum
-
-from PRODUCTS
-join PRODUCT_TYPES on PRODUCTS.type_id=PRODUCT_TYPES.type_id
-join FEES on PRODUCTS.product_id = FEES.product_id
-group by PRODUCTS.product_id, PRODUCT_TYPES.type_name
+CREATE VIEW FINANCIAL_REPORT AS
+SELECT
+    P.product_id,
+    PT.type_name,
+    CASE
+        WHEN PT.type_name = 'session' THEN dbo.getParentId(P.product_id)
+        WHEN PT.type_name = 'subject' THEN dbo.getParentIdFromSubject(P.product_id)
+    END AS study_id,
+    SUM(CASE
+        WHEN PT.type_id = 1 AND FT.type_id IN (3, 4) and payment_date is not null THEN F.fee_value
+        WHEN PT.type_id = 2 AND FT.type_id = 2 and payment_date is not null THEN F.fee_value
+        WHEN PT.type_id = 3 AND FT.type_id IN (5, 6) and payment_date is not null THEN F.fee_value
+        WHEN PT.type_id = 4 AND FT.type_id = 7 and payment_date is not null THEN F.fee_value
+        WHEN PT.type_id = 5 AND FT.type_id = 1 and payment_date is not null THEN F.fee_value
+        ELSE 0
+    END) AS total_fee_value
+FROM
+    PRODUCTS P
+JOIN PRODUCT_TYPES PT ON P.type_id = PT.type_id
+JOIN FEES F ON P.product_id = F.product_id
+JOIN dbo.FEE_TYPES FT ON F.type_id = FT.type_id
+GROUP BY
+    P.product_id,
+    PT.type_name;
 ```
 
 ### BILOCATION REPORT

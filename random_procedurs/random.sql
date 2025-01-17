@@ -107,3 +107,111 @@ BEGIN
         PRINT 'Error occurred: ' + ERROR_MESSAGE();
     END CATCH
 END;
+
+CREATE PROCEDURE AssignInternshipsForAllStudies
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        -- Cursor to iterate through all products with type_id = 1 (studies)
+        DECLARE study_cursor CURSOR FOR
+        SELECT product_id
+        FROM PRODUCTS
+        WHERE type_id = 1;
+
+        DECLARE @study_id INT;
+
+        OPEN study_cursor;
+        FETCH NEXT FROM study_cursor INTO @study_id;
+
+        WHILE @@FETCH_STATUS = 0
+        BEGIN
+            -- Log start
+            PRINT 'Processing study_id: ' + CAST(@study_id AS NVARCHAR);
+
+            BEGIN TRY
+                -- Call AssignRandomInternships for the current study_id
+                EXEC AssignRandomInternships @study_id = @study_id;
+
+                -- Log success
+                PRINT 'Successfully processed study_id: ' + CAST(@study_id AS NVARCHAR);
+            END TRY
+            BEGIN CATCH
+                -- Log error for current study_id
+                PRINT 'Error for study_id: ' + CAST(@study_id AS NVARCHAR) + ' - ' + ERROR_MESSAGE();
+            END CATCH;
+
+            -- Fetch the next study_id
+            FETCH NEXT FROM study_cursor INTO @study_id;
+        END
+
+        CLOSE study_cursor;
+        DEALLOCATE study_cursor;
+
+        PRINT 'AssignRandomInternships executed for all studies.';
+    END TRY
+    BEGIN CATCH
+        PRINT 'Error occurred in AssignInternshipsForAllStudies: ' + ERROR_MESSAGE();
+    END CATCH
+END;
+
+CREATE PROCEDURE AssignRandomInternships
+    @study_id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        -- Cursor to iterate through students with the given study_id in product_details
+        DECLARE student_cursor CURSOR FOR
+        SELECT DISTINCT pd.student_id
+        FROM PRODUCT_DETAILS pd
+        WHERE pd.product_id = @study_id;
+
+        DECLARE @student_id INT;
+        DECLARE @random_number FLOAT;
+        DECLARE @internship_id INT;
+
+        OPEN student_cursor;
+        FETCH NEXT FROM student_cursor INTO @student_id;
+
+        WHILE @@FETCH_STATUS = 0
+        BEGIN
+            -- Generate a random number between 0 and 1
+            SET @random_number = RAND();
+
+            -- Assign internship with 70% probability
+            IF @random_number <= 0.7
+            BEGIN
+                -- Select a random internship related to the study
+                SELECT TOP 1 @internship_id = internship_id
+                FROM INTERSHIPS
+                WHERE study_id = @study_id
+                ORDER BY NEWID();
+
+                -- Insert assignment into INTERSHIP_DETAILS table
+                IF @internship_id IS NOT NULL
+                BEGIN
+                    IF @random_number <= 0.5
+                        INSERT INTO INTERSHIP_DETAILS (internship_id,student_id, passed)
+                        VALUES ( @internship_id, @student_id,1);
+                    ELSE
+                        INSERT INTO INTERSHIP_DETAILS (internship_id,student_id, passed)
+                        VALUES ( @internship_id, @student_id,0);
+                END
+            END
+
+            -- Fetch the next student
+            FETCH NEXT FROM student_cursor INTO @student_id;
+        END
+
+        CLOSE student_cursor;
+        DEALLOCATE student_cursor;
+
+        PRINT 'Internships assigned successfully.';
+    END TRY
+    BEGIN CATCH
+        PRINT 'Error occurred: ' + ERROR_MESSAGE();
+    END CATCH
+END;
