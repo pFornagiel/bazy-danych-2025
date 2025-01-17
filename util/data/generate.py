@@ -4,6 +4,7 @@ from generators.generate_courses import CourseDataGenerator
 from generators.generate_webinars import WebinarDataGenerator
 import random
 from faker import Faker
+import json
 
 class DataGenerator:
     def __init__(self):
@@ -119,14 +120,17 @@ class DataGenerator:
             amount_sync_meetings = random.randint(self.AMOUNT_OF_SYNC_MEETINGS-2, self.AMOUNT_OF_SYNC_MEETINGS+2)
             course_data.generate_sync_meetings(amount_sync_meetings, random.choice(self.TUTORS), module, random.choice(self.TRANSLATORS))
             self.SYNC_MEETINGS.extend([i+cumulative_meetings for i in range(amount_sync_meetings)])
+            cumulative_meetings += len(self.SYNC_MEETINGS)
 
             amount_async_meetings = random.randint(self.AMOUNT_OF_ASYNC_MEETINGS-2, self.AMOUNT_OF_ASYNC_MEETINGS+2)
             course_data.generate_async_meetings(amount_async_meetings, random.choice(self.TUTORS), module, random.choice(self.TRANSLATORS))
             self.ASYNC_MEETINGS.extend([i+cumulative_meetings for i in range(amount_async_meetings)])
+            cumulative_meetings += len(self.ASYNC_MEETINGS)
 
             amount_stationary_meetings = random.randint(self.AMOUNT_OF_STATIONARY_MEETINGS-2, self.AMOUNT_OF_STATIONARY_MEETINGS+2)
             course_data.generate_stationary_meetings(amount_stationary_meetings, random.choice(self.TUTORS), module, random.choice(self.TRANSLATORS))
             self.STATIONARY_MEETINGS.extend([i+cumulative_meetings for i in range(amount_stationary_meetings)])
+            cumulative_meetings += len(self.STATIONARY_MEETINGS)
 
         course_data.save_queries()
 
@@ -138,11 +142,34 @@ class DataGenerator:
 
         webinar_data.save_queries()
 
+    def save_primary_keys(self):
+        primary_keys = {
+            "STUDENTS": self.STUDENTS,
+            "HEADMASTERS": self.HEADMASTERS,
+            "EMPLOYEES": self.WORKERS,
+            "TUTORS": self.TUTORS,
+            "TRANSLATORS": self.TRANSLATORS,
+            "STUDIES": self.STUDIES,
+            "SUBJECTS": self.SUBJECTS,
+            "SESSIONS": self.SESSIONS,
+            "INTERNSHIPS": self.INTERNSHIPS,
+            "SYNC_MEETINGS": self.SYNC_MEETINGS,
+            "ASYNC_MEETINGS": self.ASYNC_MEETINGS,
+            "STATIONARY_MEETINGS": self.STATIONARY_MEETINGS,
+            "COURSES": self.COURSES,
+            "MODULES": self.MODULES,
+            "WEBINARS": self.WEBINARS
+        }
+        
+        with open('primary_keys.json', 'w') as f:
+            json.dump(primary_keys, f, indent=4)
+
     def run(self):
         self.generate_users()
         self.generate_studies()
         self.generate_courses()
         self.generate_webinars()
+        self.save_primary_keys()
 
 if __name__ == "__main__":
     generator = DataGenerator()

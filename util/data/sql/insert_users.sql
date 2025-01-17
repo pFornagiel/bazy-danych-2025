@@ -1,906 +1,906 @@
 BEGIN TRANSACTION;
 
-      EXEC CreateStudent @username='ernestpawlaczek', @first_name='Urszula', @last_name='Majzner', @email='ernestpawlaczek@fpuh.net', @phone='730264704', @street='pl. Konwaliowa 452', @city='Jarosław', @postal_code='84-710', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='ada47', @first_name='Adrian', @last_name='Ławniczek', @email='ada47@fundacja.net', @phone='814416080', @street='ul. Floriana 09', @city='Wałbrzych', @postal_code='08-780', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='kgrupa', @first_name='Ada', @last_name='Pilipczuk', @email='kgrupa@kocaj.net', @phone='659123135', @street='aleja Parkowa 30', @city='Gniezno', @postal_code='01-572', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='matulasebastian', @first_name='Bianka', @last_name='Gasz', @email='matulasebastian@fpuh.pl', @phone='904528682', @street='ulica Warszawska 61/29', @city='Opole', @postal_code='54-191', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='ulegutko', @first_name='Julianna', @last_name='Cygal', @email='ulegutko@ppuh.pl', @phone='108016681', @street='plac Bursztynowa 14/46', @city='Tarnobrzeg', @postal_code='06-578', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='sylwia26', @first_name='Dariusz', @last_name='Wygoda', @email='sylwia26@klos.com', @phone='783648815', @street='aleja Sokola 585', @city='Kalisz', @postal_code='60-842', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='konrad31', @first_name='Maurycy', @last_name='Kryza', @email='konrad31@gabinety.com', @phone='532371685', @street='aleja Lawendowa 213', @city='Stalowa Wola', @postal_code='04-813', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='marcelina17', @first_name='Tymoteusz', @last_name='Bugiel', @email='marcelina17@kutek-maruszczyk.pl', @phone='245968371', @street='ul. Krótka 629', @city='Nysa', @postal_code='63-086', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='eliza93', @first_name='Antoni', @last_name='Bzdęga', @email='eliza93@gabinety.com', @phone='174894553', @street='plac Rzeczna 275', @city='Mikołów', @postal_code='93-280', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='kazimierzdzienisz', @first_name='Ewa', @last_name='Furmankiewicz', @email='kazimierzdzienisz@glazik-bakiewicz.pl', @phone='209715012', @street='al. Głowackiego 344', @city='Sanok', @postal_code='27-384', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='ckasica', @first_name='Jacek', @last_name='Majtyka', @email='ckasica@drzal.pl', @phone='815771035', @street='ul. Korfantego 06', @city='Wałcz', @postal_code='65-957', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='swyrobek', @first_name='Julianna', @last_name='Grądziel', @email='swyrobek@ppuh.com', @phone='995741693', @street='aleja Wczasowa 60', @city='Płońsk', @postal_code='22-011', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='rkloczko', @first_name='Dawid', @last_name='Maćczak', @email='rkloczko@kwak.pl', @phone='310778335', @street='al. Narcyzowa 84', @city='Szczecinek', @postal_code='57-219', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='kazimierzzymelka', @first_name='Klara', @last_name='Spychaj', @email='kazimierzzymelka@gabinety.com', @phone='962429738', @street='plac Akacjowa 96/42', @city='Cieszyn', @postal_code='24-660', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='dagmara45', @first_name='Łukasz', @last_name='Blank', @email='dagmara45@gabinety.pl', @phone='598504661', @street='al. Rataja 826', @city='Olsztyn', @postal_code='03-264', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='dawid12', @first_name='Gustaw', @last_name='Borejko', @email='dawid12@lyp-jaremko.pl', @phone='194551684', @street='ul. Lipowa 10/56', @city='Czeladź', @postal_code='59-415', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='gwizdekkornelia', @first_name='Kazimierz', @last_name='Drabczyk', @email='gwizdekkornelia@ppuh.com', @phone='888554413', @street='ul. Borówkowa 513', @city='Bielsko-Biała', @postal_code='81-405', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='ida74', @first_name='Dawid', @last_name='Motak', @email='ida74@fundacja.com', @phone='200828151', @street='pl. Bursztynowa 41', @city='Lubin', @postal_code='39-903', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='mikolajmucka', @first_name='Ida', @last_name='Filus', @email='mikolajmucka@ppuh.pl', @phone='780135782', @street='al. Wypoczynkowa 99/78', @city='Tarnowskie Góry', @postal_code='65-311', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='barteknojman', @first_name='Leon', @last_name='Rompa', @email='barteknojman@ppuh.pl', @phone='448201047', @street='pl. Krańcowa 611', @city='Sochaczew', @postal_code='16-432', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='marianna48', @first_name='Eliza', @last_name='Doroz', @email='marianna48@mietka.com', @phone='995309888', @street='al. Ściegiennego 43', @city='Ruda Śląska', @postal_code='23-887', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='latoszektymon', @first_name='Sara', @last_name='Monkiewicz', @email='latoszektymon@stowarzyszenie.pl', @phone='234745942', @street='aleja Storczykowa 06/39', @city='Iława', @postal_code='41-485', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='kdziopa', @first_name='Aniela', @last_name='Droździk', @email='kdziopa@ppuh.pl', @phone='950097388', @street='aleja Wiosenna 766', @city='Bydgoszcz', @postal_code='39-785', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='tymoteusz96', @first_name='Nela', @last_name='Świerkot', @email='tymoteusz96@ppuh.org', @phone='528534353', @street='pl. Zacisze 91/38', @city='Jarosław', @postal_code='60-947', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='gustaw03', @first_name='Alan', @last_name='Skutnik', @email='gustaw03@kuczak-mostek.com', @phone='251652166', @street='aleja Długa 70/89', @city='Czeladź', @postal_code='83-542', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='milosz79', @first_name='Marcel', @last_name='Ciuk', @email='milosz79@fpuh.pl', @phone='690448762', @street='al. Turystyczna 84', @city='Swarzędz', @postal_code='50-665', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='pawelbas', @first_name='Cezary', @last_name='Garbacik', @email='pawelbas@fundacja.org', @phone='328062860', @street='al. Matejki 212', @city='Przemyśl', @postal_code='91-683', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='brunozander', @first_name='Mariusz', @last_name='Eckert', @email='brunozander@fpuh.pl', @phone='385323611', @street='aleja Fabryczna 12/97', @city='Zakopane', @postal_code='59-141', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='odytrych', @first_name='Kaja', @last_name='Rzońca', @email='odytrych@ppuh.org', @phone='246809963', @street='pl. Prusa 750', @city='Żory', @postal_code='66-070', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='pardaoliwier', @first_name='Fryderyk', @last_name='Krasa', @email='pardaoliwier@gabinety.org', @phone='251835107', @street='al. Podmiejska 20', @city='Ostrołęka', @postal_code='34-883', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='maciasida', @first_name='Liwia', @last_name='Dziuda', @email='maciasida@ppuh.pl', @phone='448746910', @street='aleja Gałczynskiego 91', @city='Mysłowice', @postal_code='47-934', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='stachelekfryderyk', @first_name='Natasza', @last_name='Juszczuk', @email='stachelekfryderyk@grupa.com', @phone='352610975', @street='aleja Głowackiego 85', @city='Sopot', @postal_code='94-944', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='erykherba', @first_name='Gabriel', @last_name='Morgała', @email='erykherba@jachna.com', @phone='807963466', @street='pl. Solidarnosci 61', @city='Ełk', @postal_code='12-509', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='agnieszka94', @first_name='Kaja', @last_name='Franc', @email='agnieszka94@spoldzielnia.pl', @phone='479550853', @street='aleja Orzeszkowej 21/26', @city='Świecie', @postal_code='94-541', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='husakwitold', @first_name='Wojciech', @last_name='Krężołek', @email='husakwitold@spoldzielnia.com', @phone='600435869', @street='plac Żabia 07', @city='Jarocin', @postal_code='24-506', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='gustawkazmierczyk', @first_name='Fabian', @last_name='Księżak', @email='gustawkazmierczyk@drobisz-parda.pl', @phone='818745685', @street='plac Jagodowa 36', @city='Kluczbork', @postal_code='68-290', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='tadeusz22', @first_name='Dagmara', @last_name='Magryta', @email='tadeusz22@fundacja.pl', @phone='943463531', @street='ulica Żabia 95/52', @city='Oleśnica', @postal_code='04-917', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='maks09', @first_name='Urszula', @last_name='Śmieszek', @email='maks09@spoldzielnia.pl', @phone='368961824', @street='ul. Zamkowa 11', @city='Piotrków Trybunalski', @postal_code='73-991', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='ewa61', @first_name='Lidia', @last_name='Sapała', @email='ewa61@gonsior.com', @phone='670864970', @street='aleja Dworska 39/53', @city='Nowa Sól', @postal_code='65-406', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='uneubauer', @first_name='Rafał', @last_name='Kozdrój', @email='uneubauer@flieger-madzia.pl', @phone='677077055', @street='plac Stefana Batorego 05', @city='Ruda Śląska', @postal_code='60-018', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='ksaweryholysz', @first_name='Damian', @last_name='Małas', @email='ksaweryholysz@fpuh.pl', @phone='461780428', @street='pl. Łąkowa 831', @city='Tomaszów Mazowiecki', @postal_code='63-899', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='aniela19', @first_name='Artur', @last_name='Feret', @email='aniela19@fundacja.pl', @phone='468215318', @street='al. Dworcowa 871', @city='Świdnica', @postal_code='09-979', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='ekononowicz', @first_name='Angelika', @last_name='Ochwat', @email='ekononowicz@ppuh.pl', @phone='553483249', @street='plac Łabędzia 82', @city='Łódź', @postal_code='26-300', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='jedrzej82', @first_name='Kamila', @last_name='Szyja', @email='jedrzej82@grupa.com', @phone='878693717', @street='ulica Szewska 309', @city='Piła', @postal_code='99-792', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='olga96', @first_name='Andrzej', @last_name='Kielan', @email='olga96@trzepizur-rajtar.pl', @phone='218913387', @street='ul. Cyprysowa 09', @city='Wyszków', @postal_code='24-250', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='radoslawmik', @first_name='Leonard', @last_name='Malara', @email='radoslawmik@dycha-lamch.pl', @phone='757264734', @street='ul. Liliowa 17/13', @city='Ostrów Mazowiecka', @postal_code='64-920', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='oskarberes', @first_name='Oliwier', @last_name='John', @email='oskarberes@stowarzyszenie.net', @phone='467050816', @street='plac Podwale 41/40', @city='Piła', @postal_code='10-179', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='stefandrynda', @first_name='Michał', @last_name='Neugebauer', @email='stefandrynda@usarek.net', @phone='711111009', @street='al. Jadwigi 036', @city='Racibórz', @postal_code='27-425', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='ryszard02', @first_name='Melania', @last_name='Pokrzywa', @email='ryszard02@grupa.com', @phone='859984866', @street='ulica Szafirowa 860', @city='Wrocław', @postal_code='19-615', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='npinda', @first_name='Ada', @last_name='Tondera', @email='npinda@spoldzielnia.com', @phone='323593062', @street='al. Mazowiecka 831', @city='Tychy', @postal_code='08-539', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='kowalakpawel', @first_name='Damian', @last_name='Krystkowiak', @email='kowalakpawel@fpuh.org', @phone='589022438', @street='plac Wrzosowa 792', @city='Cieszyn', @postal_code='18-906', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='julita81', @first_name='Fryderyk', @last_name='Sopata', @email='julita81@mszyca-famula.org', @phone='624626904', @street='plac Wyszyńskiego 21/88', @city='Żagań', @postal_code='10-315', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='iskubala', @first_name='Andrzej', @last_name='Zagożdżon', @email='iskubala@sudnik.com', @phone='203126248', @street='ulica Sienkiewicza 04', @city='Kołobrzeg', @postal_code='83-278', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='bawolkajetan', @first_name='Kacper', @last_name='Pazik', @email='bawolkajetan@fpuh.com', @phone='469333465', @street='plac Krokusowa 324', @city='Skarżysko-Kamienna', @postal_code='99-566', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='marikakawulok', @first_name='Artur', @last_name='Sojda', @email='marikakawulok@bus-ziniewicz.com', @phone='263690321', @street='al. Dworcowa 17/55', @city='Suwałki', @postal_code='51-692', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='gajowiakurszula', @first_name='Jakub', @last_name='Leszczak', @email='gajowiakurszula@stowarzyszenie.pl', @phone='530856442', @street='aleja Sienkiewicza 542', @city='Kędzierzyn-Koźle', @postal_code='68-835', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='konraddejneka', @first_name='Sandra', @last_name='Dywan', @email='konraddejneka@kohut-wiertel.com', @phone='743639756', @street='plac Kalinowa 207', @city='Świebodzice', @postal_code='72-024', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='natanieljanuchta', @first_name='Nicole', @last_name='Froń', @email='natanieljanuchta@kamieniak.com', @phone='716257978', @street='plac Kossaka 55', @city='Szczytno', @postal_code='77-104', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='kosciuszkoantoni', @first_name='Maurycy', @last_name='Skubała', @email='kosciuszkoantoni@spoldzielnia.pl', @phone='636448397', @street='aleja Jana III Sobieskiego 520', @city='Biłgoraj', @postal_code='40-250', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='pgeca', @first_name='Justyna', @last_name='Bitner', @email='pgeca@ppuh.com', @phone='674221274', @street='ulica Diamentowa 71', @city='Gorzów Wielkopolski', @postal_code='36-892', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='sadowymaksymilian', @first_name='Maciej', @last_name='Kusik', @email='sadowymaksymilian@ppuh.com', @phone='925211951', @street='ul. Sarnia 325', @city='Grodzisk Mazowiecki', @postal_code='41-570', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='anna-mariakuban', @first_name='Norbert', @last_name='Połom', @email='anna-mariakuban@siciarz.pl', @phone='280067288', @street='pl. Starowiejska 264', @city='Lubliniec', @postal_code='95-291', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='szymonpieszak', @first_name='Gaja', @last_name='Droś', @email='szymonpieszak@fedorczyk.net', @phone='137930561', @street='ulica Gajowa 709', @city='Turek', @postal_code='09-550', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='ada11', @first_name='Bianka', @last_name='Luks', @email='ada11@spoldzielnia.pl', @phone='744282455', @street='al. Stolarska 81', @city='Olkusz', @postal_code='06-334', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='tklebba', @first_name='Urszula', @last_name='Ostapczuk', @email='tklebba@gryga-kuran.pl', @phone='180895817', @street='ul. Wróblewskiego 05/93', @city='Nowy Sącz', @postal_code='07-567', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='moronoliwier', @first_name='Eryk', @last_name='Salawa', @email='moronoliwier@kasiak-piechura.pl', @phone='940087802', @street='aleja Krokusowa 81', @city='Wałcz', @postal_code='64-858', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='tsliz', @first_name='Konstanty', @last_name='Patoła', @email='tsliz@stowarzyszenie.pl', @phone='133962014', @street='aleja Kreta 50/86', @city='Lębork', @postal_code='81-364', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='gajareich', @first_name='Eryk', @last_name='Kierepka', @email='gajareich@stowarzyszenie.pl', @phone='526615286', @street='aleja Ogrodowa 427', @city='Bolesławiec', @postal_code='76-573', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='bzmija', @first_name='Łukasz', @last_name='Front', @email='bzmija@matula-sobieszczyk.org', @phone='369466366', @street='al. Orkana 600', @city='Biała Podlaska', @postal_code='37-870', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='kubacyprian', @first_name='Maciej', @last_name='Mszyca', @email='kubacyprian@kocurek-sojda.com', @phone='845239603', @street='plac Rynek 00', @city='Starogard Gdański', @postal_code='49-503', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='kazirodfabian', @first_name='Krzysztof', @last_name='Barcz', @email='kazirodfabian@ppuh.pl', @phone='797749802', @street='ul. Cegielniana 90', @city='Zambrów', @postal_code='13-599', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='ikorkosz', @first_name='Julianna', @last_name='Perczak', @email='ikorkosz@grupa.com', @phone='341256127', @street='plac Kochanowskiego 53', @city='Bielsk Podlaski', @postal_code='78-608', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='brunomiekus', @first_name='Eliza', @last_name='Dolega', @email='brunomiekus@elert.pl', @phone='746961532', @street='al. Porzeczkowa 894', @city='Łaziska Górne', @postal_code='89-138', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='tymoteusz97', @first_name='Jacek', @last_name='Jaremek', @email='tymoteusz97@grupa.org', @phone='968737882', @street='ulica Wschodnia 53/50', @city='Świnoujście', @postal_code='03-616', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='justyna83', @first_name='Inga', @last_name='Mędrala', @email='justyna83@stowarzyszenie.org', @phone='857943172', @street='ulica Plażowa 63', @city='Zambrów', @postal_code='15-546', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='arkadiusz13', @first_name='Wiktor', @last_name='Gros', @email='arkadiusz13@stawinoga.com', @phone='502262635', @street='ulica Kazimierza Wielkiego 300', @city='Iława', @postal_code='65-071', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='pawliszynaleksander', @first_name='Miłosz', @last_name='Ciereszko', @email='pawliszynaleksander@dzierwa-zuziak.com', @phone='243418990', @street='pl. Narcyzowa 82', @city='Giżycko', @postal_code='22-627', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='elizagrycz', @first_name='Kacper', @last_name='Bienia', @email='elizagrycz@hajdas-sliz.com', @phone='484649008', @street='plac Armii Krajowej 83', @city='Dzierżoniów', @postal_code='78-155', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='budzennatan', @first_name='Jan', @last_name='Niedbał', @email='budzennatan@grupa.com', @phone='249146940', @street='plac Zaułek 203', @city='Cieszyn', @postal_code='05-243', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='ewarohde', @first_name='Borys', @last_name='Kiliszek', @email='ewarohde@stowarzyszenie.pl', @phone='734823981', @street='plac Bałtycka 01/36', @city='Łódź', @postal_code='29-360', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='bniescioruk', @first_name='Liwia', @last_name='Policht', @email='bniescioruk@fundacja.com', @phone='931025134', @street='plac Środkowa 39', @city='Mława', @postal_code='01-596', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='nikodemkiepas', @first_name='Piotr', @last_name='Zieniewicz', @email='nikodemkiepas@strzepek.com', @phone='736927749', @street='ul. Stolarska 12/74', @city='Wałcz', @postal_code='50-629', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='dziewittadeusz', @first_name='Aurelia', @last_name='Plich', @email='dziewittadeusz@puto.com', @phone='580794211', @street='ul. Mokra 70/52', @city='Ciechanów', @postal_code='28-596', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='fabiszakdariusz', @first_name='Sebastian', @last_name='Wosiak', @email='fabiszakdariusz@ppuh.pl', @phone='588487349', @street='pl. Perłowa 653', @city='Mysłowice', @postal_code='05-279', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='lwegrzyniak', @first_name='Natasza', @last_name='Pietrasz', @email='lwegrzyniak@ppuh.pl', @phone='292594328', @street='aleja Jasna 69/85', @city='Gdańsk', @postal_code='83-666', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='nelachylak', @first_name='Iwo', @last_name='Albin', @email='nelachylak@stowarzyszenie.org', @phone='884602345', @street='al. Rolna 069', @city='Kluczbork', @postal_code='88-135', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='makoskonstanty', @first_name='Dariusz', @last_name='Orawiec', @email='makoskonstanty@falba.com', @phone='892664298', @street='aleja Szkolna 214', @city='Piastów', @postal_code='12-158', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='kopyturszula', @first_name='Olga', @last_name='Leszczyk', @email='kopyturszula@bulawa-kudela.com', @phone='765034907', @street='ul. Zamkowa 68', @city='Żory', @postal_code='09-718', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='witoldmigala', @first_name='Marika', @last_name='Flasza', @email='witoldmigala@stowarzyszenie.pl', @phone='678132182', @street='al. Kolonia 29/46', @city='Zgierz', @postal_code='54-377', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='szymonnasiadka', @first_name='Józef', @last_name='Świątkiewicz', @email='szymonnasiadka@ppuh.pl', @phone='251903206', @street='aleja Jeziorna 97/71', @city='Zawiercie', @postal_code='81-847', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='suchapolonia', @first_name='Juliusz', @last_name='Kujawiak', @email='suchapolonia@stowarzyszenie.pl', @phone='615499047', @street='al. Szewska 70', @city='Kościerzyna', @postal_code='25-694', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='piotrbzdziuch', @first_name='Olaf', @last_name='Leks', @email='piotrbzdziuch@ppuh.org', @phone='416462761', @street='plac Rumiankowa 629', @city='Głogów', @postal_code='13-145', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='arkadiuszzawalich', @first_name='Mieszko', @last_name='Kacperek', @email='arkadiuszzawalich@ppuh.pl', @phone='927876104', @street='pl. Spacerowa 146', @city='Legnica', @postal_code='32-244', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='wolkpiotr', @first_name='Ksawery', @last_name='Mikołajewicz', @email='wolkpiotr@grupa.org', @phone='913840432', @street='aleja Gdańska 26/94', @city='Zabrze', @postal_code='21-698', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='dargaczolga', @first_name='Juliusz', @last_name='Mielke', @email='dargaczolga@kliber-kyc.pl', @phone='179338146', @street='pl. Nowa 08', @city='Ostrołęka', @postal_code='18-092', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='tobst', @first_name='Nicole', @last_name='Janic', @email='tobst@golenia.pl', @phone='135487245', @street='aleja Armii Krajowej 18/77', @city='Wołomin', @postal_code='52-406', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='julita96', @first_name='Maks', @last_name='Sprawka', @email='julita96@spoldzielnia.pl', @phone='707831402', @street='ulica Akacjowa 92', @city='Lubliniec', @postal_code='66-765', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='pplesniak', @first_name='Malwina', @last_name='Bartłomiejczyk', @email='pplesniak@stowarzyszenie.org', @phone='571278919', @street='pl. Pułaskiego 390', @city='Zakopane', @postal_code='53-586', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='njewula', @first_name='Natan', @last_name='Frelich', @email='njewula@fundacja.com', @phone='342367729', @street='ul. Kamienna 76', @city='Bełchatów', @postal_code='97-278', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='kamila82', @first_name='Sandra', @last_name='Gryska', @email='kamila82@fundacja.net', @phone='772023352', @street='ul. Wyspiańskiego 72/01', @city='Tarnów', @postal_code='20-701', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='feckert', @first_name='Roksana', @last_name='Kubek', @email='feckert@dybal.net', @phone='390817858', @street='plac Szymanowskiego 78', @city='Sandomierz', @postal_code='06-601', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='julianna59', @first_name='Arkadiusz', @last_name='Krzykała', @email='julianna59@stowarzyszenie.pl', @phone='367230558', @street='aleja Solidarnosci 88/42', @city='Radomsko', @postal_code='82-258', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='pkrokosz', @first_name='Marek', @last_name='Letkiewicz', @email='pkrokosz@stowarzyszenie.org', @phone='187169858', @street='al. Narcyzowa 98', @city='Kwidzyn', @postal_code='39-936', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='wudarczykdagmara', @first_name='Maurycy', @last_name='Orszulik', @email='wudarczykdagmara@fiolka-humeniuk.pl', @phone='569654929', @street='al. Krótka 399', @city='Legnica', @postal_code='92-207', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='sprawkasebastian', @first_name='Norbert', @last_name='Dębniak', @email='sprawkasebastian@krywult.pl', @phone='523030048', @street='ulica Boczna 705', @city='Czeladź', @postal_code='97-014', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='krasakamil', @first_name='Przemysław', @last_name='Kiliszek', @email='krasakamil@fpuh.com', @phone='474750279', @street='plac Mickiewicza 72/19', @city='Ostróda', @postal_code='60-913', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='grzegorz51', @first_name='Juliusz', @last_name='Bojarczuk', @email='grzegorz51@sadlak-brejnak.com', @phone='882430684', @street='aleja Mała 188', @city='Puławy', @postal_code='85-899', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='urszula85', @first_name='Jędrzej', @last_name='Owsianka', @email='urszula85@damek.net', @phone='820658063', @street='al. Cmentarna 555', @city='Siedlce', @postal_code='58-145', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='xbejnarowicz', @first_name='Sylwia', @last_name='Więcławek', @email='xbejnarowicz@grupa.pl', @phone='406186632', @street='ulica Tartaczna 35', @city='Nowa Ruda', @postal_code='58-157', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='marcinparkitna', @first_name='Fabian', @last_name='Furga', @email='marcinparkitna@ppuh.com', @phone='330792176', @street='pl. Diamentowa 92', @city='Kielce', @postal_code='28-487', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='gustaw68', @first_name='Konrad', @last_name='Wudarczyk', @email='gustaw68@fpuh.pl', @phone='963946438', @street='al. Górna 553', @city='Starachowice', @postal_code='96-936', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='aureliamokwa', @first_name='Aurelia', @last_name='Suszka', @email='aureliamokwa@maksym.pl', @phone='999305963', @street='al. Kościelna 43', @city='Starogard Gdański', @postal_code='28-764', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='justyna16', @first_name='Stefan', @last_name='Kierat', @email='justyna16@babij.pl', @phone='259469179', @street='ulica Listopada 87/42', @city='Wrocław', @postal_code='54-333', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='nycmaks', @first_name='Sonia', @last_name='Kwapisiewicz', @email='nycmaks@ppuh.pl', @phone='125749102', @street='al. Młyńska 08/11', @city='Bydgoszcz', @postal_code='96-802', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='qgalaj', @first_name='Marcin', @last_name='Malcherek', @email='qgalaj@piekacz.pl', @phone='369437352', @street='aleja Jana III Sobieskiego 040', @city='Kędzierzyn-Koźle', @postal_code='79-586', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='pacygaapolonia', @first_name='Paweł', @last_name='Paździora', @email='pacygaapolonia@laszczyk.com', @phone='940759855', @street='ul. Fabryczna 754', @city='Augustów', @postal_code='22-112', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='saraskladanek', @first_name='Tymon', @last_name='Kazana', @email='saraskladanek@fundacja.org', @phone='937449923', @street='aleja Ogrodowa 46', @city='Bielsko-Biała', @postal_code='86-075', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='cezary53', @first_name='Andrzej', @last_name='Matus', @email='cezary53@zackiewicz.pl', @phone='684025335', @street='ulica Szkolna 967', @city='Chełm', @postal_code='82-987', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='mikolajkarwot', @first_name='Grzegorz', @last_name='Hajdasz', @email='mikolajkarwot@gabinety.pl', @phone='621697635', @street='plac Zielona 499', @city='Świnoujście', @postal_code='31-853', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='iwopierzak', @first_name='Malwina', @last_name='Kaletka', @email='iwopierzak@witas-golek.com', @phone='606683517', @street='al. Grzybowa 48', @city='Biłgoraj', @postal_code='21-186', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='jpicheta', @first_name='Inga', @last_name='Rolek', @email='jpicheta@fpuh.com', @phone='980209550', @street='aleja Malczewskiego 18', @city='Ostrów Mazowiecka', @postal_code='17-152', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='basakdaniel', @first_name='Przemysław', @last_name='Bełz', @email='basakdaniel@stowarzyszenie.com', @phone='672399910', @street='plac Dobra 501', @city='Bełchatów', @postal_code='76-054', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='eliza60', @first_name='Franciszek', @last_name='Jędryczka', @email='eliza60@fundacja.com', @phone='645696810', @street='ul. Sowia 474', @city='Legnica', @postal_code='68-969', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='kusmidernikodem', @first_name='Karina', @last_name='Siemion', @email='kusmidernikodem@grupa.com', @phone='751197459', @street='pl. Floriana 60', @city='Bytom', @postal_code='79-482', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='andrzej73', @first_name='Franciszek', @last_name='Mandrysz', @email='andrzej73@balawender-siewiera.pl', @phone='462626019', @street='ul. Pałacowa 68/55', @city='Kwidzyn', @postal_code='36-127', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='olchawatymon', @first_name='Damian', @last_name='Kornek', @email='olchawatymon@ppuh.com', @phone='541089212', @street='al. Tuwima 410', @city='Myszków', @postal_code='64-027', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='fogtradoslaw', @first_name='Konstanty', @last_name='Ziemann', @email='fogtradoslaw@szalas-pachowicz.com', @phone='824468465', @street='plac Lotnicza 118', @city='Dzierżoniów', @postal_code='22-582', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='seidelkarol', @first_name='Grzegorz', @last_name='Ciuła', @email='seidelkarol@trawka-surdyk.net', @phone='640500690', @street='plac Osiedlowa 38/32', @city='Tomaszów Mazowiecki', @postal_code='12-459', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='zwelc', @first_name='Blanka', @last_name='Fołta', @email='zwelc@grupa.com', @phone='325124796', @street='ul. Ciasna 909', @city='Jawor', @postal_code='83-924', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='lkurtyka', @first_name='Natasza', @last_name='Wietecha', @email='lkurtyka@ppuh.org', @phone='876928037', @street='al. Malinowa 53/91', @city='Opole', @postal_code='92-024', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='eryk35', @first_name='Maks', @last_name='Szałas', @email='eryk35@gabinety.com', @phone='926479317', @street='aleja Grunwaldzka 52/50', @city='Ząbki', @postal_code='22-751', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='konstanty83', @first_name='Mateusz', @last_name='Ciaś', @email='konstanty83@ppuh.pl', @phone='830287522', @street='aleja Wiatraczna 37', @city='Ełk', @postal_code='32-852', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='fryderyk80', @first_name='Krystian', @last_name='Cecot', @email='fryderyk80@fundacja.com', @phone='859292734', @street='plac Tulipanowa 76/96', @city='Luboń', @postal_code='12-732', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='pkoperek', @first_name='Maciej', @last_name='Huszcza', @email='pkoperek@fpuh.com', @phone='106750826', @street='al. Rolna 904', @city='Nowy Dwór Mazowiecki', @postal_code='52-271', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='zrzeszutko', @first_name='Fabian', @last_name='Koniecko', @email='zrzeszutko@lukowicz.com', @phone='207559654', @street='aleja Kazimierza Wielkiego 19', @city='Żyrardów', @postal_code='90-717', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='jacekgiec', @first_name='Anastazja', @last_name='Koman', @email='jacekgiec@kabala-klaja.pl', @phone='926341264', @street='plac Kowalska 930', @city='Bielawa', @postal_code='42-964', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='kamila83', @first_name='Maksymilian', @last_name='Lademann', @email='kamila83@stowarzyszenie.pl', @phone='997140116', @street='plac Zaciszna 853', @city='Mława', @postal_code='26-634', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='tymon56', @first_name='Dominik', @last_name='Bytner', @email='tymon56@gabinety.net', @phone='860940551', @street='pl. Gajowa 88/30', @city='Pruszków', @postal_code='35-662', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='filakpatryk', @first_name='Olaf', @last_name='Wyderka', @email='filakpatryk@fpuh.org', @phone='691980020', @street='aleja Konopnickiej 325', @city='Kielce', @postal_code='32-484', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='ciastekliwia', @first_name='Daniel', @last_name='Wojcik', @email='ciastekliwia@pieczyrak-drygala.com', @phone='371640501', @street='aleja Składowa 417', @city='Legionowo', @postal_code='07-308', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='osiadacznatan', @first_name='Arkadiusz', @last_name='Przybyś', @email='osiadacznatan@fundacja.com', @phone='484770840', @street='pl. Żwirowa 884', @city='Mińsk Mazowiecki', @postal_code='55-662', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='smykalaandrzej', @first_name='Inga', @last_name='Nastaj', @email='smykalaandrzej@gradek-beres.com', @phone='471989080', @street='pl. Piwna 35', @city='Legionowo', @postal_code='85-210', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='jedrzejwandas', @first_name='Ryszard', @last_name='Węgrzynek', @email='jedrzejwandas@gabinety.pl', @phone='465635900', @street='ul. Cmentarna 36', @city='Pruszków', @postal_code='14-398', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='lukaszjewula', @first_name='Dominik', @last_name='Minkiewicz', @email='lukaszjewula@fpuh.pl', @phone='516939779', @street='al. Tylna 25', @city='Olkusz', @postal_code='05-783', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='juliusz06', @first_name='Michał', @last_name='Jasica', @email='juliusz06@fpuh.pl', @phone='997180972', @street='plac Waryńskiego 86/65', @city='Chojnice', @postal_code='65-298', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='apoloniachatys', @first_name='Aurelia', @last_name='Wizner', @email='apoloniachatys@fundacja.com', @phone='207299478', @street='ulica Polna 27', @city='Żyrardów', @postal_code='70-031', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='olgierdgorgol', @first_name='Kazimierz', @last_name='Paczos', @email='olgierdgorgol@grupa.com', @phone='732623154', @street='ul. Ściegiennego 09/47', @city='Knurów', @postal_code='31-767', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='dziewiormaurycy', @first_name='Norbert', @last_name='Kopik', @email='dziewiormaurycy@fundacja.pl', @phone='372365966', @street='aleja Kolejowa 87', @city='Brzeg', @postal_code='98-176', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='gustawparkitna', @first_name='Olga', @last_name='Maziarczyk', @email='gustawparkitna@spoldzielnia.com', @phone='663703359', @street='ul. Plater 76', @city='Kielce', @postal_code='46-518', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='ltomys', @first_name='Tomasz', @last_name='Mysiak', @email='ltomys@fundacja.com', @phone='823387569', @street='pl. Kalinowa 205', @city='Wodzisław Śląski', @postal_code='42-777', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='adrian02', @first_name='Paweł', @last_name='Janiszek', @email='adrian02@grupa.pl', @phone='737066514', @street='ul. Bolesława Chrobrego 13', @city='Warszawa', @postal_code='21-649', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='adrian10', @first_name='Filip', @last_name='Frymus', @email='adrian10@spoldzielnia.com', @phone='509429883', @street='aleja Wróblewskiego 27', @city='Dąbrowa Górnicza', @postal_code='83-648', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='tobiaszdurczok', @first_name='Artur', @last_name='Miśkowiec', @email='tobiaszdurczok@panus-nawoj.com', @phone='970379289', @street='aleja Mokra 12/61', @city='Marki', @postal_code='89-724', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='molekfilip', @first_name='Kazimierz', @last_name='Hermanowicz', @email='molekfilip@steckiewicz.net', @phone='105156439', @street='pl. Lawendowa 935', @city='Gliwice', @postal_code='90-350', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='kamil12', @first_name='Aleks', @last_name='Karpiel', @email='kamil12@spoldzielnia.pl', @phone='355229146', @street='plac Błękitna 53/18', @city='Nowy Sącz', @postal_code='05-714', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='hzackiewicz', @first_name='Leonard', @last_name='Jędraszczyk', @email='hzackiewicz@fundacja.pl', @phone='289385200', @street='ulica Sikorskiego 49/47', @city='Radomsko', @postal_code='74-328', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='cjarczyk', @first_name='Urszula', @last_name='Hirsch', @email='cjarczyk@gasienica-flisiak.org', @phone='223201701', @street='ulica Sikorskiego 576', @city='Szczecin', @postal_code='39-282', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='gpawelkiewicz', @first_name='Łukasz', @last_name='Kawala', @email='gpawelkiewicz@fpuh.com', @phone='365310018', @street='plac Wiślana 32/70', @city='Białogard', @postal_code='52-439', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='bruno63', @first_name='Kornelia', @last_name='Stranc', @email='bruno63@gabinety.net', @phone='154634929', @street='ul. Konarskiego 84', @city='Łowicz', @postal_code='29-799', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='milosz46', @first_name='Bartek', @last_name='Gałaj', @email='milosz46@stowarzyszenie.pl', @phone='853830142', @street='ulica Sokola 675', @city='Bełchatów', @postal_code='85-312', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='marianna32', @first_name='Tomasz', @last_name='Mazik', @email='marianna32@ppuh.com', @phone='472068690', @street='ulica Żwirowa 15', @city='Gorlice', @postal_code='83-845', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='ududzicz', @first_name='Olaf', @last_name='Rycerz', @email='ududzicz@fundacja.pl', @phone='706721083', @street='ulica Jana III Sobieskiego 023', @city='Sopot', @postal_code='67-677', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='aekert', @first_name='Sandra', @last_name='Tabak', @email='aekert@nedzi-radke.pl', @phone='892303060', @street='ul. Nadrzeczna 492', @city='Świecie', @postal_code='31-941', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='duczekgustaw', @first_name='Nataniel', @last_name='Klaja', @email='duczekgustaw@fundacja.pl', @phone='160395851', @street='plac Lisia 88', @city='Skierniewice', @postal_code='29-859', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='tjakimiak', @first_name='Anastazja', @last_name='Rabiej', @email='tjakimiak@koska-barszczak.com', @phone='596271486', @street='plac Olchowa 26', @city='Bydgoszcz', @postal_code='19-586', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='juliusz34', @first_name='Sonia', @last_name='Sypuła', @email='juliusz34@spoldzielnia.com', @phone='647101093', @street='aleja Bukowa 179', @city='Kutno', @postal_code='55-649', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='swiergielernest', @first_name='Kaja', @last_name='Iciek', @email='swiergielernest@glenc-babij.org', @phone='969995025', @street='aleja Grzybowa 06/97', @city='Ełk', @postal_code='86-881', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='aleksander05', @first_name='Kacper', @last_name='Folta', @email='aleksander05@stowarzyszenie.com', @phone='856386216', @street='aleja Poprzeczna 750', @city='Chorzów', @postal_code='50-782', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='ikorbut', @first_name='Kornel', @last_name='Martyn', @email='ikorbut@fpuh.com', @phone='682413285', @street='al. Wiejska 28', @city='Piekary Śląskie', @postal_code='34-156', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='kamilasobstyl', @first_name='Tola', @last_name='Ptok', @email='kamilasobstyl@chomiak.com', @phone='339374063', @street='aleja Błękitna 82', @city='Głogów', @postal_code='34-782', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='matuszykkaja', @first_name='Konrad', @last_name='Błasik', @email='matuszykkaja@ppuh.org', @phone='518712860', @street='pl. Piaskowa 94', @city='Chrzanów', @postal_code='65-751', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='wawszczykewelina', @first_name='Róża', @last_name='Dolega', @email='wawszczykewelina@fpuh.pl', @phone='923561851', @street='al. Magnoliowa 82', @city='Jarocin', @postal_code='19-107', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='lacinaleon', @first_name='Kornelia', @last_name='Siara', @email='lacinaleon@spoldzielnia.org', @phone='212925548', @street='plac Leszczynowa 46/10', @city='Puławy', @postal_code='72-131', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='qfronia', @first_name='Ryszard', @last_name='Lisak', @email='qfronia@sudak-golus.pl', @phone='869638601', @street='aleja Wodna 760', @city='Inowrocław', @postal_code='67-786', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='qdub', @first_name='Maksymilian', @last_name='Kokosza', @email='qdub@grupa.pl', @phone='880630667', @street='ul. Krucza 72/55', @city='Lublin', @postal_code='63-866', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='jan93', @first_name='Mariusz', @last_name='Musiolik', @email='jan93@stowarzyszenie.pl', @phone='488589723', @street='pl. Mickiewicza 222', @city='Puławy', @postal_code='24-988', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='kalina34', @first_name='Agnieszka', @last_name='Sklorz', @email='kalina34@snoch-winnik.com', @phone='334014192', @street='pl. Willowa 618', @city='Swarzędz', @postal_code='72-935', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='agierek', @first_name='Krystian', @last_name='Baranowicz', @email='agierek@czesak-zaborek.pl', @phone='106874405', @street='plac Słowicza 298', @city='Iława', @postal_code='81-109', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='alekspanicz', @first_name='Kajetan', @last_name='Krzykała', @email='alekspanicz@fundacja.pl', @phone='937760764', @street='al. Łączna 612', @city='Będzin', @postal_code='26-599', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='blazejkoniec', @first_name='Justyna', @last_name='Trzyna', @email='blazejkoniec@grupa.com', @phone='316799530', @street='ulica Mokra 65', @city='Gorlice', @postal_code='81-006', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='jzaczyk', @first_name='Tomasz', @last_name='Pazoła', @email='jzaczyk@grupa.com', @phone='667318658', @street='pl. Kasztanowa 44', @city='Lębork', @postal_code='80-252', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='anielajedryczka', @first_name='Franciszek', @last_name='Zyga', @email='anielajedryczka@lew-koscielak.pl', @phone='329210476', @street='pl. Podgórna 81/93', @city='Kielce', @postal_code='13-644', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='natasza87', @first_name='Olga', @last_name='Feliksiak', @email='natasza87@ppuh.com', @phone='641744840', @street='ul. Kościelna 51', @city='Konin', @postal_code='90-796', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='chuchlanataniel', @first_name='Natasza', @last_name='Tereszkiewicz', @email='chuchlanataniel@stowarzyszenie.pl', @phone='843933847', @street='aleja Słonecznikowa 36/25', @city='Środa Wielkopolska', @postal_code='34-045', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='jposnik', @first_name='Tymon', @last_name='Sarota', @email='jposnik@solnica-dziduch.org', @phone='421529554', @street='pl. Dolna 58/16', @city='Wyszków', @postal_code='73-031', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='olaf08', @first_name='Radosław', @last_name='Gorgol', @email='olaf08@gabinety.pl', @phone='640808771', @street='ul. Wiśniowa 514', @city='Kutno', @postal_code='89-736', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='jedrzej75', @first_name='Konrad', @last_name='Dumała', @email='jedrzej75@gabinety.org', @phone='587338685', @street='ul. Mała 615', @city='Otwock', @postal_code='39-877', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='fiedlermilosz', @first_name='Marek', @last_name='Więckiewicz', @email='fiedlermilosz@golonko-maras.com', @phone='959809482', @street='ulica Wojska Polskiego 118', @city='Leszno', @postal_code='40-308', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='iwozaborek', @first_name='Jędrzej', @last_name='Wojtiuk', @email='iwozaborek@ppuh.org', @phone='282790356', @street='plac Kusocińskiego 67', @city='Śrem', @postal_code='48-990', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='albertsoltysek', @first_name='Ida', @last_name='Szwałek', @email='albertsoltysek@grupa.pl', @phone='347518367', @street='pl. Willowa 19', @city='Bochnia', @postal_code='30-705', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='pswierad', @first_name='Kamila', @last_name='Mostek', @email='pswierad@dorna.com', @phone='875693382', @street='ul. Rolnicza 10', @city='Olkusz', @postal_code='42-093', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='apoloniamikolajewicz', @first_name='Ignacy', @last_name='Gołek', @email='apoloniamikolajewicz@fundacja.com', @phone='983440448', @street='pl. Rynek 60/59', @city='Dębica', @postal_code='56-241', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='paligaleonard', @first_name='Ewa', @last_name='Piórek', @email='paligaleonard@fundacja.com', @phone='122849208', @street='aleja Krasickiego 693', @city='Dzierżoniów', @postal_code='38-654', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='vkujawiak', @first_name='Błażej', @last_name='Kutera', @email='vkujawiak@grupa.pl', @phone='253138904', @street='ul. Rejtana 33/94', @city='Goleniów', @postal_code='44-403', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='nikodemjama', @first_name='Hubert', @last_name='Kawula', @email='nikodemjama@spoldzielnia.pl', @phone='419828501', @street='plac Gdańska 421', @city='Świebodzice', @postal_code='25-916', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='sternagaja', @first_name='Ewa', @last_name='Czylok', @email='sternagaja@fundacja.pl', @phone='152682479', @street='plac Turystyczna 17', @city='Szczecinek', @postal_code='76-297', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='jmularz', @first_name='Anita', @last_name='Błasik', @email='jmularz@wieclawek-siedlarz.pl', @phone='406778420', @street='aleja Szeroka 27/39', @city='Kielce', @postal_code='91-162', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='pbaster', @first_name='Ewelina', @last_name='Wieja', @email='pbaster@gabinety.org', @phone='973305696', @street='ulica Jastrzębia 05', @city='Września', @postal_code='40-752', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='cirzyk', @first_name='Bianka', @last_name='Iwańczyk', @email='cirzyk@pasciak-fogt.net', @phone='278358619', @street='ulica Baczynskiego 09/54', @city='Koło', @postal_code='05-629', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='natanielpiskor', @first_name='Radosław', @last_name='Koperek', @email='natanielpiskor@cofala-zielke.pl', @phone='688024708', @street='ul. Powstańców Śląskich 31', @city='Ełk', @postal_code='45-517', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='icias', @first_name='Tola', @last_name='Ceran', @email='icias@kinal.pl', @phone='267528648', @street='al. Rzemieślnicza 24/42', @city='Gorzów Wielkopolski', @postal_code='77-404', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='piestrzeniewiczkaja', @first_name='Tymon', @last_name='Podeszwa', @email='piestrzeniewiczkaja@spoldzielnia.com', @phone='334979562', @street='plac Wróblewskiego 66', @city='Reda', @postal_code='74-807', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='michal72', @first_name='Marek', @last_name='Uzar', @email='michal72@drygas-ropiak.net', @phone='300081682', @street='pl. Głowackiego 273', @city='Ostrołęka', @postal_code='07-992', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='julita69', @first_name='Jędrzej', @last_name='Fleszar', @email='julita69@grzesiek-pokrzywa.com', @phone='755350628', @street='al. Jałowcowa 17', @city='Wieluń', @postal_code='39-550', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='wiktorbecker', @first_name='Tomasz', @last_name='Mirgos', @email='wiktorbecker@fpuh.pl', @phone='543041070', @street='pl. Długosza 86', @city='Opole', @postal_code='61-699', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='pielkajuliusz', @first_name='Eliza', @last_name='Hartman', @email='pielkajuliusz@orszulik-szymula.pl', @phone='112484973', @street='ul. Letniskowa 699', @city='Oleśnica', @postal_code='92-422', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='stefanlaciak', @first_name='Marianna', @last_name='Zaczyk', @email='stefanlaciak@panus.org', @phone='653868724', @street='pl. Broniewskiego 955', @city='Częstochowa', @postal_code='27-622', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='igor78', @first_name='Dawid', @last_name='Bochnak', @email='igor78@stoj.com', @phone='683346508', @street='ul. Jagodowa 90', @city='Kołobrzeg', @postal_code='93-803', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='marek75', @first_name='Łukasz', @last_name='Gruchot', @email='marek75@gabinety.com', @phone='386675767', @street='ul. Widokowa 91/25', @city='Płock', @postal_code='76-941', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='rkosno', @first_name='Agnieszka', @last_name='Friedrich', @email='rkosno@fundacja.pl', @phone='344050276', @street='plac Majowa 84/32', @city='Zawiercie', @postal_code='29-051', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='natanmatacz', @first_name='Bianka', @last_name='Lazarek', @email='natanmatacz@ppuh.pl', @phone='721641466', @street='ulica Rycerska 09/32', @city='Brodnica', @postal_code='59-262', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='tchoina', @first_name='Julianna', @last_name='Symonowicz', @email='tchoina@buszta.pl', @phone='104159440', @street='plac Górna 01/78', @city='Żary', @postal_code='98-897', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='fkregiel', @first_name='Kaja', @last_name='Zubel', @email='fkregiel@stroz.pl', @phone='919556614', @street='ulica Kołłątaja 51', @city='Lębork', @postal_code='91-798', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='sumeratobiasz', @first_name='Arkadiusz', @last_name='Kurp', @email='sumeratobiasz@fpuh.pl', @phone='568464503', @street='pl. Dębowa 589', @city='Żywiec', @postal_code='40-040', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='marcin37', @first_name='Alan', @last_name='Płocharczyk', @email='marcin37@stowarzyszenie.com', @phone='738939976', @street='aleja Młynarska 66/98', @city='Olsztyn', @postal_code='79-935', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='jakubmrotek', @first_name='Dagmara', @last_name='Solarek', @email='jakubmrotek@stowarzyszenie.com', @phone='710435554', @street='al. Willowa 797', @city='Lubartów', @postal_code='25-497', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='tadeusz20', @first_name='Marcel', @last_name='Bienia', @email='tadeusz20@smal-mironiuk.org', @phone='234273043', @street='aleja Letniskowa 877', @city='Bochnia', @postal_code='75-340', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='feretprzemyslaw', @first_name='Dominik', @last_name='Ładziak', @email='feretprzemyslaw@bulanda-zbik.org', @phone='255035407', @street='aleja Sybiraków 869', @city='Piła', @postal_code='05-220', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='qbugla', @first_name='Cyprian', @last_name='Stranc', @email='qbugla@gabinety.pl', @phone='820472919', @street='aleja Daleka 96', @city='Lubartów', @postal_code='31-788', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='bkosalka', @first_name='Natan', @last_name='Gieroń', @email='bkosalka@leoniak.pl', @phone='470496276', @street='aleja Jana Pawła II 662', @city='Jasło', @postal_code='38-341', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='ejaszczur', @first_name='Aleks', @last_name='Staniewicz', @email='ejaszczur@fydrych-lachut.com', @phone='452461044', @street='pl. Niecała 15/35', @city='Mława', @postal_code='25-062', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='marianna39', @first_name='Kazimierz', @last_name='Lenda', @email='marianna39@ppuh.pl', @phone='216434299', @street='plac Piaskowa 529', @city='Kutno', @postal_code='70-099', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='kornelia13', @first_name='Ewa', @last_name='Paszkowiak', @email='kornelia13@tomalik-kanik.pl', @phone='889080616', @street='plac Brzoskwiniowa 63', @city='Wyszków', @postal_code='27-618', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='cjuraszczyk', @first_name='Radosław', @last_name='Lemieszek', @email='cjuraszczyk@piwek.net', @phone='221617023', @street='al. Magnoliowa 14', @city='Piaseczno', @postal_code='37-374', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='zmurat', @first_name='Ida', @last_name='Nitek', @email='zmurat@gryga-judek.pl', @phone='500117697', @street='plac Jesionowa 80', @city='Bartoszyce', @postal_code='95-627', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='sadlikmaks', @first_name='Krzysztof', @last_name='Gnyp', @email='sadlikmaks@gabinety.com', @phone='739152584', @street='plac Traugutta 89', @city='Płock', @postal_code='17-071', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='farugadagmara', @first_name='Kamil', @last_name='Irzyk', @email='farugadagmara@ppuh.pl', @phone='663245512', @street='ulica Młynarska 51', @city='Września', @postal_code='22-766', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='sygutklara', @first_name='Miłosz', @last_name='Nagórka', @email='sygutklara@grupa.com', @phone='848187094', @street='aleja Mazurska 037', @city='Skawina', @postal_code='26-672', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='dorota15', @first_name='Krystian', @last_name='Gamoń', @email='dorota15@fundacja.com', @phone='633950332', @street='ul. Kilińskiego 71', @city='Będzin', @postal_code='11-064', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='kondejtomasz', @first_name='Kamila', @last_name='Kostro', @email='kondejtomasz@paluszak-dzieza.com', @phone='542915176', @street='ulica Piłsudskiego 84/10', @city='Śrem', @postal_code='24-404', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='ernestbelz', @first_name='Jakub', @last_name='Żelazek', @email='ernestbelz@forma-wieclawek.net', @phone='287470567', @street='ul. Rejtana 620', @city='Luboń', @postal_code='68-833', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='omandrysz', @first_name='Kalina', @last_name='Dyjas', @email='omandrysz@ppuh.com', @phone='808465295', @street='pl. Kaszubska 736', @city='Piaseczno', @postal_code='71-200', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='qkacperczyk', @first_name='Sylwia', @last_name='Machowicz', @email='qkacperczyk@ladziak-sloboda.org', @phone='446169314', @street='ul. Pocztowa 50/33', @city='Knurów', @postal_code='41-284', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='anna-maria85', @first_name='Dawid', @last_name='Fura', @email='anna-maria85@grupa.com', @phone='918635340', @street='al. Morelowa 840', @city='Kędzierzyn-Koźle', @postal_code='51-251', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='tyniecleon', @first_name='Marcel', @last_name='Garczyk', @email='tyniecleon@ppuh.pl', @phone='764225631', @street='plac Kochanowskiego 13/02', @city='Ząbki', @postal_code='50-183', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='yludwik', @first_name='Konstanty', @last_name='Kierepka', @email='yludwik@michalkiewicz.com', @phone='898992817', @street='ul. Popiełuszki 44/37', @city='Jasło', @postal_code='90-305', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='przemyslaw41', @first_name='Natan', @last_name='Smardz', @email='przemyslaw41@ppuh.org', @phone='637907527', @street='plac Jesienna 85/14', @city='Ostróda', @postal_code='54-256', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='mareklacina', @first_name='Konrad', @last_name='Dunal', @email='mareklacina@stowarzyszenie.pl', @phone='141692193', @street='aleja Sienkiewicza 810', @city='Sochaczew', @postal_code='51-309', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='bojarczukdaniel', @first_name='Melania', @last_name='Hendzel', @email='bojarczukdaniel@gabinety.com', @phone='264234322', @street='ulica Południowa 33/82', @city='Kluczbork', @postal_code='75-940', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='jstapor', @first_name='Aurelia', @last_name='Lemieszek', @email='jstapor@ppuh.com', @phone='682202664', @street='ulica Maja 822', @city='Sopot', @postal_code='60-189', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='gszwaja', @first_name='Blanka', @last_name='Januszko', @email='gszwaja@pyrz.com', @phone='734784378', @street='al. Porzeczkowa 34', @city='Słupsk', @postal_code='88-574', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='adampasciak', @first_name='Kornel', @last_name='Kordys', @email='adampasciak@ppuh.pl', @phone='579537892', @street='al. Sucharskiego 862', @city='Pruszków', @postal_code='37-577', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='siembabaurelia', @first_name='Nikodem', @last_name='Zaranek', @email='siembabaurelia@fundacja.org', @phone='308909755', @street='ul. Jodłowa 297', @city='Jaworzno', @postal_code='29-652', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='medralaszymon', @first_name='Krystian', @last_name='Szumiło', @email='medralaszymon@kandziora-pich.pl', @phone='646189432', @street='al. Piękna 70/19', @city='Kraśnik', @postal_code='02-310', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='putekbruno', @first_name='Gabriel', @last_name='Jop', @email='putekbruno@rzaca.com', @phone='769434413', @street='al. Nadbrzeżna 86/86', @city='Szczytno', @postal_code='11-880', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='czujklara', @first_name='Sandra', @last_name='Brachman', @email='czujklara@chwedoruk.org', @phone='383493469', @street='ulica Piłsudskiego 288', @city='Marki', @postal_code='81-197', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='adrianromanczyk', @first_name='Artur', @last_name='Ryznar', @email='adrianromanczyk@grupa.com', @phone='825939184', @street='pl. Grottgera 97/92', @city='Sieradz', @postal_code='82-336', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='ada67', @first_name='Emil', @last_name='Andreasik', @email='ada67@grupa.pl', @phone='934091175', @street='al. Jana Pawła II 798', @city='Świebodzice', @postal_code='72-360', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='glesko', @first_name='Ksawery', @last_name='Kiedrowicz', @email='glesko@ppuh.com', @phone='335832420', @street='al. Lipowa 23', @city='Chorzów', @postal_code='01-006', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='meggermaurycy', @first_name='Gaja', @last_name='Haraburda', @email='meggermaurycy@grupa.net', @phone='662502638', @street='ulica Mokra 96/44', @city='Starogard Gdański', @postal_code='29-524', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='hantoszczyk', @first_name='Aurelia', @last_name='Rubaj', @email='hantoszczyk@skonieczka-gabka.pl', @phone='128940102', @street='ulica Tulipanowa 441', @city='Piotrków Trybunalski', @postal_code='40-520', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='bjas', @first_name='Aniela', @last_name='Garncarz', @email='bjas@herbut.pl', @phone='106970121', @street='ulica Listopada 82/01', @city='Żary', @postal_code='22-619', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='bkinder', @first_name='Malwina', @last_name='Komander', @email='bkinder@fpuh.pl', @phone='228519092', @street='ulica Bolesława Krzywoustego 59/91', @city='Knurów', @postal_code='46-619', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='rcydzik', @first_name='Kajetan', @last_name='Zys', @email='rcydzik@tomaszuk-zagrodnik.com', @phone='875827794', @street='al. Wojska Polskiego 73', @city='Sandomierz', @postal_code='96-874', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='pantoszczyk', @first_name='Radosław', @last_name='Wdowczyk', @email='pantoszczyk@swatek-walek.com', @phone='105190005', @street='aleja Gajowa 482', @city='Głogów', @postal_code='86-260', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='fogieldagmara', @first_name='Ewa', @last_name='Karaśkiewicz', @email='fogieldagmara@ppuh.net', @phone='239566872', @street='al. Opolska 28', @city='Oleśnica', @postal_code='47-929', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='zawalichmelania', @first_name='Janina', @last_name='Ficoń', @email='zawalichmelania@dynia-pleskot.net', @phone='841074489', @street='ulica Kraszewskiego 61/84', @city='Bartoszyce', @postal_code='95-733', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='parkitnakaja', @first_name='Sonia', @last_name='Droździk', @email='parkitnakaja@dyja.net', @phone='229293193', @street='plac Wypoczynkowa 13', @city='Lublin', @postal_code='43-946', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='jjosko', @first_name='Kajetan', @last_name='Wosiak', @email='jjosko@fundacja.com', @phone='636648338', @street='ulica Stycznia 99/30', @city='Zakopane', @postal_code='18-022', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='tgolczyk', @first_name='Aurelia', @last_name='Zacharewicz', @email='tgolczyk@ufnal-rajtar.org', @phone='444323043', @street='pl. Moniuszki 11/38', @city='Bełchatów', @postal_code='89-617', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='dorotakukuczka', @first_name='Kornel', @last_name='Masłoń', @email='dorotakukuczka@fidor.net', @phone='100923970', @street='ulica Jana Sobieskiego 75', @city='Ruda Śląska', @postal_code='65-823', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='adrianna93', @first_name='Rafał', @last_name='Dziewit', @email='adrianna93@fpuh.pl', @phone='958835517', @street='plac Wyzwolenia 627', @city='Łuków', @postal_code='65-037', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='jakubsadej', @first_name='Nataniel', @last_name='Duniec', @email='jakubsadej@stowarzyszenie.net', @phone='770651295', @street='ulica Łanowa 140', @city='Piła', @postal_code='97-377', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='aleksandertylman', @first_name='Patryk', @last_name='Konrad', @email='aleksandertylman@ppuh.net', @phone='807479800', @street='al. Krasińskiego 15/34', @city='Krotoszyn', @postal_code='63-548', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='aleksanderhartman', @first_name='Aleks', @last_name='Ciesiółka', @email='aleksanderhartman@spoldzielnia.pl', @phone='886056401', @street='al. Jarzębinowa 012', @city='Września', @postal_code='84-228', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='rafal59', @first_name='Jan', @last_name='Stachów', @email='rafal59@gesiarz.org', @phone='661648939', @street='al. Handlowa 03/73', @city='Olkusz', @postal_code='97-321', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='fkosc', @first_name='Aniela', @last_name='Kazana', @email='fkosc@stowarzyszenie.com', @phone='400375106', @street='ul. Głowackiego 145', @city='Bartoszyce', @postal_code='85-283', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='herdatadeusz', @first_name='Anna Maria', @last_name='Kasper', @email='herdatadeusz@fundacja.com', @phone='558369131', @street='al. Wolności 30', @city='Czechowice-Dziedzice', @postal_code='18-015', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='milosz67', @first_name='Gustaw', @last_name='Sroga', @email='milosz67@fundacja.pl', @phone='592272987', @street='ul. Dworcowa 11/38', @city='Bydgoszcz', @postal_code='43-482', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='hubert00', @first_name='Nikodem', @last_name='Igras', @email='hubert00@grupa.com', @phone='937975705', @street='plac Perłowa 61/38', @city='Wyszków', @postal_code='41-128', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='jaceksmieszek', @first_name='Dorota', @last_name='Pazdan', @email='jaceksmieszek@fpuh.com', @phone='261037570', @street='ulica Ściegiennego 356', @city='Wieluń', @postal_code='87-299', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='filiplesisz', @first_name='Bruno', @last_name='Kościuszko', @email='filiplesisz@downar.com', @phone='872641767', @street='aleja Lipca 008', @city='Bochnia', @postal_code='95-295', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='dagmara53', @first_name='Aniela', @last_name='Gomoła', @email='dagmara53@pryszcz.net', @phone='804303990', @street='pl. Dworcowa 710', @city='Radom', @postal_code='37-575', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='stabis', @first_name='Gabriel', @last_name='Szylar', @email='stabis@grupa.com', @phone='289792491', @street='aleja Spółdzielcza 787', @city='Biała Podlaska', @postal_code='81-163', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='karwalatobiasz', @first_name='Maksymilian', @last_name='Klatka', @email='karwalatobiasz@gortat-starega.org', @phone='636473706', @street='plac Jeziorna 708', @city='Sopot', @postal_code='17-645', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='jan29', @first_name='Stefan', @last_name='Hojda', @email='jan29@fpuh.pl', @phone='637977472', @street='ulica Jastrzębia 15/74', @city='Starogard Gdański', @postal_code='68-839', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='alex96', @first_name='Tola', @last_name='Śnieg', @email='alex96@grupa.net', @phone='830963303', @street='al. Nadrzeczna 36/53', @city='Legionowo', @postal_code='35-401', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='palegamarcin', @first_name='Krystyna', @last_name='Szpyrka', @email='palegamarcin@fpuh.com', @phone='633461929', @street='al. Traugutta 706', @city='Nowy Targ', @postal_code='30-666', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='drobotanna-maria', @first_name='Janina', @last_name='Iciek', @email='drobotanna-maria@stowarzyszenie.pl', @phone='536026895', @street='pl. Górska 06', @city='Pszczyna', @postal_code='41-983', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='lapotgrzegorz', @first_name='Klara', @last_name='Bugiel', @email='lapotgrzegorz@szklarek-pleban.com', @phone='338355497', @street='ulica Niecała 346', @city='Nowa Ruda', @postal_code='10-220', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='mordalbartek', @first_name='Róża', @last_name='Tatarczyk', @email='mordalbartek@roch.pl', @phone='157424085', @street='aleja Krasickiego 16', @city='Zduńska Wola', @postal_code='39-307', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='oszykula', @first_name='Natasza', @last_name='Brząkała', @email='oszykula@zynda.pl', @phone='975835957', @street='plac Makowa 87', @city='Wyszków', @postal_code='66-338', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='hubert96', @first_name='Andrzej', @last_name='Steckiewicz', @email='hubert96@ppuh.pl', @phone='713074136', @street='ulica Brzozowa 89/09', @city='Zduńska Wola', @postal_code='67-280', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='aleksanderankiewicz', @first_name='Roksana', @last_name='Uliczka', @email='aleksanderankiewicz@matulewicz.com', @phone='146906506', @street='pl. Głogowa 08/52', @city='Łuków', @postal_code='93-191', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='pzybura', @first_name='Blanka', @last_name='Fiedoruk', @email='pzybura@fundacja.net', @phone='589626438', @street='ulica Rózana 45/60', @city='Piastów', @postal_code='18-244', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='oarmata', @first_name='Eliza', @last_name='Wódka', @email='oarmata@ppuh.com', @phone='116376057', @street='aleja Łanowa 100', @city='Gliwice', @postal_code='95-721', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='leon08', @first_name='Witold', @last_name='Topa', @email='leon08@ppuh.com', @phone='894179370', @street='plac Zachodnia 19/80', @city='Tychy', @postal_code='84-042', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='dorota13', @first_name='Leonard', @last_name='Nitkiewicz', @email='dorota13@ppuh.com', @phone='884691342', @street='ulica Składowa 57/34', @city='Nowa Ruda', @postal_code='62-405', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='rajmangrzegorz', @first_name='Kamil', @last_name='Ciaś', @email='rajmangrzegorz@stowarzyszenie.com', @phone='754400425', @street='plac Jagiellońska 59/93', @city='Siemianowice Śląskie', @postal_code='12-065', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='marika17', @first_name='Tymoteusz', @last_name='Pośnik', @email='marika17@pieczarka-hulboj.com', @phone='410171960', @street='aleja Irysowa 54/94', @city='Kłodzko', @postal_code='13-701', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='adrian11', @first_name='Szymon', @last_name='Pośnik', @email='adrian11@dubik-pal.com', @phone='786861549', @street='al. Podleśna 95/13', @city='Mińsk Mazowiecki', @postal_code='38-090', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='ysalomon', @first_name='Sylwia', @last_name='Feliksiak', @email='ysalomon@fundacja.com', @phone='195136449', @street='pl. Kazimierza Wielkiego 12/87', @city='Wyszków', @postal_code='39-931', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='gustaw35', @first_name='Mieszko', @last_name='Białasik', @email='gustaw35@fpuh.com', @phone='797059736', @street='plac Wróblewskiego 51/16', @city='Kościerzyna', @postal_code='32-823', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='krzysztofpodlesna', @first_name='Maciej', @last_name='Syldatk', @email='krzysztofpodlesna@ppuh.com', @phone='408264196', @street='ulica Ciasna 78/21', @city='Jastrzębie-Zdrój', @postal_code='91-851', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='kottborys', @first_name='Natan', @last_name='Politowicz', @email='kottborys@stowarzyszenie.com', @phone='187081303', @street='aleja Odrzańska 841', @city='Żory', @postal_code='09-534', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='mularzmaciej', @first_name='Bartek', @last_name='Majtyka', @email='mularzmaciej@gabinety.com', @phone='407483116', @street='ul. Sikorskiego 04', @city='Jasło', @postal_code='99-856', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='witkowiczignacy', @first_name='Anna Maria', @last_name='Bogusiewicz', @email='witkowiczignacy@stowarzyszenie.pl', @phone='288920518', @street='ul. Kaliska 06/38', @city='Krotoszyn', @postal_code='10-346', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='fulawkakornel', @first_name='Andrzej', @last_name='Groborz', @email='fulawkakornel@kafel.pl', @phone='190048507', @street='pl. Zielona 06', @city='Czeladź', @postal_code='17-329', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='stanislaw94', @first_name='Adrianna', @last_name='Bylina', @email='stanislaw94@stowarzyszenie.pl', @phone='694988978', @street='pl. Pszenna 718', @city='Piekary Śląskie', @postal_code='01-950', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='waznaelzbieta', @first_name='Agnieszka', @last_name='Groń', @email='waznaelzbieta@stowarzyszenie.net', @phone='638127069', @street='pl. Rataja 66', @city='Toruń', @postal_code='33-140', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='turonapolonia', @first_name='Natasza', @last_name='Radko', @email='turonapolonia@grupa.pl', @phone='392952595', @street='ulica Pocztowa 02', @city='Lublin', @postal_code='33-847', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='kramerdawid', @first_name='Kajetan', @last_name='Banak', @email='kramerdawid@spoldzielnia.com', @phone='204392996', @street='ulica Kreta 865', @city='Koszalin', @postal_code='44-445', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='kupsmalwina', @first_name='Anastazja', @last_name='Capiga', @email='kupsmalwina@fpuh.pl', @phone='271070196', @street='pl. Rajska 99', @city='Świnoujście', @postal_code='96-490', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='jstrzelczak', @first_name='Dagmara', @last_name='Jantos', @email='jstrzelczak@spoldzielnia.net', @phone='375748978', @street='aleja Mazurska 702', @city='Ostrołęka', @postal_code='54-372', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='kwiekiera', @first_name='Mateusz', @last_name='Roda', @email='kwiekiera@gabinety.com', @phone='277949529', @street='pl. Polna 03', @city='Piastów', @postal_code='68-707', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='lskalka', @first_name='Tola', @last_name='Puła', @email='lskalka@kajstura.net', @phone='888164534', @street='al. Bursztynowa 76/65', @city='Sandomierz', @postal_code='03-008', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='serwakonstanty', @first_name='Inga', @last_name='Kolarczyk', @email='serwakonstanty@fundacja.org', @phone='267207568', @street='aleja Dobra 659', @city='Krosno', @postal_code='52-511', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='ohermanowicz', @first_name='Juliusz', @last_name='Oleksiewicz', @email='ohermanowicz@spoldzielnia.com', @phone='724215305', @street='aleja Wiosenna 281', @city='Piaseczno', @postal_code='16-032', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='robertludzik', @first_name='Sonia', @last_name='Kuśmider', @email='robertludzik@bracha-kazirod.pl', @phone='339160575', @street='al. Dobra 691', @city='Tczew', @postal_code='15-593', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='wwiese', @first_name='Sebastian', @last_name='Noculak', @email='wwiese@gabinety.com', @phone='867556861', @street='pl. Korfantego 821', @city='Mińsk Mazowiecki', @postal_code='38-842', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='jakub09', @first_name='Dorota', @last_name='Rychert', @email='jakub09@stowarzyszenie.com', @phone='400056278', @street='ul. Bałtycka 37', @city='Lublin', @postal_code='81-851', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='smutekgabriel', @first_name='Kamil', @last_name='Kaźmierczyk', @email='smutekgabriel@grupa.com', @phone='403286927', @street='plac Długa 634', @city='Słupsk', @postal_code='41-967', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='michalbystrek', @first_name='Anna Maria', @last_name='Albin', @email='michalbystrek@gabinety.com', @phone='538174642', @street='ulica Wilcza 61/01', @city='Legionowo', @postal_code='41-324', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='norbertklemens', @first_name='Ryszard', @last_name='Fedorczyk', @email='norbertklemens@kluj.pl', @phone='901873091', @street='ulica Klonowa 44/09', @city='Żory', @postal_code='06-113', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='emil54', @first_name='Stefan', @last_name='Ignatiuk', @email='emil54@fundacja.pl', @phone='447600894', @street='aleja Młynarska 57', @city='Piaseczno', @postal_code='31-815', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='jlemiesz', @first_name='Jakub', @last_name='Dziuda', @email='jlemiesz@ppuh.net', @phone='122738569', @street='al. Narcyzowa 628', @city='Knurów', @postal_code='56-256', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='julianswiatek', @first_name='Dorota', @last_name='Sieradzan', @email='julianswiatek@fpuh.pl', @phone='975856713', @street='plac Gołębia 927', @city='Nowy Dwór Mazowiecki', @postal_code='38-740', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='malyszkamarcel', @first_name='Adrian', @last_name='Warwas', @email='malyszkamarcel@fundacja.pl', @phone='187819423', @street='ulica Krucza 06/38', @city='Gdańsk', @postal_code='50-998', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='csobel', @first_name='Adam', @last_name='Strzępek', @email='csobel@stowarzyszenie.pl', @phone='428608693', @street='aleja Dobra 04/32', @city='Wągrowiec', @postal_code='77-911', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='kalinamelka', @first_name='Przemysław', @last_name='Motak', @email='kalinamelka@bodzak-rejmer.pl', @phone='781252990', @street='ul. Kaszubska 51', @city='Wałbrzych', @postal_code='19-199', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='krystian15', @first_name='Łukasz', @last_name='Kijanka', @email='krystian15@fundacja.pl', @phone='344729805', @street='ul. Hutnicza 52', @city='Jawor', @postal_code='93-472', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='kacperbejger', @first_name='Tola', @last_name='Maślankiewicz', @email='kacperbejger@fpuh.pl', @phone='253604434', @street='ul. Koralowa 06', @city='Starachowice', @postal_code='68-331', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='ewa73', @first_name='Olgierd', @last_name='Lula', @email='ewa73@stowarzyszenie.org', @phone='722077758', @street='al. Sowia 97', @city='Ruda Śląska', @postal_code='41-423', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='natanmandrysz', @first_name='Ewa', @last_name='Aleksiejuk', @email='natanmandrysz@fundacja.pl', @phone='824463454', @street='ulica Topolowa 340', @city='Płock', @postal_code='47-563', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='miteraewelina', @first_name='Natan', @last_name='Spólnik', @email='miteraewelina@ppuh.com', @phone='878237432', @street='ulica Słowicza 37/23', @city='Jarocin', @postal_code='31-174', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='sniegkalina', @first_name='Anita', @last_name='Szpara', @email='sniegkalina@pompa.com', @phone='408858794', @street='aleja Nadbrzeżna 18', @city='Sieradz', @postal_code='44-266', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='fabiandziuda', @first_name='Kajetan', @last_name='Majak', @email='fabiandziuda@fpuh.com', @phone='262163768', @street='plac Poprzeczna 10', @city='Chełm', @postal_code='26-603', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='kajetankruger', @first_name='Kamila', @last_name='Plaskota', @email='kajetankruger@swic.pl', @phone='807417675', @street='plac Andersa 30', @city='Biała Podlaska', @postal_code='43-901', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='xbujas', @first_name='Cyprian', @last_name='Buś', @email='xbujas@spoldzielnia.com', @phone='430661711', @street='plac Kalinowa 989', @city='Sosnowiec', @postal_code='66-154', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='dariuszmaruszczak', @first_name='Ksawery', @last_name='Dylik', @email='dariuszmaruszczak@grupa.org', @phone='459352479', @street='plac Piłsudskiego 76', @city='Szczecinek', @postal_code='05-632', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='marciniszynmaks', @first_name='Stefan', @last_name='Żakiewicz', @email='marciniszynmaks@ppuh.pl', @phone='107969865', @street='aleja Wczasowa 599', @city='Kalisz', @postal_code='36-075', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='dworczakgustaw', @first_name='Tadeusz', @last_name='Pindral', @email='dworczakgustaw@fpuh.pl', @phone='648209516', @street='aleja Jastrzębia 448', @city='Rumia', @postal_code='29-849', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='aochal', @first_name='Maksymilian', @last_name='Opoka', @email='aochal@grupa.com', @phone='775908635', @street='ulica Wiklinowa 48/76', @city='Sanok', @postal_code='39-057', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='gabrielsanetra', @first_name='Szymon', @last_name='Choroś', @email='gabrielsanetra@spoldzielnia.com', @phone='854101705', @street='pl. Lazurowa 374', @city='Czeladź', @postal_code='98-234', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='szpyraborys', @first_name='Marek', @last_name='Śliż', @email='szpyraborys@grupa.org', @phone='311837157', @street='aleja Klasztorna 516', @city='Kościerzyna', @postal_code='23-329', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='ozyzik', @first_name='Mikołaj', @last_name='Dulemba', @email='ozyzik@kniaz-magryta.org', @phone='878007163', @street='al. Piłsudskiego 72', @city='Cieszyn', @postal_code='87-320', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='dpawlonka', @first_name='Rafał', @last_name='Sznura', @email='dpawlonka@fundacja.pl', @phone='955199754', @street='ul. Piekarska 76', @city='Białogard', @postal_code='93-607', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='stefanbudzyn', @first_name='Szymon', @last_name='Omiotek', @email='stefanbudzyn@gabinety.com', @phone='107202096', @street='aleja Wczasowa 71', @city='Tarnowskie Góry', @postal_code='28-369', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='ksawerydybas', @first_name='Kaja', @last_name='Skalik', @email='ksawerydybas@jedryczka-swistek.pl', @phone='868118075', @street='plac Orkana 95', @city='Zgorzelec', @postal_code='56-302', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='dornarobert', @first_name='Fabian', @last_name='Andreasik', @email='dornarobert@grupa.pl', @phone='354647531', @street='pl. Brzechwy 23', @city='Świecie', @postal_code='28-644', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='uwenda', @first_name='Błażej', @last_name='Czubaj', @email='uwenda@prazmo-kapera.pl', @phone='780616178', @street='plac Mazurska 84/94', @city='Czeladź', @postal_code='60-056', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='xsznura', @first_name='Natan', @last_name='Bakalarczyk', @email='xsznura@boduch.pl', @phone='433133890', @street='al. Wiślana 796', @city='Olkusz', @postal_code='20-357', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='rplebanek', @first_name='Karol', @last_name='Majdan', @email='rplebanek@ppuh.net', @phone='450071658', @street='plac Lazurowa 092', @city='Zamość', @postal_code='59-458', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='cblasik', @first_name='Kornel', @last_name='Węgrzyniak', @email='cblasik@stowarzyszenie.org', @phone='816019223', @street='ul. Skośna 53/48', @city='Przemyśl', @postal_code='87-433', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='mariusz68', @first_name='Filip', @last_name='Rozmiarek', @email='mariusz68@pytlarz.pl', @phone='827603127', @street='plac Wyspiańskiego 10/39', @city='Szczecinek', @postal_code='85-132', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='lindnerjan', @first_name='Mikołaj', @last_name='Małas', @email='lindnerjan@stowarzyszenie.net', @phone='184852776', @street='ulica Kruczkowskiego 62/54', @city='Jastrzębie-Zdrój', @postal_code='95-599', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='klaszczyk', @first_name='Elżbieta', @last_name='Wiak', @email='klaszczyk@spoldzielnia.com', @phone='271853006', @street='pl. Łączna 15/76', @city='Kutno', @postal_code='37-546', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='inga12', @first_name='Ernest', @last_name='Burzec', @email='inga12@klepka-lelito.com', @phone='701663200', @street='plac Diamentowa 856', @city='Inowrocław', @postal_code='28-745', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='dzikamarcelina', @first_name='Nataniel', @last_name='Strzyż', @email='dzikamarcelina@osik-kut.com', @phone='732306933', @street='ulica Nałkowskiej 63/74', @city='Tarnobrzeg', @postal_code='74-428', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='robert31', @first_name='Oliwier', @last_name='Truchel', @email='robert31@maslankiewicz.net', @phone='805345139', @street='plac Młynarska 02/30', @city='Ostrów Wielkopolski', @postal_code='95-321', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='gorawiec', @first_name='Tobiasz', @last_name='Zadora', @email='gorawiec@gron.com', @phone='515819319', @street='ul. Piastowska 32/11', @city='Wołomin', @postal_code='39-578', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='qkajdan', @first_name='Franciszek', @last_name='Karnas', @email='qkajdan@fpuh.com', @phone='192249766', @street='plac Górska 55/45', @city='Środa Wielkopolska', @postal_code='35-051', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='kusektola', @first_name='Nikodem', @last_name='Kliber', @email='kusektola@minta.com', @phone='868717807', @street='aleja Orkana 686', @city='Mława', @postal_code='13-698', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='akuchciak', @first_name='Natan', @last_name='Kulus', @email='akuchciak@skowyra-pachla.pl', @phone='149652416', @street='ulica Srebrna 97', @city='Świdnik', @postal_code='27-057', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='gceluch', @first_name='Dominik', @last_name='Kudlak', @email='gceluch@gabinety.com', @phone='237892423', @street='al. Bociania 05', @city='Koszalin', @postal_code='64-633', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='kamieniakarkadiusz', @first_name='Robert', @last_name='Łaskawiec', @email='kamieniakarkadiusz@stowarzyszenie.pl', @phone='471339748', @street='ul. Poznańska 73/51', @city='Mława', @postal_code='17-074', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='opiolaurszula', @first_name='Hubert', @last_name='Wziątek', @email='opiolaurszula@stowarzyszenie.com', @phone='761781210', @street='pl. Złota 647', @city='Kędzierzyn-Koźle', @postal_code='06-868', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='xnowek', @first_name='Jacek', @last_name='Dziuban', @email='xnowek@ppuh.org', @phone='998192963', @street='al. Strzelecka 056', @city='Zduńska Wola', @postal_code='09-746', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='hkudra', @first_name='Janina', @last_name='Leoniuk', @email='hkudra@grupa.pl', @phone='541567872', @street='aleja Zaułek 15', @city='Rzeszów', @postal_code='19-505', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='kamil02', @first_name='Roksana', @last_name='Kujawiak', @email='kamil02@fundacja.net', @phone='377328340', @street='aleja Wrocławska 31', @city='Oleśnica', @postal_code='66-937', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='tworzydloignacy', @first_name='Norbert', @last_name='Czochara', @email='tworzydloignacy@spoldzielnia.pl', @phone='741924428', @street='aleja Żwirowa 907', @city='Tarnobrzeg', @postal_code='72-638', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='fabian87', @first_name='Konrad', @last_name='Karaśkiewicz', @email='fabian87@spoldzielnia.net', @phone='200445825', @street='aleja Topolowa 265', @city='Nowa Ruda', @postal_code='04-165', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='dzialakazimierz', @first_name='Hubert', @last_name='Osipowicz', @email='dzialakazimierz@stowarzyszenie.com', @phone='770258489', @street='al. Śląska 47/24', @city='Skarżysko-Kamienna', @postal_code='74-524', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='elzbietagrzech', @first_name='Karina', @last_name='Lorens', @email='elzbietagrzech@szczepaniec-korkosz.org', @phone='225563160', @street='aleja Stroma 85', @city='Gniezno', @postal_code='24-268', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='frymusfabian', @first_name='Oskar', @last_name='Kaja', @email='frymusfabian@sadza-pinda.net', @phone='655089644', @street='aleja Mokra 990', @city='Szczecinek', @postal_code='44-465', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='ignacy71', @first_name='Mikołaj', @last_name='Glazer', @email='ignacy71@gabinety.pl', @phone='317766437', @street='plac Żeglarska 91', @city='Częstochowa', @postal_code='07-847', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='witaszekmariusz', @first_name='Alex', @last_name='Wietecha', @email='witaszekmariusz@ppuh.pl', @phone='836341361', @street='aleja Narcyzowa 331', @city='Sopot', @postal_code='70-883', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='duszczykgaja', @first_name='Tymon', @last_name='Kordys', @email='duszczykgaja@mlot.pl', @phone='710337602', @street='pl. Dworcowa 62/55', @city='Ełk', @postal_code='35-422', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='nicolesura', @first_name='Alan', @last_name='Zemanek', @email='nicolesura@grupa.pl', @phone='697525414', @street='al. Pogodna 799', @city='Wołomin', @postal_code='89-589', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='lawniczeklukasz', @first_name='Cezary', @last_name='Kołaczyk', @email='lawniczeklukasz@fpuh.pl', @phone='964520755', @street='plac Wyspiańskiego 38', @city='Marki', @postal_code='58-153', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='szymon55', @first_name='Sara', @last_name='Klaus', @email='szymon55@prostak.com', @phone='451411321', @street='pl. Turkusowa 23/15', @city='Kraków', @postal_code='30-925', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='usiudek', @first_name='Andrzej', @last_name='Fołta', @email='usiudek@patyna-gasz.net', @phone='695320061', @street='pl. Tęczowa 41', @city='Wyszków', @postal_code='36-154', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='yniescior', @first_name='Nicole', @last_name='Groń', @email='yniescior@stowarzyszenie.com', @phone='179102219', @street='al. Bolesława Chrobrego 181', @city='Świnoujście', @postal_code='79-528', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='kumorekkrzysztof', @first_name='Sandra', @last_name='Gnyp', @email='kumorekkrzysztof@ppuh.org', @phone='530616583', @street='plac Swierkowa 629', @city='Koszalin', @postal_code='51-321', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='kamilakieszek', @first_name='Natan', @last_name='Wereda', @email='kamilakieszek@paczos-ufniarz.com', @phone='707464491', @street='aleja Handlowa 418', @city='Warszawa', @postal_code='84-056', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='korneliacegla', @first_name='Tomasz', @last_name='Drzał', @email='korneliacegla@kretek-materek.com', @phone='760100039', @street='aleja Śląska 63/74', @city='Świebodzice', @postal_code='04-580', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='klara22', @first_name='Natasza', @last_name='Bieleń', @email='klara22@fundacja.com', @phone='842299568', @street='aleja Willowa 58/50', @city='Sieradz', @postal_code='66-396', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='xszmalec', @first_name='Marcelina', @last_name='Helak', @email='xszmalec@misko-rutowicz.net', @phone='903038583', @street='pl. Strumykowa 950', @city='Stargard Szczeciński', @postal_code='62-991', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='marcin59', @first_name='Jędrzej', @last_name='Hudzik', @email='marcin59@ppuh.pl', @phone='812652893', @street='ul. Zacisze 20', @city='Dąbrowa Górnicza', @postal_code='78-017', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='oleksiewiczmaciej', @first_name='Kazimierz', @last_name='Bazydło', @email='oleksiewiczmaciej@krata-karalus.net', @phone='478298871', @street='ul. Kusocińskiego 53', @city='Lublin', @postal_code='05-796', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='nicolegoik', @first_name='Hubert', @last_name='Pernak', @email='nicolegoik@spoldzielnia.pl', @phone='736767458', @street='al. Poniatowskiego 995', @city='Nowa Sól', @postal_code='50-980', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='minkiewiczjustyna', @first_name='Aniela', @last_name='Nazarko', @email='minkiewiczjustyna@burczak.com', @phone='291504417', @street='ulica Jana 85/78', @city='Mława', @postal_code='28-057', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='kuchciakoliwier', @first_name='Angelika', @last_name='Marchlewicz', @email='kuchciakoliwier@gorzelanczyk-dynia.com', @phone='404596057', @street='ulica Akacjowa 67', @city='Przemyśl', @postal_code='93-963', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='klajajulianna', @first_name='Bruno', @last_name='Juszczuk', @email='klajajulianna@grupa.com', @phone='113171135', @street='ul. Widokowa 95/13', @city='Jarosław', @postal_code='19-735', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='ewa57', @first_name='Wojciech', @last_name='Pabisiak', @email='ewa57@fundacja.com', @phone='691488405', @street='pl. Paderewskiego 89', @city='Siedlce', @postal_code='25-687', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='milosz40', @first_name='Aleks', @last_name='Grymuza', @email='milosz40@kielan.net', @phone='682558510', @street='ulica Głogowa 13', @city='Kościan', @postal_code='08-406', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='indykryszard', @first_name='Maciej', @last_name='Pela', @email='indykryszard@gabinety.net', @phone='357157898', @street='pl. Sikorskiego 74/84', @city='Sosnowiec', @postal_code='76-732', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='dorotadzienis', @first_name='Przemysław', @last_name='Symonowicz', @email='dorotadzienis@gabinety.org', @phone='421695706', @street='pl. Kasztanowa 083', @city='Ząbki', @postal_code='68-878', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='xmatenko', @first_name='Marcel', @last_name='Zubowicz', @email='xmatenko@fundacja.org', @phone='905692374', @street='plac Spółdzielcza 20/07', @city='Tarnobrzeg', @postal_code='24-867', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='dtoborek', @first_name='Radosław', @last_name='Bryja', @email='dtoborek@gabinety.pl', @phone='694640894', @street='plac Rzemieślnicza 150', @city='Pabianice', @postal_code='36-745', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='aniela05', @first_name='Krystyna', @last_name='Linda', @email='aniela05@fundacja.com', @phone='393802145', @street='ulica Miła 66/68', @city='Wyszków', @postal_code='85-517', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='nmleczak', @first_name='Ryszard', @last_name='Wielgo', @email='nmleczak@dziadura.pl', @phone='430188393', @street='ulica Jasna 61', @city='Gorzów Wielkopolski', @postal_code='82-366', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='albertgowin', @first_name='Mikołaj', @last_name='Ryczko', @email='albertgowin@grupa.pl', @phone='685804769', @street='ulica Spacerowa 06', @city='Siemianowice Śląskie', @postal_code='16-317', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='rozatymczyszyn', @first_name='Nela', @last_name='Cogiel', @email='rozatymczyszyn@fiedoruk-dabros.com', @phone='763507125', @street='al. Słoneczna 07/21', @city='Chrzanów', @postal_code='80-886', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='alan36', @first_name='Agnieszka', @last_name='Musiała', @email='alan36@malesza.pl', @phone='779227298', @street='plac Lazurowa 82/33', @city='Mława', @postal_code='74-013', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='mironczuksara', @first_name='Kacper', @last_name='Wąsiewicz', @email='mironczuksara@janiga.pl', @phone='156517982', @street='al. Cisowa 811', @city='Chorzów', @postal_code='03-340', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='blazej03', @first_name='Bruno', @last_name='Kustosz', @email='blazej03@kuncewicz-zymelka.com', @phone='158758342', @street='al. Drzymały 585', @city='Starogard Gdański', @postal_code='70-556', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='fiedleraleksander', @first_name='Tymon', @last_name='Szlachcic', @email='fiedleraleksander@gabinety.pl', @phone='142375834', @street='aleja Leszczynowa 72/97', @city='Lubartów', @postal_code='45-111', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateStudent @username='maurycy45', @first_name='Leon', @last_name='Szwaj', @email='maurycy45@fpuh.net', @phone='849234986', @street='al. Korfantego 02', @city='Świdnica', @postal_code='75-562', @country_id=1, @user_id=NULL
+      EXEC CreateStudent @username='dhawrylak', @first_name='Karol', @last_name='Prostak', @email='dhawrylak@ppuh.pl', @phone='127234792', @street='pl. Gałczynskiego 60', @city='Rumia', @postal_code='82-383', @country_id=1, @user_id=NULL
       
 
-      EXEC CreateEmployee @username='jkacperczyk', @first_name='Monika', @last_name='Kość', @email='jkacperczyk@pitula-zadka.net', @phone='830250445', @employee_type_id=1, @birth_date='1990-01-01', @hire_date='2017-06-13', @employee_id=NULL
+      EXEC CreateEmployee @username='kidonstefan', @first_name='Blanka', @last_name='Szara', @email='kidonstefan@ppuh.com', @phone='317388756', @employee_type_id=1, @birth_date='1990-01-01', @hire_date='2009-10-04', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='oskar12', @first_name='Marika', @last_name='Wichary', @email='oskar12@utrata.com', @phone='529788819', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2015-09-02', @employee_id=NULL
+      EXEC CreateEmployee @username='kfaryna', @first_name='Bianka', @last_name='Ryszkiewicz', @email='kfaryna@spoldzielnia.com', @phone='871598243', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2009-07-10', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='daniechubert', @first_name='Aleksander', @last_name='Bulak', @email='daniechubert@suchon.net', @phone='568043497', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2022-09-06', @employee_id=NULL
+      EXEC CreateEmployee @username='wojtalikmikolaj', @first_name='Elżbieta', @last_name='Rzeźniczek', @email='wojtalikmikolaj@fundacja.pl', @phone='493316734', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2020-06-14', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='marcelina58', @first_name='Kornelia', @last_name='Stoltmann', @email='marcelina58@gabinety.com', @phone='292597032', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2016-08-09', @employee_id=NULL
+      EXEC CreateEmployee @username='hanusblanka', @first_name='Jędrzej', @last_name='Reichel', @email='hanusblanka@fpuh.org', @phone='601073175', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2019-03-25', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='mjasionek', @first_name='Rafał', @last_name='Roj', @email='mjasionek@gabinety.pl', @phone='310541322', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2019-07-07', @employee_id=NULL
+      EXEC CreateEmployee @username='duchnikolgierd', @first_name='Angelika', @last_name='Nazarewicz', @email='duchnikolgierd@fpuh.pl', @phone='774852084', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2009-10-17', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='jaceklabno', @first_name='Andrzej', @last_name='Cylwik', @email='jaceklabno@polewka-fornalik.pl', @phone='668053484', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2010-07-22', @employee_id=NULL
+      EXEC CreateEmployee @username='lgasik', @first_name='Oliwier', @last_name='Cebo', @email='lgasik@heleniak.com', @phone='280925607', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2017-02-07', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='artur66', @first_name='Paweł', @last_name='Fabiszak', @email='artur66@milewczyk-gabrych.org', @phone='605193264', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2017-03-10', @employee_id=NULL
+      EXEC CreateEmployee @username='ficonoskar', @first_name='Leon', @last_name='Bazyluk', @email='ficonoskar@liedtke-wesola.com', @phone='885069594', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2013-06-13', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='danielsamiec', @first_name='Konstanty', @last_name='Kiliszek', @email='danielsamiec@wiszowaty-dydak.com', @phone='921911057', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2021-09-11', @employee_id=NULL
+      EXEC CreateEmployee @username='emil89', @first_name='Anastazja', @last_name='Sadza', @email='emil89@rajczak.com', @phone='210387762', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2010-08-24', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='klaraszumny', @first_name='Stefan', @last_name='Wenzel', @email='klaraszumny@spoldzielnia.pl', @phone='124782017', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2014-02-17', @employee_id=NULL
+      EXEC CreateEmployee @username='emilskwira', @first_name='Maurycy', @last_name='Gorzelańczyk', @email='emilskwira@grupa.pl', @phone='902709012', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2013-10-07', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='moczkomalwina', @first_name='Michał', @last_name='Jarkiewicz', @email='moczkomalwina@sojda.com', @phone='135584448', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2018-08-17', @employee_id=NULL
+      EXEC CreateEmployee @username='gbuszka', @first_name='Ksawery', @last_name='Karwot', @email='gbuszka@gornisiewicz-siergiej.pl', @phone='746912058', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2011-03-27', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='maksgarczyk', @first_name='Marcelina', @last_name='Wojtyna', @email='maksgarczyk@gabinety.com', @phone='483845905', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2011-12-04', @employee_id=NULL
+      EXEC CreateEmployee @username='qsuda', @first_name='Gustaw', @last_name='Musiała', @email='qsuda@ppuh.com', @phone='788919833', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2016-03-13', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='fzymelka', @first_name='Krystian', @last_name='Tutka', @email='fzymelka@tomal-roszkiewicz.pl', @phone='895325191', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2008-02-10', @employee_id=NULL
+      EXEC CreateEmployee @username='linkaadrian', @first_name='Sonia', @last_name='Giel', @email='linkaadrian@spoldzielnia.pl', @phone='956817235', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2019-07-17', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='monikakubiaczyk', @first_name='Blanka', @last_name='Bazyluk', @email='monikakubiaczyk@stowarzyszenie.com', @phone='453949827', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2018-02-06', @employee_id=NULL
+      EXEC CreateEmployee @username='anastazjagrabas', @first_name='Kamil', @last_name='Klyszcz', @email='anastazjagrabas@stowarzyszenie.net', @phone='720192977', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2016-03-01', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='elzbietadoktor', @first_name='Stanisław', @last_name='Latoszek', @email='elzbietadoktor@szymula.org', @phone='110212877', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2016-03-28', @employee_id=NULL
+      EXEC CreateEmployee @username='halkajulianna', @first_name='Karol', @last_name='Żmija', @email='halkajulianna@stowarzyszenie.org', @phone='383471158', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2008-05-30', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='tgoral', @first_name='Sonia', @last_name='Tłuczek', @email='tgoral@gabinety.pl', @phone='698798392', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2015-07-16', @employee_id=NULL
+      EXEC CreateEmployee @username='filip32', @first_name='Igor', @last_name='Gładka', @email='filip32@maszota-samul.com', @phone='712837177', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2014-12-04', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='maciejberes', @first_name='Grzegorz', @last_name='Dynia', @email='maciejberes@fundacja.com', @phone='301424317', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2017-01-14', @employee_id=NULL
+      EXEC CreateEmployee @username='oskarszkopek', @first_name='Blanka', @last_name='Dacko', @email='oskarszkopek@spoldzielnia.org', @phone='451377719', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2011-07-26', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='kalinalorenz', @first_name='Juliusz', @last_name='Soczewka', @email='kalinalorenz@gabinety.com', @phone='257972003', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2014-03-23', @employee_id=NULL
+      EXEC CreateEmployee @username='marcelina57', @first_name='Elżbieta', @last_name='Bystrek', @email='marcelina57@ppuh.com', @phone='589050436', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2018-05-07', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='marek26', @first_name='Tymon', @last_name='Ziegler', @email='marek26@spoldzielnia.pl', @phone='581861595', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2010-06-09', @employee_id=NULL
+      EXEC CreateEmployee @username='andrzej95', @first_name='Ada', @last_name='Chadaj', @email='andrzej95@grupa.pl', @phone='894624543', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2020-09-25', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='dorota46', @first_name='Oskar', @last_name='Kiwior', @email='dorota46@grupa.pl', @phone='904392951', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2018-09-13', @employee_id=NULL
+      EXEC CreateEmployee @username='erykpiwowarek', @first_name='Jerzy', @last_name='Dumin', @email='erykpiwowarek@matejczuk-wenda.com', @phone='868247728', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2016-11-28', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='karina12', @first_name='Piotr', @last_name='Wojtak', @email='karina12@ppuh.com', @phone='312564258', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2022-01-01', @employee_id=NULL
+      EXEC CreateEmployee @username='jwygoda', @first_name='Grzegorz', @last_name='Pogorzelec', @email='jwygoda@siedlaczek-bernatowicz.pl', @phone='617577682', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2017-02-12', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='idafidler', @first_name='Witold', @last_name='Dorna', @email='idafidler@szczechowicz.pl', @phone='107079910', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2008-02-10', @employee_id=NULL
+      EXEC CreateEmployee @username='inga39', @first_name='Ernest', @last_name='Zbróg', @email='inga39@spoldzielnia.com', @phone='292375024', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2020-05-21', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='karina81', @first_name='Paweł', @last_name='Wypchło', @email='karina81@fpuh.pl', @phone='439760068', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2015-12-22', @employee_id=NULL
+      EXEC CreateEmployee @username='albertdzieza', @first_name='Sara', @last_name='Wicha', @email='albertdzieza@misiuk-karaskiewicz.pl', @phone='378929480', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2016-04-02', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='lepkamarek', @first_name='Kacper', @last_name='Achtelik', @email='lepkamarek@grupa.com', @phone='619109234', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2016-04-26', @employee_id=NULL
+      EXEC CreateEmployee @username='hubert63', @first_name='Julita', @last_name='Nagel', @email='hubert63@grupa.com', @phone='904821619', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2011-09-26', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='borzymrafal', @first_name='Przemysław', @last_name='Kuciel', @email='borzymrafal@loj-czulak.com', @phone='662526435', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2023-12-03', @employee_id=NULL
+      EXEC CreateEmployee @username='wegrzynowiczdawid', @first_name='Klara', @last_name='Węgier', @email='wegrzynowiczdawid@skutnik-siarkiewicz.org', @phone='447802558', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2016-09-13', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='jarochjuliusz', @first_name='Tola', @last_name='Czura', @email='jarochjuliusz@gabinety.org', @phone='302678195', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2018-10-20', @employee_id=NULL
+      EXEC CreateEmployee @username='gradzielmaurycy', @first_name='Konrad', @last_name='Dydak', @email='gradzielmaurycy@stowarzyszenie.com', @phone='264792574', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2023-05-24', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='arkadiusz41', @first_name='Tymon', @last_name='Kalarus', @email='arkadiusz41@gwara-jasionek.com', @phone='492966565', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2024-05-12', @employee_id=NULL
+      EXEC CreateEmployee @username='damian65', @first_name='Oskar', @last_name='Falba', @email='damian65@szkola-kosciukiewicz.org', @phone='775300087', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2015-06-01', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='roksana46', @first_name='Leon', @last_name='Kośnik', @email='roksana46@fpuh.org', @phone='342407461', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2020-02-01', @employee_id=NULL
+      EXEC CreateEmployee @username='qbuchalik', @first_name='Eryk', @last_name='Styn', @email='qbuchalik@maciol-kolaczyk.pl', @phone='573093842', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2011-02-10', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='ida51', @first_name='Marcin', @last_name='Wołczyk', @email='ida51@milka-lobacz.org', @phone='863028058', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2021-09-07', @employee_id=NULL
+      EXEC CreateEmployee @username='fskutnik', @first_name='Miłosz', @last_name='Kieloch', @email='fskutnik@orawiec-kliszcz.com', @phone='810504713', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2021-12-19', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='ksawery89', @first_name='Julian', @last_name='Ćmiel', @email='ksawery89@fpuh.com', @phone='179512860', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2014-10-05', @employee_id=NULL
+      EXEC CreateEmployee @username='marcin17', @first_name='Miłosz', @last_name='Andrearczyk', @email='marcin17@heleniak.org', @phone='350754001', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2015-01-13', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='jedrzejpieszak', @first_name='Wiktor', @last_name='Herba', @email='jedrzejpieszak@fpuh.com', @phone='920561657', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2023-12-17', @employee_id=NULL
+      EXEC CreateEmployee @username='konstanty14', @first_name='Tymon', @last_name='Syldatk', @email='konstanty14@kocwin.net', @phone='777435426', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2014-11-25', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='awrochna', @first_name='Robert', @last_name='Płaneta', @email='awrochna@drozd.com', @phone='520154032', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2022-12-16', @employee_id=NULL
+      EXEC CreateEmployee @username='maks52', @first_name='Radosław', @last_name='Hubert', @email='maks52@fpuh.pl', @phone='973032008', @employee_type_id=2, @birth_date='1990-01-01', @hire_date='2013-11-30', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='wlazlyjozef', @first_name='Emil', @last_name='Kulus', @email='wlazlyjozef@jaje-kujawiak.net', @phone='921234637', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2014-07-28', @employee_id=NULL
+      EXEC CreateEmployee @username='stochmaldawid', @first_name='Franciszek', @last_name='Borysewicz', @email='stochmaldawid@bialczyk-arendarczyk.pl', @phone='609628318', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2017-11-10', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='obudner', @first_name='Adrian', @last_name='Kwapis', @email='obudner@ufnal-labaj.com', @phone='254026963', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2019-10-31', @employee_id=NULL
+      EXEC CreateEmployee @username='malwina06', @first_name='Tadeusz', @last_name='Jaremek', @email='malwina06@cieciura.pl', @phone='543516802', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2021-02-08', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='ugubernat', @first_name='Kacper', @last_name='Jarema', @email='ugubernat@stowarzyszenie.com', @phone='994156133', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2011-11-02', @employee_id=NULL
+      EXEC CreateEmployee @username='waclawartur', @first_name='Nataniel', @last_name='Czuryło', @email='waclawartur@gabinety.pl', @phone='779162157', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2016-01-20', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='blazej93', @first_name='Melania', @last_name='Zielke', @email='blazej93@fpuh.com', @phone='845293905', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2020-04-23', @employee_id=NULL
+      EXEC CreateEmployee @username='ifornalik', @first_name='Emil', @last_name='Styn', @email='ifornalik@spoldzielnia.com', @phone='600048125', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2012-07-18', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='szottkrystian', @first_name='Sandra', @last_name='Bereś', @email='szottkrystian@fpuh.pl', @phone='401725458', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2024-04-30', @employee_id=NULL
+      EXEC CreateEmployee @username='natasza21', @first_name='Bruno', @last_name='Pokusa', @email='natasza21@buczko.net', @phone='259786219', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2014-08-27', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='rogaczradoslaw', @first_name='Marianna', @last_name='Truchel', @email='rogaczradoslaw@nazarewicz.com', @phone='123287733', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2009-11-12', @employee_id=NULL
+      EXEC CreateEmployee @username='gzaborek', @first_name='Natan', @last_name='Kosz', @email='gzaborek@stowarzyszenie.org', @phone='243473456', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2017-04-07', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='cezary80', @first_name='Malwina', @last_name='Porwoł', @email='cezary80@brojek.pl', @phone='255005463', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2022-03-19', @employee_id=NULL
+      EXEC CreateEmployee @username='alan10', @first_name='Justyna', @last_name='Klęk', @email='alan10@padlo.com', @phone='307397720', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2014-01-15', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='nnowotny', @first_name='Karol', @last_name='Sip', @email='nnowotny@grupa.com', @phone='252280076', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2015-12-28', @employee_id=NULL
+      EXEC CreateEmployee @username='szkupmaurycy', @first_name='Marcel', @last_name='Małyszka', @email='szkupmaurycy@grupa.com', @phone='759399362', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2012-08-23', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='olaf75', @first_name='Norbert', @last_name='Cis', @email='olaf75@myga.com', @phone='820249340', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2010-12-29', @employee_id=NULL
+      EXEC CreateEmployee @username='jan17', @first_name='Tymon', @last_name='Niebudek', @email='jan17@janke-mularz.org', @phone='679187718', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2012-05-17', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='fnikolajuk', @first_name='Olaf', @last_name='Mazik', @email='fnikolajuk@spoldzielnia.com', @phone='560023382', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2009-01-17', @employee_id=NULL
+      EXEC CreateEmployee @username='zstartek', @first_name='Robert', @last_name='Wita', @email='zstartek@pokusa-dorobek.com', @phone='333514743', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2015-11-23', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='hpiersa', @first_name='Blanka', @last_name='Filiks', @email='hpiersa@nozka.pl', @phone='727684182', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2023-04-01', @employee_id=NULL
+      EXEC CreateEmployee @username='zwegrzynek', @first_name='Ewelina', @last_name='Wiszowata', @email='zwegrzynek@fundacja.pl', @phone='940988574', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2014-05-06', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='leon01', @first_name='Marcin', @last_name='Samul', @email='leon01@spoldzielnia.pl', @phone='374582455', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2022-09-25', @employee_id=NULL
+      EXEC CreateEmployee @username='elzbieta64', @first_name='Bianka', @last_name='Guźniczak', @email='elzbieta64@lizurej-murat.pl', @phone='953403542', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2019-09-02', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='cyrulikadam', @first_name='Stanisław', @last_name='Koperek', @email='cyrulikadam@stowarzyszenie.com', @phone='328797390', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2019-10-18', @employee_id=NULL
+      EXEC CreateEmployee @username='hklekot', @first_name='Andrzej', @last_name='Organiściak', @email='hklekot@macek.com', @phone='336997789', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2010-11-06', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='wcader', @first_name='Bianka', @last_name='Fraś', @email='wcader@zamora.com', @phone='123247655', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2015-09-10', @employee_id=NULL
+      EXEC CreateEmployee @username='ebachanek', @first_name='Stefan', @last_name='Cherek', @email='ebachanek@cholody-filas.pl', @phone='766880381', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2013-05-09', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='oliwiermetel', @first_name='Ignacy', @last_name='Herdzik', @email='oliwiermetel@bobak.org', @phone='897130774', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2019-03-23', @employee_id=NULL
+      EXEC CreateEmployee @username='dominik85', @first_name='Sandra', @last_name='Knysak', @email='dominik85@glazer-solis.net', @phone='734141708', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2008-08-04', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='tslobodzian', @first_name='Stefan', @last_name='Freitag', @email='tslobodzian@faltyn-szambelan.com', @phone='223202655', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2011-03-14', @employee_id=NULL
+      EXEC CreateEmployee @username='swaczynaryszard', @first_name='Piotr', @last_name='Szczerek', @email='swaczynaryszard@grupa.pl', @phone='211024064', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2021-10-01', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='leonard04', @first_name='Julianna', @last_name='Młodzik', @email='leonard04@handke.org', @phone='359523159', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2013-03-15', @employee_id=NULL
+      EXEC CreateEmployee @username='sierpienjerzy', @first_name='Iwo', @last_name='Paprotny', @email='sierpienjerzy@grupa.com', @phone='188679735', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2014-09-27', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='radoslawgnyp', @first_name='Olga', @last_name='Jankowicz', @email='radoslawgnyp@juraszczyk-wiatrak.pl', @phone='243584726', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2023-02-06', @employee_id=NULL
+      EXEC CreateEmployee @username='szatanikmaurycy', @first_name='Jan', @last_name='Graban', @email='szatanikmaurycy@grupa.com', @phone='724862795', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2012-07-21', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='cezary45', @first_name='Sebastian', @last_name='Cyrek', @email='cezary45@lenarcik.org', @phone='621833871', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2022-07-12', @employee_id=NULL
+      EXEC CreateEmployee @username='robertprzerwa', @first_name='Nicole', @last_name='Ryndak', @email='robertprzerwa@fundacja.org', @phone='338129812', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2015-07-09', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='ubusko', @first_name='Maurycy', @last_name='Miętus', @email='ubusko@grupa.pl', @phone='562876058', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2022-12-29', @employee_id=NULL
+      EXEC CreateEmployee @username='lczerkies', @first_name='Róża', @last_name='Wawrzonek', @email='lczerkies@spoldzielnia.net', @phone='232632293', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2022-09-08', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='grzegorzkolek', @first_name='Tomasz', @last_name='Drynda', @email='grzegorzkolek@pianka.pl', @phone='328142757', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2010-02-25', @employee_id=NULL
+      EXEC CreateEmployee @username='mlynarzewelina', @first_name='Mariusz', @last_name='Żbik', @email='mlynarzewelina@grupa.net', @phone='652738452', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2013-06-22', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='maks04', @first_name='Sylwia', @last_name='Kasak', @email='maks04@ppuh.pl', @phone='440469787', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2022-01-01', @employee_id=NULL
+      EXEC CreateEmployee @username='olga95', @first_name='Marek', @last_name='Wojtoń', @email='olga95@ppuh.com', @phone='127342672', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2020-01-21', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='elzbietalitwa', @first_name='Piotr', @last_name='Balas', @email='elzbietalitwa@drewa-kubasiak.pl', @phone='291400987', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2018-07-13', @employee_id=NULL
+      EXEC CreateEmployee @username='natanekblanka', @first_name='Artur', @last_name='Skowyra', @email='natanekblanka@grupa.pl', @phone='709070676', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2009-12-26', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='heczkokarina', @first_name='Aleks', @last_name='Hejduk', @email='heczkokarina@wykret.pl', @phone='305577975', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2010-08-07', @employee_id=NULL
+      EXEC CreateEmployee @username='fwrzesniak', @first_name='Franciszek', @last_name='Ragus', @email='fwrzesniak@lapaj.org', @phone='444686218', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2019-10-30', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='zoltekmarcin', @first_name='Oliwier', @last_name='Szarpak', @email='zoltekmarcin@grupa.com', @phone='197799667', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2009-06-01', @employee_id=NULL
+      EXEC CreateEmployee @username='teclawdariusz', @first_name='Rozalia', @last_name='Bejger', @email='teclawdariusz@grupa.net', @phone='774783107', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2013-07-09', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='belzajeremi', @first_name='Miłosz', @last_name='Łuczka', @email='belzajeremi@fundacja.net', @phone='838772261', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2017-11-30', @employee_id=NULL
+      EXEC CreateEmployee @username='stochmaligor', @first_name='Natan', @last_name='Herba', @email='stochmaligor@grupa.com', @phone='666543520', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2019-11-23', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='wotaeryk', @first_name='Leonard', @last_name='Zacharczuk', @email='wotaeryk@dziczek-hudzik.pl', @phone='277100241', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2023-02-15', @employee_id=NULL
+      EXEC CreateEmployee @username='schwarzalex', @first_name='Igor', @last_name='Janoszka', @email='schwarzalex@stowarzyszenie.pl', @phone='708514819', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2010-05-02', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='krystynasolek', @first_name='Marek', @last_name='Dydo', @email='krystynasolek@grupa.com', @phone='386217998', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2008-12-24', @employee_id=NULL
+      EXEC CreateEmployee @username='rbuza', @first_name='Klara', @last_name='Sroga', @email='rbuza@klus-stanaszek.com', @phone='597114175', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2008-02-07', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='fbroszkiewicz', @first_name='Marcelina', @last_name='Pielech', @email='fbroszkiewicz@patalas-rajczak.pl', @phone='694923031', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2013-01-07', @employee_id=NULL
+      EXEC CreateEmployee @username='dagmara76', @first_name='Kajetan', @last_name='Sztuczka', @email='dagmara76@fundacja.pl', @phone='680030947', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2018-11-23', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='cmatura', @first_name='Daniel', @last_name='Stanaszek', @email='cmatura@mikusek.pl', @phone='117572827', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2023-06-09', @employee_id=NULL
+      EXEC CreateEmployee @username='lromaniak', @first_name='Leonard', @last_name='Chadaj', @email='lromaniak@burnat-budzen.pl', @phone='344476154', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2017-08-05', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='leon88', @first_name='Natan', @last_name='Łukowicz', @email='leon88@ppuh.com', @phone='381612331', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2017-06-16', @employee_id=NULL
+      EXEC CreateEmployee @username='cyprian90', @first_name='Kalina', @last_name='Długozima', @email='cyprian90@koronkiewicz.pl', @phone='813008105', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2016-02-06', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='fedykigor', @first_name='Dariusz', @last_name='Plizga', @email='fedykigor@stowarzyszenie.net', @phone='550432546', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2021-07-20', @employee_id=NULL
+      EXEC CreateEmployee @username='nstawczyk', @first_name='Jakub', @last_name='Pazdan', @email='nstawczyk@spoldzielnia.org', @phone='237945546', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2011-04-16', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='leoneckert', @first_name='Lidia', @last_name='Ochab', @email='leoneckert@rohde-jewula.com', @phone='885054707', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2023-11-29', @employee_id=NULL
+      EXEC CreateEmployee @username='madziajulita', @first_name='Julian', @last_name='Indyk', @email='madziajulita@wawrzynek.com', @phone='671145653', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2010-08-17', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='erykwylupek', @first_name='Krystyna', @last_name='Fornalik', @email='erykwylupek@fpuh.com', @phone='362809746', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2016-05-13', @employee_id=NULL
+      EXEC CreateEmployee @username='skupdariusz', @first_name='Mikołaj', @last_name='Hnat', @email='skupdariusz@gabinety.com', @phone='757860558', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2009-03-06', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='klorekbruno', @first_name='Radosław', @last_name='Mizgała', @email='klorekbruno@fpuh.com', @phone='512889963', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2010-10-03', @employee_id=NULL
+      EXEC CreateEmployee @username='jacek22', @first_name='Igor', @last_name='Przewoźny', @email='jacek22@stowarzyszenie.org', @phone='515177112', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2021-12-21', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='misiaszekoliwier', @first_name='Kornelia', @last_name='Krzywoń', @email='misiaszekoliwier@kuznia.com', @phone='393045566', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2015-06-21', @employee_id=NULL
+      EXEC CreateEmployee @username='julita78', @first_name='Nicole', @last_name='Beśka', @email='julita78@grupa.pl', @phone='338579884', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2015-08-17', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='berusolaf', @first_name='Krystyna', @last_name='Dawiec', @email='berusolaf@fpuh.com', @phone='847350749', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2015-04-20', @employee_id=NULL
+      EXEC CreateEmployee @username='wendamikolaj', @first_name='Sonia', @last_name='Sąsiadek', @email='wendamikolaj@fundacja.net', @phone='904348166', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2015-02-13', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='agnieszka54', @first_name='Wojciech', @last_name='Ciaś', @email='agnieszka54@fundacja.org', @phone='325703563', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2017-05-25', @employee_id=NULL
+      EXEC CreateEmployee @username='agnieszka90', @first_name='Gaja', @last_name='Wałęsa', @email='agnieszka90@baka-skubis.org', @phone='637475122', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2020-11-05', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='maksymilian08', @first_name='Antoni', @last_name='Hajdas', @email='maksymilian08@ppuh.com', @phone='568135565', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2017-12-08', @employee_id=NULL
+      EXEC CreateEmployee @username='sszylar', @first_name='Roksana', @last_name='Musiolik', @email='sszylar@niksa.com', @phone='583939345', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2016-04-17', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='nkaczan', @first_name='Justyna', @last_name='Bobrowicz', @email='nkaczan@kempka.pl', @phone='508554771', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2017-02-18', @employee_id=NULL
+      EXEC CreateEmployee @username='bpara', @first_name='Stefan', @last_name='Idzi', @email='bpara@fpuh.pl', @phone='213931215', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2014-05-14', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='kobeltymoteusz', @first_name='Marcelina', @last_name='Burzec', @email='kobeltymoteusz@spoldzielnia.net', @phone='460996111', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2022-10-10', @employee_id=NULL
+      EXEC CreateEmployee @username='gaja80', @first_name='Dominik', @last_name='Dawiec', @email='gaja80@kluczyk-buksa.org', @phone='743363374', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2009-05-14', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='nicolesosnowka', @first_name='Nataniel', @last_name='Piskor', @email='nicolesosnowka@kohnke.pl', @phone='554963931', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2017-10-26', @employee_id=NULL
+      EXEC CreateEmployee @username='dwelenc', @first_name='Kornelia', @last_name='Wenda', @email='dwelenc@betlej.pl', @phone='133012517', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2012-11-17', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='arkadiusz12', @first_name='Roksana', @last_name='Mazanek', @email='arkadiusz12@spoldzielnia.pl', @phone='755452050', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2011-03-27', @employee_id=NULL
+      EXEC CreateEmployee @username='alinka', @first_name='Błażej', @last_name='Wiszowata', @email='alinka@hanus.pl', @phone='306030634', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2018-12-12', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='elizawietecha', @first_name='Adrian', @last_name='Samiec', @email='elizawietecha@kaczan-piersa.com', @phone='750894094', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2017-06-16', @employee_id=NULL
+      EXEC CreateEmployee @username='adamkubina', @first_name='Olaf', @last_name='Hołysz', @email='adamkubina@nesterowicz-leoniuk.com', @phone='630627984', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2011-11-08', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='jozeftekiela', @first_name='Leon', @last_name='Prochownik', @email='jozeftekiela@faruga-kajdas.pl', @phone='100252205', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2024-08-28', @employee_id=NULL
+      EXEC CreateEmployee @username='tsiemieniec', @first_name='Grzegorz', @last_name='Mućko', @email='tsiemieniec@fpuh.net', @phone='358124359', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2011-07-16', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='juliuszkawula', @first_name='Tymon', @last_name='Gamoń', @email='juliuszkawula@gabinety.com', @phone='323941171', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2009-12-06', @employee_id=NULL
+      EXEC CreateEmployee @username='odyka', @first_name='Apolonia', @last_name='Pyzel', @email='odyka@spoldzielnia.pl', @phone='591989212', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2010-07-13', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='krystynasierpien', @first_name='Konstanty', @last_name='Smolorz', @email='krystynasierpien@wojtera-sadoch.net', @phone='154702251', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2017-11-06', @employee_id=NULL
+      EXEC CreateEmployee @username='fpazdziora', @first_name='Piotr', @last_name='Fedyk', @email='fpazdziora@mikolajewicz-halka.net', @phone='122584230', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2018-11-22', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='siegklara', @first_name='Kamila', @last_name='Podsiedlik', @email='siegklara@borak.org', @phone='421235945', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2013-08-08', @employee_id=NULL
+      EXEC CreateEmployee @username='konradjarema', @first_name='Tymon', @last_name='Labus', @email='konradjarema@ppuh.com', @phone='447144897', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2021-05-27', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='mlarysz', @first_name='Igor', @last_name='Mainka', @email='mlarysz@fpuh.com', @phone='273440697', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2012-11-23', @employee_id=NULL
+      EXEC CreateEmployee @username='inga06', @first_name='Nikodem', @last_name='Maślankiewicz', @email='inga06@grupa.pl', @phone='676810309', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2008-05-28', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='djezyk', @first_name='Grzegorz', @last_name='Jakóbik', @email='djezyk@stowarzyszenie.com', @phone='458686039', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2015-11-26', @employee_id=NULL
+      EXEC CreateEmployee @username='markielgrzegorz', @first_name='Aleksander', @last_name='Jonik', @email='markielgrzegorz@spoldzielnia.pl', @phone='119940417', @employee_type_id=3, @birth_date='1990-01-01', @hire_date='2008-03-16', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='artur07', @first_name='Róża', @last_name='Roda', @email='artur07@gabinety.org', @phone='684660363', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2020-08-19', @employee_id=NULL
+      EXEC CreateEmployee @username='cyprian34', @first_name='Sebastian', @last_name='Zdonek', @email='cyprian34@smolorz-budrewicz.net', @phone='944440302', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2010-03-07', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='nkurcz', @first_name='Julita', @last_name='Tuzimek', @email='nkurcz@stowarzyszenie.net', @phone='416656920', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2008-06-04', @employee_id=NULL
+      EXEC CreateEmployee @username='bulandakarina', @first_name='Anita', @last_name='Krężołek', @email='bulandakarina@ppuh.com', @phone='657859317', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2010-12-07', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='grzegorz62', @first_name='Sandra', @last_name='Gosik', @email='grzegorz62@nestorowicz.org', @phone='751182443', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2023-11-30', @employee_id=NULL
+      EXEC CreateEmployee @username='akuncewicz', @first_name='Alan', @last_name='Stasica', @email='akuncewicz@ppuh.net', @phone='585956266', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2013-04-07', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='olgajeka', @first_name='Eliza', @last_name='Klimko', @email='olgajeka@fpuh.com', @phone='455905209', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2016-12-21', @employee_id=NULL
+      EXEC CreateEmployee @username='julianborzym', @first_name='Paweł', @last_name='Macioł', @email='julianborzym@ppuh.org', @phone='747185641', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2011-08-12', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='justynamesjasz', @first_name='Melania', @last_name='Szarzec', @email='justynamesjasz@grupa.com', @phone='621661545', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2020-01-01', @employee_id=NULL
+      EXEC CreateEmployee @username='janhelman', @first_name='Grzegorz', @last_name='Franaszek', @email='janhelman@grupa.org', @phone='671132904', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2024-06-06', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='adriannakarnas', @first_name='Tadeusz', @last_name='Stempin', @email='adriannakarnas@flisek.net', @phone='882186201', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2018-03-22', @employee_id=NULL
+      EXEC CreateEmployee @username='bartek20', @first_name='Tomasz', @last_name='Snoch', @email='bartek20@spoldzielnia.org', @phone='676427240', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2011-06-18', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='anielaciolczyk', @first_name='Olaf', @last_name='Drożdżal', @email='anielaciolczyk@liss.com', @phone='224007865', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2010-12-15', @employee_id=NULL
+      EXEC CreateEmployee @username='jakubbuk', @first_name='Ryszard', @last_name='Klama', @email='jakubbuk@ppuh.com', @phone='434256505', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2017-07-25', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='uszkup', @first_name='Iwo', @last_name='Wojciech', @email='uszkup@mosur.pl', @phone='816962212', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2016-01-13', @employee_id=NULL
+      EXEC CreateEmployee @username='stanislawlemke', @first_name='Jędrzej', @last_name='Wakuła', @email='stanislawlemke@gabinety.pl', @phone='619655977', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2014-05-31', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='uklisz', @first_name='Julian', @last_name='Kiełbik', @email='uklisz@maraszek-przystupa.pl', @phone='988528667', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2012-08-26', @employee_id=NULL
+      EXEC CreateEmployee @username='milcarzkamila', @first_name='Marcin', @last_name='Gorol', @email='milcarzkamila@gabinety.org', @phone='718393355', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2008-11-21', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='kowalowkakornel', @first_name='Kornel', @last_name='Marciniszyn', @email='kowalowkakornel@spoldzielnia.com', @phone='347963279', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2017-02-07', @employee_id=NULL
+      EXEC CreateEmployee @username='matraszekada', @first_name='Sandra', @last_name='Dylong', @email='matraszekada@komisarek.pl', @phone='902419874', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2009-02-01', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='konstantymilczarczyk', @first_name='Ada', @last_name='Kazimierczyk', @email='konstantymilczarczyk@grupa.com', @phone='719697718', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2024-04-29', @employee_id=NULL
+      EXEC CreateEmployee @username='istosio', @first_name='Rozalia', @last_name='Smolec', @email='istosio@stowarzyszenie.pl', @phone='392962610', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2020-11-16', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='umyszak', @first_name='Wojciech', @last_name='Szymańczyk', @email='umyszak@mikoda-lapot.org', @phone='193018115', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2011-10-12', @employee_id=NULL
+      EXEC CreateEmployee @username='aniolaolgierd', @first_name='Łukasz', @last_name='Szajek', @email='aniolaolgierd@znojek.org', @phone='858534454', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2017-04-11', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='qkuziora', @first_name='Rozalia', @last_name='Mizgała', @email='qkuziora@ppuh.pl', @phone='976548399', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2023-05-17', @employee_id=NULL
+      EXEC CreateEmployee @username='marianna15', @first_name='Filip', @last_name='Hejduk', @email='marianna15@posluszny.com', @phone='872678197', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2017-03-11', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='ijuszczuk', @first_name='Dagmara', @last_name='Jereczek', @email='ijuszczuk@spoldzielnia.pl', @phone='242656337', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2020-01-11', @employee_id=NULL
+      EXEC CreateEmployee @username='swiadekmonika', @first_name='Bruno', @last_name='Hermanowicz', @email='swiadekmonika@fpuh.pl', @phone='343271392', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2010-05-29', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='ckubieniec', @first_name='Róża', @last_name='Mateńko', @email='ckubieniec@ppuh.com', @phone='500445063', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2015-04-26', @employee_id=NULL
+      EXEC CreateEmployee @username='adamheinrich', @first_name='Antoni', @last_name='Andrzejuk', @email='adamheinrich@gabinety.pl', @phone='454950883', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2020-06-19', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='urszula07', @first_name='Mieszko', @last_name='Łaciak', @email='urszula07@krakowczyk-portka.org', @phone='790266999', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2022-11-13', @employee_id=NULL
+      EXEC CreateEmployee @username='gabrielklosek', @first_name='Mikołaj', @last_name='Łój', @email='gabrielklosek@ppuh.pl', @phone='532382595', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2012-07-29', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='tymoteuszpuch', @first_name='Blanka', @last_name='Franków', @email='tymoteuszpuch@spoldzielnia.pl', @phone='185592639', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2010-05-08', @employee_id=NULL
+      EXEC CreateEmployee @username='burdachroza', @first_name='Urszula', @last_name='Pinda', @email='burdachroza@kozaczuk.org', @phone='983181284', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2016-08-16', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='pulanowicz', @first_name='Sandra', @last_name='Rejmak', @email='pulanowicz@ppuh.com', @phone='623310101', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2022-11-02', @employee_id=NULL
+      EXEC CreateEmployee @username='majosjan', @first_name='Kalina', @last_name='Twardy', @email='majosjan@dabrowicz-ludzik.net', @phone='553877707', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2015-12-25', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='blankabulczak', @first_name='Oskar', @last_name='Ulrych', @email='blankabulczak@fundacja.org', @phone='622528758', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2013-09-20', @employee_id=NULL
+      EXEC CreateEmployee @username='bartekkoniecko', @first_name='Ignacy', @last_name='Gronostaj', @email='bartekkoniecko@malyszek-kesek.net', @phone='793005216', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2008-05-21', @employee_id=NULL
       
 
-      EXEC CreateEmployee @username='krystian75', @first_name='Mieszko', @last_name='Kraszkiewicz', @email='krystian75@swies.pl', @phone='420771084', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2008-04-13', @employee_id=NULL
+      EXEC CreateEmployee @username='ssaternus', @first_name='Melania', @last_name='Klaus', @email='ssaternus@fpuh.com', @phone='493184980', @employee_type_id=4, @birth_date='1990-01-01', @hire_date='2014-09-17', @employee_id=NULL
       
 
       IF @@ERROR <> 0
