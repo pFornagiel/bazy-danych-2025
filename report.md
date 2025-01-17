@@ -13,7 +13,7 @@
 
 <!-- TOC -->
 
-- [1. Wymagania i funkcje systemu](#1-wymagania-i-funkcje-systemu)
+- [Opis Struktury Systemu](#opis-struktury-systemu)
 - [Opis Funkcjonalności Systemu](#opis-funkcjonalności-systemu)
   - [Funkcje Systemu](#funkcje-systemu)
   - [Użytkownicy](#użytkownicy)
@@ -158,8 +158,6 @@
     - [MarkProductAsPassed](#markproductaspassed)
   - [MEETINGS](#meetings-1)
     - [FillMeetingDetails](#fillmeetingdetails)
-- [Wyzwalacze (Triggers)](#wyzwalacze-triggers)
-  - [trg_AddMeetingDetails](#trg_addmeetingdetails)
 - [Funkcje](#funkcje)
   - [Kategoria zamówienia i produkty](#kategoria-zamówienia-i-produkty-1)
     - [Wyliczenie wartości koszyka](#wyliczenie-wartości-koszyka)
@@ -209,23 +207,29 @@
   - [Dyrektor](#dyrektor-1)
   - [Dziekanat](#dziekanat-1)
   - [Tłumacz](#tłumacz-1)
-- [Weryfikacja integralności bazy danych](#weryfikacja-integralności-bazy-danych)
-  - [can_product_be_in_shopping_cart](#can_product_be_in_shopping_cart)
-  - [LimitVacanciesOnInsert](#limitvacanciesoninsert)
-  - [UniqueTranslatorPerMeeting](#uniquetranslatorpermeeting)
-  - [PreventPastMeetingAttendance](#preventpastmeetingattendance)
-  - [CheckRoomAvailability](#checkroomavailability)
-  - [module_meetings_no_intersection](#module_meetings_no_intersection)
+- [Wyzwalacze (Triggers)](#wyzwalacze-triggers)
+  - [Weryfikacja integralności bazy danych](#weryfikacja-integralności-bazy-danych)
+    - [trg_CanProductBeInShoppingCart](#trg_canproductbeinshoppingcart)
+    - [trg_LimitVacanciesOnInsert](#trg_limitvacanciesoninsert)
+    - [trg_UniqueTranslatorPerMeeting](#trg_uniquetranslatorpermeeting)
+    - [trg_PreventPastMeetingAttendance](#trg_preventpastmeetingattendance)
+    - [trg_CheckRoomAvailability](#trg_checkroomavailability)
+    - [trg_ModuleMeetingsNoIntersection](#trg_modulemeetingsnointersection)
+  - [Automatyczne tworzenie wpisów po zdarzeniu](#automatyczne-tworzenie-wpisów-po-zdarzeniu)
+    - [trg_AddMeetingDetails](#trg_addmeetingdetails)
+    - [trg_OrdersAddProductDetails](#trg_ordersaddproductdetails)
 
 <!-- /TOC -->
 
-### Założenia dotyczące projektu:
+### Opis struktury systemu
 
-- W zakres studiów wchodzą pojedyńcze przedmioty (studium), które mają przypisane spotkania
+System bazodanowy składa się z tabel, których głównym celem jest przechowywanie danych dotyczących użytkowników, produktów, zamówień, płatności, webinarów, kursów, studiów oraz powiązanych spotkań.
+
+Dane wszystkich użytkowników znajdują się w tabeli `USERS`, podział na pracowników i studentów realizowany jest poprzez tabele `STUDENTS` oraz `EMPLOYEES`. Dla każdego studenta przechowywane są informacje o jakie adresie zamieszkania i kraju pochodzenia, będącego jednym z państw zdefiniowanych w słownikowej tabeli `COUNTRIES`. Każdy pracownik ma przypisany jeden z typów pracownika zdefiniowanych w tabeli `EMPLOYEE_TYPES`. Obsługiwane są następujące typy pracowników:
+
+ Każda kategoria zawiera tabele przechowujące szczegółowe informacje na temat poszczególnych elementów systemu, takie jak dane użytkowników, szczegóły produktów, informacje o zamówieniach, opłatach, spotkaniach oraz praktykach. System wspiera różne role użytkowników, takie jak studenci, prowadzący zajęcia, administratorzy zasobów, dyrektorzy, pracownicy dziekanatu oraz tłumacze, z odpowiednimi uprawnieniami do zarządzania danymi. Dodatkowo, system zawiera procedury składowane, funkcje oraz wyzwalacze, które zapewniają integralność danych oraz automatyzują różne operacje w bazie danych.
 
 ---
-
-# 1. Wymagania i funkcje systemu
 
 # Opis Funkcjonalności Systemu
 
@@ -4802,81 +4806,7 @@ END;
 GO
 ```
 
-# Wyzwalacze (Triggers)
 
-### trg_AddMeetingDetails
-
-Trigger `trg_AddMeetingDetails` automatycznie dodaje wpisy do tabeli MEETING_DETAILS gdy student zostaje przypisany do produktu w PRODUCTS_DETAILS.
-
-Tabela wyzwalająca:
-
-- PRODUCTS_DETAILS
-
-Moment aktywacji:
-
-- AFTER INSERT
-
-```sql
-CREATE TRIGGER trg_AddMeetingDetails
-ON PRODUCTS_DETAILS
-AFTER INSERT
-AS
-BEGIN
-  SET NOCOUNT ON;
-
-  DECLARE @student_id INT;
-  DECLARE @product_id INT;
-  DECLARE @type_id INT;
-
-  -- Get the inserted student_id and product_id
-  SELECT @student_id = inserted.student_id, @product_id = inserted.product_id
-  FROM inserted;
-
-  -- Get the type_id of the product
-  SELECT @type_id = type_id FROM PRODUCTS WHERE product_id = @product_id;
-
-  -- Return early if type_id does not match study, subject, course, or session
-  IF @type_id NOT IN (1, 2, 3, 5)
-  BEGIN
-    RETURN;
-  END
-
-  -- Add meeting details based on product type
-  IF @type_id = 1 -- study
-  BEGIN
-    INSERT INTO MEETING_DETAILS (meeting_id, student_id)
-    SELECT meeting_id, @student_id
-    FROM MEETINGS
-    JOIN SESSIONS ON MEETINGS.session_id = SESSIONS.session_id
-    JOIN SUBJECTS ON SESSIONS.subject_id = SUBJECTS.subject_id
-    WHERE SUBJECTS.study_id = @product_id;
-  END
-  ELSE IF @type_id = 2 -- subject
-  BEGIN
-    INSERT INTO MEETING_DETAILS (meeting_id, student_id)
-    SELECT meeting_id, @student_id
-    FROM MEETINGS
-    JOIN SESSIONS ON MEETINGS.session_id = SESSIONS.session_id
-    WHERE SESSIONS.subject_id = @product_id;
-  END
-  ELSE IF @type_id = 3 -- course
-  BEGIN
-    INSERT INTO MEETING_DETAILS (meeting_id, student_id)
-    SELECT meeting_id, @student_id
-    FROM MEETINGS
-    JOIN MODULES ON MEETINGS.module_id = MODULES.module_id
-    WHERE MODULES.course_id = @product_id;
-  END
-  ELSE IF @type_id = 5 -- session
-  BEGIN
-    INSERT INTO MEETING_DETAILS (meeting_id, student_id)
-    SELECT meeting_id, @student_id
-    FROM MEETINGS
-    WHERE session_id = @product_id;
-  END
-END;
-GO
-```
 
 # Funkcje
 
@@ -5537,14 +5467,22 @@ grant select on course_information to translator;
 grant select on study_information to translator
 ```
 
-# Weryfikacja integralności bazy danych
+# Wyzwalacze (Triggers)
 
-## can_product_be_in_shopping_cart
+## Weryfikacja integralności bazy danych
 
-Wyzwalacz `can_product_be_in_shopping_cart` po dodaniu produktu do koszyka sprawdza, czy użytkownik mógł to zrobić. Jeśli nie, cofa transakcje
+### trg_CanProductBeInShoppingCart
+
+Wyzwalacz `trg_CanProductBeInShoppingCart` po dodaniu produktu do koszyka sprawdza, czy użytkownik mógł to zrobić. Jeśli nie, cofa transakcje
+
+Tabela wyzwalająca:
+- SHOPPING_CART
+
+Moment aktywacji:
+- AFTER INSERT, UPDATE
 
 ```sql
-CREATE TRIGGER can_product_be_in_shopping_cart
+CREATE TRIGGER trg_CanProductBeInShoppingCart
     ON shopping_cart
     AFTER INSERT, UPDATE
     AS BEGIN
@@ -5560,12 +5498,18 @@ CREATE TRIGGER can_product_be_in_shopping_cart
 END
 ```
 
-## LimitVacanciesOnInsert
+### trg_LimitVacanciesOnInsert
 
-Wyzwalacz `LimitVacanciesOnInsert` zapobiega zapisaniu więcej studentów na kurs, niż wynosi dostępna liczba miejsc (vacancies).
+Wyzwalacz `trg_LimitVacanciesOnInsert` zapobiega zapisaniu więcej studentów na kurs, niż wynosi dostępna liczba miejsc (`vacancies`).
+
+Tabela wyzwalająca:
+- PRODUCT_DETAILS
+
+Moment aktywacji:
+- AFTER INSERT
 
 ```sql
-CREATE TRIGGER LimitVacanciesOnInsert
+CREATE TRIGGER trg_LimitVacanciesOnInsert
 ON PRODUCT_DETAILS
 AFTER INSERT
 AS
@@ -5598,12 +5542,18 @@ BEGIN
 END;
 ```
 
-## UniqueTranslatorPerMeeting
+### trg_UniqueTranslatorPerMeeting
 
-Wyzwalacz `UniqueTranslatorPerMeeting` zapobiega przypisaniu tego samego tłumacza do więcej niż jednego spotkania w tym samym terminie.
+Wyzwalacz `trg_UniqueTranslatorPerMeeting` zapobiega przypisaniu tego samego tłumacza do więcej niż jednego spotkania w tym samym terminie.
+
+Tabela wyzwalająca:
+- MEETINGS
+
+Moment aktywacji:
+- AFTER INSERT, UPDATE
 
 ```sql
-CREATE TRIGGER UniqueTranslatorPerMeeting
+CREATE TRIGGER trg_UniqueTranslatorPerMeeting
 ON MEETINGS
 AFTER INSERT, UPDATE
 AS
@@ -5628,12 +5578,18 @@ BEGIN
 END;
 ```
 
-## PreventPastMeetingAttendance
+### trg_PreventPastMeetingAttendance
 
-Wyzwalacz PreventPastMeetingAttendance zapewnia, że nie można zarejestrować obecności na spotkaniach, które już się odbyły.
+Wyzwalacz `trg_PreventPastMeetingAttendance` zapewnia, że nie można zarejestrować obecności na spotkaniach, które już się odbyły.
+
+Tabela wyzwalająca:
+- MEETING_DETAILS
+
+Moment aktywacji:
+- INSTEAD OF INSERT
 
 ```sql
-CREATE TRIGGER PreventPastMeetingAttendance
+CREATE TRIGGER trg_PreventPastMeetingAttendance
 ON MEETING_DETAILS
 INSTEAD OF INSERT
 AS
@@ -5664,12 +5620,18 @@ BEGIN
 END;
 ```
 
-## CheckRoomAvailability
+### trg_CheckRoomAvailability
 
-Wyzwalacz `CheckRoomAvailability` zapewnia, że jedna sala nie może być przypisana do więcej niż jednego spotkania w tym samym czasie.
+Wyzwalacz `trg_CheckRoomAvailability` zapewnia, że jedna sala nie może być przypisana do więcej niż jednego spotkania w tym samym czasie.
+
+Tabela wyzwalająca:
+- STATIONARY_MEETINGS
+
+Moment aktywacji:
+- AFTER INSERT, UPDATE
 
 ```sql
-CREATE TRIGGER CheckRoomAvailability
+CREATE TRIGGER trg_CheckRoomAvailability
 ON STATIONARY_MEETINGS
 AFTER INSERT, UPDATE
 AS
@@ -5711,12 +5673,18 @@ END;
 GO
 ```
 
-## module_meetings_no_intersection
+### trg_ModuleMeetingsNoIntersection
 
-Wyzwalacz `module_meetings_no_intersection` sprawdza, czy meetingi w nowo dodanym module nie nachodzą na siebie.
+Wyzwalacz `trg_ModuleMeetingsNoIntersection` sprawdza, czy spotkania w nowo dodanym module nie nachodzą na siebie.
+
+Tabela wyzwalająca:
+- MEETINGS
+
+Moment aktywacji:
+- AFTER INSERT, UPDATE
 
 ```sql
-CREATE TRIGGER module_meetings_no_intersection
+CREATE TRIGGER trg_ModuleMeetingsNoIntersection
 ON MEETINGS
 AFTER INSERT, UPDATE
 AS
@@ -5755,4 +5723,114 @@ BEGIN
     ROLLBACK TRANSACTION;
   END
 END;
+```
+## Automatyczne tworzenie wpisów po zdarzeniu
+
+### trg_AddMeetingDetails
+
+Wyzwalacz `trg_AddMeetingDetails` automatycznie dodaje wpisy do tabeli `MEETING_DETAILS` gdy student zostaje przypisany do produktu w PRODUCTS_DETAILS.
+
+Tabela wyzwalająca:
+
+- PRODUCTS_DETAILS
+
+Moment aktywacji:
+
+- AFTER INSERT
+
+```sql
+-- Trigger to add MEETING_DETAILS rows when a student is added to PRODUCTS_DETAILS
+CREATE TRIGGER trg_AddMeetingDetails
+ON PRODUCTS_DETAILS
+AFTER INSERT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  DECLARE @student_id INT;
+  DECLARE @product_id INT;
+  DECLARE @type_id INT;
+
+  -- Get the inserted student_id and product_id
+  SELECT @student_id = inserted.student_id, @product_id = inserted.product_id
+  FROM inserted;
+
+  -- Get the type_id of the product
+  SELECT @type_id = type_id FROM PRODUCTS WHERE product_id = @product_id;
+
+  -- Return early if type_id does not match study, subject, course, or session
+  IF @type_id NOT IN (1, 2, 3, 5)
+  BEGIN
+    RETURN;
+  END
+
+  -- Add meeting details based on product type
+  IF @type_id = 1 -- study
+  BEGIN
+    INSERT INTO MEETING_DETAILS (meeting_id, student_id)
+    SELECT meeting_id, @student_id
+    FROM MEETINGS
+    JOIN SESSIONS ON MEETINGS.session_id = SESSIONS.session_id
+    JOIN SUBJECTS ON SESSIONS.subject_id = SUBJECTS.subject_id
+    WHERE SUBJECTS.study_id = @product_id;
+  END
+  ELSE IF @type_id = 2 -- subject
+  BEGIN
+    INSERT INTO MEETING_DETAILS (meeting_id, student_id)
+    SELECT meeting_id, @student_id
+    FROM MEETINGS
+    JOIN SESSIONS ON MEETINGS.session_id = SESSIONS.session_id
+    WHERE SESSIONS.subject_id = @product_id;
+  END
+  ELSE IF @type_id = 3 -- course
+  BEGIN
+    INSERT INTO MEETING_DETAILS (meeting_id, student_id)
+    SELECT meeting_id, @student_id
+    FROM MEETINGS
+    JOIN MODULES ON MEETINGS.module_id = MODULES.module_id
+    WHERE MODULES.course_id = @product_id;
+  END
+  ELSE IF @type_id = 5 -- session
+  BEGIN
+    INSERT INTO MEETING_DETAILS (meeting_id, student_id)
+    SELECT meeting_id, @student_id
+    FROM MEETINGS
+    WHERE session_id = @product_id;
+  END
+END;
+GO
+```
+
+### trg_OrdersAddProductDetails
+
+Wyzwalacz `trg_OrdersAddProductDetails` automatycznie dodaje szczegóły produktów do tabeli `PRODUCT_DETAILS` po utworzeniu nowego zamówienia.
+
+Tabela wyzwalająca:
+
+- ORDERS
+
+Moment aktywacji:
+
+- AFTER INSERT
+
+```sql
+CREATE TRIGGER trg_OrdersAddProductDetails
+ON ORDERS
+AFTER INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Get all products from cart for the student who just created an order
+    INSERT INTO PRODUCT_DETAILS (student_id, product_id, order_id, passed)
+    SELECT 
+        inserted.student_id,
+        SHOPPING_CART.product_id,
+        inserted.order_id,
+        0
+    FROM inserted
+    JOIN SHOPPING_CART ON SHOPPING_CART.student_id = inserted.student_id;
+END;
+GO
+
 ```
