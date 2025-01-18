@@ -561,12 +561,18 @@ BEGIN
     -- Validate product exists
     EXEC [dbo].[CheckProductExists] @product_id;
 
+    -- Check if student already owns the product
+    IF (dbo.CanAddToCart(@student_id, @product_id) = 0)
+    BEGIN
+      THROW 50001, 'Student już posiada ten produkt w koszyku.', 1;
+    END
+    
     -- Add product to cart
     INSERT INTO SHOPPING_CART (student_id, product_id)
     VALUES (@student_id, @product_id);
 
     COMMIT TRANSACTION;
-    PRINT 'Produkt dodany do koszyka pomyślnie.';
+    PRINT 'Pomyślnie dodano produkt do koszyka.';
   END TRY
   BEGIN CATCH
     IF @@TRANCOUNT > 0
