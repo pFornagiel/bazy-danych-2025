@@ -1,6 +1,6 @@
 from faker import Faker
 from models import Course, Module, SyncMeeting, AsyncMeeting, StationaryMeeting, Meeting
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 import random
 
 class CourseDataGenerator:
@@ -45,14 +45,15 @@ class CourseDataGenerator:
       module: Module = self.generated_data['modules'][module_id-1]
       min_course_id = min([module.course_id for module in self.generated_data['modules']])
       course: Course = self.generated_data['courses'][module.course_id-min_course_id-1]
-      date = course.release
+      date = datetime.combine(course.release, time=time(hour=8))
+      date = self.fake.date_time_between_dates(datetime_start=date, datetime_end=date + timedelta(hours=12))
       
       return Meeting(
           module_id=module_id,
           tutor_id=tutor_id,
-          term=self.fake.date_time_between(start_date=date, end_date='+1y'),
+          term=self.fake.date_time_between(start_date=date, end_date='+3m').strftime("%Y-%m-%d %H:%M:%S"),
           meeting_name=self.fake.sentence(nb_words=3),  # Added meeting_name generation
-          duration=self.fake.time_object(end_datetime=None),
+          duration=str(timedelta(hours=random.randint(1, 4))),
           translator_id=translator_id,
           language_id=1 # Changed to language_id to match Meeting class
       )

@@ -60,9 +60,10 @@ class UserDataGenerator:
     return self.generated_data['users']
   
   def generate_students(self, num_students):
-    country_id = [d for d in COUNTRIES if d.get('country') == self.country][0]["id"]
-
     for _ in range(num_students):
+      probability = random.uniform(0,1.)
+      country_id = 1
+      if(probability > 0.9): country_id  =  [d for d in COUNTRIES][random.randint(0,len(COUNTRIES)-1)]["id"]
       self.generated_data['students'].append(
         Student(
           **self._generate_basic_user_data().__dict__,

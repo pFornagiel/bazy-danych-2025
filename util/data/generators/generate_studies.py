@@ -1,6 +1,6 @@
 from faker import Faker
 from models import Study, Subject, Session, Internship, InternshipDetails, Meeting, SyncMeeting, AsyncMeeting, StationaryMeeting
-from datetime import timedelta
+from datetime import timedelta, datetime, time
 import random
 from .const import LANGAUGES
 
@@ -97,16 +97,16 @@ class StudyDataGenerator:
         return self.generated_data['internship_details']
 
     def _generate_meeting_data(self, tutor_id, session_id, translator_id=None):
-        session: Session = [session for i,session in enumerate(self.generated_data['sessions']) if len(self.generated_data['subjects']) + len(self.generated_data['studies']) + i+1 == session_id][0]
-        date = session.release
+        session: Session = [session for i, session in enumerate(self.generated_data['sessions']) if len(self.generated_data['subjects']) + len(self.generated_data['studies']) + i + 1 == session_id][0]
+        date = datetime.combine(session.release, time=time(hour=8))
+        date = self.fake.date_time_between_dates(datetime_start=date, datetime_end=date + timedelta(hours=12))
         return Meeting(
             session_id=session_id,
             tutor_id=tutor_id,
-            term=self.fake.date_time_between(start_date=date, end_date='+1d'),
-            meeting_name=self.fake.sentence(nb_words=3),  # Added meeting_name generation
-            duration=self.fake.time_object(end_datetime=None),
+            term=self.fake.date_time_between(start_date=date, end_date='+6m').strftime("%Y-%m-%d %H:%M:%S"),
+            duration=str(timedelta(hours=random.randint(1, 4))),
             translator_id=translator_id,
-            language_id=random.randint(1,len(LANGAUGES))# Changed to language_id to match Meeting class
+            language_id=random.randint(1, len(LANGAUGES))
         )
 
     def generate_meetings(self, num_meetings, tutor_id, translator_id=None):
