@@ -30,17 +30,17 @@
     - [Tabela USERS](#tabela-users)
     - [Tabela STUDENTS](#tabela-students)
     - [Tabela EMPLOYEES](#tabela-employees)
-    - [Tabela EMPLOYEES\_TYPES](#tabela-employees_types)
+    - [Tabela EMPLOYEES_TYPES](#tabela-employees_types)
     - [Tabela COUNTRIES](#tabela-countries)
   - [Kategoria Products](#kategoria-products)
     - [Tabela Products](#tabela-products)
-    - [Tabela PRODUCT\_DETAILS](#tabela-product_details)
-    - [Tabela PRODUCT\_TYPES](#tabela-product_types)
-    - [Tabela SHOPPING\_CART](#tabela-shopping_cart)
+    - [Tabela PRODUCT_DETAILS](#tabela-product_details)
+    - [Tabela PRODUCT_TYPES](#tabela-product_types)
+    - [Tabela SHOPPING_CART](#tabela-shopping_cart)
   - [Kategoria Orders](#kategoria-orders)
     - [Tabela ORDERS](#tabela-orders)
     - [Tabela FEES](#tabela-fees)
-    - [Tabela FEE\_TYPES](#tabela-fee_types)
+    - [Tabela FEE_TYPES](#tabela-fee_types)
   - [Kategoria Webinars](#kategoria-webinars)
     - [Tabela Webinars](#tabela-webinars)
   - [Kategoria COURSES](#kategoria-courses)
@@ -51,56 +51,56 @@
     - [Tabela SUBJECTS](#tabela-subjects)
   - [Tabela SESSIONS](#tabela-sessions)
     - [Tabela INTERSHIPS](#tabela-interships)
-    - [Tabela INTERSHIP\_DETAILS](#tabela-intership_details)
+    - [Tabela INTERSHIP_DETAILS](#tabela-intership_details)
   - [Kategoria MEETINGS](#kategoria-meetings)
     - [Tabela MEETINGS](#tabela-meetings)
-    - [Tabela MEETING\_DETAILS](#tabela-meeting_details)
-    - [Tabela ASYNC\_MEETINGS](#tabela-async_meetings)
-    - [Tabela SYNC\_MEETINGS](#tabela-sync_meetings)
-    - [Tabela STATIONARY\_MEETINGS](#tabela-stationary_meetings)
+    - [Tabela MEETING_DETAILS](#tabela-meeting_details)
+    - [Tabela ASYNC_MEETINGS](#tabela-async_meetings)
+    - [Tabela SYNC_MEETINGS](#tabela-sync_meetings)
+    - [Tabela STATIONARY_MEETINGS](#tabela-stationary_meetings)
   - [Kategoria LANGUAGES](#kategoria-languages)
     - [Tabela LANGUAGES](#tabela-languages)
 - [Dokumentacja kluczy obcych](#dokumentacja-kluczy-obcych)
 - [Widoki](#widoki)
   - [Users](#users)
-    - [Student\_address](#student_address)
-    - [Emploee\_list](#emploee_list)
-    - [User\_information](#user_information)
-    - [Regular\_customers](#regular_customers)
+    - [Student_address](#student_address)
+    - [Emploee_list](#emploee_list)
+    - [User_information](#user_information)
+    - [Regular_customers](#regular_customers)
   - [Webinars](#webinars)
-    - [Webinar\_information](#webinar_information)
-    - [Webinar\_free\_entry](#webinar_free_entry)
-    - [Webinar\_available](#webinar_available)
+    - [Webinar_information](#webinar_information)
+    - [Webinar_free_entry](#webinar_free_entry)
+    - [Webinar_available](#webinar_available)
   - [Courses](#courses)
-    - [Course\_information](#course_information)
-    - [Course\_module\_meeting\_types](#course_module_meeting_types)
-    - [Course\_module\_information](#course_module_information)
+    - [Course_information](#course_information)
+    - [Course_module_meeting_types](#course_module_meeting_types)
+    - [Course_module_information](#course_module_information)
     - [Course passes](#course-passes)
-    - [Course\_syllabus](#course_syllabus)
+    - [Course_syllabus](#course_syllabus)
   - [Kategoria zamówienia i produkty](#kategoria-zamówienia-i-produkty)
     - [PRODUCT VACANCIES](#product-vacancies)
     - [USERS IN DEBT](#users-in-debt)
     - [FINANCIAL REPORT](#financial-report)
     - [BILOCATION REPORT](#bilocation-report)
     - [PRODUCT OWNERS](#product-owners)
-    - [Product\_payment\_information](#product_payment_information)
+    - [Product_payment_information](#product_payment_information)
     - [Unpaid special permissions](#unpaid-special-permissions)
-    - [Product\_information](#product_information)
+    - [Product_information](#product_information)
   - [Meetings](#meetings)
-    - [Attendance\_meeting](#attendance_meeting)
-    - [Future\_meeting\_attendee\_count](#future_meeting_attendee_count)
-    - [Meeting\_type](#meeting_type)
-    - [Only\_course\_meeting](#only_course_meeting)
-    - [Only\_studies\_meeting](#only_studies_meeting)
-    - [Room\_schedule](#room_schedule)
+    - [Attendance_meeting](#attendance_meeting)
+    - [Future_meeting_attendee_count](#future_meeting_attendee_count)
+    - [Meeting_type](#meeting_type)
+    - [Only_course_meeting](#only_course_meeting)
+    - [Only_studies_meeting](#only_studies_meeting)
+    - [Room_schedule](#room_schedule)
   - [Studies](#studies)
-    - [Study\_information](#study_information)
-    - [Study\_internship\_information](#study_internship_information)
-    - [Study\_meeting\_information](#study_meeting_information)
-    - [Study\_offers](#study_offers)
-    - [Study\_passed](#study_passed)
-    - [Study\_session\_schedule](#study_session_schedule)
-    - [Study\_syllabus](#study_syllabus)
+    - [Study_information](#study_information)
+    - [Study_internship_information](#study_internship_information)
+    - [Study_meeting_information](#study_meeting_information)
+    - [Study_offers](#study_offers)
+    - [Study_passed](#study_passed)
+    - [Study_session_schedule](#study_session_schedule)
+    - [Study_syllabus](#study_syllabus)
 - [Procedury](#procedury)
   - [Sprawdzanie poprawności danych przed operacją](#sprawdzanie-poprawności-danych-przed-operacją)
     - [CheckWebinarExists](#checkwebinarexists)
@@ -155,6 +155,7 @@
   - [Products](#products)
     - [FillProductDetails](#fillproductdetails)
     - [MarkProductAsPassed](#markproductaspassed)
+    - [UpdateProductDetails](#updateproductdetails)
   - [MEETINGS](#meetings-1)
     - [FillMeetingDetails](#fillmeetingdetails)
 - [Funkcje](#funkcje)
@@ -168,9 +169,13 @@
     - [Sprawdzenie czy student może dodać produkt do koszyka](#sprawdzenie-czy-student-może-dodać-produkt-do-koszyka)
     - [Sprawdzenie czy student może kupić produkt](#sprawdzenie-czy-student-może-kupić-produkt)
   - [Kursy, studia i webinary](#kursy-studia-i-webinary)
-    - [Sprawdzenie czy student zdał praktyki](#sprawdzenie-czy-student-zdał-praktyki)
     - [Wyliczenie obecności studenta na danych studiach](#wyliczenie-obecności-studenta-na-danych-studiach)
     - [Wyliczenie obecności studenta na danym kursie](#wyliczenie-obecności-studenta-na-danym-kursie)
+    - [Wyliczenie obecności studenta na danym przedmiocie](#wyliczenie-obecności-studenta-na-danym-przedmiocie)
+    - [Sprawdzenie czy student zdał praktyki](#sprawdzenie-czy-student-zdał-praktyki)
+    - [Sprawdzenie czy student zdał studia](#sprawdzenie-czy-student-zdał-studia)
+    - [Sprawdzenie czy student zdał kurs](#sprawdzenie-czy-student-zdał-kurs)
+    - [Sprawdzenie czy student zdał przedmiot](#sprawdzenie-czy-student-zdał-przedmiot)
     - [Zwraca plan studiów w formie spotkań](#zwraca-plan-studiów-w-formie-spotkań)
     - [Zwraca plan kursu w formie spotkań](#zwraca-plan-kursu-w-formie-spotkań)
     - [Plan zajęć studenta](#plan-zajęć-studenta)
@@ -185,7 +190,7 @@
     - [Tabela INTERNSHIPS](#tabela-internships)
     - [Tabela MEETINGS](#tabela-meetings-1)
     - [Tabela MODULES](#tabela-modules-1)
-    - [Tabela PRODUCT\_DETAILS](#tabela-product_details-1)
+    - [Tabela PRODUCT_DETAILS](#tabela-product_details-1)
     - [Tabela PRODUCTS](#tabela-products-1)
     - [Tabela SUBJECTS](#tabela-subjects-1)
     - [Tabela SESSIONS](#tabela-sessions-1)
@@ -198,7 +203,7 @@
     - [Tabela MEETINGS](#tabela-meetings-2)
     - [Tabela PRODUCTS](#tabela-products-2)
     - [Tabela ORDERS](#tabela-orders-2)
-    - [Tabela STATIONARY\_MEETINGS](#tabela-stationary_meetings-1)
+    - [Tabela STATIONARY_MEETINGS](#tabela-stationary_meetings-1)
 - [Role i uprawnienia użytkowników](#role-i-uprawnienia-użytkowników)
   - [Gość](#gość)
   - [Student](#student)
@@ -208,15 +213,15 @@
   - [Tłumacz](#tłumacz-1)
 - [Wyzwalacze (Triggers)](#wyzwalacze-triggers)
   - [Weryfikacja integralności bazy danych](#weryfikacja-integralności-bazy-danych)
-    - [trg\_CanProductBeInShoppingCart](#trg_canproductbeinshoppingcart)
-    - [trg\_LimitVacanciesOnInsert](#trg_limitvacanciesoninsert)
-    - [trg\_UniqueTranslatorPerMeeting](#trg_uniquetranslatorpermeeting)
-    - [trg\_PreventPastMeetingAttendance](#trg_preventpastmeetingattendance)
-    - [trg\_CheckRoomAvailability](#trg_checkroomavailability)
-    - [trg\_ModuleMeetingsNoIntersection](#trg_modulemeetingsnointersection)
+    - [trg_CanProductBeInShoppingCart](#trg_canproductbeinshoppingcart)
+    - [trg_LimitVacanciesOnInsert](#trg_limitvacanciesoninsert)
+    - [trg_UniqueTranslatorPerMeeting](#trg_uniquetranslatorpermeeting)
+    - [trg_PreventPastMeetingAttendance](#trg_preventpastmeetingattendance)
+    - [trg_CheckRoomAvailability](#trg_checkroomavailability)
+    - [trg_ModuleMeetingsNoIntersection](#trg_modulemeetingsnointersection)
   - [Automatyczne tworzenie wpisów po zdarzeniu](#automatyczne-tworzenie-wpisów-po-zdarzeniu)
-    - [trg\_AddMeetingDetails](#trg_addmeetingdetails)
-    - [trg\_OrdersAddProductDetails](#trg_ordersaddproductdetails)
+    - [trg_AddMeetingDetails](#trg_addmeetingdetails)
+    - [trg_OrdersAddProductDetails](#trg_ordersaddproductdetails)
 
 <!-- /TOC -->
 
@@ -226,11 +231,12 @@ System bazodanowy składa się z tabel, których głównym celem jest przechowyw
 
 Dane wszystkich użytkowników znajdują się w tabeli `USERS`, podział na pracowników i studentów realizowany jest poprzez tabele połączenia z tabelami `STUDENTS` oraz `EMPLOYEES`. Dla każdego studenta przechowywane są informacje o jakie adresie zamieszkania i kraju pochodzenia, będącego jednym z państw zdefiniowanych w słownikowej tabeli `COUNTRIES`. Każdy pracownik ma przypisany jeden z typów pracownika zdefiniowanych w tabeli `EMPLOYEE_TYPES`. Obsługiwane są następujące typy pracowników: _headmaster_, _administration worker_, _tutor_, _translator_.
 
-Dane dotyczące produktów edukacyjnych, które może zakupić użytkownik będący studentem, znajdują się w tabeli `PRODUCTS`. Tabela zawiera dane dotyczące danego produktu (data wydania, cena, maksymalna ilość miejsc) oraz typ produktu, będący jednym z wpisów w tabeli słownikowej `PRODUCT_TYPES`. Obsługiwane są następujące typy produktów: _study_, _subject_, _course_, _session_, _webinar_. 
+Dane dotyczące produktów edukacyjnych, które może zakupić użytkownik będący studentem, znajdują się w tabeli `PRODUCTS`. Tabela zawiera dane dotyczące danego produktu (data wydania, cena, maksymalna ilość miejsc) oraz typ produktu, będący jednym z wpisów w tabeli słownikowej `PRODUCT_TYPES`. Obsługiwane są następujące typy produktów: _study_, _subject_, _course_, _session_, _webinar_.
 System umożliwia dodawanie produktów edukacyjnych do koszyka - tabela `SHOPPING_CART` - co później umożliwia zakup wszystkich produktów będących w koszyku za pośrednictwem zewnętrznego systemu płatności. Informacje o powiązaniu produktu z danym studentem (informacja o dostępie do produktu przez danego studenta) przechowywane są w tabeli `PRODUCT_DETAILS`. System automatycznie dodaje dane do tabeli `PRODUCT_DETAILS` po utworzeniu zamówienia na dany produkt przez studenta.
 
 Dane dotyczące zamówień przechowywane są w tabeli `ORDERS`, przechowującej informacje o dacie, numerze studenta oraz zamówienia.
-Informacje dotyczące należności studenta za dane zamówienia znajdują się w tabeli `FEES` i dotyczą wartości należnej, terminu zapłaty, daty zapłaty oraz typu zamówienia, będącego jednym z typów zdefiniowanych w słownikowej tabeli `FEE_TYPES`. Obsługiwane są następujące typy należności: _session_, _subject session_, _study session_, _study entry fee_, _course_, _course advance_, _webinar_.  Dane dotyczące tabeli `ORDERS` oraz powiązane należności w tabeli `FEES` tworzone są automatycznie na podstawie zawartości koszyka studenta, po wywołaniu procedury `CreateOrderFromCart`, po czym następuje opróżnienie koszyka. Dla każdego z dodawanych produktów, tworzona jest należnośc powiązana z zamówieniem, wyróżniając następujące przypadki dodawania należności
+Informacje dotyczące należności studenta za dane zamówienia znajdują się w tabeli `FEES` i dotyczą wartości należnej, terminu zapłaty, daty zapłaty oraz typu zamówienia, będącego jednym z typów zdefiniowanych w słownikowej tabeli `FEE_TYPES`. Obsługiwane są następujące typy należności: _session_, _subject session_, _study session_, _study entry fee_, _course_, _course advance_, _webinar_. Dane dotyczące tabeli `ORDERS` oraz powiązane należności w tabeli `FEES` tworzone są automatycznie na podstawie zawartości koszyka studenta, po wywołaniu procedury `CreateOrderFromCart`, po czym następuje opróżnienie koszyka. Dla każdego z dodawanych produktów, tworzona jest należnośc powiązana z zamówieniem, wyróżniając następujące przypadki dodawania należności
+
 - W przypadku sesji i webinarów tworzona jest pojedyńcza należność dotycząca produktu (odpowiednio typ należności _session_ lub _webinar_)
 - W przypadku kursu, tworzone są dwie należności: typu _course advance_ będąca zaliczką stanowiącą zdefiniowaną w tabeli `COURSES` część nalażności za całość kursu oraz typu _course_ staniowąca resztę należności
 - W przypadku przedmiotu, tworzone są pojedyńcze należności typu _subject session_, powiązane z każdą z sesji wchodzącej w zakres przedmiotu, aby umożliwić osobne opłacenie każdej z sesji
@@ -1499,8 +1505,17 @@ Przedstawia ID produktu i wolne miejsca na dany produkt
 
 ```sql
 create view PRODUCT_VACANCIES as
-select product_id as product_id, dbo.GetVacanciesForProduct(product_id) as vacancies
-from PRODUCTS
+select 'Study' as type, s.study_name, dbo.GetVacanciesForProduct(product_id) as vacancies
+from PRODUCTS p
+join STUDIES s on p.product_id=s.study_id
+union
+select 'Course' as type, c.course_name, dbo.GetVacanciesForProduct(product_id) as vacancies
+from PRODUCTS p
+join COURSES c on p.product_id=c.course_id
+union
+select 'Webinar' as type, w.webinar_name, dbo.GetVacanciesForProduct(product_id) as vacancies
+from PRODUCTS p
+join WEBINARS w on p.product_id=w.webinar_id
 ```
 
 ### USERS IN DEBT
@@ -4588,7 +4603,7 @@ BEGIN
     BEGIN
       THROW 50001, 'Student już posiada ten produkt w koszyku.', 1;
     END
-    
+
     -- Add product to cart
     INSERT INTO SHOPPING_CART (student_id, product_id)
     VALUES (@student_id, @product_id);
@@ -4788,6 +4803,75 @@ END;
 GO
 ```
 
+### UpdateProductDetails
+
+Procedura `UpdateProductDetails` wstawia zaliczenia na podstawie wyliczonej obecności
+
+```sql
+CREATE PROCEDURE [dbo].[UpdateProductDetails]
+AS
+BEGIN
+    SET NOCOUNT ON;
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Update passed for studies
+        UPDATE pd
+        SET passed = CASE WHEN dbo.DoesStudentPassStudy(pd.student_id, s.study_id) = 1 THEN 1 ELSE 0 END
+        FROM PRODUCT_DETAILS pd
+        JOIN PRODUCTS p ON pd.product_id = p.product_id
+        JOIN PRODUCT_TYPES pt ON p.type_id = pt.type_id
+        JOIN STUDIES s ON s.study_id = p.product_id
+        WHERE pt.type_name = 'study';
+
+        -- Update passed for subjects
+        UPDATE pd
+        SET passed = CASE WHEN dbo.DoesStudentPassSubject(pd.student_id, subj.subject_id) = 1 THEN 1 ELSE 0 END
+        FROM PRODUCT_DETAILS pd
+        JOIN PRODUCTS p ON pd.product_id = p.product_id
+        JOIN PRODUCT_TYPES pt ON p.type_id = pt.type_id
+        JOIN SUBJECTS subj ON subj.subject_id = p.product_id
+        WHERE pt.type_name = 'subject';
+
+        -- Update passed for courses
+        UPDATE pd
+        SET passed = CASE WHEN dbo.DoesStudentPassCourse(pd.student_id, c.course_id) = 1 THEN 1 ELSE 0 END
+        FROM PRODUCT_DETAILS pd
+        JOIN PRODUCTS p ON pd.product_id = p.product_id
+        JOIN PRODUCT_TYPES pt ON p.type_id = pt.type_id
+        JOIN COURSES c ON c.course_id = p.product_id
+        WHERE pt.type_name = 'course';
+
+        -- Update passed for webinars
+        UPDATE pd
+        SET passed = 1
+        FROM PRODUCT_DETAILS pd
+        JOIN PRODUCTS p ON pd.product_id = p.product_id
+        JOIN PRODUCT_TYPES pt ON p.type_id = pt.type_id
+        WHERE pt.type_name = 'webinar';
+
+        -- Update passed for sessions
+        UPDATE pd
+        SET passed = 1
+        FROM PRODUCT_DETAILS pd
+        JOIN PRODUCTS p ON pd.product_id = p.product_id
+        JOIN PRODUCT_TYPES pt ON p.type_id = pt.type_id
+        WHERE pt.type_name = 'session';
+
+        -- Print success message
+        PRINT 'Tabela PRODUCT_DETAILS została pomyślnie zaktualizowana.';
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+        -- Rethrow error for debugging/logging purposes
+        THROW;
+    END CATCH
+END;
+GO
+```
+
 ## MEETINGS
 
 ### FillMeetingDetails
@@ -4836,8 +4920,6 @@ BEGIN
 END;
 GO
 ```
-
-
 
 # Funkcje
 
@@ -5016,35 +5098,6 @@ END;
 
 ## Kursy, studia i webinary
 
-### Sprawdzenie czy student zdał praktyki
-
-```sql
-CREATE FUNCTION DoesStudentPassInternship(@StudentId INT)
-RETURNS BIT
-AS
-BEGIN
-    DECLARE @Result bit = 0
-    IF EXISTS (SELECT 1 FROM INTERNSHIP_DETAILS WHERE @StudentId=student_id)
-    BEGIN
-        IF NOT EXISTS (
-            SELECT 1
-            FROM INTERNSHIP_DETAILS id
-            JOIN INTERNSHIPS i ON i.internship_id=id.internship_id
-            WHERE id.student_id=@StudentId AND i.end_date>GETDATE()
-        )
-        BEGIN
-            IF NOT EXISTS (
-                SELECT 1
-                FROM INTERNSHIP_DETAILS id
-                WHERE id.student_id=@StudentId and id.passed=0
-            )
-            SET @Result=1
-        END
-    END
-    RETURN @Result;
-END
-```
-
 ### Wyliczenie obecności studenta na danych studiach
 
 ```sql
@@ -5095,6 +5148,123 @@ BEGIN
 
     RETURN ISNULL((@AttendedMeetings * 100.0) / NULLIF(@TotalMeetings, 0), 0);
 END;
+```
+
+### Wyliczenie obecności studenta na danym przedmiocie
+
+```sql
+CREATE FUNCTION GetAttendanceForSubject(@StudentId INT, @SubjectId INT)
+RETURNS DECIMAL(5, 2)
+AS
+BEGIN
+    DECLARE @TotalMeetings INT, @AttendedMeetings INT;
+
+    -- Count total meetings for the subject
+    SELECT @TotalMeetings = COUNT(*)
+    FROM MEETING_DETAILS md
+    JOIN MEETINGS m ON md.meeting_id = m.meeting_id
+    JOIN SESSIONS sess ON m.session_id = sess.session_id
+    WHERE sess.subject_id = @SubjectId;
+
+    -- Count attended meetings for the subject by the student
+    SELECT @AttendedMeetings = COUNT(*)
+    FROM MEETING_DETAILS md
+    JOIN MEETINGS m ON md.meeting_id = m.meeting_id
+    JOIN SESSIONS sess ON m.session_id = sess.session_id
+    WHERE sess.subject_id = @SubjectId AND md.student_id = @StudentId AND md.attendance = 1;
+
+    -- Calculate and return attendance percentage
+    RETURN ISNULL((@AttendedMeetings * 100.0) / NULLIF(@TotalMeetings, 0), 0);
+END;
+GO
+```
+
+### Sprawdzenie czy student zdał praktyki
+
+```sql
+CREATE FUNCTION DoesStudentPassInternship(@StudentId INT)
+RETURNS BIT
+AS
+BEGIN
+    DECLARE @Result bit = 0
+    IF EXISTS (SELECT 1 FROM INTERNSHIP_DETAILS WHERE @StudentId=student_id)
+    BEGIN
+        IF NOT EXISTS (
+            SELECT 1
+            FROM INTERNSHIP_DETAILS id
+            JOIN INTERNSHIPS i ON i.internship_id=id.internship_id
+            WHERE id.student_id=@StudentId AND i.end_date>GETDATE()
+        )
+        BEGIN
+            IF NOT EXISTS (
+                SELECT 1
+                FROM INTERNSHIP_DETAILS id
+                WHERE id.student_id=@StudentId and id.passed=0
+            )
+            SET @Result=1
+        END
+    END
+    RETURN @Result;
+END
+```
+
+### Sprawdzenie czy student zdał studia
+
+```sql
+CREATE FUNCTION DoesStudentPassStudy(@StudentId INT, @StudyId INT)
+RETURNS BIT
+AS
+BEGIN
+    DECLARE @Attendance DECIMAL(5, 2);
+
+    -- Get attendance percentage
+    SET @Attendance = dbo.GetAttendanceForStudy(@StudentId, @StudyId);
+
+    -- Return 1 if attendance >= 80%, otherwise return 0
+    RETURN CASE
+        WHEN @Attendance >= 80 THEN 1
+        ELSE 0
+    END;
+END;
+GO
+```
+
+### Sprawdzenie czy student zdał kurs
+
+```sql
+CREATE FUNCTION DoesStudentPassCourse(@StudentId INT, @CourseId INT)
+RETURNS BIT
+AS
+BEGIN
+    DECLARE @Attendance DECIMAL(5, 2);
+
+    SET @Attendance = dbo.GetAttendanceForCourse(@StudentId, @CourseId);
+
+    -- Return 1 if attendance >= 80%, otherwise return 0
+    RETURN CASE
+        WHEN @Attendance >= 80 THEN 1
+        ELSE 0
+    END;
+END;
+GO
+```
+
+### Sprawdzenie czy student zdał przedmiot
+
+```sql
+CREATE FUNCTION DoesStudentPassSubject(@StudentId INT, @SubjectId INT)
+RETURNS BIT
+AS
+BEGIN
+    DECLARE @Attendance DECIMAL(5, 2);
+
+    -- Get the attendance percentage for the subject
+    SET @Attendance = dbo.GetAttendanceForSubject(@StudentId, @SubjectId);
+
+    -- Return 1 if attendance is above or equal to 80%, else return 0
+    RETURN CASE WHEN @Attendance >= 80 THEN 1 ELSE 0 END;
+END;
+GO
 ```
 
 ### Zwraca plan studiów w formie spotkań
@@ -5524,9 +5694,11 @@ grant select on study_information to translator
 Wyzwalacz `trg_CanProductBeInShoppingCart` po dodaniu produktu do koszyka sprawdza, czy użytkownik mógł to zrobić. Jeśli nie, cofa transakcje
 
 Tabela wyzwalająca:
+
 - SHOPPING_CART
 
 Moment aktywacji:
+
 - AFTER INSERT, UPDATE
 
 ```sql
@@ -5551,9 +5723,11 @@ END
 Wyzwalacz `trg_LimitVacanciesOnInsert` zapobiega zapisaniu więcej studentów na kurs, niż wynosi dostępna liczba miejsc (`vacancies`).
 
 Tabela wyzwalająca:
+
 - PRODUCT_DETAILS
 
 Moment aktywacji:
+
 - AFTER INSERT
 
 ```sql
@@ -5595,9 +5769,11 @@ END;
 Wyzwalacz `trg_UniqueTranslatorPerMeeting` zapobiega przypisaniu tego samego tłumacza do więcej niż jednego spotkania w tym samym terminie.
 
 Tabela wyzwalająca:
+
 - MEETINGS
 
 Moment aktywacji:
+
 - AFTER INSERT, UPDATE
 
 ```sql
@@ -5631,9 +5807,11 @@ END;
 Wyzwalacz `trg_PreventPastMeetingAttendance` zapewnia, że nie można zarejestrować obecności na spotkaniach, które już się odbyły.
 
 Tabela wyzwalająca:
+
 - MEETING_DETAILS
 
 Moment aktywacji:
+
 - INSTEAD OF INSERT
 
 ```sql
@@ -5673,9 +5851,11 @@ END;
 Wyzwalacz `trg_CheckRoomAvailability` zapewnia, że jedna sala nie może być przypisana do więcej niż jednego spotkania w tym samym czasie.
 
 Tabela wyzwalająca:
+
 - STATIONARY_MEETINGS
 
 Moment aktywacji:
+
 - AFTER INSERT, UPDATE
 
 ```sql
@@ -5726,9 +5906,11 @@ GO
 Wyzwalacz `trg_ModuleMeetingsNoIntersection` sprawdza, czy spotkania w nowo dodanym module nie nachodzą na siebie.
 
 Tabela wyzwalająca:
+
 - MEETINGS
 
 Moment aktywacji:
+
 - AFTER INSERT, UPDATE
 
 ```sql
@@ -5772,6 +5954,7 @@ BEGIN
   END
 END;
 ```
+
 ## Automatyczne tworzenie wpisów po zdarzeniu
 
 ### trg_AddMeetingDetails
@@ -5871,7 +6054,7 @@ BEGIN
 
     -- Get all products from cart for the student who just created an order
     INSERT INTO PRODUCT_DETAILS (student_id, product_id, order_id, passed)
-    SELECT 
+    SELECT
         inserted.student_id,
         SHOPPING_CART.product_id,
         inserted.order_id,
