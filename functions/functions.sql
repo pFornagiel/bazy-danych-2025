@@ -10,7 +10,7 @@ BEGIN
         WHERE sc.student_id = @StudentId
     );
 END;
-Select GetCartValue(1)
+
 
 -- Function 2: Check if product in fees is a single product
 CREATE FUNCTION isSingleProduct(@fee_id INT)
@@ -242,7 +242,7 @@ RETURN (
     JOIN SUBJECTS sub on sub.subject_id=s.session_id
     JOIN STUDIES st on st.study_id=sub.study_id
     WHERE st.study_id=@StudyId
-    ORDER BY m.term
+
 );
 
 --FOO
@@ -257,7 +257,7 @@ RETURN (
     JOIN MODULES mod ON mod.module_id=m.module_id
     JOIN COURSES c on c.course_id=mod.course_id
     WHERE c.course_id=@CourseId
-    ORDER BY m.term
+
 );
 
 -- Function 7: Create student timetable with student_id
@@ -270,7 +270,7 @@ RETURN (
     JOIN MEETINGS m ON md.meeting_id = m.meeting_id
     JOIN LANGUAGES l ON m.language_id = l.language_id
     WHERE md.student_id = @StudentId
-    ORDER BY m.term
+
 );
 
 -- Function 7.5: Create tutor timetable
@@ -282,7 +282,7 @@ RETURN (
     FROM MEETINGS m
     JOIN LANGUAGES l ON m.language_id = l.language_id
     WHERE m.tutor_id = @EmployeeId
-    ORDER BY m.term
+
 );
 
 -- Function 7.9: Create translator timetable
@@ -294,7 +294,7 @@ RETURN (
     FROM MEETINGS m
     JOIN LANGUAGES l ON m.language_id = l.language_id
     WHERE m.translator_id = @EmployeeId
-    ORDER BY m.term
+
 );
 
 -- Function 8: Check if meeting intersects with schedule
@@ -344,7 +344,7 @@ BEGIN
   DECLARE @InCart BIT;
 
   -- Check if student owns the product
-  SELECT @OwnsProduct = CheckStudentOwnsProduct(@StudentId, @ProductId);
+  SELECT @OwnsProduct = dbo.CheckStudentOwnsProduct(@StudentId, @ProductId);
 
   -- Check if product is already in the shopping cart
   SELECT @InCart = CASE
@@ -371,7 +371,7 @@ AS
 BEGIN
     DECLARE @AvailableVacancies INT;
 
-    SELECT @AvailableVacancies = GetVacanciesForProduct(@ProductId)
+    SELECT @AvailableVacancies = dbo.GetVacanciesForProduct(@ProductId)
 
     RETURN (
         CASE
