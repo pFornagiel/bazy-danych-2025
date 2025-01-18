@@ -4583,12 +4583,18 @@ BEGIN
     -- Validate product exists
     EXEC [dbo].[CheckProductExists] @product_id;
 
+    -- Check if student already owns the product
+    IF (dbo.CanAddToCart(@student_id, @product_id) = 0)
+    BEGIN
+      THROW 50001, 'Student już posiada ten produkt w koszyku.', 1;
+    END
+    
     -- Add product to cart
     INSERT INTO SHOPPING_CART (student_id, product_id)
     VALUES (@student_id, @product_id);
 
     COMMIT TRANSACTION;
-    PRINT 'Produkt dodany do koszyka pomyślnie.';
+    PRINT 'Pomyślnie dodano produkt do koszyka.';
   END TRY
   BEGIN CATCH
     IF @@TRANCOUNT > 0
@@ -4963,11 +4969,28 @@ CREATE FUNCTION CanAddToCart(@StudentId INT, @ProductId INT)
 RETURNS BIT
 AS
 BEGIN
-    DECLARE @OwnsProduct BIT;
+  DECLARE @OwnsProduct BIT;
+  DECLARE @InCart BIT;
 
-    SELECT @OwnsProduct = CheckStudentOwnsProduct(@StudentId,@ProductId)
+  -- Check if student owns the product
+  SELECT @OwnsProduct = CheckStudentOwnsProduct(@StudentId, @ProductId);
 
-    RETURN @OwnsProduct
+  -- Check if product is already in the shopping cart
+  SELECT @InCart = CASE
+            WHEN EXISTS (
+              SELECT 1
+              FROM SHOPPING_CART
+              WHERE SHOPPING_CART.student_id = @StudentId
+                AND SHOPPING_CART.product_id = @ProductId
+            ) THEN 1
+            ELSE 0
+          END;
+
+  -- Return 1 if student does not own the product and it is not in the cart, otherwise return 0
+  RETURN CASE
+    WHEN @OwnsProduct = 0 AND @InCart = 0 THEN 1
+    ELSE 0
+  END;
 END;
 ```
 
