@@ -83,33 +83,6 @@ BEGIN
     );
 END;
 
--- Function 4: Check if student passes internships
-CREATE FUNCTION DoesStudentPassInternship(@StudentId INT)
-RETURNS BIT
-AS
-BEGIN
-    DECLARE @Result bit = 0
-    IF EXISTS (SELECT 1 FROM INTERNSHIP_DETAILS WHERE @StudentId=student_id)
-    BEGIN
-        IF NOT EXISTS (
-            SELECT 1
-            FROM INTERNSHIP_DETAILS id
-            JOIN INTERNSHIPS i ON i.internship_id=id.internship_id
-            WHERE id.student_id=@StudentId AND i.end_date>GETDATE()
-        )
-        BEGIN
-            IF NOT EXISTS (
-                SELECT 1
-                FROM INTERNSHIP_DETAILS id
-                WHERE id.student_id=@StudentId and id.passed=0
-            )
-            SET @Result=1
-        END
-    END
-    RETURN @Result;
-END
-
-
 -- Function 5: Calculate attendance % for student_id and study_id
 CREATE FUNCTION GetAttendanceForStudy(@StudentId INT, @StudyId INT)
 RETURNS DECIMAL(5, 2)
@@ -155,6 +128,106 @@ BEGIN
 
     RETURN ISNULL((@AttendedMeetings * 100.0) / NULLIF(@TotalMeetings, 0), 0);
 END;
+
+CREATE FUNCTION [dbo].[GetAttendanceForSubject](@StudentId INT, @SubjectId INT)
+RETURNS DECIMAL(5, 2)
+AS
+BEGIN
+    DECLARE @TotalMeetings INT, @AttendedMeetings INT;
+
+    -- Count total meetings for the subject
+    SELECT @TotalMeetings = COUNT(*)
+    FROM MEETING_DETAILS md
+    JOIN MEETINGS m ON md.meeting_id = m.meeting_id
+    JOIN SESSIONS sess ON m.session_id = sess.session_id
+    WHERE sess.subject_id = @SubjectId;
+
+    -- Count attended meetings for the subject by the student
+    SELECT @AttendedMeetings = COUNT(*)
+    FROM MEETING_DETAILS md
+    JOIN MEETINGS m ON md.meeting_id = m.meeting_id
+    JOIN SESSIONS sess ON m.session_id = sess.session_id
+    WHERE sess.subject_id = @SubjectId AND md.student_id = @StudentId AND md.attendance = 1;
+
+    -- Calculate and return attendance percentage
+    RETURN ISNULL((@AttendedMeetings * 100.0) / NULLIF(@TotalMeetings, 0), 0);
+END;
+GO
+
+
+CREATE FUNCTION DoesStudentPassStudy(@StudentId INT, @StudyId INT)
+RETURNS BIT
+AS
+BEGIN
+    DECLARE @Attendance DECIMAL(5, 2);
+
+    -- Get attendance percentage
+    SET @Attendance = dbo.GetAttendanceForStudy(@StudentId, @StudyId);
+
+    -- Return 1 if attendance >= 80%, otherwise return 0
+    RETURN CASE
+        WHEN @Attendance >= 80 THEN 1
+        ELSE 0
+    END;
+END;
+GO
+
+CREATE FUNCTION DoesStudentPassCourse(@StudentId INT, @CourseId INT)
+RETURNS BIT
+AS
+BEGIN
+    DECLARE @Attendance DECIMAL(5, 2);
+
+    SET @Attendance = dbo.GetAttendanceForCourse(@StudentId, @CourseId);
+
+    -- Return 1 if attendance >= 80%, otherwise return 0
+    RETURN CASE
+        WHEN @Attendance >= 80 THEN 1
+        ELSE 0
+    END;
+END;
+GO
+
+CREATE FUNCTION [dbo].[DoesStudentPassSubject](@StudentId INT, @SubjectId INT)
+RETURNS BIT
+AS
+BEGIN
+    DECLARE @Attendance DECIMAL(5, 2);
+
+    -- Get the attendance percentage for the subject
+    SET @Attendance = dbo.GetAttendanceForSubject(@StudentId, @SubjectId);
+
+    -- Return 1 if attendance is above or equal to 80%, else return 0
+    RETURN CASE WHEN @Attendance >= 80 THEN 1 ELSE 0 END;
+END;
+GO
+
+
+-- Function 4: Check if student passes internships
+CREATE FUNCTION DoesStudentPassInternship(@StudentId INT)
+RETURNS BIT
+AS
+BEGIN
+    DECLARE @Result bit = 0
+    IF EXISTS (SELECT 1 FROM INTERNSHIP_DETAILS WHERE @StudentId=student_id)
+    BEGIN
+        IF NOT EXISTS (
+            SELECT 1
+            FROM INTERNSHIP_DETAILS id
+            JOIN INTERNSHIPS i ON i.internship_id=id.internship_id
+            WHERE id.student_id=@StudentId AND i.end_date>GETDATE()
+        )
+        BEGIN
+            IF NOT EXISTS (
+                SELECT 1
+                FROM INTERNSHIP_DETAILS id
+                WHERE id.student_id=@StudentId and id.passed=0
+            )
+            SET @Result=1
+        END
+    END
+    RETURN @Result;
+END
 
 --FOO
 CREATE FUNCTION GetStudySchedule(@StudyId INT)
