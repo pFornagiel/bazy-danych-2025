@@ -42,14 +42,19 @@ class CourseDataGenerator:
         return self.generated_data['modules']
       
     def _generate_meeting_data(self, tutor_id, module_id, translator_id=None):
+      module: Module = self.generated_data['modules'][module_id-1]
+      min_course_id = min([module.course_id for module in self.generated_data['modules']])
+      course: Course = self.generated_data['courses'][module.course_id-min_course_id-1]
+      date = course.release
+      
       return Meeting(
           module_id=module_id,
           tutor_id=tutor_id,
-          term=self.fake.date_time_between(start_date='-1y', end_date='now'),
+          term=self.fake.date_time_between(start_date=date, end_date='+1y'),
           meeting_name=self.fake.sentence(nb_words=3),  # Added meeting_name generation
           duration=self.fake.time_object(end_datetime=None),
           translator_id=translator_id,
-          language_id=1# Changed to language_id to match Meeting class
+          language_id=1 # Changed to language_id to match Meeting class
       )
 
     def generate_meetings(self, num_meetings, tutor_id, translator_id=None):
