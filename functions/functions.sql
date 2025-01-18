@@ -129,7 +129,7 @@ BEGIN
     RETURN ISNULL((@AttendedMeetings * 100.0) / NULLIF(@TotalMeetings, 0), 0);
 END;
 
-CREATE FUNCTION [dbo].[GetAttendanceForSubject](@StudentId INT, @SubjectId INT)
+CREATE FUNCTION GetAttendanceForSubject(@StudentId INT, @SubjectId INT)
 RETURNS DECIMAL(5, 2)
 AS
 BEGIN
@@ -188,7 +188,7 @@ BEGIN
 END;
 GO
 
-CREATE FUNCTION [dbo].[DoesStudentPassSubject](@StudentId INT, @SubjectId INT)
+CREATE FUNCTION DoesStudentPassSubject(@StudentId INT, @SubjectId INT)
 RETURNS BIT
 AS
 BEGIN
@@ -365,7 +365,7 @@ BEGIN
 END;
 
 -- Function 11: Check if student can buy product
-CREATE FUNCTION CanStudentBuyProduct(@ProductId INT)
+CREATE FUNCTION CanStudentBuyProduct(@StudentId INT, @ProductId INT)
 RETURNS BIT
 AS
 BEGIN
