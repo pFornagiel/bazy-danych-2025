@@ -156,6 +156,7 @@ BEGIN
     END CATCH
 END;
 
+
 CREATE PROCEDURE AssignRandomInternships
     @study_id INT
 AS
@@ -172,6 +173,8 @@ BEGIN
         DECLARE @student_id INT;
         DECLARE @random_number FLOAT;
         DECLARE @internship_id INT;
+        DECLARE @end_date DATE;
+
 
         OPEN student_cursor;
         FETCH NEXT FROM student_cursor INTO @student_id;
@@ -185,13 +188,13 @@ BEGIN
             IF @random_number <= 0.7
             BEGIN
                 -- Select a random internship related to the study
-                SELECT TOP 1 @internship_id = internship_id
+                SELECT TOP 1 @internship_id = internship_id, @end_date = end_date
                 FROM INTERSHIPS
                 WHERE study_id = @study_id
                 ORDER BY NEWID();
 
                 -- Insert assignment into INTERSHIP_DETAILS table
-                IF @internship_id IS NOT NULL
+                IF @internship_id IS NOT NULL and @end_date < getdate()
                 BEGIN
                     IF @random_number <= 0.5
                         INSERT INTO INTERSHIP_DETAILS (internship_id,student_id, passed)
