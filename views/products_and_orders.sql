@@ -43,17 +43,30 @@ WHERE
     )
 
 
-create view FINANCIAL_REPORT as
-select
-  PRODUCTS.product_id,
-  PRODUCT_TYPES.type_name,
-  case
-      when PRODUCT_TYPES.type_name = 'session'
-          then dbo.getParentId(PRODUCTS.product_id)
-      when PRODUCT_TYPES.type_name = 'subject'
-          then dbo.getParentIdFromSubject(PRODUCTS.product_id)
-  end as study_id,
-  sum(fees.fee_value) as fees_sum
+CREATE VIEW FINANCIAL_REPORT AS
+SELECT
+    P.product_id,
+    PT.type_name,
+    CASE
+        WHEN PT.type_name = 'session' THEN dbo.getParentId(P.product_id)
+        WHEN PT.type_name = 'subject' THEN dbo.getParentIdFromSubject(P.product_id)
+    END AS study_id,
+    SUM(CASE
+        WHEN PT.type_id = 1 AND FT.type_id IN (3, 4) and payment_date is not null THEN F.fee_value
+        WHEN PT.type_id = 2 AND FT.type_id = 2 and payment_date is not null THEN F.fee_value
+        WHEN PT.type_id = 3 AND FT.type_id IN (5, 6) and payment_date is not null THEN F.fee_value
+        WHEN PT.type_id = 4 AND FT.type_id = 7 and payment_date is not null THEN F.fee_value
+        WHEN PT.type_id = 5 AND FT.type_id = 1 and payment_date is not null THEN F.fee_value
+        ELSE 0
+    END) AS total_fee_value
+FROM
+    PRODUCTS P
+JOIN PRODUCT_TYPES PT ON P.type_id = PT.type_id
+JOIN FEES F ON P.product_id = F.product_id
+JOIN dbo.FEE_TYPES FT ON F.type_id = FT.type_id
+GROUP BY
+    P.product_id,
+    PT.type_name;
 
 from PRODUCTS
 join PRODUCT_TYPES on PRODUCTS.type_id=PRODUCT_TYPES.type_id

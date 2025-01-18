@@ -241,3 +241,4 @@ BEGIN
     JOIN SHOPPING_CART ON SHOPPING_CART.student_id = inserted.student_id;
 END;
 GO
+

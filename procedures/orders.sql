@@ -4,6 +4,7 @@ CREATE TYPE dbo.productIdList AS TABLE (
 );
 
 -- Add new order
+drop PROCEDURE [dbo].[CreateOrder]
 CREATE PROCEDURE [dbo].[CreateOrder]
   @student_id INT,
   @product_ids dbo.productIdList READONLY,  -- productIdList type
@@ -27,6 +28,17 @@ BEGIN
     )
     BEGIN
       THROW 50004, 'Student już ma dostęp do jednego lub więcej produktów z zamówienia.', 1;
+    END
+
+
+    -- CHECK WOLNE MIEJSCA
+    if EXISTS(
+        SELECT 1
+        FROM @product_ids pid
+        WHERE [dbo].[GetVacanciesForProduct](pid.product_id) <= 0
+    )
+    BEGIN
+      THROW 50004, 'Dany produkt ma pełną liste zapisanych', 1;
     END
 
     -- Insert order
@@ -91,6 +103,22 @@ BEGIN
 
     CLOSE product_cursor;
     DEALLOCATE product_cursor;
+
+    -- dodanie detailsów
+        BEGIN
+    SET NOCOUNT ON;
+
+    -- Get all products from cart for the student who just created an order
+        INSERT INTO PRODUCT_DETAILS (student_id, product_id, order_id, passed)
+        SELECT
+            @student_id,
+            f.product_id,
+            @order_id,
+            0
+        FROM FEES f
+        where f.order_id = @order_id --and (f.type_id = 1 or f.type_id = 2 or f.type_id = 7);
+    END
+
 
     COMMIT TRANSACTION;
     PRINT 'Zamówienie utworzone pomyślnie.';
@@ -585,6 +613,7 @@ END;
 GO
 
 -- Update fee information by filling in the current date as the payment date
+drop PROCEDURE [dbo].[UpdateFeePaymentDate]
 CREATE PROCEDURE [dbo].[UpdateFeePaymentDate]
   @fee_id INT
 AS
@@ -612,3 +641,85 @@ BEGIN
   END CATCH
 END;
 GO
+
+CREATE PROCEDURE [dbo].[UpdateFeePaymentDateWithDate]
+  @fee_id INT,
+  @payment_date DATE
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Validate fee exists
+    EXEC [dbo].[CheckFeeExists] @fee_id;
+
+    -- Update the fee with the provided date as the payment date
+    UPDATE FEES
+    SET payment_date = @payment_date
+    WHERE fee_id = @fee_id;
+
+    COMMIT TRANSACTION;
+    PRINT 'Data płatności została zaktualizowana pomyślnie na wskazaną date.';
+  END TRY
+  BEGIN CATCH
+    IF @@TRANCOUNT > 0
+      ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH
+END;
+GO
+
+-- moje
+-- CREATE PROCEDURE [dbo].[UpdateFeePaymentDate]
+--   @fee_id INT
+-- AS
+-- BEGIN
+--   SET NOCOUNT ON;
+--
+--   BEGIN TRY
+--     BEGIN TRANSACTION;
+--
+--     -- Validate fee exists
+--     EXEC [dbo].[CheckFeeExists] @fee_id;
+--
+--     -- Update the fee with the current date as the payment date
+--     UPDATE FEES
+--     SET payment_date = GETDATE()
+--     WHERE fee_id = @fee_id;
+--
+--     declare @type_id INT;
+--     declare @student_id INT;
+--     declare @order_id INT;
+--     SELECT @type_id = type_id FROM FEES WHERE fee_id = @fee_id;
+--     SELECT @student_id = ORDERS.student_id, @order_id = ORDERS.order_id  FROM FEES
+--     join ORDERS on FEES.order_id = ORDERS.order_id
+--     WHERE fee_id = @fee_id
+--
+--     IF(@type_id =4 OR @type_id=6)
+--         BEGIN
+--         SET NOCOUNT ON;
+--
+--     -- Get all products from cart for the student who just created an order
+--         INSERT INTO PRODUCT_DETAILS (student_id, product_id, order_id, passed)
+--         SELECT
+--             @student_id,
+--             f.product_id,
+--             @order_id,
+--             0
+--         FROM FEES f
+--         where f.order_id = @order_id
+--     END
+--
+--     COMMIT TRANSACTION;
+--     PRINT 'Data płatności została zaktualizowana pomyślnie.';
+--   END TRY
+--   BEGIN CATCH
+--     IF @@TRANCOUNT > 0
+--       ROLLBACK TRANSACTION;
+--     THROW;
+--   END CATCH
+-- END;
+-- GO
+
