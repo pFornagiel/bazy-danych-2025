@@ -25,7 +25,7 @@ BEGIN
                      ELSE 1
                   END
     FROM FEES f
-    JOIN FEE_TYPE ft ON f.type_id = ft.type_id
+    JOIN FEE_TYPES ft ON f.type_id = ft.type_id
     WHERE f.fee_id = @fee_id;
 
     RETURN @result;
@@ -60,7 +60,7 @@ BEGIN
         @owns_product = CASE
                             WHEN EXISTS (
                                 SELECT 1
-                                FROM PRODUCTS_DETAILS pd
+                                FROM PRODUCT_DETAILS pd
                                 WHERE pd.product_id = @product_id
                                   AND pd.student_id = @student_id
                             ) THEN 1
@@ -255,7 +255,7 @@ RETURN (
     JOIN MEETINGS m ON md.meeting_id = m.meeting_id
     JOIN LANGUAGES l ON m.language_id = l.language_id
     JOIN MODULES mod ON mod.module_id=m.module_id
-    JOIN COURSES c on c.course_id=m.course_id
+    JOIN COURSES c on c.course_id=mod.course_id
     WHERE c.course_id=@CourseId
     ORDER BY m.term
 );
@@ -329,7 +329,7 @@ BEGIN
     WHERE p.product_id = @ProductId;
 
     SELECT @EnrolledStudents = COUNT(*)
-    FROM PRODUCTS_DETAILS pd
+    FROM PRODUCT_DETAILS pd
     WHERE pd.product_id = @ProductId;
 
     RETURN ISNULL(@TotalVacancies - @EnrolledStudents, 0);
@@ -348,7 +348,7 @@ BEGIN
 END;
 
 -- Function 11: Check if student can buy product
-CREATE FUNCTION CanStudentBuyProduct(@StudentId INT, @ProductId INT)
+CREATE FUNCTION CanStudentBuyProduct(@ProductId INT)
 RETURNS BIT
 AS
 BEGIN
