@@ -2,6 +2,7 @@ from generators.generate_users import UserDataGenerator
 from generators.generate_studies import StudyDataGenerator
 from generators.generate_courses import CourseDataGenerator
 from generators.generate_webinars import WebinarDataGenerator
+from generators.generate_product_details import generate_product_details
 import random
 from faker import Faker
 import json
@@ -170,6 +171,7 @@ class DataGenerator:
         self.generate_courses()
         self.generate_webinars()
         self.save_primary_keys()
+        generate_product_details('sql')
 
 if __name__ == "__main__":
     generator = DataGenerator()
