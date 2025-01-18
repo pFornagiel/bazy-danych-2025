@@ -190,7 +190,7 @@ BEGIN
     EXEC [dbo].[CheckStudyExists] @study_id
 
     -- Insert internship
-    INSERT INTO INTERSHIPS (
+    INSERT INTO INTERNSHIPS (
       study_id,
       start_date,
       end_date
@@ -228,7 +228,7 @@ BEGIN
     BEGIN TRANSACTION;
 
     -- Validate internship exists
-    IF NOT EXISTS (SELECT 1 FROM INTERSHIPS WHERE internship_id = @internship_id)
+    IF NOT EXISTS (SELECT 1 FROM INTERNSHIPS WHERE internship_id = @internship_id)
     BEGIN
       THROW 50000, 'Praktyka nie istnieje.', 1;
       RETURN;
@@ -238,7 +238,7 @@ BEGIN
     EXEC [dbo].[CheckStudentExists] @student_id
 
     -- Insert internship details
-    INSERT INTO INTERSHIP_DETAILS (
+    INSERT INTO INTERNSHIP_DETAILS (
       internship_id,
       student_id,
       passed
