@@ -1,6 +1,6 @@
 from faker import Faker
 from models import Study, Subject, Session, Internship, InternshipDetails, Meeting, SyncMeeting, AsyncMeeting, StationaryMeeting
-from datetime import datetime, timedelta
+from datetime import timedelta
 import random
 from .const import LANGAUGES
 
@@ -25,7 +25,7 @@ class StudyDataGenerator:
             study_description=self.fake.text(),
             price=random.uniform(1000, 5000),
             vacancies=random.randint(10, 50),
-            release=self.fake.date_between(start_date='today', end_date='+1y')
+            release=self.fake.date_between(start_date='-2y', end_date='+1y')
         )
 
     def generate_studies(self, num_studies):
@@ -34,6 +34,8 @@ class StudyDataGenerator:
         return self.generated_data['studies']
 
     def _generate_subject_data(self, study_id, tutors):
+        study: Study = [study for i,study in enumerate(self.generated_data['studies']) if i+1 == study_id][0]
+        date = study.release
         return Subject(
             study_id=study_id,
             tutor_id=random.choice(tutors),
@@ -41,7 +43,7 @@ class StudyDataGenerator:
             subject_description=self.fake.text(),
             price=random.uniform(500, 2000),
             vacancies=random.randint(10, 30),
-            release=self.fake.date_between(start_date='today', end_date='+1y')
+            release=date
         )
 
     def generate_subjects(self, num_subjects, study_id, tutors):
@@ -50,11 +52,13 @@ class StudyDataGenerator:
         return self.generated_data['subjects']
 
     def _generate_session_data(self, subject_id):
+        subject: Subject = [subject for i,subject in enumerate(self.generated_data['subjects']) if len(self.generated_data['studies']) + i+ 1 == subject_id][0]
+        date = subject.release
         return Session(
             subject_id=subject_id,
             price=random.uniform(100, 500),
             vacancies=random.randint(5, 20),
-            release=self.fake.date_between(start_date='today', end_date='+1y')
+            release=date
         )
 
     def generate_sessions(self, num_sessions, subject_id):
@@ -63,9 +67,10 @@ class StudyDataGenerator:
         return self.generated_data['sessions']
 
     def _generate_internship_data(self, study_id):
-        start_date = self.fake.date_between(start_date='today', end_date='+1y')
+        study: Study = [study for i,study in enumerate(self.generated_data['studies']) if i+1 == study_id][0]
+        date = study.release
+        start_date = self.fake.date_between(start_date=date, end_date='+1y')
         end_date = (start_date + timedelta(weeks=2))
-
 
         return Internship(
             study_id=study_id,
