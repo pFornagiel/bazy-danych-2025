@@ -1,7 +1,7 @@
-# Projekt: Systemu Bazodanowy Uczelni
+# Projekt: System Bazodanowy Uczelni
 ## Podstawy Baz Danych 2025
-
-Projekt został stworzony na potrzeby przedmiotu "Bazy Danych" realizowanego w roku akademickim 2025.
+### AGH, Wydział Informatyki, Informatyka
+Projekt został stworzony na potrzeby przedmiotu "Podstawy Baz Danych" realizowanego w roku akademickim 2025.
 
 Autorzy:
 - Dariusz Marecik [[FloudMe]](https://github.com/FloudMe77)
@@ -12,7 +12,7 @@ Autorzy:
 
 Pełna treść realizowanego zadania dostępna jest [tutaj](https://github.com/pFornagiel/bazy-danych-2025/blob/main/BD_2024.pdf).
 
-Realizowane zadanie, w przybliżeniu, polegało na zaprojektowaniu i wdrożeniu systemu bazodanowego dla firmy oferującej różnego rodzaju formy kształcenia: studia, kursy oraz webinary. Model świadczenia usług przez firmę jest problematyczny ze względu na niejednolitą formułę realizacji form kształcenia.
+Zadanie, w przybliżeniu, polegało na zaprojektowaniu i wdrożeniu systemu bazodanowego dla firmy oferującej różnego rodzaju formy kształcenia: studia, kursy oraz webinary. Model świadczenia usług przez firmę jest problematyczny ze względu na niejednolitą formułę realizacji form kształcenia.
 
 Wymagane elementy systemu, które zostały przez nas zaimplementowane to obsługa:
 
@@ -23,7 +23,7 @@ Wymagane elementy systemu, które zostały przez nas zaimplementowane to obsług
 - studiów – zestawów przedmiotów składających się z zajęć studyjnych, które mogą odbywać się w tych samych formach, co kursy,
 - tworzenia i zarządzenia zamówieniami na wyżej wymienione produkty edukacyjne
 
-### Schemat ukończonej bazy danych
+### Schemat Bazy Danych
 ![schemat bazy](schemat.png)
 
 
