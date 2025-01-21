@@ -157,6 +157,7 @@ BEGIN
 END;
 
 
+drop PROCEDURE AssignRandomInternships
 CREATE PROCEDURE AssignRandomInternships
     @study_id INT
 AS
@@ -189,18 +190,18 @@ BEGIN
             BEGIN
                 -- Select a random internship related to the study
                 SELECT TOP 1 @internship_id = internship_id, @end_date = end_date
-                FROM INTERSHIPS
+                FROM INTERNSHIPS
                 WHERE study_id = @study_id
                 ORDER BY NEWID();
 
-                -- Insert assignment into INTERSHIP_DETAILS table
+                -- Insert assignment into INTERNSHIP_DETAILS table
                 IF @internship_id IS NOT NULL and @end_date < getdate()
                 BEGIN
                     IF @random_number <= 0.5
-                        INSERT INTO INTERSHIP_DETAILS (internship_id,student_id, passed)
+                        INSERT INTO INTERNSHIP_DETAILS (internship_id,student_id, passed)
                         VALUES ( @internship_id, @student_id,1);
                     ELSE
-                        INSERT INTO INTERSHIP_DETAILS (internship_id,student_id, passed)
+                        INSERT INTO INTERNSHIP_DETAILS (internship_id,student_id, passed)
                         VALUES ( @internship_id, @student_id,0);
                 END
             END

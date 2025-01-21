@@ -222,7 +222,7 @@ BEGIN
   END
 END;
 
-
+drop TRIGGER trg_OrdersAddProductDetails
 CREATE TRIGGER trg_OrdersAddProductDetails
 ON ORDERS
 AFTER INSERT

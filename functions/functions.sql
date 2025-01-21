@@ -154,19 +154,20 @@ BEGIN
 END;
 GO
 
-
 CREATE FUNCTION DoesStudentPassStudy(@StudentId INT, @StudyId INT)
 RETURNS BIT
 AS
 BEGIN
     DECLARE @Attendance DECIMAL(5, 2);
-
+    DECLARE @Internship_pass INT;
     -- Get attendance percentage
     SET @Attendance = dbo.GetAttendanceForStudy(@StudentId, @StudyId);
+    SET @Internship_pass = dbo.CheckInternshipsPass(@StudentId, @StudyId);
 
     -- Return 1 if attendance >= 80%, otherwise return 0
     RETURN CASE
-        WHEN @Attendance >= 80 THEN 1
+        when dbo.GetStudyEndDate(@StudyId) > GETDATE() then null
+        WHEN @Attendance >= 80 and @Internship_pass = 1 THEN 1
         ELSE 0
     END;
 END;
@@ -182,12 +183,14 @@ BEGIN
 
     -- Return 1 if attendance >= 80%, otherwise return 0
     RETURN CASE
+        when dbo.GetCourseEndDate(@CourseId) > GETDATE() then null
         WHEN @Attendance >= 80 THEN 1
         ELSE 0
     END;
 END;
 GO
 
+drop FUNCTION DoesStudentPassSubject
 CREATE FUNCTION DoesStudentPassSubject(@StudentId INT, @SubjectId INT)
 RETURNS BIT
 AS
@@ -198,7 +201,11 @@ BEGIN
     SET @Attendance = dbo.GetAttendanceForSubject(@StudentId, @SubjectId);
 
     -- Return 1 if attendance is above or equal to 80%, else return 0
-    RETURN CASE WHEN @Attendance >= 80 THEN 1 ELSE 0 END;
+    RETURN CASE
+        when dbo.GetSubjectEndDate(@SubjectId) > GETDATE() then null
+        WHEN @Attendance >= 80 THEN 1
+        ELSE 0
+    END;
 END;
 GO
 
@@ -417,3 +424,77 @@ BEGIN
 
     RETURN @Conflicts;
 END;
+
+
+CREATE FUNCTION dbo.CheckInternshipsPass
+    (@student_id INT,
+     @study_id INT)
+RETURNS BIT
+AS
+BEGIN
+    DECLARE @result BIT
+    DECLARE @hasNull BIT = 0
+    DECLARE @totalInternships INT
+    DECLARE @passedInternships INT
+
+    -- Get total number of internships and number of passed internships
+    SELECT
+        @totalInternships = COUNT(id.internship_id),
+        @passedInternships = SUM(CAST(id.passed AS INT)),
+        @hasNull = CASE
+            WHEN SUM(CASE WHEN id.passed IS NULL THEN 1 ELSE 0 END) > 0 THEN 1
+            ELSE 0
+        END
+    FROM INTERNSHIPS i
+    JOIN INTERNSHIP_DETAILS id ON i.internship_id = id.internship_id
+                             AND id.student_id = @student_id
+    WHERE i.study_id = @study_id
+
+    -- If there are no internships, return NULL
+    IF @totalInternships = 0
+        RETURN NULL
+
+    -- If any internship is still in progress (NULL), return NULL
+    IF @hasNull = 1
+        RETURN NULL
+
+    -- If all internships are completed and passed
+    IF @totalInternships = @passedInternships
+        SET @result = 1
+    ELSE
+        SET @result = 0
+
+    RETURN @result
+END;
+
+CREATE PROCEDURE dbo.UpdateProductDetailsPassed
+AS
+BEGIN
+    -- Update for Studies (type_id = 1)
+    UPDATE pd
+    SET pd.passed = dbo.DoesStudentPassStudy(pd.student_id, s.study_id)
+    FROM PRODUCT_DETAILS pd
+    JOIN PRODUCTS p ON p.product_id = pd.product_id
+    JOIN STUDIES s ON s.study_id = p.product_id
+    WHERE p.type_id = 1
+
+    -- Update for Subjects (type_id = 2)
+    UPDATE pd
+    SET pd.passed = dbo.DoesStudentPassSubject(pd.student_id, s.subject_id)
+    FROM PRODUCT_DETAILS pd
+    JOIN PRODUCTS p ON p.product_id = pd.product_id
+    JOIN SUBJECTS s ON s.subject_id = p.product_id
+    WHERE p.type_id = 2
+
+    -- Update for Courses (type_id = 3)
+    UPDATE pd
+    SET pd.passed = dbo.DoesStudentPassCourse(pd.student_id, c.course_id)
+    FROM PRODUCT_DETAILS pd
+    JOIN PRODUCTS p ON p.product_id = pd.product_id
+    JOIN COURSES c ON c.course_id = p.product_id
+    WHERE p.type_id = 3
+END;
+
+
+select * from PRODUCT_DETAILS
+where passed = 0

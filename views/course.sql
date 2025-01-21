@@ -60,7 +60,8 @@ SELECT
     PRODUCT_DETAILS.student_id AS student_id,
     CASE
         WHEN PRODUCT_DETAILS.passed = 1 THEN 'pass'
-        ELSE 'fail'
+        WHEN PRODUCT_DETAILS.passed = 0 THEN 'fail'
+        ELSE 'during passing'
     END AS passed_status,
     COUNT(DISTINCT m.meeting_id) AS total_available_meetings,
     COUNT(DISTINCT CASE WHEN md.attendance = 1 THEN m.meeting_id END) AS meetings_attended,

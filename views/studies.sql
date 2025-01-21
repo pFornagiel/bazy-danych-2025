@@ -1,4 +1,5 @@
 
+DROP VIEW Study_information
 CREATE VIEW Study_information AS
 WITH study_timeframe AS (
     SELECT
@@ -27,7 +28,7 @@ SELECT
     COUNT(async.meeting_id) AS async_meetings,
     (
         SELECT COUNT(*)
-        FROM INTERSHIPS i
+        FROM INTERNSHIPS i
         WHERE i.study_id = s.study_id
     ) AS number_of_internships,
     dbo.GetVacanciesForProduct(s.study_id) AS Vacancies,
@@ -51,6 +52,7 @@ GROUP BY
     p.total_vacancies,
     p.price, CAST(s.study_description AS VARCHAR(MAX));
 
+
 CREATE VIEW study_internship_information AS
 SELECT
     i.internship_id,
@@ -69,9 +71,9 @@ SELECT
         ELSE 'In Progress'
     END AS internship_status
 FROM
-    INTERSHIPS i
+    INTERNSHIPS i
     INNER JOIN STUDIES s ON i.study_id = s.study_id
-    LEFT JOIN INTERSHIP_DETAILS id ON i.internship_id = id.internship_id
+    LEFT JOIN INTERNSHIP_DETAILS id ON i.internship_id = id.internship_id
 GROUP BY
     i.internship_id,
     s.study_id,
@@ -136,6 +138,7 @@ WHERE
 
 ;
 
+drop VIEW study_passes
 CREATE VIEW study_passes AS
 SELECT
     s.study_id,
@@ -143,7 +146,8 @@ SELECT
     u.user_id AS student_id,
     CASE
         WHEN pd.passed = 1 THEN 'Passed'
-        ELSE 'Not Passed'
+        WHEN pd.passed = 0 THEN 'Fail'
+        ELSE 'In progress'
     END AS study_status,
     -- Meeting attendance details
     COUNT(DISTINCT m.meeting_id) AS total_available_meetings,
@@ -152,9 +156,9 @@ SELECT
         WHEN COUNT(DISTINCT m.meeting_id) = 0 THEN 0
         ELSE CAST(COUNT(DISTINCT CASE WHEN md.attendance = 1 THEN m.meeting_id END) AS FLOAT) /
              COUNT(DISTINCT m.meeting_id) * 100
-    END AS attendance_rate,
+    END AS attendance_rate
     -- Internship completion details
-    id.passed as internships_passed
+--     id.passed as internships_passed
 FROM
     STUDIES s
     INNER JOIN PRODUCT_DETAILS pd ON s.study_id = pd.product_id
@@ -166,8 +170,8 @@ FROM
     LEFT JOIN MEETINGS m ON ses.session_id = m.session_id
     LEFT JOIN MEETING_DETAILS md ON m.meeting_id = md.meeting_id AND md.student_id = pd.student_id
     -- Internship completion
-    LEFT JOIN INTERSHIPS i ON s.study_id = i.study_id
-    LEFT JOIN INTERSHIP_DETAILS id ON i.internship_id = id.internship_id AND id.student_id = pd.student_id
+    LEFT JOIN INTERNSHIPS i ON s.study_id = i.study_id
+    LEFT JOIN INTERNSHIP_DETAILS id ON i.internship_id = id.internship_id AND id.student_id = pd.student_id
 GROUP BY
     s.study_id,
     s.study_name,
@@ -177,7 +181,7 @@ GROUP BY
     u.email,
     pd.order_id,
     o.order_date,
-    pd.passed, id.passed
+    pd.passed
 
 CREATE VIEW study_session_schedule AS
   SELECT

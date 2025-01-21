@@ -112,11 +112,10 @@ BEGIN
         INSERT INTO PRODUCT_DETAILS (student_id, product_id, order_id, passed)
         SELECT
             @student_id,
-            f.product_id,
+            pid.product_id,
             @order_id,
-            0
-        FROM FEES f
-        where f.order_id = @order_id --and (f.type_id = 1 or f.type_id = 2 or f.type_id = 7);
+                    null
+        FROM @product_ids pid
     END
 
 
