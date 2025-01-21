@@ -193,7 +193,6 @@ BEGIN
                 FROM INTERNSHIPS
                 WHERE study_id = @study_id
                 ORDER BY NEWID();
-
                 -- Insert assignment into INTERNSHIP_DETAILS table
                 IF @internship_id IS NOT NULL and @end_date < getdate()
                 BEGIN
@@ -217,5 +216,80 @@ BEGIN
     END TRY
     BEGIN CATCH
         PRINT 'Error occurred: ' + ERROR_MESSAGE();
+    END CATCH
+END;
+
+CREATE PROCEDURE AssignInternshipsToStudents
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Create a temporary table to store selected student-study pairs
+        CREATE TABLE #SelectedPairs (
+            student_id INT,
+            study_id INT
+        );
+
+        -- Insert 90% randomly selected student-study pairs
+        WITH StudentStudyPairs AS (
+            SELECT pd.student_id, p.product_id as study_id
+            FROM PRODUCT_DETAILS pd
+            JOIN PRODUCTS p ON pd.product_id = p.product_id
+            WHERE p.type_id = 1 -- Assuming 1 is the type_id for studies
+        )
+        INSERT INTO #SelectedPairs
+        SELECT student_id, study_id
+        FROM StudentStudyPairs
+        WHERE RAND() <= 0.9;
+
+        -- Assign internships for selected pairs
+        DECLARE @student_id INT;
+        DECLARE @study_id INT;
+        DECLARE @internship_id INT;
+        DECLARE @random_number FLOAT;
+
+        DECLARE pair_cursor CURSOR FOR
+        SELECT student_id, study_id FROM #SelectedPairs;
+
+        OPEN pair_cursor;
+        FETCH NEXT FROM pair_cursor INTO @student_id, @study_id;
+
+        WHILE @@FETCH_STATUS = 0
+        BEGIN
+            -- Select a random internship for this study
+            SELECT TOP 1 @internship_id = internship_id
+            FROM INTERNSHIPS
+            WHERE study_id = @study_id
+            ORDER BY NEWID();
+
+            IF @internship_id IS NOT NULL
+            BEGIN
+                SET @random_number = RAND();
+                
+                -- Insert with 80% pass rate
+                INSERT INTO INTERNSHIP_DETAILS (internship_id, student_id, passed)
+                VALUES (@internship_id, @student_id, CASE WHEN @random_number <= 0.8 THEN 1 ELSE 0 END);
+            END
+
+            FETCH NEXT FROM pair_cursor INTO @student_id, @study_id;
+        END
+
+        CLOSE pair_cursor;
+        DEALLOCATE pair_cursor;
+
+        -- Clean up
+        DROP TABLE #SelectedPairs;
+
+        COMMIT TRANSACTION;
+        PRINT 'Internships assigned successfully to 90% of student-study pairs.';
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+        PRINT 'Error occurred: ' + ERROR_MESSAGE();
+        THROW;
     END CATCH
 END;

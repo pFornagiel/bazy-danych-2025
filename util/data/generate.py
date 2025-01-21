@@ -71,9 +71,9 @@ class DataGenerator:
             self.SUBJECTS.extend([i+self.cumulative_products for i in range(amount_subjects)])
             self.cumulative_products += amount_subjects
 
-        amount_internships = random.randint(self.AMOUNT_OF_INTERSHIPS-2, self.AMOUNT_OF_INTERSHIPS+2)
-        study_data.generate_internships(amount_internships, study)
-        self.INTERNSHIPS.extend([i+1 for i in range(amount_internships)])
+            amount_internships = random.randint(self.AMOUNT_OF_INTERSHIPS-2, self.AMOUNT_OF_INTERSHIPS+2)
+            study_data.generate_internships(amount_internships, study)
+            self.INTERNSHIPS.extend([i+1 for i in range(amount_internships)])
 
         for subject in self.SUBJECTS:
             amount_sessions = random.randint(self.AMOUNT_OF_SESSIONS-1, self.AMOUNT_OF_SESSIONS+1)
