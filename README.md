@@ -26,4 +26,16 @@ Wymagane elementy systemu, które zostały przez nas zaimplementowane to obsług
 ### Schemat Bazy Danych
 ![schemat bazy](schemat.png)
 
-
+### Struktura repozytorium
+Repozytorium projektu składa się z następujących katalogów:
+- `views` - zawierającym definicje widoków
+- `procedures` - zawierający definicje procedur
+- `triggers` - zawierający definicje wyzwalaczy bazodanowych
+- `functions` - zawierający definicje funkcji bazodanowych
+- `indexes` - zawierający definicje indeksów
+- `demo` - zawierający polecenia używane podczas przykładowej demonstracji danych
+- `random_procedures` - zawierający procedury generujące losowe dane przykładowe
+- `roles_and_permissions` - zawierający definicje ról i uprawnień
+- `util` - zawierający katalogi ze skryptami pomocniczymi, tj.:
+  - `data` - zawierający skrypty pozwalające na generowanie danych testowych w tabelach
+  - `doc_generator` - zawierający generator prostej wersji dokumentacji bazując na pliku SQL z poleceniami tworzącymi bazę danych w formacie T-SQL eksportowanym przez narzędzie _Vertabelo_.
