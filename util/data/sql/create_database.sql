@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2025-01-09 09:16:18.788
+-- Last modification date: 2025-01-22 01:46:03.664
 
 -- tables
 -- Table: ASYNC_MEETINGS
@@ -12,14 +12,14 @@ CREATE TABLE ASYNC_MEETINGS (
 -- Table: COUNTRIES
 CREATE TABLE COUNTRIES (
     country_id int  NOT NULL,
-    country_name nvarchar(30)  NOT NULL,
+    country_name nvarchar(300)  NOT NULL,
     CONSTRAINT COUNTRIES_pk PRIMARY KEY  (country_id)
 );
 
 -- Table: COURSES
 CREATE TABLE COURSES (
     course_id int  NOT NULL,
-    course_name nvarchar(50)  NOT NULL,
+    course_name nvarchar(300)  NOT NULL,
     course_description text  NULL,
     advance_share decimal(5,4)  NOT NULL DEFAULT 0.3000 CHECK (advance_share >= 0 and advance_share <= 1),
     CONSTRAINT COURSES_pk PRIMARY KEY  (course_id)
@@ -60,21 +60,21 @@ CREATE TABLE FEE_TYPES (
     CONSTRAINT FEE_TYPES_pk PRIMARY KEY  (type_id)
 );
 
--- Table: INTERSHIPS
-CREATE TABLE INTERSHIPS (
+-- Table: INTERNSHIPS
+CREATE TABLE INTERNSHIPS (
     internship_id int  NOT NULL IDENTITY,
     study_id int  NOT NULL,
     start_date date  NOT NULL,
     end_date date  NOT NULL,
-    CONSTRAINT INTERSHIPS_pk PRIMARY KEY  (internship_id)
+    CONSTRAINT INTERNSHIPS_pk PRIMARY KEY  (internship_id)
 );
 
--- Table: INTERSHIP_DETAILS
-CREATE TABLE INTERSHIP_DETAILS (
+-- Table: INTERNSHIP_DETAILS
+CREATE TABLE INTERNSHIP_DETAILS (
     internship_id int  NOT NULL,
     student_id int  NOT NULL,
-    passed bit  NOT NULL,
-    CONSTRAINT INTERSHIP_DETAILS_pk PRIMARY KEY  (internship_id,student_id)
+    passed bit  NULL,
+    CONSTRAINT INTERNSHIP_DETAILS_pk PRIMARY KEY  (internship_id,student_id)
 );
 
 -- Table: LANGUAGES
@@ -89,7 +89,7 @@ CREATE TABLE MEETINGS (
     meeting_id int  NOT NULL IDENTITY,
     tutor_id int  NOT NULL,
     translator_id int  NULL,
-    meeting_name varchar(30)  NOT NULL,
+    meeting_name varchar(300)  NOT NULL,
     term datetime  NOT NULL,
     duration time(0)  NULL DEFAULT '01:30:00' CHECK (duration>'00:00:00'),
     language_id int  NOT NULL DEFAULT 'POLISH',
@@ -111,7 +111,7 @@ CREATE TABLE MODULES (
     module_id int  NOT NULL IDENTITY,
     course_id int  NOT NULL,
     tutor_id int  NOT NULL,
-    module_name nvarchar(50)  NOT NULL,
+    module_name nvarchar(300)  NOT NULL,
     module_description text  NOT NULL,
     CONSTRAINT MODULES_pk PRIMARY KEY  (module_id)
 );
@@ -128,7 +128,7 @@ CREATE TABLE ORDERS (
 CREATE TABLE PRODUCTS (
     product_id int  NOT NULL IDENTITY,
     type_id int  NOT NULL,
-    price money  NULL DEFAULT 1000 CHECK (price>=0),
+    price money  NOT NULL DEFAULT 1000 CHECK (price>=0),
     total_vacancies int  NOT NULL DEFAULT 30 CHECK (total_vacancies>0),
     release date  NOT NULL,
     CONSTRAINT product_id PRIMARY KEY  (product_id)
@@ -139,7 +139,7 @@ CREATE TABLE PRODUCT_DETAILS (
     student_id int  NOT NULL,
     product_id int  NOT NULL,
     order_id int  NOT NULL,
-    passed bit  NOT NULL DEFAULT 0,
+    passed bit  NULL DEFAULT 0,
     CONSTRAINT PRODUCT_DETAILS_pk PRIMARY KEY  (student_id,product_id)
 );
 
@@ -174,17 +174,17 @@ CREATE TABLE STATIONARY_MEETINGS (
 -- Table: STUDENTS
 CREATE TABLE STUDENTS (
     student_id int  NOT NULL,
+    country_id int  NOT NULL,
     street varchar(30)  NOT NULL,
     city varchar(30)  NOT NULL,
     postal_code varchar(30)  NOT NULL,
-    country_id int  NOT NULL,
     CONSTRAINT STUDENTS_pk PRIMARY KEY  (student_id)
 );
 
 -- Table: STUDIES
 CREATE TABLE STUDIES (
     study_id int  NOT NULL,
-    study_name nvarchar(50)  NOT NULL,
+    study_name nvarchar(300)  NOT NULL,
     study_description text  NULL,
     CONSTRAINT STUDIES_pk PRIMARY KEY  (study_id)
 );
@@ -194,7 +194,7 @@ CREATE TABLE SUBJECTS (
     subject_id int  NOT NULL,
     study_id int  NOT NULL,
     tutor_id int  NOT NULL,
-    subject_name varchar(50)  NOT NULL,
+    subject_name varchar(300)  NOT NULL,
     subject_description text  NULL,
     CONSTRAINT SUBJECTS_pk PRIMARY KEY  (subject_id)
 );
@@ -214,7 +214,7 @@ CREATE TABLE USERS (
     first_name nvarchar(30)  NOT NULL,
     last_name nvarchar(30)  NOT NULL,
     email varchar(50)  NOT NULL CHECK (email LIKE '%_@%.%'),
-    phone varchar(13)  NULL CHECK (LEN(Phone) = 9 AND ISNUMERIC(Phone) = 1),
+    phone varchar(9)  NULL CHECK (LEN(Phone) = 9 AND ISNUMERIC(Phone) = 1),
     CONSTRAINT unique_email UNIQUE (email),
     CONSTRAINT unique_phone UNIQUE (phone),
     CONSTRAINT USERS_pk PRIMARY KEY  (user_id)
@@ -225,7 +225,7 @@ CREATE TABLE WEBINARS (
     webinar_id int  NOT NULL,
     tutor_id int  NOT NULL,
     translator_id int  NULL,
-    webinar_name varchar(50)  NOT NULL,
+    webinar_name varchar(300)  NOT NULL,
     webinar_description text  NULL,
     meeting_url text  NOT NULL,
     video_url text  NULL,
@@ -286,18 +286,18 @@ ALTER TABLE FEES ADD CONSTRAINT FEE_FEE_TYPE
     FOREIGN KEY (type_id)
     REFERENCES FEE_TYPES (type_id);
 
--- Reference: Internship_STUDY (table: INTERSHIPS)
-ALTER TABLE INTERSHIPS ADD CONSTRAINT Internship_STUDY
+-- Reference: Internship_STUDY (table: INTERNSHIPS)
+ALTER TABLE INTERNSHIPS ADD CONSTRAINT Internship_STUDY
     FOREIGN KEY (study_id)
     REFERENCES STUDIES (study_id);
 
--- Reference: Internship_details_Internship (table: INTERSHIP_DETAILS)
-ALTER TABLE INTERSHIP_DETAILS ADD CONSTRAINT Internship_details_Internship
+-- Reference: Internship_details_Internship (table: INTERNSHIP_DETAILS)
+ALTER TABLE INTERNSHIP_DETAILS ADD CONSTRAINT Internship_details_Internship
     FOREIGN KEY (internship_id)
-    REFERENCES INTERSHIPS (internship_id);
+    REFERENCES INTERNSHIPS (internship_id);
 
--- Reference: Internship_details_STUDENT (table: INTERSHIP_DETAILS)
-ALTER TABLE INTERSHIP_DETAILS ADD CONSTRAINT Internship_details_STUDENT
+-- Reference: Internship_details_STUDENT (table: INTERNSHIP_DETAILS)
+ALTER TABLE INTERNSHIP_DETAILS ADD CONSTRAINT Internship_details_STUDENT
     FOREIGN KEY (student_id)
     REFERENCES STUDENTS (student_id);
 

@@ -9,19 +9,19 @@
 
 ## Table: COUNTRIES
 
-| Column Name  | Data Type    | Properties  |
-| ------------ | ------------ | ----------- |
-| country_id   | int          | Primary Key |
-| country_name | nvarchar(30) |             |
+| Column Name  | Data Type     | Properties  |
+| ------------ | ------------- | ----------- |
+| country_id   | int           | Primary Key |
+| country_name | nvarchar(300) |             |
 
 ## Table: COURSES
 
-| Column Name        | Data Type    | Properties                 |
-| ------------------ | ------------ | -------------------------- |
-| course_id          | int          | Primary Key<br>Foreign Key |
-| course_name        | nvarchar(50) |                            |
-| course_description | text         |                            |
-| advance_share      | decimal(5,4) |                            |
+| Column Name        | Data Type     | Properties                 |
+| ------------------ | ------------- | -------------------------- |
+| course_id          | int           | Primary Key<br>Foreign Key |
+| course_name        | nvarchar(300) |                            |
+| course_description | text          |                            |
+| advance_share      | decimal(5,4)  |                            |
 
 ## Table: EMPLOYEES
 
@@ -58,7 +58,7 @@
 | type_id     | int          | Primary Key |
 | type_name   | nvarchar(30) |             |
 
-## Table: INTERSHIPS
+## Table: INTERNSHIPS
 
 | Column Name   | Data Type | Properties                 |
 | ------------- | --------- | -------------------------- |
@@ -67,7 +67,7 @@
 | start_date    | date      |                            |
 | end_date      | date      |                            |
 
-## Table: INTERSHIP_DETAILS
+## Table: INTERNSHIP_DETAILS
 
 | Column Name   | Data Type | Properties                 |
 | ------------- | --------- | -------------------------- |
@@ -84,17 +84,17 @@
 
 ## Table: MEETINGS
 
-| Column Name   | Data Type   | Properties                 |
-| ------------- | ----------- | -------------------------- |
-| meeting_id    | int         | Primary Key<br>Foreign Key |
-| tutor_id      | int         |                            |
-| translator_id | int         |                            |
-| meeting_name  | varchar(30) |                            |
-| term          | datetime    |                            |
-| duration      | time(0)     |                            |
-| language_id   | int         |                            |
-| module_id     | int         |                            |
-| session_id    | int         |                            |
+| Column Name   | Data Type    | Properties                 |
+| ------------- | ------------ | -------------------------- |
+| meeting_id    | int          | Primary Key<br>Foreign Key |
+| tutor_id      | int          |                            |
+| translator_id | int          |                            |
+| meeting_name  | varchar(300) |                            |
+| term          | datetime     |                            |
+| duration      | time(0)      |                            |
+| language_id   | int          |                            |
+| module_id     | int          |                            |
+| session_id    | int          |                            |
 
 ## Table: MEETING_DETAILS
 
@@ -106,13 +106,13 @@
 
 ## Table: MODULES
 
-| Column Name        | Data Type    | Properties                 |
-| ------------------ | ------------ | -------------------------- |
-| module_id          | int          | Primary Key<br>Foreign Key |
-| course_id          | int          |                            |
-| tutor_id           | int          |                            |
-| module_name        | nvarchar(50) |                            |
-| module_description | text         |                            |
+| Column Name        | Data Type     | Properties                 |
+| ------------------ | ------------- | -------------------------- |
+| module_id          | int           | Primary Key<br>Foreign Key |
+| course_id          | int           |                            |
+| tutor_id           | int           |                            |
+| module_name        | nvarchar(300) |                            |
+| module_description | text          |                            |
 
 ## Table: ORDERS
 
@@ -174,28 +174,28 @@
 | Column Name | Data Type   | Properties                 |
 | ----------- | ----------- | -------------------------- |
 | student_id  | int         | Primary Key<br>Foreign Key |
+| country_id  | int         |                            |
 | street      | varchar(30) |                            |
 | city        | varchar(30) |                            |
 | postal_code | varchar(30) |                            |
-| country_id  | int         |                            |
 
 ## Table: STUDIES
 
-| Column Name       | Data Type    | Properties                 |
-| ----------------- | ------------ | -------------------------- |
-| study_id          | int          | Primary Key<br>Foreign Key |
-| study_name        | nvarchar(50) |                            |
-| study_description | text         |                            |
+| Column Name       | Data Type     | Properties                 |
+| ----------------- | ------------- | -------------------------- |
+| study_id          | int           | Primary Key<br>Foreign Key |
+| study_name        | nvarchar(300) |                            |
+| study_description | text          |                            |
 
 ## Table: SUBJECTS
 
-| Column Name         | Data Type   | Properties                 |
-| ------------------- | ----------- | -------------------------- |
-| subject_id          | int         | Primary Key<br>Foreign Key |
-| study_id            | int         |                            |
-| tutor_id            | int         |                            |
-| subject_name        | varchar(50) |                            |
-| subject_description | text        |                            |
+| Column Name         | Data Type    | Properties                 |
+| ------------------- | ------------ | -------------------------- |
+| subject_id          | int          | Primary Key<br>Foreign Key |
+| study_id            | int          |                            |
+| tutor_id            | int          |                            |
+| subject_name        | varchar(300) |                            |
+| subject_description | text         |                            |
 
 ## Table: SYNC_MEETINGS
 
@@ -214,24 +214,24 @@
 | first_name  | nvarchar(30) |             |
 | last_name   | nvarchar(30) |             |
 | email       | varchar(50)  |             |
-| phone       | varchar(13)  |             |
+| phone       | varchar(9)   |             |
 | CONSTRAINT  | unique_email |             |
 | CONSTRAINT  | unique_phone |             |
 
 ## Table: WEBINARS
 
-| Column Name         | Data Type   | Properties                 |
-| ------------------- | ----------- | -------------------------- |
-| webinar_id          | int         | Primary Key<br>Foreign Key |
-| tutor_id            | int         |                            |
-| translator_id       | int         |                            |
-| webinar_name        | varchar(50) |                            |
-| webinar_description | text        |                            |
-| meeting_url         | text        |                            |
-| video_url           | text        |                            |
-| webinar_duration    | time(0)     |                            |
-| publish_date        | datetime    |                            |
-| language_id         | int         |                            |
+| Column Name         | Data Type    | Properties                 |
+| ------------------- | ------------ | -------------------------- |
+| webinar_id          | int          | Primary Key<br>Foreign Key |
+| tutor_id            | int          |                            |
+| translator_id       | int          |                            |
+| webinar_name        | varchar(300) |                            |
+| webinar_description | text         |                            |
+| meeting_url         | text         |                            |
+| video_url           | text         |                            |
+| webinar_duration    | time(0)      |                            |
+| publish_date        | datetime     |                            |
+| language_id         | int          |                            |
 
 # Foreign Key Documentation
 
@@ -247,9 +247,9 @@
 | FEES                | order_id      | ORDERS           | order_id          |
 | FEES                | product_id    | PRODUCTS         | product_id        |
 | FEES                | type_id       | FEE_TYPES        | type_id           |
-| INTERSHIPS          | study_id      | STUDIES          | study_id          |
-| INTERSHIP_DETAILS   | internship_id | INTERSHIPS       | internship_id     |
-| INTERSHIP_DETAILS   | student_id    | STUDENTS         | student_id        |
+| INTERNSHIPS         | study_id      | STUDIES          | study_id          |
+| INTERNSHIP_DETAILS  | internship_id | INTERNSHIPS      | internship_id     |
+| INTERNSHIP_DETAILS  | student_id    | STUDENTS         | student_id        |
 | MEETINGS            | language_id   | LANGUAGES        | language_id       |
 | WEBINARS            | language_id   | LANGUAGES        | language_id       |
 | MEETINGS            | module_id     | MODULES          | module_id         |
