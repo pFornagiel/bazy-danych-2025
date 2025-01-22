@@ -17,7 +17,7 @@ def generate_product_details(save_path: str):
     product_usage = defaultdict(int)
 
     # Randomly select 175 unique students
-    students = random.sample(data["STUDENTS"], 120)
+    students = random.sample(data["STUDENTS"], 195)
 
     # Initialize the final SQL script
     final_sql_script = f"""
@@ -85,3 +85,4 @@ def generate_product_details(save_path: str):
     with open(path, 'w') as output_file:
         output_file.write(final_sql_script)
 
+generate_product_details("")

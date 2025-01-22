@@ -95,7 +95,7 @@ BEGIN
     JOIN MEETINGS m ON md.meeting_id = m.meeting_id
     JOIN SESSIONS sess ON m.session_id = sess.session_id
     JOIN SUBJECTS subj ON sess.subject_id = subj.subject_id
-    WHERE subj.study_id = @StudyId;
+    WHERE subj.study_id = @StudyId AND md.student_id = @StudentId;
 
     SELECT @AttendedMeetings = COUNT(*)
     FROM MEETING_DETAILS md
@@ -118,13 +118,15 @@ BEGIN
     FROM MEETING_DETAILS md
     JOIN MEETINGS m ON md.meeting_id = m.meeting_id
     JOIN MODULES mod ON m.module_id = mod.module_id
-    WHERE mod.course_id = @CourseId;
+    WHERE mod.course_id = @CourseId AND md.student_id = @StudentId;
+    -- WHERE mod.course_id = @CourseId
 
     SELECT @AttendedMeetings = COUNT(*)
     FROM MEETING_DETAILS md
     JOIN MEETINGS m ON md.meeting_id = m.meeting_id
     JOIN MODULES mod ON m.module_id = mod.module_id
     WHERE mod.course_id = @CourseId AND md.student_id = @StudentId AND md.attendance = 1;
+
 
     RETURN ISNULL((@AttendedMeetings * 100.0) / NULLIF(@TotalMeetings, 0), 0);
 END;
@@ -140,7 +142,7 @@ BEGIN
     FROM MEETING_DETAILS md
     JOIN MEETINGS m ON md.meeting_id = m.meeting_id
     JOIN SESSIONS sess ON m.session_id = sess.session_id
-    WHERE sess.subject_id = @SubjectId;
+    WHERE sess.subject_id = @SubjectId AND md.student_id = @StudentId;
 
     -- Count attended meetings for the subject by the student
     SELECT @AttendedMeetings = COUNT(*)
@@ -160,13 +162,15 @@ RETURNS BIT
 AS
 BEGIN
     DECLARE @Attendance DECIMAL(5, 2);
-
+    DECLARE @Internship_pass INT;
     -- Get attendance percentage
     SET @Attendance = dbo.GetAttendanceForStudy(@StudentId, @StudyId);
+    SET @Internship_pass = dbo.CheckInternshipsPass(@StudentId, @StudyId);
 
     -- Return 1 if attendance >= 80%, otherwise return 0
     RETURN CASE
-        WHEN @Attendance >= 80 THEN 1
+        when dbo.GetStudyEndDate(@StudyId) > GETDATE() then null
+        WHEN @Attendance >= 80 and @Internship_pass = 1 THEN 1
         ELSE 0
     END;
 END;
@@ -182,12 +186,14 @@ BEGIN
 
     -- Return 1 if attendance >= 80%, otherwise return 0
     RETURN CASE
+        when dbo.GetCourseEndDate(@CourseId) > GETDATE() then null
         WHEN @Attendance >= 80 THEN 1
         ELSE 0
     END;
 END;
 GO
 
+drop FUNCTION DoesStudentPassSubject
 CREATE FUNCTION DoesStudentPassSubject(@StudentId INT, @SubjectId INT)
 RETURNS BIT
 AS
@@ -198,36 +204,40 @@ BEGIN
     SET @Attendance = dbo.GetAttendanceForSubject(@StudentId, @SubjectId);
 
     -- Return 1 if attendance is above or equal to 80%, else return 0
-    RETURN CASE WHEN @Attendance >= 80 THEN 1 ELSE 0 END;
+    RETURN CASE
+        when dbo.GetSubjectEndDate(@SubjectId) > GETDATE() then null
+        WHEN @Attendance >= 80 THEN 1
+        ELSE 0
+    END;
 END;
 GO
 
 
 -- Function 4: Check if student passes internships
-CREATE FUNCTION DoesStudentPassInternship(@StudentId INT)
-RETURNS BIT
-AS
-BEGIN
-    DECLARE @Result bit = 0
-    IF EXISTS (SELECT 1 FROM INTERNSHIP_DETAILS WHERE @StudentId=student_id)
-    BEGIN
-        IF NOT EXISTS (
-            SELECT 1
-            FROM INTERNSHIP_DETAILS id
-            JOIN INTERNSHIPS i ON i.internship_id=id.internship_id
-            WHERE id.student_id=@StudentId AND i.end_date>GETDATE()
-        )
-        BEGIN
-            IF NOT EXISTS (
-                SELECT 1
-                FROM INTERNSHIP_DETAILS id
-                WHERE id.student_id=@StudentId and id.passed=0
-            )
-            SET @Result=1
-        END
-    END
-    RETURN @Result;
-END
+-- CREATE FUNCTION DoesStudentPassInternship(@StudentId INT)
+-- RETURNS BIT
+-- AS
+-- BEGIN
+--     DECLARE @Result bit = 0
+--     IF EXISTS (SELECT 1 FROM INTERNSHIP_DETAILS WHERE @StudentId=student_id)
+--     BEGIN
+--         IF NOT EXISTS (
+--             SELECT 1
+--             FROM INTERNSHIP_DETAILS id
+--             JOIN INTERNSHIPS i ON i.internship_id=id.internship_id
+--             WHERE id.student_id=@StudentId AND i.end_date>GETDATE()
+--         )
+--         BEGIN
+--             IF NOT EXISTS (
+--                 SELECT 1
+--                 FROM INTERNSHIP_DETAILS id
+--                 WHERE id.student_id=@StudentId and id.passed=0
+--             )
+--             SET @Result=1
+--         END
+--     END
+--     RETURN @Result;
+-- END
 
 --FOO
 CREATE FUNCTION GetStudySchedule(@StudyId INT)
@@ -417,3 +427,74 @@ BEGIN
 
     RETURN @Conflicts;
 END;
+
+
+CREATE FUNCTION dbo.CheckInternshipsPass
+    (@student_id INT,
+     @study_id INT)
+RETURNS BIT
+AS
+BEGIN
+    DECLARE @result BIT
+    DECLARE @hasNull BIT = 0
+    DECLARE @totalInternships INT
+    DECLARE @passedInternships INT
+
+    -- Get total number of internships and number of passed internships
+    SELECT
+        @totalInternships = COUNT(id.internship_id),
+        @passedInternships = SUM(CAST(id.passed AS INT)),
+        @hasNull = CASE
+            WHEN SUM(CASE WHEN id.passed IS NULL THEN 1 ELSE 0 END) > 0 THEN 1
+            ELSE 0
+        END
+    FROM INTERNSHIPS i
+    JOIN INTERNSHIP_DETAILS id ON i.internship_id = id.internship_id
+                             AND id.student_id = @student_id
+    WHERE i.study_id = @study_id
+
+    -- If there are no internships, return NULL
+    IF @totalInternships = 0
+        RETURN NULL
+
+    -- If any internship is still in progress (NULL), return NULL
+    IF @hasNull = 1
+        RETURN NULL
+
+    -- If all internships are completed and passed
+    IF @totalInternships = @passedInternships
+        SET @result = 1
+    ELSE
+        SET @result = 0
+
+    RETURN @result
+END;
+
+CREATE PROCEDURE dbo.UpdateProductDetailsPassed
+AS
+BEGIN
+    -- Update for Studies (type_id = 1)
+    UPDATE pd
+    SET pd.passed = dbo.DoesStudentPassStudy(pd.student_id, s.study_id)
+    FROM PRODUCT_DETAILS pd
+    JOIN PRODUCTS p ON p.product_id = pd.product_id
+    JOIN STUDIES s ON s.study_id = p.product_id
+    WHERE p.type_id = 1
+
+    -- Update for Subjects (type_id = 2)
+    UPDATE pd
+    SET pd.passed = dbo.DoesStudentPassSubject(pd.student_id, s.subject_id)
+    FROM PRODUCT_DETAILS pd
+    JOIN PRODUCTS p ON p.product_id = pd.product_id
+    JOIN SUBJECTS s ON s.subject_id = p.product_id
+    WHERE p.type_id = 2
+
+    -- Update for Courses (type_id = 3)
+    UPDATE pd
+    SET pd.passed = dbo.DoesStudentPassCourse(pd.student_id, c.course_id)
+    FROM PRODUCT_DETAILS pd
+    JOIN PRODUCTS p ON p.product_id = pd.product_id
+    JOIN COURSES c ON c.course_id = p.product_id
+    WHERE p.type_id = 3
+END;
+

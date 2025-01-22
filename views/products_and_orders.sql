@@ -2,17 +2,21 @@ create view PRODUCT_VACANCIES as
 select product_id as product_id, dbo.GetVacanciesForProduct(product_id) as vacancies
 from PRODUCTS
 ;
+select user_id,count(*) from USERS_IN_DEBT
+group by user_id
+
+
+drop VIEW USERS_IN_DEBT
 CREATE VIEW USERS_IN_DEBT AS
 SELECT DISTINCT
     u.user_id,
     u.first_name,
     u.last_name,
     u.email,
-    s.session_id,
     COALESCE(s.session_id, m.module_id, w.webinar_id) AS product_reference_id,
     CASE
         WHEN s.session_id IS NOT NULL THEN 'Study Session'
-        WHEN m.module_id IS NOT NULL THEN 'Course Module'
+        WHEN m.module_id IS NOT NULL THEN 'Course'
         WHEN w.webinar_id IS NOT NULL THEN 'Webinar'
     END AS product_type,
     p.price AS amount_to_pay
@@ -27,8 +31,7 @@ FROM
         COALESCE(s.session_id, m.module_id, w.webinar_id)
     )
 WHERE
-    md.attendance = 1  -- Student was present at the meeting
-    AND p.price > 0    -- Only check products that aren't free
+    p.price > 0    -- Only check products that aren't free
     AND NOT EXISTS (
         -- Check if student has paid for this product (session/module/webinar)
         SELECT 1
@@ -39,7 +42,7 @@ WHERE
             FROM PRODUCT_DETAILS
             WHERE student_id = u.user_id
         )
-        AND f.payment_date IS NOT NULL  -- Payment has been made
+        AND (f.payment_date IS NOT NULL and f.due_date < DATEADD(DAY, 3, getdate()))
     )
 
 
@@ -68,10 +71,6 @@ GROUP BY
     P.product_id,
     PT.type_name;
 
-from PRODUCTS
-join PRODUCT_TYPES on PRODUCTS.type_id=PRODUCT_TYPES.type_id
-join FEES on PRODUCTS.product_id = FEES.product_id
-group by PRODUCTS.product_id, PRODUCT_TYPES.type_name
 
 CREATE VIEW BILOCATION_REPORT AS
 WITH student_meetings AS (
