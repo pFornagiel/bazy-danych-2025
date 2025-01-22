@@ -21,7 +21,7 @@ BEGIN
 
     -- Check if student already has access to any of the products
     IF EXISTS (
-      SELECT 1 
+      SELECT 1
       FROM @product_ids pid
       JOIN PRODUCT_DETAILS pd ON pid.product_id = pd.product_id
       WHERE pd.student_id = @student_id
@@ -81,7 +81,7 @@ BEGIN
       BEGIN
         EXEC [dbo].[createFeesForSubject] @order_id, @product_id;
       END
-      ELSE IF @type_id = 3 
+      ELSE IF @type_id = 3
       -- course
       BEGIN
         EXEC [dbo].[createFeesForCourse] @order_id, @product_id;
@@ -159,10 +159,10 @@ BEGIN
 
     -- Check if fee for this product already exists
     IF EXISTS (
-      SELECT 1 
+      SELECT 1
       FROM FEES
       JOIN ORDERS ON FEES.order_id = ORDERS.order_id
-      WHERE ORDERS.student_id = @student_id 
+      WHERE ORDERS.student_id = @student_id
       AND FEES.product_id = @product_id
       AND FEES.payment_date IS NOT NULL
     )
@@ -234,7 +234,7 @@ BEGIN
     SET @fee_value = (SELECT price FROM PRODUCTS WHERE product_id = @session_id);
 
     DECLARE @fee_id INT;
-    
+
     EXEC [dbo].[CreateFee]
       @order_id = @order_id,
       @product_id = @session_id,
@@ -425,9 +425,9 @@ BEGIN
     -- Add advance fee
     DECLARE @advance_value MONEY;
     SET @advance_value =  @product_price * @advance_share;
-    
+
     DECLARE @fee_id INT;
-    
+
     EXEC [dbo].[CreateFee]
       @order_id = @order_id,
       @product_id = @course_id,
@@ -437,13 +437,13 @@ BEGIN
       @fee_id = @fee_id OUTPUT;
 
     -- Add remaining fee for course
-    
+
     DECLARE @value_remaining MONEY;
     SET @value_remaining = @product_price * (1 - @advance_share)
 
     DECLARE @date_remaining datetime;
     SET @date_remaining = DATEADD(DAY, -3, @first_meeting_date);
-    
+
     EXEC [dbo].[CreateFee]
       @order_id = @order_id,
       @product_id = @course_id,
@@ -565,7 +565,7 @@ BEGIN
     BEGIN
       THROW 50001, 'Student już posiada ten produkt w koszyku.', 1;
     END
-    
+
     -- Add product to cart
     INSERT INTO SHOPPING_CART (student_id, product_id)
     VALUES (@student_id, @product_id);
@@ -676,55 +676,4 @@ BEGIN
 END;
 GO
 
--- moje
--- CREATE PROCEDURE [dbo].[UpdateFeePaymentDate]
---   @fee_id INT
--- AS
--- BEGIN
---   SET NOCOUNT ON;
---
---   BEGIN TRY
---     BEGIN TRANSACTION;
---
---     -- Validate fee exists
---     EXEC [dbo].[CheckFeeExists] @fee_id;
---
---     -- Update the fee with the current date as the payment date
---     UPDATE FEES
---     SET payment_date = GETDATE()
---     WHERE fee_id = @fee_id;
---
---     declare @type_id INT;
---     declare @student_id INT;
---     declare @order_id INT;
---     SELECT @type_id = type_id FROM FEES WHERE fee_id = @fee_id;
---     SELECT @student_id = ORDERS.student_id, @order_id = ORDERS.order_id  FROM FEES
---     join ORDERS on FEES.order_id = ORDERS.order_id
---     WHERE fee_id = @fee_id
---
---     IF(@type_id =4 OR @type_id=6)
---         BEGIN
---         SET NOCOUNT ON;
---
---     -- Get all products from cart for the student who just created an order
---         INSERT INTO PRODUCT_DETAILS (student_id, product_id, order_id, passed)
---         SELECT
---             @student_id,
---             f.product_id,
---             @order_id,
---             0
---         FROM FEES f
---         where f.order_id = @order_id
---     END
---
---     COMMIT TRANSACTION;
---     PRINT 'Data płatności została zaktualizowana pomyślnie.';
---   END TRY
---   BEGIN CATCH
---     IF @@TRANCOUNT > 0
---       ROLLBACK TRANSACTION;
---     THROW;
---   END CATCH
--- END;
--- GO
 

@@ -71,10 +71,6 @@ GROUP BY
     P.product_id,
     PT.type_name;
 
-from PRODUCTS
-join PRODUCT_TYPES on PRODUCTS.type_id=PRODUCT_TYPES.type_id
-join FEES on PRODUCTS.product_id = FEES.product_id
-group by PRODUCTS.product_id, PRODUCT_TYPES.type_name
 
 CREATE VIEW BILOCATION_REPORT AS
 WITH student_meetings AS (

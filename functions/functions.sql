@@ -95,7 +95,7 @@ BEGIN
     JOIN MEETINGS m ON md.meeting_id = m.meeting_id
     JOIN SESSIONS sess ON m.session_id = sess.session_id
     JOIN SUBJECTS subj ON sess.subject_id = subj.subject_id
-    WHERE subj.study_id = @StudyId;
+    WHERE subj.study_id = @StudyId AND md.student_id = @StudentId;
 
     SELECT @AttendedMeetings = COUNT(*)
     FROM MEETING_DETAILS md
@@ -118,13 +118,15 @@ BEGIN
     FROM MEETING_DETAILS md
     JOIN MEETINGS m ON md.meeting_id = m.meeting_id
     JOIN MODULES mod ON m.module_id = mod.module_id
-    WHERE mod.course_id = @CourseId;
+    WHERE mod.course_id = @CourseId AND md.student_id = @StudentId;
+    -- WHERE mod.course_id = @CourseId
 
     SELECT @AttendedMeetings = COUNT(*)
     FROM MEETING_DETAILS md
     JOIN MEETINGS m ON md.meeting_id = m.meeting_id
     JOIN MODULES mod ON m.module_id = mod.module_id
     WHERE mod.course_id = @CourseId AND md.student_id = @StudentId AND md.attendance = 1;
+
 
     RETURN ISNULL((@AttendedMeetings * 100.0) / NULLIF(@TotalMeetings, 0), 0);
 END;
@@ -140,7 +142,7 @@ BEGIN
     FROM MEETING_DETAILS md
     JOIN MEETINGS m ON md.meeting_id = m.meeting_id
     JOIN SESSIONS sess ON m.session_id = sess.session_id
-    WHERE sess.subject_id = @SubjectId;
+    WHERE sess.subject_id = @SubjectId AND md.student_id = @StudentId;
 
     -- Count attended meetings for the subject by the student
     SELECT @AttendedMeetings = COUNT(*)
@@ -153,6 +155,7 @@ BEGIN
     RETURN ISNULL((@AttendedMeetings * 100.0) / NULLIF(@TotalMeetings, 0), 0);
 END;
 GO
+
 
 CREATE FUNCTION DoesStudentPassStudy(@StudentId INT, @StudyId INT)
 RETURNS BIT
@@ -211,30 +214,30 @@ GO
 
 
 -- Function 4: Check if student passes internships
-CREATE FUNCTION DoesStudentPassInternship(@StudentId INT)
-RETURNS BIT
-AS
-BEGIN
-    DECLARE @Result bit = 0
-    IF EXISTS (SELECT 1 FROM INTERNSHIP_DETAILS WHERE @StudentId=student_id)
-    BEGIN
-        IF NOT EXISTS (
-            SELECT 1
-            FROM INTERNSHIP_DETAILS id
-            JOIN INTERNSHIPS i ON i.internship_id=id.internship_id
-            WHERE id.student_id=@StudentId AND i.end_date>GETDATE()
-        )
-        BEGIN
-            IF NOT EXISTS (
-                SELECT 1
-                FROM INTERNSHIP_DETAILS id
-                WHERE id.student_id=@StudentId and id.passed=0
-            )
-            SET @Result=1
-        END
-    END
-    RETURN @Result;
-END
+-- CREATE FUNCTION DoesStudentPassInternship(@StudentId INT)
+-- RETURNS BIT
+-- AS
+-- BEGIN
+--     DECLARE @Result bit = 0
+--     IF EXISTS (SELECT 1 FROM INTERNSHIP_DETAILS WHERE @StudentId=student_id)
+--     BEGIN
+--         IF NOT EXISTS (
+--             SELECT 1
+--             FROM INTERNSHIP_DETAILS id
+--             JOIN INTERNSHIPS i ON i.internship_id=id.internship_id
+--             WHERE id.student_id=@StudentId AND i.end_date>GETDATE()
+--         )
+--         BEGIN
+--             IF NOT EXISTS (
+--                 SELECT 1
+--                 FROM INTERNSHIP_DETAILS id
+--                 WHERE id.student_id=@StudentId and id.passed=0
+--             )
+--             SET @Result=1
+--         END
+--     END
+--     RETURN @Result;
+-- END
 
 --FOO
 CREATE FUNCTION GetStudySchedule(@StudyId INT)
@@ -495,6 +498,3 @@ BEGIN
     WHERE p.type_id = 3
 END;
 
-
-select * from PRODUCT_DETAILS
-where passed = 0
