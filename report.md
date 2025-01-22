@@ -78,11 +78,11 @@
     - [Course passes](#course-passes)
     - [Course_syllabus](#course_syllabus)
   - [Kategoria zamówienia i produkty](#kategoria-zamówienia-i-produkty)
-    - [PRODUCT VACANCIES](#product-vacancies)
-    - [USERS IN DEBT](#users-in-debt)
-    - [FINANCIAL REPORT](#financial-report)
-    - [BILOCATION REPORT](#bilocation-report)
-    - [PRODUCT OWNERS](#product-owners)
+    - [Product_vacancies](#product_vacancies)
+    - [Users_in_debt](#users-in-debt)
+    - [Financial_record](#financial-report)
+    - [Bilocation_record](#bilocation-report)
+    - [Product_owners](#product-owners)
     - [Product_payment_information](#product_payment_information)
     - [Unpaid special permissions](#unpaid-special-permissions)
     - [Product_information](#product_information)
@@ -156,33 +156,33 @@
     - [FillProductDetails](#fillproductdetails)
     - [MarkProductAsPassed](#markproductaspassed)
     - [UpdateProductDetails](#updateproductdetails)
+    - [UpdateProductDetailsPassed](#updateproductdetailspassed)
   - [MEETINGS](#meetings-1)
     - [FillMeetingDetails](#fillmeetingdetails)
 - [Funkcje](#funkcje)
   - [Kategoria zamówienia i produkty](#kategoria-zamówienia-i-produkty-1)
-    - [Wyliczenie wartości koszyka](#wyliczenie-wartości-koszyka)
-    - [Wyliczenie wartości zamówienia](#wyliczenie-wartości-zamówienia)
-    - [Sprawdzenie czy zjazd został zakupiony pojedynczo](#sprawdzenie-czy-zjazd-został-zakupiony-pojedynczo)
-    - [Znalezienie studiów do których należy sesja](#znalezienie-studiów-do-których-należy-sesja)
-    - [Wyliczenie wolnych miejsc dla danego produktu](#wyliczenie-wolnych-miejsc-dla-danego-produktu)
-    - [Sprawdzenie czy student posiada dany produkt](#sprawdzenie-czy-student-posiada-dany-produkt)
-    - [Sprawdzenie czy student może dodać produkt do koszyka](#sprawdzenie-czy-student-może-dodać-produkt-do-koszyka)
-    - [Sprawdzenie czy student może kupić produkt](#sprawdzenie-czy-student-może-kupić-produkt)
+    - [GetCartValue](#getcartvalue)
+    - [GetOrderValue](#getordervalue)
+    - [IsSingleProduct](#issingleproduct)
+    - [GetParentId](#getparentid)
+    - [GetVacanciesForProduct](#getvacanciesforproduct)
+    - [CheckStudentOwnsProduct](#checkstudentownsproduct)
+    - [CanAddToCart](#canaddtocart)
+    - [CanStudentBuyProduct](#canstudentbuyproduct)
   - [Kursy, studia i webinary](#kursy-studia-i-webinary)
-    - [Wyliczenie obecności studenta na danych studiach](#wyliczenie-obecności-studenta-na-danych-studiach)
-    - [Wyliczenie obecności studenta na danym kursie](#wyliczenie-obecności-studenta-na-danym-kursie)
-    - [Wyliczenie obecności studenta na danym przedmiocie](#wyliczenie-obecności-studenta-na-danym-przedmiocie)
-    - [Sprawdzenie czy student zdał praktyki](#sprawdzenie-czy-student-zdał-praktyki)
-    - [Sprawdzenie czy student zdał studia](#sprawdzenie-czy-student-zdał-studia)
-    - [Sprawdzenie czy student zdał kurs](#sprawdzenie-czy-student-zdał-kurs)
-    - [Sprawdzenie czy student zdał przedmiot](#sprawdzenie-czy-student-zdał-przedmiot)
-    - [Zwraca plan studiów w formie spotkań](#zwraca-plan-studiów-w-formie-spotkań)
-    - [Zwraca plan kursu w formie spotkań](#zwraca-plan-kursu-w-formie-spotkań)
-    - [Plan zajęć studenta](#plan-zajęć-studenta)
-    - [Plan zajęć nauczyciela](#plan-zajęć-nauczyciela)
-    - [Plan zajęć tłumacza](#plan-zajęć-tłumacza)
-    - [Sprawdzenie czy spotkanie koliduje z resztą planu użytkownika](#sprawdzenie-czy-spotkanie-koliduje-z-resztą-planu-użytkownika)
-    - [Akrualizuje zdanie studiów, kursów i przedmiotów w Product_details](#akrualizuje-zdanie-studiów-kursów-i-przedmiotów-w-product_details)
+    - [GetAttendanceForStudy](#getattendanceforstudy)
+    - [GetAttendanceForCourse](#getattendanceforcourse)
+    - [GetAttendanceForSubject](#getattendanceforsubject)
+    - [CheckInternshipsPass](#checkinternshipspass)
+    - [DoesStudentPassStudy](#doesstudentpassstudy)
+    - [DoesStudentPassCourse](#doesstudentpasscourse)
+    - [DoesStudentPassSubject](#doesstudentpasssubject)
+    - [GetStudySchedule](#getstudyschedule)
+    - [GetCourseSchedule](#getcourseschedule)
+    - [GetStudentTimetable](#getstudenttimetable)
+    - [GetTutorTimetable](#gettutortimetable)
+    - [GetTranslatorTimetable](#gettranslatortimetable)
+    - [CheckMeetingConflict](#checkmeetingconflict)
 - [Indeksy](#indeksy)
   - [Indeksy na kluczach obcych](#indeksy-na-kluczach-obcych)
     - [Tabela EMPLOYEES](#tabela-employees-1)
@@ -1498,7 +1498,7 @@ GROUP BY
 
 ## Kategoria zamówienia i produkty
 
-### PRODUCT VACANCIES
+### Product_vacancies
 
 Przedstawia ID produktu i wolne miejsca na dany produkt
 
@@ -1517,7 +1517,7 @@ from PRODUCTS p
 join WEBINARS w on p.product_id=w.webinar_id
 ```
 
-### USERS IN DEBT
+### Users_in_debt
 
 Przedstawia użytkowników którzy nie opłacili danej usługi, ale z niej skorzystali co wykazane jest na liście obecności
 
@@ -1562,7 +1562,7 @@ WHERE
 
 ```
 
-### FINANCIAL REPORT
+### Financial_report
 
 Przedstawia przychód dla każdego z produktów
 
@@ -1593,7 +1593,7 @@ GROUP BY
     PT.type_name;
 ```
 
-### BILOCATION REPORT
+### Bilocation_report
 
 Przedstawia studentów którzy mają kolizje wśród swoich zajęć oraz id spotkań, które kolidują. Nie sprawdzamy webinarów, bo to jednarozwa aktywność i student powinien mieć prawo zrobić sobie kolizje webinarem
 
@@ -1627,7 +1627,7 @@ JOIN
     );
 ```
 
-### PRODUCT OWNERS
+### Product_owners
 
 Przedstawia użytkowników i zakupione przez nich produkty wraz z numerem zamówienia do którego należy zakupiony przedmiot i datą zakupu
 
@@ -1664,7 +1664,7 @@ FROM
 
 ```
 
-### Unpaid special permissions
+### Unpaid_special_permissions
 
 Widok unpaid_special_permissions dla każdego klienta, któremu została odroczona płatność za
 zamówienie, pokazuje łączną kwotę jaką musi jeszcze dopłacić ze wszystkich zamówień.
@@ -4896,6 +4896,40 @@ END;
 GO
 ```
 
+### UpdateProductDetailsPassed
+
+Procedura `UpdateProductDetailsPassed` aktualizuje status zaliczenia wszystkich produktów dla wszystkich studentów.
+
+```sql
+CREATE PROCEDURE UpdateProductDetailsPassed
+AS
+BEGIN
+    -- Update for Studies (type_id = 1)
+    UPDATE pd
+    SET pd.passed = DoesStudentPassStudy(pd.student_id, s.study_id)
+    FROM PRODUCT_DETAILS pd
+    JOIN PRODUCTS p ON p.product_id = pd.product_id
+    JOIN STUDIES s ON s.study_id = p.product_id
+    WHERE p.type_id = 1
+
+    -- Update for Subjects (type_id = 2)
+    UPDATE pd
+    SET pd.passed = dbo.DoesStudentPassSubject(pd.student_id, s.subject_id)
+    FROM PRODUCT_DETAILS pd
+    JOIN PRODUCTS p ON p.product_id = pd.product_id
+    JOIN SUBJECTS s ON s.subject_id = p.product_id
+    WHERE p.type_id = 2
+
+    -- Update for Courses (type_id = 3)
+    UPDATE pd
+    SET pd.passed = dbo.DoesStudentPassCourse(pd.student_id, c.course_id)
+    FROM PRODUCT_DETAILS pd
+    JOIN PRODUCTS p ON p.product_id = pd.product_id
+    JOIN COURSES c ON c.course_id = p.product_id
+    WHERE p.type_id = 3
+END;
+```
+
 ## MEETINGS
 
 ### FillMeetingDetails
@@ -4949,7 +4983,17 @@ GO
 
 ## Kategoria zamówienia i produkty
 
-### Wyliczenie wartości koszyka
+### GetCartValue
+
+Funkcja `GetCartValue` oblicza łączną wartość produktów w koszyku studenta.
+
+Argumenty:
+
+- @StudentId INT - ID studenta, którego koszyk ma zostać wyceniony
+
+Zwraca:
+
+- MONEY - Suma cen wszystkich produktów w koszyku
 
 ```sql
 CREATE FUNCTION GetCartValue(@StudentId INT)
@@ -4965,7 +5009,17 @@ BEGIN
 END;
 ```
 
-### Wyliczenie wartości zamówienia
+### GetOrderValue
+
+Funkcja `GetOrderValue` oblicza łączną wartość zamówienia na podstawie wszystkich jego opłat.
+
+Argumenty:
+
+- @OrderId INT - ID zamówienia, którego wartość ma zostać obliczona
+
+Zwraca:
+
+- MONEY - Suma wartości wszystkich opłat w zamówieniu
 
 ```sql
 CREATE FUNCTION GetOrderValue(@OrderId INT)
@@ -4980,10 +5034,20 @@ BEGIN
 END;
 ```
 
-### Sprawdzenie czy zjazd został zakupiony pojedynczo
+### IsSingleProduct
+
+Funkcja `IsSingleProduct` sprawdza czy opłata dotyczy pojedynczego produktu (sesji) czy serii sesji.
+
+Argumenty:
+
+- @fee_id INT - ID opłaty do sprawdzenia
+
+Zwraca:
+
+- BIT - 1 jeśli opłata dotyczy pojedynczego produktu, 0 jeśli serii sesji
 
 ```sql
-CREATE FUNCTION isSingleProduct(@fee_id INT)
+CREATE FUNCTION IsSingleProduct(@fee_id INT)
 RETURNS BIT
 AS
 BEGIN
@@ -5002,28 +5066,48 @@ BEGIN
 END;
 ```
 
-### Znalezienie studiów do których należy sesja
+### GetParentId
+
+Funkcja `GetParentId` zwraca ID przedmiotu (subject_id) dla podanej sesji.
+
+Argumenty:
+
+- @session_id INT - ID sesji, dla której szukamy przedmiotu nadrzędnego
+
+Zwraca:
+
+- INT - ID przedmiotu (subject_id), do którego należy sesja
 
 ```sql
-CREATE FUNCTION getParentId(@session_id INT)
+CREATE FUNCTION GetParentId(@session_id INT)
 RETURNS INT
 AS
 BEGIN
-    DECLARE @study_id INT;
+    DECLARE @subject_id INT;
 
     SELECT
-        @study_id = s.subject_id
+        @subject_id = s.subject_id
     FROM
         SESSIONS ses
     JOIN SUBJECTS s ON ses.subject_id = s.subject_id
     WHERE
         ses.session_id = @session_id;
 
-    RETURN @study_id;
+    RETURN @subject_id;
 END;
 ```
 
-### Wyliczenie wolnych miejsc dla danego produktu
+### GetVacanciesForProduct
+
+Funkcja `GetVacanciesForProduct` oblicza liczbę wolnych miejsc dla danego produktu.
+
+Argumenty:
+
+- @ProductId INT - ID produktu, dla którego sprawdzamy dostępne miejsca
+
+Zwraca:
+
+- INT - Liczba wolnych miejsc (różnica między maksymalną liczbą miejsc a liczbą zapisanych studentów)
 
 ```sql
 CREATE FUNCTION GetVacanciesForProduct(@ProductId INT)
@@ -5044,7 +5128,18 @@ BEGIN
 END;
 ```
 
-### Sprawdzenie czy student posiada dany produkt
+### CheckStudentOwnsProduct
+
+Funkcja `CheckStudentOwnsProduct` sprawdza czy student posiada dostęp do danego produktu.
+
+Argumenty:
+
+- @student_id INT - ID studenta do sprawdzenia
+- @product_id INT - ID produktu do sprawdzenia
+
+Zwraca:
+
+- BIT - 1 jeśli student ma dostęp do produktu, 0 jeśli nie
 
 ```sql
 CREATE FUNCTION CheckStudentOwnsProduct(@student_id INT, @product_id INT)
@@ -5068,7 +5163,18 @@ BEGIN
 END;
 ```
 
-### Sprawdzenie czy student może dodać produkt do koszyka
+### CanAddToCart
+
+Funkcja `CanAddToCart` sprawdza czy produkt może zostać dodany do koszyka studenta.
+
+Argumenty:
+
+- @StudentId INT - ID studenta, do którego koszyka chcemy dodać produkt
+- @ProductId INT - ID produktu, który chcemy dodać do koszyka
+
+Zwraca:
+
+- BIT - 1 jeśli produkt może zostać dodany, 0 jeśli nie
 
 ```sql
 CREATE FUNCTION CanAddToCart(@StudentId INT, @ProductId INT)
@@ -5100,7 +5206,18 @@ BEGIN
 END;
 ```
 
-### Sprawdzenie czy student może kupić produkt
+### CanStudentBuyProduct
+
+Funkcja `CanStudentBuyProduct` sprawdza czy student może zakupić dany produkt na podstawie dostępności miejsc.
+
+Argumenty:
+
+- @StudentId INT - ID studenta chcącego zakupić produkt
+- @ProductId INT - ID produktu do zakupu
+
+Zwraca:
+
+- BIT - 1 jeśli zakup jest możliwy, 0 jeśli nie
 
 ```sql
 CREATE FUNCTION CanStudentBuyProduct(@StudentId INT, @ProductId INT)
@@ -5122,7 +5239,18 @@ END;
 
 ## Kursy, studia i webinary
 
-### Wyliczenie obecności studenta na danych studiach
+### GetAttendanceForStudy
+
+Funkcja `GetAttendanceForStudy` oblicza procentową frekwencję studenta na wszystkich spotkaniach w ramach studiów.
+
+Argumenty:
+
+- @StudentId INT - ID studenta, którego frekwencję sprawdzamy
+- @StudyId INT - ID studiów, dla których sprawdzamy frekwencję
+
+Zwraca:
+
+- DECIMAL(5,2) - Procent obecności (0-100)
 
 ```sql
 CREATE FUNCTION GetAttendanceForStudy(@StudentId INT, @StudyId INT)
@@ -5149,7 +5277,18 @@ BEGIN
 END;
 ```
 
-### Wyliczenie obecności studenta na danym kursie
+### GetAttendanceForCourse
+
+Funkcja `GetAttendanceForCourse` oblicza procentową frekwencję studenta na wszystkich spotkaniach w ramach kursu.
+
+Argumenty:
+
+- @StudentId INT - ID studenta, którego frekwencję sprawdzamy
+- @CourseId INT - ID kursu, dla którego sprawdzamy frekwencję
+
+Zwraca:
+
+- DECIMAL(5,2) - Procent obecności (0-100)
 
 ```sql
 CREATE FUNCTION GetAttendanceForCourse(@StudentId INT, @CourseId INT)
@@ -5176,7 +5315,18 @@ BEGIN
 END;
 ```
 
-### Wyliczenie obecności studenta na danym przedmiocie
+### GetAttendanceForSubject
+
+Funkcja `GetAttendanceForSubject` oblicza procentową frekwencję studenta na wszystkich spotkaniach w ramach przedmiotu.
+
+Argumenty:
+
+- @StudentId INT - ID studenta, którego frekwencję sprawdzamy
+- @SubjectId INT - ID przedmiotu, dla którego sprawdzamy frekwencję
+
+Zwraca:
+
+- DECIMAL(5,2) - Procent obecności (0-100)
 
 ```sql
 CREATE FUNCTION GetAttendanceForSubject(@StudentId INT, @SubjectId INT)
@@ -5204,10 +5354,21 @@ BEGIN
 END;
 ```
 
-### Sprawdzenie czy student zdał praktyki
+### CheckInternshipsPass
+
+Funkcja `CheckInternshipsPass` sprawdza czy student zaliczył wszystkie praktyki w ramach studiów.
+
+Argumenty:
+
+- @student_id INT - ID studenta, którego praktyki sprawdzamy
+- @study_id INT - ID studiów, dla których sprawdzamy praktyki
+
+Zwraca:
+
+- BIT - NULL jeśli brak praktyk lub są niezakończone praktyki, 1 jeśli wszystkie zaliczone, 0 jeśli któraś niezaliczona
 
 ```sql
-CREATE FUNCTION dbo.CheckInternshipsPass
+CREATE FUNCTION CheckInternshipsPass
     (@student_id INT,
      @study_id INT)
 RETURNS BIT
@@ -5249,7 +5410,18 @@ BEGIN
 END;
 ```
 
-### Sprawdzenie czy student zdał studia
+### DoesStudentPassStudy
+
+Funkcja `DoesStudentPassStudy` sprawdza czy student zaliczył studia na podstawie frekwencji i zaliczenia praktyk.
+
+Argumenty:
+
+- @StudentId INT - ID studenta do sprawdzenia
+- @StudyId INT - ID studiów do sprawdzenia
+
+Zwraca:
+
+- BIT - NULL jeśli studia się jeszcze nie zakończyły, 1 jeśli zaliczone, 0 jeśli niezaliczone
 
 ```sql
 CREATE FUNCTION DoesStudentPassStudy(@StudentId INT, @StudyId INT)
@@ -5271,7 +5443,18 @@ BEGIN
 END;
 ```
 
-### Sprawdzenie czy student zdał kurs
+### DoesStudentPassCourse
+
+Funkcja `DoesStudentPassCourse` sprawdza czy student zaliczył kurs na podstawie frekwencji.
+
+Argumenty:
+
+- @StudentId INT - ID studenta do sprawdzenia
+- @CourseId INT - ID kursu do sprawdzenia
+
+Zwraca:
+
+- BIT - NULL jeśli kurs się jeszcze nie zakończył, 1 jeśli zaliczony, 0 jeśli niezaliczony
 
 ```sql
 CREATE FUNCTION DoesStudentPassCourse(@StudentId INT, @CourseId INT)
@@ -5291,7 +5474,18 @@ BEGIN
 END;
 ```
 
-### Sprawdzenie czy student zdał przedmiot
+### DoesStudentPassSubject
+
+Funkcja `DoesStudentPassSubject` sprawdza czy student zaliczył przedmiot na podstawie frekwencji.
+
+Argumenty:
+
+- @StudentId INT - ID studenta do sprawdzenia
+- @SubjectId INT - ID przedmiotu do sprawdzenia
+
+Zwraca:
+
+- BIT - NULL jeśli przedmiot się jeszcze nie zakończył, 1 jeśli zaliczony, 0 jeśli niezaliczony
 
 ```sql
 CREATE FUNCTION DoesStudentPassSubject(@StudentId INT, @SubjectId INT)
@@ -5313,7 +5507,21 @@ END;
 GO
 ```
 
-### Zwraca plan studiów w formie spotkań
+### GetStudySchedule
+
+Funkcja `GetStudySchedule` zwraca harmonogram wszystkich spotkań w ramach studiów.
+
+Argumenty:
+
+- @StudyId INT - ID studiów, których harmonogram chcemy pobrać
+
+Zwracana tabela:
+
+- meeting_id - ID spotkania
+- meeting_name - Nazwa spotkania
+- term - Termin spotkania
+- duration - Czas trwania
+- language_name - Nazwa języka
 
 ```sql
 CREATE FUNCTION GetStudySchedule(@StudyId INT)
@@ -5332,7 +5540,21 @@ RETURN (
 );
 ```
 
-### Zwraca plan kursu w formie spotkań
+### GetCourseSchedule
+
+Funkcja `GetCourseSchedule` zwraca harmonogram wszystkich spotkań w ramach kursu.
+
+Argumenty:
+
+- @CourseId INT - ID kursu, którego harmonogram chcemy pobrać
+
+Zwracana tabela:
+
+- meeting_id - ID spotkania
+- meeting_name - Nazwa spotkania
+- term - Termin spotkania
+- duration - Czas trwania
+- language_name - Nazwa języka
 
 ```sql
 CREATE FUNCTION GetCourseSchedule(@CourseId INT)
@@ -5350,7 +5572,21 @@ RETURN (
 );
 ```
 
-### Plan zajęć studenta
+### GetStudentTimetable
+
+Funkcja `GetStudentTimetable` zwraca harmonogram wszystkich spotkań studenta.
+
+Argumenty:
+
+- @StudentId INT - ID studenta, którego harmonogram chcemy pobrać
+
+Zwracana tabela:
+
+- meeting_id - ID spotkania
+- meeting_name - Nazwa spotkania
+- term - Termin spotkania
+- duration - Czas trwania
+- language_name - Nazwa języka
 
 ```sql
 CREATE FUNCTION GetStudentTimetable(@StudentId INT)
@@ -5366,7 +5602,21 @@ RETURN (
 );
 ```
 
-### Plan zajęć nauczyciela
+### GetTutorTimetable
+
+Funkcja `GetTutorTimetable` zwraca harmonogram wszystkich spotkań prowadzącego.
+
+Argumenty:
+
+- @EmployeeId INT - ID prowadzącego, którego harmonogram chcemy pobrać
+
+Zwracana tabela:
+
+- meeting_id - ID spotkania
+- meeting_name - Nazwa spotkania
+- term - Termin spotkania
+- duration - Czas trwania
+- language_name - Nazwa języka
 
 ```sql
 CREATE FUNCTION GetTutorTimetable(@EmployeeId INT)
@@ -5381,7 +5631,21 @@ RETURN (
 );
 ```
 
-### Plan zajęć tłumacza
+### GetTranslatorTimetable
+
+Funkcja `GetTranslatorTimetable` zwraca harmonogram wszystkich spotkań tłumacza.
+
+Argumenty:
+
+- @EmployeeId INT - ID tłumacza, którego harmonogram chcemy pobrać
+
+Zwracana tabela:
+
+- meeting_id - ID spotkania
+- meeting_name - Nazwa spotkania
+- term - Termin spotkania
+- duration - Czas trwania
+- language_name - Nazwa języka
 
 ```sql
 CREATE FUNCTION GetTranslatorTimetable(@EmployeeId INT)
@@ -5396,7 +5660,18 @@ RETURN (
 );
 ```
 
-### Sprawdzenie czy spotkanie koliduje z resztą planu użytkownika
+### CheckMeetingConflict
+
+Funkcja `CheckMeetingConflict` sprawdza czy istnieje konflikt czasowy dla uczestnika spotkania (student/prowadzący/tłumacz).
+
+Argumenty:
+
+- @Id INT - ID osoby (student_id/tutor_id/translator_id) do sprawdzenia
+- @MeetingId INT - ID spotkania do sprawdzenia
+
+Zwraca:
+
+- BIT - 1 jeśli wykryto konflikt, 0 jeśli brak konfliktu
 
 ```sql
 CREATE FUNCTION CheckMeetingConflict(@Id INT, @MeetingId INT)
@@ -5448,7 +5723,18 @@ BEGIN
 END;
 ```
 
-Zwraca ramy czasowe kursu
+### GetCourseStartEndDate
+
+Funkcja `GetCourseStartEndDate` zwraca datę rozpoczęcia i zakończenia kursu na podstawie terminów spotkań.
+
+Argumenty:
+
+- @course_id INT - ID kursu, którego daty chcemy pobrać
+
+Zwracana tabela:
+
+- start_date - Data pierwszego spotkania w ramach kursu
+- end_date - Data ostatniego spotkania w ramach kursu
 
 ```sql
 CREATE FUNCTION GetCourseStartEndDate(@course_id INT)
@@ -5463,7 +5749,7 @@ RETURN
     WHERE m.module_id IS NOT NULL AND mo.course_id = @course_id;
 ```
 
-Zwraca łączną liczbe spotkań danego typu dla course_id
+### GetMeetingTypeCounts
 
 ```sql
 CREATE FUNCTION GetMeetingTypeCounts(@module_id INT)
@@ -5486,7 +5772,20 @@ RETURN
          WHERE m.module_id = @module_id) AS async_MEETINGS_count;
 ```
 
-Zwraca łączną liczbe spotkań danego typu dla course_id
+### GetMeetingTypeCounts
+
+Funkcja `GetMeetingTypeCounts` zlicza ilość spotkań każdego typu w ramach modułu.
+
+Argumenty:
+
+- @module_id INT - ID modułu, dla którego zliczamy spotkania
+
+Zwracana tabela:
+
+- module_id - ID modułu
+- STATIONARY_MEETINGS_count - Liczba spotkań stacjonarnych
+- sync_MEETINGS_count - Liczba spotkań synchronicznych
+- async_MEETINGS_count - Liczba spotkań asynchronicznych
 
 ```sql
 CREATE FUNCTION GetMeetingTypeCounts(@module_id INT)
@@ -5507,38 +5806,6 @@ RETURN
          FROM MEETINGS m
          JOIN ASYNC_MEETINGS am ON am.meeting_id = m.meeting_id
          WHERE m.module_id = @module_id) AS async_MEETINGS_count;
-```
-
-### Akrualizuje zdanie studiów, kursów i przedmiotów w Product_details
-
-```sql
-CREATE PROCEDURE dbo.UpdateProductDetailsPassed
-AS
-BEGIN
-    -- Update for Studies (type_id = 1)
-    UPDATE pd
-    SET pd.passed = dbo.DoesStudentPassStudy(pd.student_id, s.study_id)
-    FROM PRODUCT_DETAILS pd
-    JOIN PRODUCTS p ON p.product_id = pd.product_id
-    JOIN STUDIES s ON s.study_id = p.product_id
-    WHERE p.type_id = 1
-
-    -- Update for Subjects (type_id = 2)
-    UPDATE pd
-    SET pd.passed = dbo.DoesStudentPassSubject(pd.student_id, s.subject_id)
-    FROM PRODUCT_DETAILS pd
-    JOIN PRODUCTS p ON p.product_id = pd.product_id
-    JOIN SUBJECTS s ON s.subject_id = p.product_id
-    WHERE p.type_id = 2
-
-    -- Update for Courses (type_id = 3)
-    UPDATE pd
-    SET pd.passed = dbo.DoesStudentPassCourse(pd.student_id, c.course_id)
-    FROM PRODUCT_DETAILS pd
-    JOIN PRODUCTS p ON p.product_id = pd.product_id
-    JOIN COURSES c ON c.course_id = p.product_id
-    WHERE p.type_id = 3
-END;
 ```
 
 # Indeksy
