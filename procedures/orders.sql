@@ -4,7 +4,6 @@ CREATE TYPE dbo.productIdList AS TABLE (
 );
 
 -- Add new order
-drop PROCEDURE [dbo].[CreateOrder]
 CREATE PROCEDURE [dbo].[CreateOrder]
   @student_id INT,
   @product_ids dbo.productIdList READONLY,  -- productIdList type
@@ -118,6 +117,42 @@ BEGIN
         FROM @product_ids pid
     END
 
+    -- Add meeting details for each product type
+    -- For studies (type_id = 1)
+    INSERT INTO MEETING_DETAILS (meeting_id, student_id)
+    SELECT DISTINCT m.meeting_id, @student_id
+    FROM @product_ids pid
+    JOIN PRODUCTS p ON pid.product_id = p.product_id
+    JOIN SUBJECTS s ON s.study_id = pid.product_id
+    JOIN SESSIONS ses ON ses.subject_id = s.subject_id
+    JOIN MEETINGS m ON m.session_id = ses.session_id
+    WHERE p.type_id = 1;
+
+    -- For subjects (type_id = 2)
+    INSERT INTO MEETING_DETAILS (meeting_id, student_id)
+    SELECT DISTINCT m.meeting_id, @student_id
+    FROM @product_ids pid
+    JOIN PRODUCTS p ON pid.product_id = p.product_id
+    JOIN SESSIONS ses ON ses.subject_id = pid.product_id
+    JOIN MEETINGS m ON m.session_id = ses.session_id
+    WHERE p.type_id = 2;
+
+    -- For courses (type_id = 3)
+    INSERT INTO MEETING_DETAILS (meeting_id, student_id)
+    SELECT DISTINCT m.meeting_id, @student_id
+    FROM @product_ids pid
+    JOIN PRODUCTS p ON pid.product_id = p.product_id
+    JOIN MODULES mod ON mod.course_id = pid.product_id
+    JOIN MEETINGS m ON m.module_id = mod.module_id
+    WHERE p.type_id = 3;
+
+    -- For sessions (type_id = 5)
+    INSERT INTO MEETING_DETAILS (meeting_id, student_id)
+    SELECT DISTINCT m.meeting_id, @student_id
+    FROM @product_ids pid
+    JOIN PRODUCTS p ON pid.product_id = p.product_id
+    JOIN MEETINGS m ON m.session_id = pid.product_id
+    WHERE p.type_id = 5;
 
     COMMIT TRANSACTION;
     PRINT 'Zamówienie utworzone pomyślnie.';
@@ -618,7 +653,6 @@ END;
 GO
 
 -- Update fee information by filling in the current date as the payment date
-drop PROCEDURE [dbo].[UpdateFeePaymentDate]
 CREATE PROCEDURE [dbo].[UpdateFeePaymentDate]
   @fee_id INT
 AS
