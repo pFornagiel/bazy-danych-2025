@@ -59,7 +59,6 @@ def generate_markdown_documentation(tables, foreign):
     doc += "|-------------|-----------|------------|\n"
     for column in table['columns']:
       foreign_value = 'Foreign Key' if any(d.get('table_name') == table['name'][10:-1:] for d in foreign) else ''
-      print([(d.get('table_name'), table['name'][10:-1:]) for d in foreign])
       value = 'Primary Key<br>Foreign Key' if foreign_value else 'Primary Key'
       doc += f"| {column['name']} | {column['type']} | {value if column['name'] in table['pk'] else ''} |\n"
     doc += "\n"
@@ -75,10 +74,9 @@ def generate_markdown_for_foreign_keys(foreign_keys):
 
 
 sql_script = ""
-with open(os.path.join('data/sql/bazy-danych-2025_create.sql'), 'r') as file:
+with open(os.path.join('..','data','sql','create_database.sql'), 'r') as file:
   sql_script = "".join(file.readlines()[4::]) 
 
-# print(parse_foreign_keys(sql_script))
 parsed_main = parse_sql(sql_script)
 parsed_foreign = parse_foreign_keys(sql_script)
 documentation = generate_markdown_documentation(parsed_main, parsed_foreign)

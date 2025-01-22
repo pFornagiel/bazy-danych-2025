@@ -7,7 +7,7 @@
 
 **Autorzy:** Dariusz Marecik, Filip Węgrzyn, Paweł Fornagiel
 
-**Link do repozytorium git**: https://github.com/pFornagiel/bazy-danych-2025
+**Link do repozytorium GitHub**: https://github.com/pFornagiel/bazy-danych-2025
 
 ---
 
@@ -30,17 +30,17 @@
     - [Tabela USERS](#tabela-users)
     - [Tabela STUDENTS](#tabela-students)
     - [Tabela EMPLOYEES](#tabela-employees)
-    - [Tabela EMPLOYEES\_TYPES](#tabela-employees_types)
+    - [Tabela EMPLOYEES_TYPES](#tabela-employees_types)
     - [Tabela COUNTRIES](#tabela-countries)
   - [Kategoria Products](#kategoria-products)
     - [Tabela Products](#tabela-products)
-    - [Tabela PRODUCT\_DETAILS](#tabela-product_details)
-    - [Tabela PRODUCT\_TYPES](#tabela-product_types)
-    - [Tabela SHOPPING\_CART](#tabela-shopping_cart)
+    - [Tabela PRODUCT_DETAILS](#tabela-product_details)
+    - [Tabela PRODUCT_TYPES](#tabela-product_types)
+    - [Tabela SHOPPING_CART](#tabela-shopping_cart)
   - [Kategoria Orders](#kategoria-orders)
     - [Tabela ORDERS](#tabela-orders)
     - [Tabela FEES](#tabela-fees)
-    - [Tabela FEE\_TYPES](#tabela-fee_types)
+    - [Tabela FEE_TYPES](#tabela-fee_types)
   - [Kategoria Webinars](#kategoria-webinars)
     - [Tabela Webinars](#tabela-webinars)
   - [Kategoria COURSES](#kategoria-courses)
@@ -51,56 +51,56 @@
     - [Tabela SUBJECTS](#tabela-subjects)
   - [Tabela SESSIONS](#tabela-sessions)
     - [Tabela InternshipS](#tabela-internships)
-    - [Tabela Internship\_DETAILS](#tabela-internship_details)
+    - [Tabela Internship_DETAILS](#tabela-internship_details)
   - [Kategoria MEETINGS](#kategoria-meetings)
     - [Tabela MEETINGS](#tabela-meetings)
-    - [Tabela MEETING\_DETAILS](#tabela-meeting_details)
-    - [Tabela ASYNC\_MEETINGS](#tabela-async_meetings)
-    - [Tabela SYNC\_MEETINGS](#tabela-sync_meetings)
-    - [Tabela STATIONARY\_MEETINGS](#tabela-stationary_meetings)
+    - [Tabela MEETING_DETAILS](#tabela-meeting_details)
+    - [Tabela ASYNC_MEETINGS](#tabela-async_meetings)
+    - [Tabela SYNC_MEETINGS](#tabela-sync_meetings)
+    - [Tabela STATIONARY_MEETINGS](#tabela-stationary_meetings)
   - [Kategoria LANGUAGES](#kategoria-languages)
     - [Tabela LANGUAGES](#tabela-languages)
 - [Dokumentacja kluczy obcych](#dokumentacja-kluczy-obcych)
 - [Widoki](#widoki)
   - [Users](#users)
-    - [Student\_address](#student_address)
-    - [Emploee\_list](#emploee_list)
-    - [User\_information](#user_information)
-    - [Regular\_customers](#regular_customers)
+    - [Student_address](#student_address)
+    - [Emploee_list](#emploee_list)
+    - [User_information](#user_information)
+    - [Regular_customers](#regular_customers)
   - [Webinars](#webinars)
-    - [Webinar\_information](#webinar_information)
-    - [Webinar\_free\_entry](#webinar_free_entry)
-    - [Webinar\_available](#webinar_available)
+    - [Webinar_information](#webinar_information)
+    - [Webinar_free_entry](#webinar_free_entry)
+    - [Webinar_available](#webinar_available)
   - [Courses](#courses)
-    - [Course\_information](#course_information)
-    - [Course\_module\_meeting\_types](#course_module_meeting_types)
-    - [Course\_module\_information](#course_module_information)
+    - [Course_information](#course_information)
+    - [Course_module_meeting_types](#course_module_meeting_types)
+    - [Course_module_information](#course_module_information)
     - [Course passes](#course-passes)
-    - [Course\_syllabus](#course_syllabus)
+    - [Course_syllabus](#course_syllabus)
   - [Kategoria zamówienia i produkty](#kategoria-zamówienia-i-produkty)
-    - [PRODUCT VACANCIES](#product-vacancies)
-    - [USERS IN DEBT](#users-in-debt)
-    - [FINANCIAL REPORT](#financial-report)
-    - [BILOCATION REPORT](#bilocation-report)
-    - [PRODUCT OWNERS](#product-owners)
-    - [Product\_payment\_information](#product_payment_information)
+    - [Product_vacancies](#product_vacancies)
+    - [Users_in_debt](#users-in-debt)
+    - [Financial_record](#financial-report)
+    - [Bilocation_record](#bilocation-report)
+    - [Product_owners](#product-owners)
+    - [Product_payment_information](#product_payment_information)
     - [Unpaid special permissions](#unpaid-special-permissions)
-    - [Product\_information](#product_information)
+    - [Product_information](#product_information)
   - [Meetings](#meetings)
-    - [Attendance\_meeting](#attendance_meeting)
-    - [Future\_meeting\_attendee\_count](#future_meeting_attendee_count)
-    - [Meeting\_type](#meeting_type)
-    - [Only\_course\_meeting](#only_course_meeting)
-    - [Only\_studies\_meeting](#only_studies_meeting)
-    - [Room\_schedule](#room_schedule)
+    - [Attendance_meeting](#attendance_meeting)
+    - [Future_meeting_attendee_count](#future_meeting_attendee_count)
+    - [Meeting_type](#meeting_type)
+    - [Only_course_meeting](#only_course_meeting)
+    - [Only_studies_meeting](#only_studies_meeting)
+    - [Room_schedule](#room_schedule)
   - [Studies](#studies)
-    - [Study\_information](#study_information)
-    - [Study\_internship\_information](#study_internship_information)
-    - [Study\_meeting\_information](#study_meeting_information)
-    - [Study\_offers](#study_offers)
-    - [Study\_passed](#study_passed)
-    - [Study\_session\_schedule](#study_session_schedule)
-    - [Study\_syllabus](#study_syllabus)
+    - [Study_information](#study_information)
+    - [Study_internship_information](#study_internship_information)
+    - [Study_meeting_information](#study_meeting_information)
+    - [Study_offers](#study_offers)
+    - [Study_passed](#study_passed)
+    - [Study_session_schedule](#study_session_schedule)
+    - [Study_syllabus](#study_syllabus)
 - [Procedury](#procedury)
   - [Sprawdzanie poprawności danych przed operacją](#sprawdzanie-poprawności-danych-przed-operacją)
     - [CheckWebinarExists](#checkwebinarexists)
@@ -156,33 +156,33 @@
     - [FillProductDetails](#fillproductdetails)
     - [MarkProductAsPassed](#markproductaspassed)
     - [UpdateProductDetails](#updateproductdetails)
+    - [UpdateProductDetailsPassed](#updateproductdetailspassed)
   - [MEETINGS](#meetings-1)
     - [FillMeetingDetails](#fillmeetingdetails)
 - [Funkcje](#funkcje)
   - [Kategoria zamówienia i produkty](#kategoria-zamówienia-i-produkty-1)
-    - [Wyliczenie wartości koszyka](#wyliczenie-wartości-koszyka)
-    - [Wyliczenie wartości zamówienia](#wyliczenie-wartości-zamówienia)
-    - [Sprawdzenie czy zjazd został zakupiony pojedynczo](#sprawdzenie-czy-zjazd-został-zakupiony-pojedynczo)
-    - [Znalezienie studiów do których należy sesja](#znalezienie-studiów-do-których-należy-sesja)
-    - [Wyliczenie wolnych miejsc dla danego produktu](#wyliczenie-wolnych-miejsc-dla-danego-produktu)
-    - [Sprawdzenie czy student posiada dany produkt](#sprawdzenie-czy-student-posiada-dany-produkt)
-    - [Sprawdzenie czy student może dodać produkt do koszyka](#sprawdzenie-czy-student-może-dodać-produkt-do-koszyka)
-    - [Sprawdzenie czy student może kupić produkt](#sprawdzenie-czy-student-może-kupić-produkt)
+    - [GetCartValue](#getcartvalue)
+    - [GetOrderValue](#getordervalue)
+    - [IsSingleProduct](#issingleproduct)
+    - [GetParentId](#getparentid)
+    - [GetVacanciesForProduct](#getvacanciesforproduct)
+    - [CheckStudentOwnsProduct](#checkstudentownsproduct)
+    - [CanAddToCart](#canaddtocart)
+    - [CanStudentBuyProduct](#canstudentbuyproduct)
   - [Kursy, studia i webinary](#kursy-studia-i-webinary)
-    - [Wyliczenie obecności studenta na danych studiach](#wyliczenie-obecności-studenta-na-danych-studiach)
-    - [Wyliczenie obecności studenta na danym kursie](#wyliczenie-obecności-studenta-na-danym-kursie)
-    - [Wyliczenie obecności studenta na danym przedmiocie](#wyliczenie-obecności-studenta-na-danym-przedmiocie)
-    - [Sprawdzenie czy student zdał praktyki](#sprawdzenie-czy-student-zdał-praktyki)
-    - [Sprawdzenie czy student zdał studia](#sprawdzenie-czy-student-zdał-studia)
-    - [Sprawdzenie czy student zdał kurs](#sprawdzenie-czy-student-zdał-kurs)
-    - [Sprawdzenie czy student zdał przedmiot](#sprawdzenie-czy-student-zdał-przedmiot)
-    - [Zwraca plan studiów w formie spotkań](#zwraca-plan-studiów-w-formie-spotkań)
-    - [Zwraca plan kursu w formie spotkań](#zwraca-plan-kursu-w-formie-spotkań)
-    - [Plan zajęć studenta](#plan-zajęć-studenta)
-    - [Plan zajęć nauczyciela](#plan-zajęć-nauczyciela)
-    - [Plan zajęć tłumacza](#plan-zajęć-tłumacza)
-    - [Sprawdzenie czy spotkanie koliduje z resztą planu użytkownika](#sprawdzenie-czy-spotkanie-koliduje-z-resztą-planu-użytkownika)
-    - [Akrualizuje zdanie studiów, kursów i przedmiotów w Product\_details](#akrualizuje-zdanie-studiów-kursów-i-przedmiotów-w-product_details)
+    - [GetAttendanceForStudy](#getattendanceforstudy)
+    - [GetAttendanceForCourse](#getattendanceforcourse)
+    - [GetAttendanceForSubject](#getattendanceforsubject)
+    - [CheckInternshipsPass](#checkinternshipspass)
+    - [DoesStudentPassStudy](#doesstudentpassstudy)
+    - [DoesStudentPassCourse](#doesstudentpasscourse)
+    - [DoesStudentPassSubject](#doesstudentpasssubject)
+    - [GetStudySchedule](#getstudyschedule)
+    - [GetCourseSchedule](#getcourseschedule)
+    - [GetStudentTimetable](#getstudenttimetable)
+    - [GetTutorTimetable](#gettutortimetable)
+    - [GetTranslatorTimetable](#gettranslatortimetable)
+    - [CheckMeetingConflict](#checkmeetingconflict)
 - [Indeksy](#indeksy)
   - [Indeksy na kluczach obcych](#indeksy-na-kluczach-obcych)
     - [Tabela EMPLOYEES](#tabela-employees-1)
@@ -191,7 +191,7 @@
     - [Tabela INTERNSHIPS](#tabela-internships-1)
     - [Tabela MEETINGS](#tabela-meetings-1)
     - [Tabela MODULES](#tabela-modules-1)
-    - [Tabela PRODUCT\_DETAILS](#tabela-product_details-1)
+    - [Tabela PRODUCT_DETAILS](#tabela-product_details-1)
     - [Tabela PRODUCTS](#tabela-products-1)
     - [Tabela SUBJECTS](#tabela-subjects-1)
     - [Tabela SESSIONS](#tabela-sessions-1)
@@ -204,7 +204,7 @@
     - [Tabela MEETINGS](#tabela-meetings-2)
     - [Tabela PRODUCTS](#tabela-products-2)
     - [Tabela ORDERS](#tabela-orders-2)
-    - [Tabela STATIONARY\_MEETINGS](#tabela-stationary_meetings-1)
+    - [Tabela STATIONARY_MEETINGS](#tabela-stationary_meetings-1)
 - [Role i uprawnienia użytkowników](#role-i-uprawnienia-użytkowników)
   - [Gość](#gość)
   - [Student](#student)
@@ -214,14 +214,12 @@
   - [Tłumacz](#tłumacz-1)
 - [Wyzwalacze (Triggers)](#wyzwalacze-triggers)
   - [Weryfikacja integralności bazy danych](#weryfikacja-integralności-bazy-danych)
-    - [trg\_CanProductBeInShoppingCart](#trg_canproductbeinshoppingcart)
-    - [trg\_LimitVacanciesOnInsert](#trg_limitvacanciesoninsert)
-    - [trg\_UniqueTranslatorPerMeeting](#trg_uniquetranslatorpermeeting)
-    - [trg\_PreventPastMeetingAttendance](#trg_preventpastmeetingattendance)
-    - [trg\_CheckRoomAvailability](#trg_checkroomavailability)
-    - [trg\_ModuleMeetingsNoIntersection](#trg_modulemeetingsnointersection)
-  - [Automatyczne tworzenie wpisów po zdarzeniu](#automatyczne-tworzenie-wpisów-po-zdarzeniu)
-    - [trg\_AddMeetingDetails](#trg_addmeetingdetails)
+    - [trg_CanProductBeInShoppingCart](#trg_canproductbeinshoppingcart)
+    - [trg_LimitVacanciesOnInsert](#trg_limitvacanciesoninsert)
+    - [trg_UniqueTranslatorPerMeeting](#trg_uniquetranslatorpermeeting)
+    - [trg_PreventPastMeetingAttendance](#trg_preventpastmeetingattendance)
+    - [trg_CheckRoomAvailability](#trg_checkroomavailability)
+    - [trg_ModuleMeetingsNoIntersection](#trg_modulemeetingsnointersection)
 
 <!-- /TOC -->
 
@@ -375,7 +373,7 @@ Zawiera podstawowe informacje o każdym użytkowniku bazy.
   - warunek: (mail LIKE '%\_@%.%')
 
 - phone varchar(9) nullable - numer telefonu użytkownika
-  - warunek: LEN(Phone) = 15 AND ISNUMERIC(Phone) = 1
+  - warunek: LEN(Phone) = 9 AND ISNUMERIC(Phone) = 1
 
 ```sql
 -- Table: USERS
@@ -486,15 +484,15 @@ CREATE TABLE EMPLOYEE_TYPES (
 
 ### Tabela COUNTRIES
 
-| Column Name  | Data Type    | Properties  |
-| ------------ | ------------ | ----------- |
-| country_id   | int          | Primary Key |
-| country_name | nvarchar(30) |             |
+| Column Name  | Data Type     | Properties  |
+| ------------ | ------------- | ----------- |
+| country_id   | int           | Primary Key |
+| country_name | nvarchar(300) |             |
 
 Tabela słownikowa, przechowująca nazwy znanych państw, z których pocodzą studenci
 
 - country_id int - klucz główny, identyfikator państwa
-- country_name nvarchar(30) - nazwa państwa
+- country_name nvarchar(300) - nazwa państwa
 
 ```sql
 -- Table: COUNTRIES
@@ -561,7 +559,7 @@ Zawiera informacje o studentach zapisanych na dane zajęcia oraz o numerze zamó
 - student_id int - wchodzi w skład klucza głównego, klucz obcy, identyfikuje studenta
 - product_id int - wchodzi w skład klucza głównego, klucz obcy, identifukuje produkt
 - order_id int - klucz obcy, identifikuje zamówienie z jakiego został kupiony dostęp do zajęć
-- passed bit - indykator zaliczenia produktu edukacyjnego (1 - produkt zaliczony, 0 - produkt niezaliczony)
+- passed bit nullable - indykator zaliczenia produktu edukacyjnego (1 - produkt zaliczony, 0 - produkt niezaliczony, NULL - brak ukończenia przedmiotu)
 
 ```sql
 -- Table: PRODUCTS_DETAILS
@@ -731,18 +729,18 @@ CREATE TABLE FEE_TYPES (
 
 ### Tabela Webinars
 
-| Column Name         | Data Type   | Properties                 |
-| ------------------- | ----------- | -------------------------- |
-| webinar_id          | int         | Primary Key<br>Foreign Key |
-| tutor_id            | int         | Foreign Key                |
-| translator_id       | int         | Foreign Key                |
-| language_id         | int         | Foreign Key                |
-| webinar_name        | varchar(50) |                            |
-| webinar_description | text        |                            |
-| meeting_url         | text        |                            |
-| video_url           | text        |                            |
-| webinar_duration    | time(0)     |                            |
-| publish_date        | datetime    |                            |
+| Column Name         | Data Type    | Properties                 |
+| ------------------- | ------------ | -------------------------- |
+| webinar_id          | int          | Primary Key<br>Foreign Key |
+| tutor_id            | int          | Foreign Key                |
+| translator_id       | int          | Foreign Key                |
+| language_id         | int          | Foreign Key                |
+| webinar_name        | varchar(300) |                            |
+| webinar_description | text         |                            |
+| meeting_url         | text         |                            |
+| video_url           | text         |                            |
+| webinar_duration    | time(0)      |                            |
+| publish_date        | datetime     |                            |
 
 Zawiera informacje specyfinczne dla każdego produktu będącego webinarem
 
@@ -752,7 +750,7 @@ Zawiera informacje specyfinczne dla każdego produktu będącego webinarem
 
 - translator_id int nullable - klucz obcy, identifikator tłumacza
 
-- webinar_name varchar(50) - nazwa webinaru
+- webinar_name varchar(300) - nazwa webinaru
 
 - webinar_description text nullable - opis webinaru
 
@@ -791,12 +789,12 @@ CREATE TABLE WEBINARS (
 
 ### Tabela COURSES
 
-| Column Name        | Data Type    | Properties                 |
-| ------------------ | ------------ | -------------------------- |
-| course_id          | int          | Primary Key<br>Foreign Key |
-| course_name        | nvarchar(50) |                            |
-| course_description | text         |                            |
-| advance_share      | decimal(5,4) |                            |
+| Column Name        | Data Type     | Properties                 |
+| ------------------ | ------------- | -------------------------- |
+| course_id          | int           | Primary Key<br>Foreign Key |
+| course_name        | nvarchar(300) |                            |
+| course_description | text          |                            |
+| advance_share      | decimal(5,4)  |                            |
 
 Zawiera informacje o produktach, które są kursami
 
@@ -825,13 +823,13 @@ CREATE TABLE COURSES (
 
 ### Tabela MODULES
 
-| Column Name        | Data Type    | Properties  |
-| ------------------ | ------------ | ----------- |
-| module_id          | int          | Primary Key |
-| course_id          | int          | Foreign Key |
-| tutor_id           | int          | Foreign Key |
-| module_name        | nvarchar(50) |             |
-| module_description | text         |             |
+| Column Name        | Data Type     | Properties  |
+| ------------------ | ------------- | ----------- |
+| module_id          | int           | Primary Key |
+| course_id          | int           | Foreign Key |
+| tutor_id           | int           | Foreign Key |
+| module_name        | nvarchar(300) |             |
+| module_description | text          |             |
 
 Zawiera szczegółowe informacje dla każdego modułu kursu
 
@@ -841,7 +839,7 @@ Zawiera szczegółowe informacje dla każdego modułu kursu
 
 - tutor_id int - klucz obcy, identifikator nauczyciela, który prowadzi dany moduł
 
-- module_name nvarchar(50) - nazwa modułu
+- module_name nvarchar(300) - nazwa modułu
 
 - module_description text - opis modułu
 
@@ -861,17 +859,17 @@ CREATE TABLE MODULES (
 
 ### Tabela STUDIES
 
-| Column Name       | Data Type    | Properties                 |
-| ----------------- | ------------ | -------------------------- |
-| study_id          | int          | Primary Key<br>Foreign Key |
-| study_name        | nvarchar(50) |                            |
-| study_description | text         |                            |
+| Column Name       | Data Type     | Properties                 |
+| ----------------- | ------------- | -------------------------- |
+| study_id          | int           | Primary Key<br>Foreign Key |
+| study_name        | nvarchar(300) |                            |
+| study_description | text          |                            |
 
 Zawiera ogólne informacje o danych studiach
 
 - study_id int - klucz główny, klucz obcy, identifikator studium
 
-- study_name nvarchar(50) - nazwa studium
+- study_name nvarchar(300) - nazwa studium
 
 - study_description text nullable - opis studium
 
@@ -887,19 +885,19 @@ CREATE TABLE STUDIES (
 
 ### Tabela SUBJECTS
 
-| Column Name         | Data Type   | Properties                 |
-| ------------------- | ----------- | -------------------------- |
-| subject_id          | int         | Primary Key<br>Foreign Key |
-| study_id            | int         | Foreign Key                |
-| tutor_id            | int         | Foreign Key                |
-| subject_name        | varchar(50) |                            |
-| subject_description | text        |                            |
+| Column Name         | Data Type    | Properties                 |
+| ------------------- | ------------ | -------------------------- |
+| subject_id          | int          | Primary Key<br>Foreign Key |
+| study_id            | int          | Foreign Key                |
+| tutor_id            | int          | Foreign Key                |
+| subject_name        | varchar(300) |                            |
+| subject_description | text         |                            |
 
 Zawiera informacje szczegółowe inforamcje dotyczące przedmiotow
 
 - subject_id int - klucz główny, klucz obcy, identifikator przedmiotu
 
-- subject_name varchar(50) - nazwa przedmiotu
+- subject_name varchar(300) - nazwa przedmiotu
 
 - subject_description text nullable - opis przedmiotu
 
@@ -939,7 +937,7 @@ CREATE TABLE SESSIONS (
 );
 ```
 
-### Tabela InternshipS
+### Tabela INTERNSHIPS
 
 | Column Name   | Data Type | Properties                 |
 | ------------- | --------- | -------------------------- |
@@ -960,16 +958,16 @@ Zawiera informacje o praktykach prowadzonych na danych studiach
 
 ```sql
 -- Table: InternshipS
-CREATE TABLE InternshipS (
+CREATE TABLE INTERNSHIPS (
     internship_id int  NOT NULL IDENTITY,
     study_id int  NOT NULL,
     start_date date NOT NULL,
     end_date date NOT NULL,
-    CONSTRAINT InternshipS_pk PRIMARY KEY  (internship_id)
+    CONSTRAINT INTERNSHIPS_pk PRIMARY KEY  (internship_id)
 );
 ```
 
-### Tabela Internship_DETAILS
+### Tabela INTERNSHIP_DETAILS
 
 | Column Name   | Data Type | Properties                 |
 | ------------- | --------- | -------------------------- |
@@ -989,11 +987,11 @@ Zawiera szczegółowe informacje na temat danych praktyk
 
 ```sql
 -- Table: Internship_DETAILS
-CREATE TABLE Internship_DETAILS (
+CREATE TABLE INTERNSHIP_DETAILS (
     internship_id int  NOT NULL,
     student_id int  NOT NULL,
     passed bit  NOT NULL,
-    CONSTRAINT Internship_DETAILS_pk PRIMARY KEY  (internship_id,student_id)
+    CONSTRAINT INTERNSHIP_DETAILS_pk PRIMARY KEY  (internship_id,student_id)
 );
 ```
 
@@ -1001,17 +999,17 @@ CREATE TABLE Internship_DETAILS (
 
 ### Tabela MEETINGS
 
-| Column Name   | Data Type   | Properties  |
-| ------------- | ----------- | ----------- |
-| meeting_id    | int         | Primary Key |
-| tutor_id      | int         | Foreign Key |
-| translator_id | int         | Foreign Key |
-| language_id   | int         | Foreign Key |
-| module_id     | int         | Foreign Key |
-| session_id    | int         | Foreign Key |
-| meeting_name  | varchar(30) |             |
-| term          | datetime    |             |
-| duration      | time(0)     |             |
+| Column Name   | Data Type    | Properties  |
+| ------------- | ------------ | ----------- |
+| meeting_id    | int          | Primary Key |
+| tutor_id      | int          | Foreign Key |
+| translator_id | int          | Foreign Key |
+| language_id   | int          | Foreign Key |
+| module_id     | int          | Foreign Key |
+| session_id    | int          | Foreign Key |
+| meeting_name  | varchar(300) |             |
+| term          | datetime     |             |
+| duration      | time(0)      |             |
 
 Zawiera ogólne informacje na temat spotkania
 
@@ -1021,7 +1019,7 @@ Zawiera ogólne informacje na temat spotkania
 
 - translator_id int nullable nullable - klucz obcy, identifikator tłumacza tłumaczącego spotkanie
 
-- meeting_name varchar(30) - nazwa spotkania
+- meeting_name varchar(300) - nazwa spotkania
 
 - term datetime - data i godzina spotkania
 
@@ -1190,9 +1188,9 @@ CREATE TABLE LANGUAGES (
 | FEES                | order_id      | ORDERS           | order_id          |
 | FEES                | product_id    | PRODUCTS         | product_id        |
 | FEES                | type_id       | FEE_TYPE         | type_id           |
-| InternshipS          | study_id      | STUDIES          | study_id          |
-| Internship_DETAILS   | internship_id | InternshipS       | internship_id     |
-| Internship_DETAILS   | student_id    | STUDENTS         | student_id        |
+| InternshipS         | study_id      | STUDIES          | study_id          |
+| Internship_DETAILS  | internship_id | InternshipS      | internship_id     |
+| Internship_DETAILS  | student_id    | STUDENTS         | student_id        |
 | MEETINGS            | language_id   | LANGUAGES        | language_id       |
 | WEBINARS            | language_id   | LANGUAGES        | language_id       |
 | MEETINGS            | module_id     | MODULES          | module_id         |
@@ -1500,7 +1498,7 @@ GROUP BY
 
 ## Kategoria zamówienia i produkty
 
-### PRODUCT VACANCIES
+### Product_vacancies
 
 Przedstawia ID produktu i wolne miejsca na dany produkt
 
@@ -1519,7 +1517,7 @@ from PRODUCTS p
 join WEBINARS w on p.product_id=w.webinar_id
 ```
 
-### USERS IN DEBT
+### Users_in_debt
 
 Przedstawia użytkowników którzy nie opłacili danej usługi, ale z niej skorzystali co wykazane jest na liście obecności
 
@@ -1564,7 +1562,7 @@ WHERE
 
 ```
 
-### FINANCIAL REPORT
+### Financial_report
 
 Przedstawia przychód dla każdego z produktów
 
@@ -1614,7 +1612,7 @@ GROUP BY
     PT.type_id;
 ```
 
-### BILOCATION REPORT
+### Bilocation_report
 
 Przedstawia studentów którzy mają kolizje wśród swoich zajęć oraz id spotkań, które kolidują. Nie sprawdzamy webinarów, bo to jednarozwa aktywność i student powinien mieć prawo zrobić sobie kolizje webinarem
 
@@ -1648,7 +1646,7 @@ JOIN
     );
 ```
 
-### PRODUCT OWNERS
+### Product_owners
 
 Przedstawia użytkowników i zakupione przez nich produkty wraz z numerem zamówienia do którego należy zakupiony przedmiot i datą zakupu
 
@@ -1685,7 +1683,7 @@ FROM
 
 ```
 
-### Unpaid special permissions
+### Unpaid_special_permissions
 
 Widok unpaid_special_permissions dla każdego klienta, któremu została odroczona płatność za
 zamówienie, pokazuje łączną kwotę jaką musi jeszcze dopłacić ze wszystkich zamówień.
@@ -4004,7 +4002,7 @@ BEGIN
 
     -- Check if student already has access to any of the products
     IF EXISTS (
-      SELECT 1 
+      SELECT 1
       FROM @product_ids pid
       JOIN PRODUCT_DETAILS pd ON pid.product_id = pd.product_id
       WHERE pd.student_id = @student_id
@@ -4064,7 +4062,7 @@ BEGIN
       BEGIN
         EXEC [dbo].[createFeesForSubject] @order_id, @product_id;
       END
-      ELSE IF @type_id = 3 
+      ELSE IF @type_id = 3
       -- course
       BEGIN
         EXEC [dbo].[createFeesForCourse] @order_id, @product_id;
@@ -4917,6 +4915,40 @@ END;
 GO
 ```
 
+### UpdateProductDetailsPassed
+
+Procedura `UpdateProductDetailsPassed` aktualizuje status zaliczenia wszystkich produktów dla wszystkich studentów.
+
+```sql
+CREATE PROCEDURE UpdateProductDetailsPassed
+AS
+BEGIN
+    -- Update for Studies (type_id = 1)
+    UPDATE pd
+    SET pd.passed = DoesStudentPassStudy(pd.student_id, s.study_id)
+    FROM PRODUCT_DETAILS pd
+    JOIN PRODUCTS p ON p.product_id = pd.product_id
+    JOIN STUDIES s ON s.study_id = p.product_id
+    WHERE p.type_id = 1
+
+    -- Update for Subjects (type_id = 2)
+    UPDATE pd
+    SET pd.passed = dbo.DoesStudentPassSubject(pd.student_id, s.subject_id)
+    FROM PRODUCT_DETAILS pd
+    JOIN PRODUCTS p ON p.product_id = pd.product_id
+    JOIN SUBJECTS s ON s.subject_id = p.product_id
+    WHERE p.type_id = 2
+
+    -- Update for Courses (type_id = 3)
+    UPDATE pd
+    SET pd.passed = dbo.DoesStudentPassCourse(pd.student_id, c.course_id)
+    FROM PRODUCT_DETAILS pd
+    JOIN PRODUCTS p ON p.product_id = pd.product_id
+    JOIN COURSES c ON c.course_id = p.product_id
+    WHERE p.type_id = 3
+END;
+```
+
 ## MEETINGS
 
 ### FillMeetingDetails
@@ -4970,7 +5002,17 @@ GO
 
 ## Kategoria zamówienia i produkty
 
-### Wyliczenie wartości koszyka
+### GetCartValue
+
+Funkcja `GetCartValue` oblicza łączną wartość produktów w koszyku studenta.
+
+Argumenty:
+
+- @StudentId INT - ID studenta, którego koszyk ma zostać wyceniony
+
+Zwraca:
+
+- MONEY - Suma cen wszystkich produktów w koszyku
 
 ```sql
 CREATE FUNCTION GetCartValue(@StudentId INT)
@@ -4986,7 +5028,17 @@ BEGIN
 END;
 ```
 
-### Wyliczenie wartości zamówienia
+### GetOrderValue
+
+Funkcja `GetOrderValue` oblicza łączną wartość zamówienia na podstawie wszystkich jego opłat.
+
+Argumenty:
+
+- @OrderId INT - ID zamówienia, którego wartość ma zostać obliczona
+
+Zwraca:
+
+- MONEY - Suma wartości wszystkich opłat w zamówieniu
 
 ```sql
 CREATE FUNCTION GetOrderValue(@OrderId INT)
@@ -5001,10 +5053,20 @@ BEGIN
 END;
 ```
 
-### Sprawdzenie czy zjazd został zakupiony pojedynczo
+### IsSingleProduct
+
+Funkcja `IsSingleProduct` sprawdza czy opłata dotyczy pojedynczego produktu (sesji) czy serii sesji.
+
+Argumenty:
+
+- @fee_id INT - ID opłaty do sprawdzenia
+
+Zwraca:
+
+- BIT - 1 jeśli opłata dotyczy pojedynczego produktu, 0 jeśli serii sesji
 
 ```sql
-CREATE FUNCTION isSingleProduct(@fee_id INT)
+CREATE FUNCTION IsSingleProduct(@fee_id INT)
 RETURNS BIT
 AS
 BEGIN
@@ -5023,28 +5085,48 @@ BEGIN
 END;
 ```
 
-### Znalezienie studiów do których należy sesja
+### GetParentId
+
+Funkcja `GetParentId` zwraca ID przedmiotu (subject_id) dla podanej sesji.
+
+Argumenty:
+
+- @session_id INT - ID sesji, dla której szukamy przedmiotu nadrzędnego
+
+Zwraca:
+
+- INT - ID przedmiotu (subject_id), do którego należy sesja
 
 ```sql
-CREATE FUNCTION getParentId(@session_id INT)
+CREATE FUNCTION GetParentId(@session_id INT)
 RETURNS INT
 AS
 BEGIN
-    DECLARE @study_id INT;
+    DECLARE @subject_id INT;
 
     SELECT
-        @study_id = s.subject_id
+        @subject_id = s.subject_id
     FROM
         SESSIONS ses
     JOIN SUBJECTS s ON ses.subject_id = s.subject_id
     WHERE
         ses.session_id = @session_id;
 
-    RETURN @study_id;
+    RETURN @subject_id;
 END;
 ```
 
-### Wyliczenie wolnych miejsc dla danego produktu
+### GetVacanciesForProduct
+
+Funkcja `GetVacanciesForProduct` oblicza liczbę wolnych miejsc dla danego produktu.
+
+Argumenty:
+
+- @ProductId INT - ID produktu, dla którego sprawdzamy dostępne miejsca
+
+Zwraca:
+
+- INT - Liczba wolnych miejsc (różnica między maksymalną liczbą miejsc a liczbą zapisanych studentów)
 
 ```sql
 CREATE FUNCTION GetVacanciesForProduct(@ProductId INT)
@@ -5065,7 +5147,18 @@ BEGIN
 END;
 ```
 
-### Sprawdzenie czy student posiada dany produkt
+### CheckStudentOwnsProduct
+
+Funkcja `CheckStudentOwnsProduct` sprawdza czy student posiada dostęp do danego produktu.
+
+Argumenty:
+
+- @student_id INT - ID studenta do sprawdzenia
+- @product_id INT - ID produktu do sprawdzenia
+
+Zwraca:
+
+- BIT - 1 jeśli student ma dostęp do produktu, 0 jeśli nie
 
 ```sql
 CREATE FUNCTION CheckStudentOwnsProduct(@student_id INT, @product_id INT)
@@ -5089,7 +5182,18 @@ BEGIN
 END;
 ```
 
-### Sprawdzenie czy student może dodać produkt do koszyka
+### CanAddToCart
+
+Funkcja `CanAddToCart` sprawdza czy produkt może zostać dodany do koszyka studenta.
+
+Argumenty:
+
+- @StudentId INT - ID studenta, do którego koszyka chcemy dodać produkt
+- @ProductId INT - ID produktu, który chcemy dodać do koszyka
+
+Zwraca:
+
+- BIT - 1 jeśli produkt może zostać dodany, 0 jeśli nie
 
 ```sql
 CREATE FUNCTION CanAddToCart(@StudentId INT, @ProductId INT)
@@ -5121,7 +5225,18 @@ BEGIN
 END;
 ```
 
-### Sprawdzenie czy student może kupić produkt
+### CanStudentBuyProduct
+
+Funkcja `CanStudentBuyProduct` sprawdza czy student może zakupić dany produkt na podstawie dostępności miejsc.
+
+Argumenty:
+
+- @StudentId INT - ID studenta chcącego zakupić produkt
+- @ProductId INT - ID produktu do zakupu
+
+Zwraca:
+
+- BIT - 1 jeśli zakup jest możliwy, 0 jeśli nie
 
 ```sql
 CREATE FUNCTION CanStudentBuyProduct(@StudentId INT, @ProductId INT)
@@ -5143,7 +5258,18 @@ END;
 
 ## Kursy, studia i webinary
 
-### Wyliczenie obecności studenta na danych studiach
+### GetAttendanceForStudy
+
+Funkcja `GetAttendanceForStudy` oblicza procentową frekwencję studenta na wszystkich spotkaniach w ramach studiów.
+
+Argumenty:
+
+- @StudentId INT - ID studenta, którego frekwencję sprawdzamy
+- @StudyId INT - ID studiów, dla których sprawdzamy frekwencję
+
+Zwraca:
+
+- DECIMAL(5,2) - Procent obecności (0-100)
 
 ```sql
 CREATE FUNCTION GetAttendanceForStudy(@StudentId INT, @StudyId INT)
@@ -5170,7 +5296,18 @@ BEGIN
 END;
 ```
 
-### Wyliczenie obecności studenta na danym kursie
+### GetAttendanceForCourse
+
+Funkcja `GetAttendanceForCourse` oblicza procentową frekwencję studenta na wszystkich spotkaniach w ramach kursu.
+
+Argumenty:
+
+- @StudentId INT - ID studenta, którego frekwencję sprawdzamy
+- @CourseId INT - ID kursu, dla którego sprawdzamy frekwencję
+
+Zwraca:
+
+- DECIMAL(5,2) - Procent obecności (0-100)
 
 ```sql
 CREATE FUNCTION GetAttendanceForCourse(@StudentId INT, @CourseId INT)
@@ -5197,7 +5334,18 @@ BEGIN
 END;
 ```
 
-### Wyliczenie obecności studenta na danym przedmiocie
+### GetAttendanceForSubject
+
+Funkcja `GetAttendanceForSubject` oblicza procentową frekwencję studenta na wszystkich spotkaniach w ramach przedmiotu.
+
+Argumenty:
+
+- @StudentId INT - ID studenta, którego frekwencję sprawdzamy
+- @SubjectId INT - ID przedmiotu, dla którego sprawdzamy frekwencję
+
+Zwraca:
+
+- DECIMAL(5,2) - Procent obecności (0-100)
 
 ```sql
 CREATE FUNCTION GetAttendanceForSubject(@StudentId INT, @SubjectId INT)
@@ -5225,10 +5373,21 @@ BEGIN
 END;
 ```
 
-### Sprawdzenie czy student zdał praktyki
+### CheckInternshipsPass
+
+Funkcja `CheckInternshipsPass` sprawdza czy student zaliczył wszystkie praktyki w ramach studiów.
+
+Argumenty:
+
+- @student_id INT - ID studenta, którego praktyki sprawdzamy
+- @study_id INT - ID studiów, dla których sprawdzamy praktyki
+
+Zwraca:
+
+- BIT - NULL jeśli brak praktyk lub są niezakończone praktyki, 1 jeśli wszystkie zaliczone, 0 jeśli któraś niezaliczona
 
 ```sql
-CREATE FUNCTION dbo.CheckInternshipsPass
+CREATE FUNCTION CheckInternshipsPass
     (@student_id INT,
      @study_id INT)
 RETURNS BIT
@@ -5270,7 +5429,18 @@ BEGIN
 END;
 ```
 
-### Sprawdzenie czy student zdał studia
+### DoesStudentPassStudy
+
+Funkcja `DoesStudentPassStudy` sprawdza czy student zaliczył studia na podstawie frekwencji i zaliczenia praktyk.
+
+Argumenty:
+
+- @StudentId INT - ID studenta do sprawdzenia
+- @StudyId INT - ID studiów do sprawdzenia
+
+Zwraca:
+
+- BIT - NULL jeśli studia się jeszcze nie zakończyły, 1 jeśli zaliczone, 0 jeśli niezaliczone
 
 ```sql
 CREATE FUNCTION DoesStudentPassStudy(@StudentId INT, @StudyId INT)
@@ -5292,7 +5462,18 @@ BEGIN
 END;
 ```
 
-### Sprawdzenie czy student zdał kurs
+### DoesStudentPassCourse
+
+Funkcja `DoesStudentPassCourse` sprawdza czy student zaliczył kurs na podstawie frekwencji.
+
+Argumenty:
+
+- @StudentId INT - ID studenta do sprawdzenia
+- @CourseId INT - ID kursu do sprawdzenia
+
+Zwraca:
+
+- BIT - NULL jeśli kurs się jeszcze nie zakończył, 1 jeśli zaliczony, 0 jeśli niezaliczony
 
 ```sql
 CREATE FUNCTION DoesStudentPassCourse(@StudentId INT, @CourseId INT)
@@ -5312,7 +5493,18 @@ BEGIN
 END;
 ```
 
-### Sprawdzenie czy student zdał przedmiot
+### DoesStudentPassSubject
+
+Funkcja `DoesStudentPassSubject` sprawdza czy student zaliczył przedmiot na podstawie frekwencji.
+
+Argumenty:
+
+- @StudentId INT - ID studenta do sprawdzenia
+- @SubjectId INT - ID przedmiotu do sprawdzenia
+
+Zwraca:
+
+- BIT - NULL jeśli przedmiot się jeszcze nie zakończył, 1 jeśli zaliczony, 0 jeśli niezaliczony
 
 ```sql
 CREATE FUNCTION DoesStudentPassSubject(@StudentId INT, @SubjectId INT)
@@ -5334,7 +5526,21 @@ END;
 GO
 ```
 
-### Zwraca plan studiów w formie spotkań
+### GetStudySchedule
+
+Funkcja `GetStudySchedule` zwraca harmonogram wszystkich spotkań w ramach studiów.
+
+Argumenty:
+
+- @StudyId INT - ID studiów, których harmonogram chcemy pobrać
+
+Zwracana tabela:
+
+- meeting_id - ID spotkania
+- meeting_name - Nazwa spotkania
+- term - Termin spotkania
+- duration - Czas trwania
+- language_name - Nazwa języka
 
 ```sql
 CREATE FUNCTION GetStudySchedule(@StudyId INT)
@@ -5353,7 +5559,21 @@ RETURN (
 );
 ```
 
-### Zwraca plan kursu w formie spotkań
+### GetCourseSchedule
+
+Funkcja `GetCourseSchedule` zwraca harmonogram wszystkich spotkań w ramach kursu.
+
+Argumenty:
+
+- @CourseId INT - ID kursu, którego harmonogram chcemy pobrać
+
+Zwracana tabela:
+
+- meeting_id - ID spotkania
+- meeting_name - Nazwa spotkania
+- term - Termin spotkania
+- duration - Czas trwania
+- language_name - Nazwa języka
 
 ```sql
 CREATE FUNCTION GetCourseSchedule(@CourseId INT)
@@ -5371,7 +5591,21 @@ RETURN (
 );
 ```
 
-### Plan zajęć studenta
+### GetStudentTimetable
+
+Funkcja `GetStudentTimetable` zwraca harmonogram wszystkich spotkań studenta.
+
+Argumenty:
+
+- @StudentId INT - ID studenta, którego harmonogram chcemy pobrać
+
+Zwracana tabela:
+
+- meeting_id - ID spotkania
+- meeting_name - Nazwa spotkania
+- term - Termin spotkania
+- duration - Czas trwania
+- language_name - Nazwa języka
 
 ```sql
 CREATE FUNCTION GetStudentTimetable(@StudentId INT)
@@ -5387,7 +5621,21 @@ RETURN (
 );
 ```
 
-### Plan zajęć nauczyciela
+### GetTutorTimetable
+
+Funkcja `GetTutorTimetable` zwraca harmonogram wszystkich spotkań prowadzącego.
+
+Argumenty:
+
+- @EmployeeId INT - ID prowadzącego, którego harmonogram chcemy pobrać
+
+Zwracana tabela:
+
+- meeting_id - ID spotkania
+- meeting_name - Nazwa spotkania
+- term - Termin spotkania
+- duration - Czas trwania
+- language_name - Nazwa języka
 
 ```sql
 CREATE FUNCTION GetTutorTimetable(@EmployeeId INT)
@@ -5402,7 +5650,21 @@ RETURN (
 );
 ```
 
-### Plan zajęć tłumacza
+### GetTranslatorTimetable
+
+Funkcja `GetTranslatorTimetable` zwraca harmonogram wszystkich spotkań tłumacza.
+
+Argumenty:
+
+- @EmployeeId INT - ID tłumacza, którego harmonogram chcemy pobrać
+
+Zwracana tabela:
+
+- meeting_id - ID spotkania
+- meeting_name - Nazwa spotkania
+- term - Termin spotkania
+- duration - Czas trwania
+- language_name - Nazwa języka
 
 ```sql
 CREATE FUNCTION GetTranslatorTimetable(@EmployeeId INT)
@@ -5417,7 +5679,18 @@ RETURN (
 );
 ```
 
-### Sprawdzenie czy spotkanie koliduje z resztą planu użytkownika
+### CheckMeetingConflict
+
+Funkcja `CheckMeetingConflict` sprawdza czy istnieje konflikt czasowy dla uczestnika spotkania (student/prowadzący/tłumacz).
+
+Argumenty:
+
+- @Id INT - ID osoby (student_id/tutor_id/translator_id) do sprawdzenia
+- @MeetingId INT - ID spotkania do sprawdzenia
+
+Zwraca:
+
+- BIT - 1 jeśli wykryto konflikt, 0 jeśli brak konfliktu
 
 ```sql
 CREATE FUNCTION CheckMeetingConflict(@Id INT, @MeetingId INT)
@@ -5469,7 +5742,18 @@ BEGIN
 END;
 ```
 
-Zwraca ramy czasowe kursu
+### GetCourseStartEndDate
+
+Funkcja `GetCourseStartEndDate` zwraca datę rozpoczęcia i zakończenia kursu na podstawie terminów spotkań.
+
+Argumenty:
+
+- @course_id INT - ID kursu, którego daty chcemy pobrać
+
+Zwracana tabela:
+
+- start_date - Data pierwszego spotkania w ramach kursu
+- end_date - Data ostatniego spotkania w ramach kursu
 
 ```sql
 CREATE FUNCTION GetCourseStartEndDate(@course_id INT)
@@ -5484,7 +5768,7 @@ RETURN
     WHERE m.module_id IS NOT NULL AND mo.course_id = @course_id;
 ```
 
-Zwraca łączną liczbe spotkań danego typu dla course_id
+### GetMeetingTypeCounts
 
 ```sql
 CREATE FUNCTION GetMeetingTypeCounts(@module_id INT)
@@ -5507,7 +5791,20 @@ RETURN
          WHERE m.module_id = @module_id) AS async_MEETINGS_count;
 ```
 
-Zwraca łączną liczbe spotkań danego typu dla course_id
+### GetMeetingTypeCounts
+
+Funkcja `GetMeetingTypeCounts` zlicza ilość spotkań każdego typu w ramach modułu.
+
+Argumenty:
+
+- @module_id INT - ID modułu, dla którego zliczamy spotkania
+
+Zwracana tabela:
+
+- module_id - ID modułu
+- STATIONARY_MEETINGS_count - Liczba spotkań stacjonarnych
+- sync_MEETINGS_count - Liczba spotkań synchronicznych
+- async_MEETINGS_count - Liczba spotkań asynchronicznych
 
 ```sql
 CREATE FUNCTION GetMeetingTypeCounts(@module_id INT)
@@ -5528,38 +5825,6 @@ RETURN
          FROM MEETINGS m
          JOIN ASYNC_MEETINGS am ON am.meeting_id = m.meeting_id
          WHERE m.module_id = @module_id) AS async_MEETINGS_count;
-```
-
-### Akrualizuje zdanie studiów, kursów i przedmiotów w Product_details
-
-``` sql
-CREATE PROCEDURE dbo.UpdateProductDetailsPassed
-AS
-BEGIN
-    -- Update for Studies (type_id = 1)
-    UPDATE pd
-    SET pd.passed = dbo.DoesStudentPassStudy(pd.student_id, s.study_id)
-    FROM PRODUCT_DETAILS pd
-    JOIN PRODUCTS p ON p.product_id = pd.product_id
-    JOIN STUDIES s ON s.study_id = p.product_id
-    WHERE p.type_id = 1
-
-    -- Update for Subjects (type_id = 2)
-    UPDATE pd
-    SET pd.passed = dbo.DoesStudentPassSubject(pd.student_id, s.subject_id)
-    FROM PRODUCT_DETAILS pd
-    JOIN PRODUCTS p ON p.product_id = pd.product_id
-    JOIN SUBJECTS s ON s.subject_id = p.product_id
-    WHERE p.type_id = 2
-
-    -- Update for Courses (type_id = 3)
-    UPDATE pd
-    SET pd.passed = dbo.DoesStudentPassCourse(pd.student_id, c.course_id)
-    FROM PRODUCT_DETAILS pd
-    JOIN PRODUCTS p ON p.product_id = pd.product_id
-    JOIN COURSES c ON c.course_id = p.product_id
-    WHERE p.type_id = 3
-END;
 ```
 
 # Indeksy
@@ -6076,81 +6341,3 @@ BEGIN
   END
 END;
 ```
-
-## Automatyczne tworzenie wpisów po zdarzeniu
-
-### trg_AddMeetingDetails
-
-Wyzwalacz `trg_AddMeetingDetails` automatycznie dodaje wpisy do tabeli `MEETING_DETAILS` gdy student zostaje przypisany do produktu w PRODUCTS_DETAILS.
-
-Tabela wyzwalająca:
-
-- PRODUCTS_DETAILS
-
-Moment aktywacji:
-
-- AFTER INSERT
-
-```sql
--- Trigger to add MEETING_DETAILS rows when a student is added to PRODUCTS_DETAILS
-CREATE TRIGGER trg_AddMeetingDetails
-ON PRODUCTS_DETAILS
-AFTER INSERT
-AS
-BEGIN
-  SET NOCOUNT ON;
-
-  DECLARE @student_id INT;
-  DECLARE @product_id INT;
-  DECLARE @type_id INT;
-
-  -- Get the inserted student_id and product_id
-  SELECT @student_id = inserted.student_id, @product_id = inserted.product_id
-  FROM inserted;
-
-  -- Get the type_id of the product
-  SELECT @type_id = type_id FROM PRODUCTS WHERE product_id = @product_id;
-
-  -- Return early if type_id does not match study, subject, course, or session
-  IF @type_id NOT IN (1, 2, 3, 5)
-  BEGIN
-    RETURN;
-  END
-
-  -- Add meeting details based on product type
-  IF @type_id = 1 -- study
-  BEGIN
-    INSERT INTO MEETING_DETAILS (meeting_id, student_id)
-    SELECT meeting_id, @student_id
-    FROM MEETINGS
-    JOIN SESSIONS ON MEETINGS.session_id = SESSIONS.session_id
-    JOIN SUBJECTS ON SESSIONS.subject_id = SUBJECTS.subject_id
-    WHERE SUBJECTS.study_id = @product_id;
-  END
-  ELSE IF @type_id = 2 -- subject
-  BEGIN
-    INSERT INTO MEETING_DETAILS (meeting_id, student_id)
-    SELECT meeting_id, @student_id
-    FROM MEETINGS
-    JOIN SESSIONS ON MEETINGS.session_id = SESSIONS.session_id
-    WHERE SESSIONS.subject_id = @product_id;
-  END
-  ELSE IF @type_id = 3 -- course
-  BEGIN
-    INSERT INTO MEETING_DETAILS (meeting_id, student_id)
-    SELECT meeting_id, @student_id
-    FROM MEETINGS
-    JOIN MODULES ON MEETINGS.module_id = MODULES.module_id
-    WHERE MODULES.course_id = @product_id;
-  END
-  ELSE IF @type_id = 5 -- session
-  BEGIN
-    INSERT INTO MEETING_DETAILS (meeting_id, student_id)
-    SELECT meeting_id, @student_id
-    FROM MEETINGS
-    WHERE session_id = @product_id;
-  END
-END;
-GO
-```
-

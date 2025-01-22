@@ -36,17 +36,17 @@ CREATE FUNCTION getParentId(@session_id INT)
 RETURNS INT
 AS
 BEGIN
-    DECLARE @study_id INT;
+    DECLARE @subject_id INT;
 
     SELECT
-        @study_id = s.subject_id
+        @subject_id = s.subject_id
     FROM
         SESSIONS ses
     JOIN SUBJECTS s ON ses.subject_id = s.subject_id
     WHERE
         ses.session_id = @session_id;
 
-    RETURN @study_id;
+    RETURN @subject_id;
 END;
 
 -- function 2.7 checks if student owns product
