@@ -7,7 +7,7 @@
 
 **Autorzy:** Dariusz Marecik, Filip Węgrzyn, Paweł Fornagiel
 
-**Link do repozytorium git**: https://github.com/pFornagiel/bazy-danych-2025
+**Link do repozytorium GitHub**: https://github.com/pFornagiel/bazy-danych-2025
 
 ---
 
