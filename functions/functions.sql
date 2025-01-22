@@ -497,4 +497,3 @@ BEGIN
     JOIN COURSES c ON c.course_id = p.product_id
     WHERE p.type_id = 3
 END;
-

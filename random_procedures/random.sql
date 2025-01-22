@@ -80,8 +80,8 @@ BEGIN
             -- Generate a random number between 0 and 1
             SET @random_number = RAND();
 
-            -- Update attendance with 80% probability
-            IF @random_number <= 0.8
+            -- Update attendance with 81% probability
+            IF @random_number <= 0.81
             BEGIN
                 UPDATE MEETING_DETAILS
                 SET attendance = 1
@@ -157,7 +157,6 @@ BEGIN
 END;
 
 
-drop PROCEDURE AssignRandomInternships
 CREATE PROCEDURE AssignRandomInternships
     @study_id INT
 AS
