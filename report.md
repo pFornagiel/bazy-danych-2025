@@ -50,8 +50,8 @@
     - [Tabela STUDIES](#tabela-studies)
     - [Tabela SUBJECTS](#tabela-subjects)
   - [Tabela SESSIONS](#tabela-sessions)
-    - [Tabela INTERSHIPS](#tabela-interships)
-    - [Tabela INTERSHIP\_DETAILS](#tabela-intership_details)
+    - [Tabela InternshipS](#tabela-internships)
+    - [Tabela Internship\_DETAILS](#tabela-internship_details)
   - [Kategoria MEETINGS](#kategoria-meetings)
     - [Tabela MEETINGS](#tabela-meetings)
     - [Tabela MEETING\_DETAILS](#tabela-meeting_details)
@@ -188,7 +188,7 @@
     - [Tabela EMPLOYEES](#tabela-employees-1)
     - [Tabela WEBINARS](#tabela-webinars-1)
     - [Tabela FEES](#tabela-fees-1)
-    - [Tabela INTERNSHIPS](#tabela-internships)
+    - [Tabela INTERNSHIPS](#tabela-internships-1)
     - [Tabela MEETINGS](#tabela-meetings-1)
     - [Tabela MODULES](#tabela-modules-1)
     - [Tabela PRODUCT\_DETAILS](#tabela-product_details-1)
@@ -200,7 +200,7 @@
   - [Pozostałe indeksy](#pozostałe-indeksy)
     - [Tabela USERS](#tabela-users-1)
     - [Tabela WEBINARS](#tabela-webinars-2)
-    - [Tabela INTERNSHIPS](#tabela-internships-1)
+    - [Tabela INTERNSHIPS](#tabela-internships-2)
     - [Tabela MEETINGS](#tabela-meetings-2)
     - [Tabela PRODUCTS](#tabela-products-2)
     - [Tabela ORDERS](#tabela-orders-2)
@@ -939,7 +939,7 @@ CREATE TABLE SESSIONS (
 );
 ```
 
-### Tabela INTERSHIPS
+### Tabela InternshipS
 
 | Column Name   | Data Type | Properties                 |
 | ------------- | --------- | -------------------------- |
@@ -959,17 +959,17 @@ Zawiera informacje o praktykach prowadzonych na danych studiach
 - end_date date - data zakończenia praktyk
 
 ```sql
--- Table: INTERSHIPS
-CREATE TABLE INTERSHIPS (
+-- Table: InternshipS
+CREATE TABLE InternshipS (
     internship_id int  NOT NULL IDENTITY,
     study_id int  NOT NULL,
     start_date date NOT NULL,
     end_date date NOT NULL,
-    CONSTRAINT INTERSHIPS_pk PRIMARY KEY  (internship_id)
+    CONSTRAINT InternshipS_pk PRIMARY KEY  (internship_id)
 );
 ```
 
-### Tabela INTERSHIP_DETAILS
+### Tabela Internship_DETAILS
 
 | Column Name   | Data Type | Properties                 |
 | ------------- | --------- | -------------------------- |
@@ -988,12 +988,12 @@ Zawiera szczegółowe informacje na temat danych praktyk
   0 - student nie zaliczył praktyk (brak 100% obecności)
 
 ```sql
--- Table: INTERSHIP_DETAILS
-CREATE TABLE INTERSHIP_DETAILS (
+-- Table: Internship_DETAILS
+CREATE TABLE Internship_DETAILS (
     internship_id int  NOT NULL,
     student_id int  NOT NULL,
     passed bit  NOT NULL,
-    CONSTRAINT INTERSHIP_DETAILS_pk PRIMARY KEY  (internship_id,student_id)
+    CONSTRAINT Internship_DETAILS_pk PRIMARY KEY  (internship_id,student_id)
 );
 ```
 
@@ -1190,9 +1190,9 @@ CREATE TABLE LANGUAGES (
 | FEES                | order_id      | ORDERS           | order_id          |
 | FEES                | product_id    | PRODUCTS         | product_id        |
 | FEES                | type_id       | FEE_TYPE         | type_id           |
-| INTERSHIPS          | study_id      | STUDIES          | study_id          |
-| INTERSHIP_DETAILS   | internship_id | INTERSHIPS       | internship_id     |
-| INTERSHIP_DETAILS   | student_id    | STUDENTS         | student_id        |
+| InternshipS          | study_id      | STUDIES          | study_id          |
+| Internship_DETAILS   | internship_id | InternshipS       | internship_id     |
+| Internship_DETAILS   | student_id    | STUDENTS         | student_id        |
 | MEETINGS            | language_id   | LANGUAGES        | language_id       |
 | WEBINARS            | language_id   | LANGUAGES        | language_id       |
 | MEETINGS            | module_id     | MODULES          | module_id         |
@@ -2015,7 +2015,7 @@ SELECT
     COUNT(async.meeting_id) AS async_meetings,
     (
         SELECT COUNT(*)
-        FROM INTERSHIPS i
+        FROM InternshipS i
         WHERE i.study_id = s.study_id
     ) AS number_of_internships,
     dbo.GetVacanciesForProduct(s.study_id) AS Vacancies,
@@ -2065,9 +2065,9 @@ SELECT
         ELSE 'In Progress'
     END AS internship_status
 FROM
-    INTERSHIPS i
+    InternshipS i
     INNER JOIN STUDIES s ON i.study_id = s.study_id
-    LEFT JOIN INTERSHIP_DETAILS id ON i.internship_id = id.internship_id
+    LEFT JOIN Internship_DETAILS id ON i.internship_id = id.internship_id
 GROUP BY
     i.internship_id,
     s.study_id,
@@ -2188,8 +2188,8 @@ FROM
     LEFT JOIN MEETINGS m ON ses.session_id = m.session_id
     LEFT JOIN MEETING_DETAILS md ON m.meeting_id = md.meeting_id AND md.student_id = pd.student_id
     -- Internship completion
-    LEFT JOIN INTERSHIPS i ON s.study_id = i.study_id
-    LEFT JOIN INTERSHIP_DETAILS id ON i.internship_id = id.internship_id AND id.student_id = pd.student_id
+    LEFT JOIN InternshipS i ON s.study_id = i.study_id
+    LEFT JOIN Internship_DETAILS id ON i.internship_id = id.internship_id AND id.student_id = pd.student_id
 GROUP BY
     s.study_id,
     s.study_name,
@@ -3841,7 +3841,7 @@ BEGIN
     EXEC [dbo].[CheckStudyExists] @study_id
 
     -- Insert internship
-    INSERT INTO INTERSHIPS (
+    INSERT INTO InternshipS (
       study_id,
       start_date,
       end_date
@@ -3893,7 +3893,7 @@ BEGIN
     BEGIN TRANSACTION;
 
     -- Validate internship exists
-    IF NOT EXISTS (SELECT 1 FROM INTERSHIPS WHERE internship_id = @internship_id)
+    IF NOT EXISTS (SELECT 1 FROM InternshipS WHERE internship_id = @internship_id)
     BEGIN
       RAISERROR('Praktyka nie istnieje.', 16, 1);
       RETURN;
@@ -3903,7 +3903,7 @@ BEGIN
     EXEC [dbo].[CheckStudentExists] @student_id
 
     -- Insert internship details
-    INSERT INTO INTERSHIP_DETAILS (
+    INSERT INTO Internship_DETAILS (
       internship_id,
       student_id,
       passed
@@ -3966,6 +3966,7 @@ Działanie:
    - Kurs: opłata zaliczkowa + pozostała część
    - Webinar: opłata jednorazowa
    - Sesja: opłata jednorazowa
+5. Dodaje produkty do Product_details
 
 ```sql
 CREATE PROCEDURE [dbo].[CreateOrder]
@@ -3984,13 +3985,24 @@ BEGIN
 
     -- Check if student already has access to any of the products
     IF EXISTS (
-      SELECT 1
+      SELECT 1 
       FROM @product_ids pid
       JOIN PRODUCT_DETAILS pd ON pid.product_id = pd.product_id
       WHERE pd.student_id = @student_id
     )
     BEGIN
       THROW 50004, 'Student już ma dostęp do jednego lub więcej produktów z zamówienia.', 1;
+    END
+
+
+    -- CHECK WOLNE MIEJSCA
+    if EXISTS(
+        SELECT 1
+        FROM @product_ids pid
+        WHERE [dbo].[GetVacanciesForProduct](pid.product_id) <= 0
+    )
+    BEGIN
+      THROW 50004, 'Dany produkt ma pełną liste zapisanych', 1;
     END
 
     -- Insert order
@@ -4033,7 +4045,7 @@ BEGIN
       BEGIN
         EXEC [dbo].[createFeesForSubject] @order_id, @product_id;
       END
-      ELSE IF @type_id = 3
+      ELSE IF @type_id = 3 
       -- course
       BEGIN
         EXEC [dbo].[createFeesForCourse] @order_id, @product_id;
@@ -4056,6 +4068,21 @@ BEGIN
     CLOSE product_cursor;
     DEALLOCATE product_cursor;
 
+    -- dodanie detailsów
+        BEGIN
+    SET NOCOUNT ON;
+
+    -- Get all products from cart for the student who just created an order
+        INSERT INTO PRODUCT_DETAILS (student_id, product_id, order_id, passed)
+        SELECT
+            @student_id,
+            pid.product_id,
+            @order_id,
+                    null
+        FROM @product_ids pid
+    END
+
+
     COMMIT TRANSACTION;
     PRINT 'Zamówienie utworzone pomyślnie.';
   END TRY
@@ -4065,7 +4092,6 @@ BEGIN
     THROW;
   END CATCH
 END;
-GO
 ```
 
 ### CreateFee
@@ -5546,7 +5572,7 @@ CREATE INDEX fees_type_id_idx ON FEES (type_id);
 ### Tabela INTERNSHIPS
 
 ```sql
-CREATE INDEX interships_study_id_idx ON INTERSHIPS (study_id);
+CREATE INDEX Internships_study_id_idx ON InternshipS (study_id);
 ```
 
 ### Tabela MEETINGS
@@ -5620,7 +5646,7 @@ CREATE INDEX webinar_publish_date on WEBINARS(publish_date,webinar_duration)
 ### Tabela INTERNSHIPS
 
 ```sql
-CREATE INDEX internship_date on INTERSHIPS(start_date,end_date)
+CREATE INDEX internship_date on InternshipS(start_date,end_date)
 ```
 
 ### Tabela MEETINGS
