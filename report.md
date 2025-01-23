@@ -1,4 +1,5 @@
 ---
+
 # Podstawy baz danych
 
 **Dzień i godzina zajęć**: Środa 15:00
@@ -8,6 +9,13 @@
 **Autorzy:** Dariusz Marecik, Filip Węgrzyn, Paweł Fornagiel
 
 **Link do repozytorium GitHub**: https://github.com/pFornagiel/bazy-danych-2025
+
+---
+
+### Wkład w projekt
+- **Dariusz Marecik** - Widoki, funkcje, wyzwalacze, procedury losowe, warunki integralności, współtworzenie struktury bazy danych i funckji systemu
+- **Filip Węgrzyn** - Widoki, funkcje, role i uprawnienia, indeksy, demo funkcjonalności, współtworzenie struktury bazy danych i funckji systemu
+- **Paweł Fornagiel** - procedury, wyzwalacze, genereratory danych, utworzenie i zarządzanie bazą danych na zdalnym serwerze, dokumentacja, współtworzenie struktury bazy danych i funckji systemu
 
 ---
 
@@ -214,7 +222,6 @@
   - [Tłumacz](#tłumacz-1)
 - [Wyzwalacze (Triggers)](#wyzwalacze-triggers)
   - [Weryfikacja integralności bazy danych](#weryfikacja-integralności-bazy-danych)
-    - [trg_CanProductBeInShoppingCart](#trg_canproductbeinshoppingcart)
     - [trg_LimitVacanciesOnInsert](#trg_limitvacanciesoninsert)
     - [trg_UniqueTranslatorPerMeeting](#trg_uniquetranslatorpermeeting)
     - [trg_PreventPastMeetingAttendance](#trg_preventpastmeetingattendance)
@@ -4622,18 +4629,22 @@ BEGIN
     -- Validate product exists
     EXEC [dbo].[CheckProductExists] @product_id;
 
-    -- Check if student already owns the product
-    IF (dbo.CanAddToCart(@student_id, @product_id) = 0)
+    -- Check if the product can be added
+    DECLARE @ValidationMessage NVARCHAR(255);
+    SELECT @ValidationMessage = dbo.CanAddToCart(@student_id, @product_id);
+
+    -- Handle validation messages
+    IF @ValidationMessage LIKE 'Error:%'
     BEGIN
-      THROW 50001, 'Student już posiada ten produkt w koszyku.', 1;
+      THROW 50001, @ValidationMessage, 1;
     END
 
-    -- Add product to cart
+    -- Add the product to the shopping cart
     INSERT INTO SHOPPING_CART (student_id, product_id)
     VALUES (@student_id, @product_id);
 
     COMMIT TRANSACTION;
-    PRINT 'Pomyślnie dodano produkt do koszyka.';
+    PRINT 'Success: Produkt pomyślnie dodany do koszyka.';
   END TRY
   BEGIN CATCH
     IF @@TRANCOUNT > 0
@@ -4641,7 +4652,6 @@ BEGIN
     THROW;
   END CATCH
 END;
-GO
 ```
 
 ### removeProductFromCart
@@ -5165,43 +5175,46 @@ END;
 
 ### CanAddToCart
 
-Funkcja `CanAddToCart` sprawdza czy produkt może zostać dodany do koszyka studenta.
+Funkcja `CanAddToCart` sprawdza czy produkt może zostać dodany do koszyka studenta, zwracając odpowiedni komunikat.
 
 Argumenty:
-
 - @StudentId INT - ID studenta, do którego koszyka chcemy dodać produkt
 - @ProductId INT - ID produktu, który chcemy dodać do koszyka
 
 Zwraca:
-
-- BIT - 1 jeśli produkt może zostać dodany, 0 jeśli nie
+- NVARCHAR(255) - Komunikat informujący o możliwości lub braku możliwości dodania produktu:
+  - 'Error: Student jest już posiadaczem produktu.' - gdy student już posiada produkt
+  - 'Error: Produkt już znajduje się w koszyku.' - gdy produkt jest już w koszyku
+  - 'Success: Produkt może zostać dodany do koszyka.' - gdy można dodać produkt
 
 ```sql
 CREATE FUNCTION CanAddToCart(@StudentId INT, @ProductId INT)
-RETURNS BIT
+RETURNS NVARCHAR(255)
 AS
 BEGIN
-  DECLARE @OwnsProduct BIT;
-  DECLARE @InCart BIT;
+  DECLARE @OwnsProduct INT = 0; -- Default to not owning
+  DECLARE @InCart INT = 0; -- Default to not in cart
 
-  -- Check if student owns the product
-  SELECT @OwnsProduct = CheckStudentOwnsProduct(@StudentId, @ProductId);
+  -- Check if the student owns the product
+  SELECT @OwnsProduct = dbo.CheckStudentOwnsProduct(@StudentId, @ProductId);
 
-  -- Check if product is already in the shopping cart
-  SELECT @InCart = CASE
-            WHEN EXISTS (
-              SELECT 1
-              FROM SHOPPING_CART
-              WHERE SHOPPING_CART.student_id = @StudentId
-                AND SHOPPING_CART.product_id = @ProductId
-            ) THEN 1
-            ELSE 0
-          END;
+  -- Check if the product is already in the shopping cart
+  SELECT @InCart = 
+    CASE 
+      WHEN EXISTS (
+        SELECT 1
+        FROM SHOPPING_CART
+        WHERE student_id = @StudentId
+          AND product_id = @ProductId
+      ) THEN 1
+      ELSE 0
+    END;
 
-  -- Return 1 if student does not own the product and it is not in the cart, otherwise return 0
+  -- Return appropriate error message or success
   RETURN CASE
-    WHEN @OwnsProduct = 0 AND @InCart = 0 THEN 1
-    ELSE 0
+    WHEN @OwnsProduct = 1 THEN 'Error: Student jest już posiadaczem produktu.'
+    WHEN @InCart = 1 THEN 'Error: Produkt już znajduje się w koszyku.'
+    ELSE 'Success: Produkt może zostać dodany do koszyka.'
   END;
 END;
 ```
@@ -6056,35 +6069,6 @@ grant select on study_information to translator
 # Wyzwalacze (Triggers)
 
 ## Weryfikacja integralności bazy danych
-
-### trg_CanProductBeInShoppingCart
-
-Wyzwalacz `trg_CanProductBeInShoppingCart` po dodaniu produktu do koszyka sprawdza, czy użytkownik mógł to zrobić. Jeśli nie, cofa transakcje
-
-Tabela wyzwalająca:
-
-- SHOPPING_CART
-
-Moment aktywacji:
-
-- AFTER INSERT, UPDATE
-
-```sql
-CREATE TRIGGER trg_CanProductBeInShoppingCart
-    ON shopping_cart
-    AFTER INSERT, UPDATE
-    AS BEGIN
-    SET NOCOUNT ON;
-    DECLARE @student_id INT, @product_id INT;
-    SELECT @student_id = student_id, @product_id = product_id
-    FROM inserted
-    IF 0 = dbo.CanAddToCart(@student_id, @product_id)
-    BEGIN
-        RAISERROR ('Cannot add this product to shopping cart', 16, 1);
-        ROLLBACK TRANSACTION;
-    END
-END
-```
 
 ### trg_LimitVacanciesOnInsert
 
