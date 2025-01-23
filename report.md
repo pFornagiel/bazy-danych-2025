@@ -1583,13 +1583,31 @@ SELECT
         WHEN PT.type_name = 'subject' THEN dbo.getParentIdFromSubject(P.product_id)
     END AS study_id,
     SUM(CASE
-        WHEN PT.type_id = 1 AND FT.type_id IN (3, 4) and payment_date is not null THEN F.fee_value
-        WHEN PT.type_id = 2 AND FT.type_id = 2 and payment_date is not null THEN F.fee_value
-        WHEN PT.type_id = 3 AND FT.type_id IN (5, 6) and payment_date is not null THEN F.fee_value
-        WHEN PT.type_id = 4 AND FT.type_id = 7 and payment_date is not null THEN F.fee_value
-        WHEN PT.type_id = 5 AND FT.type_id = 1 and payment_date is not null THEN F.fee_value
+        WHEN PT.type_id = 1 AND FT.type_id IN (3, 4) AND payment_date IS NOT NULL THEN F.fee_value
+        WHEN PT.type_id = 2 AND FT.type_id = 2 AND payment_date IS NOT NULL THEN F.fee_value
+        WHEN PT.type_id = 3 AND FT.type_id IN (5, 6) AND payment_date IS NOT NULL THEN F.fee_value
+        WHEN PT.type_id = 4 AND FT.type_id = 7 AND payment_date IS NOT NULL THEN F.fee_value
+        WHEN PT.type_id = 5 AND FT.type_id = 1 AND payment_date IS NOT NULL THEN F.fee_value
         ELSE 0
-    END) AS total_fee_value
+    END) AS total_fee_value,
+    -- Start Date
+    CASE
+        WHEN PT.type_id = 1 THEN (SELECT start_date FROM dbo.GetStudyTimeframe(P.product_id))
+        WHEN PT.type_id = 2 THEN (SELECT start_date FROM dbo.GetSubjectTimeframe(P.product_id))
+        WHEN PT.type_id = 3 THEN (SELECT start_date FROM dbo.GetCourseStartEndDate(P.product_id))
+        WHEN PT.type_id = 4 THEN (SELECT publish_date FROM dbo.GetWebinarTime(P.product_id))
+        WHEN PT.type_id = 5 THEN (SELECT start_date FROM dbo.GetSessionTimeframe(P.product_id))
+        ELSE NULL
+    END AS start_date,
+    -- End Date
+    CASE
+        WHEN PT.type_id = 1 THEN (SELECT end_date FROM dbo.GetStudyTimeframe(P.product_id))
+        WHEN PT.type_id = 2 THEN (SELECT end_date FROM dbo.GetSubjectTimeframe(P.product_id))
+        WHEN PT.type_id = 3 THEN (SELECT end_date FROM dbo.GetCourseStartEndDate(P.product_id))
+        WHEN PT.type_id = 4 THEN (SELECT publish_date FROM dbo.GetWebinarTime(P.product_id))
+        WHEN PT.type_id = 5 THEN (SELECT end_date FROM dbo.GetSessionTimeframe(P.product_id))
+        ELSE NULL
+    END AS end_date
 FROM
     PRODUCTS P
 JOIN PRODUCT_TYPES PT ON P.type_id = PT.type_id
@@ -1597,7 +1615,8 @@ JOIN FEES F ON P.product_id = F.product_id
 JOIN dbo.FEE_TYPES FT ON F.type_id = FT.type_id
 GROUP BY
     P.product_id,
-    PT.type_name;
+    PT.type_name,
+    PT.type_id;
 ```
 
 ### Bilocation_report
