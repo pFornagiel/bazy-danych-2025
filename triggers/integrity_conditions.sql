@@ -1,19 +1,3 @@
-CREATE TRIGGER trg_CanProductBeInShoppingCart
-    ON shopping_cart
-    AFTER INSERT, UPDATE
-    AS BEGIN
-    SET NOCOUNT ON;
-    DECLARE @student_id INT, @product_id INT;
-    SELECT @student_id = student_id, @product_id = product_id
-    FROM inserted
-    IF 0 = dbo.CanAddToCart(@student_id, @product_id)
-    BEGIN
-        RAISERROR ('Cannot add this product to shopping cart', 16, 1);
-        ROLLBACK TRANSACTION;
-    END
-END
-
-
 CREATE TRIGGER trg_LimitVacanciesOnInsert
 ON PRODUCT_DETAILS
 AFTER INSERT
@@ -79,6 +63,7 @@ BEGIN
 
   PRINT 'Obecność została zarejestrowana pomyślnie.';
 END;
+GO;
 
 CREATE TRIGGER trg_CheckRoomAvailability
 ON STATIONARY_MEETINGS
@@ -119,7 +104,7 @@ BEGIN
     ROLLBACK TRANSACTION;
   END
 END;
-GO
+GO;
 
 CREATE TRIGGER trg_ModuleMeetingsNoIntersection
 ON MEETINGS
@@ -160,3 +145,4 @@ BEGIN
     ROLLBACK TRANSACTION;
   END
 END;
+GO;
