@@ -578,7 +578,7 @@ BEGIN
 END;
 GO
 
--- Add product to cart
+
 CREATE PROCEDURE [dbo].[addProductToCart]
   @student_id INT,
   @product_id INT
@@ -595,18 +595,22 @@ BEGIN
     -- Validate product exists
     EXEC [dbo].[CheckProductExists] @product_id;
 
-    -- Check if student already owns the product
-    IF (dbo.CanAddToCart(@student_id, @product_id) = 0)
+    -- Check if the product can be added
+    DECLARE @ValidationMessage NVARCHAR(255);
+    SELECT @ValidationMessage = dbo.CanAddToCart(@student_id, @product_id);
+
+    -- Handle validation messages
+    IF @ValidationMessage LIKE 'Error:%'
     BEGIN
-      THROW 50001, 'Student już posiada ten produkt w koszyku.', 1;
+      THROW 50001, @ValidationMessage, 1;
     END
 
-    -- Add product to cart
+    -- Add the product to the shopping cart
     INSERT INTO SHOPPING_CART (student_id, product_id)
     VALUES (@student_id, @product_id);
 
     COMMIT TRANSACTION;
-    PRINT 'Pomyślnie dodano produkt do koszyka.';
+    PRINT 'Success: Produkt pomyślnie dodany do koszyka.';
   END TRY
   BEGIN CATCH
     IF @@TRANCOUNT > 0
@@ -614,7 +618,6 @@ BEGIN
     THROW;
   END CATCH
 END;
-GO
 
 -- Remove product from cart
 CREATE PROCEDURE [dbo].[removeProductFromCart]
@@ -710,4 +713,30 @@ BEGIN
 END;
 GO
 
+CREATE PROCEDURE [dbo].[UpdateProductDetailsPassed]
+AS
+BEGIN
+    -- Update for Studies (type_id = 1)
+    UPDATE pd
+    SET pd.passed = dbo.DoesStudentPassStudy(pd.student_id, s.study_id)
+    FROM PRODUCT_DETAILS pd
+    JOIN PRODUCTS p ON p.product_id = pd.product_id
+    JOIN STUDIES s ON s.study_id = p.product_id
+    WHERE p.type_id = 1
 
+    -- Update for Subjects (type_id = 2)
+    UPDATE pd
+    SET pd.passed = dbo.DoesStudentPassSubject(pd.student_id, s.subject_id)
+    FROM PRODUCT_DETAILS pd
+    JOIN PRODUCTS p ON p.product_id = pd.product_id
+    JOIN SUBJECTS s ON s.subject_id = p.product_id
+    WHERE p.type_id = 2
+
+    -- Update for Courses (type_id = 3)
+    UPDATE pd
+    SET pd.passed = dbo.DoesStudentPassCourse(pd.student_id, c.course_id)
+    FROM PRODUCT_DETAILS pd
+    JOIN PRODUCTS p ON p.product_id = pd.product_id
+    JOIN COURSES c ON c.course_id = p.product_id
+    WHERE p.type_id = 3
+END;

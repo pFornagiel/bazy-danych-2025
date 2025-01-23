@@ -347,30 +347,32 @@ END;
 
 -- Function 10: Check if student can add product to cart
 CREATE FUNCTION CanAddToCart(@StudentId INT, @ProductId INT)
-RETURNS BIT
+RETURNS NVARCHAR(255)
 AS
 BEGIN
-  DECLARE @OwnsProduct BIT;
-  DECLARE @InCart BIT;
+  DECLARE @OwnsProduct INT = 0; -- Default to not owning
+  DECLARE @InCart INT = 0; -- Default to not in cart
 
-  -- Check if student owns the product
+  -- Check if the student owns the product
   SELECT @OwnsProduct = dbo.CheckStudentOwnsProduct(@StudentId, @ProductId);
 
-  -- Check if product is already in the shopping cart
-  SELECT @InCart = CASE
-            WHEN EXISTS (
-              SELECT 1
-              FROM SHOPPING_CART
-              WHERE SHOPPING_CART.student_id = @StudentId
-                AND SHOPPING_CART.product_id = @ProductId
-            ) THEN 1
-            ELSE 0
-          END;
+  -- Check if the product is already in the shopping cart
+  SELECT @InCart = 
+    CASE 
+      WHEN EXISTS (
+        SELECT 1
+        FROM SHOPPING_CART
+        WHERE student_id = @StudentId
+          AND product_id = @ProductId
+      ) THEN 1
+      ELSE 0
+    END;
 
-  -- Return 1 if student does not own the product and it is not in the cart, otherwise return 0
+  -- Return appropriate error message or success
   RETURN CASE
-    WHEN @OwnsProduct = 0 AND @InCart = 0 THEN 1
-    ELSE 0
+    WHEN @OwnsProduct = 1 THEN 'Error: Student jest już posiadaczem produktu.'
+    WHEN @InCart = 1 THEN 'Error: Produkt już znajduje się w koszyku.'
+    ELSE 'Success: Produkt może zostać dodany do koszyka.'
   END;
 END;
 
